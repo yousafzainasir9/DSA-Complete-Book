@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Prefix sums and common techniques — range queries, difference arrays, cumulative sums with C# implementations and interview applications.">
+  <meta name="keywords" content="prefix sum, range query, difference array, cumulative sum, C#, subarray sum">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch19-prefix-sums-common-techniques.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch19-prefix-sums-common-techniques.html">
+  <meta property="og:title" content="Chapter 19: Prefix Sums & Common Algorithm Techniques - DSA Complete Book">
+  <meta property="og:description" content="Prefix sums and common techniques — range queries, difference arrays, cumulative sums with C# implementations and interview applications.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch19-prefix-sums-common-techniques.html">
+  <meta name="twitter:title" content="Chapter 19: Prefix Sums & Common Algorithm Techniques - DSA Complete Book">
+  <meta name="twitter:description" content="Prefix sums and common techniques — range queries, difference arrays, cumulative sums with C# implementations and interview applications.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 19: Prefix Sums & Common Algorithm Techniques - DSA Complete Book",
+  "description": "Prefix sums and common techniques \u2014 range queries, difference arrays, cumulative sums with C# implementations and interview applications.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch19-prefix-sums-common-techniques.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 19: Prefix Sums & Common Algorithm Techniques - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* SHARED CSS TEMPLATE - Copy this into each chapter HTML file's <style> tag */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 19</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 19</div>
+      </div>
+      <h1>Prefix Sums & <em>Common Algorithm Techniques</em></h1>
+      <p class="hero-sub">Master advanced problem-solving patterns: prefix sums, difference arrays, monotonic structures, event-based algorithms, and essential string/math techniques. Learn when and how to apply each pattern to optimize time complexity from naive O(n²) to O(n) or better.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">13</div>
+          <div class="stat-l">Techniques Covered</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">26+</div>
+          <div class="stat-l">Complete Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">20</div>
+          <div class="stat-l">LeetCode Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">100+</div>
+          <div class="stat-l">Interview Patterns</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">19.1</span> Prefix Sum (1D)</a>
+        <a href="#sec-2"><span class="toc-n">19.2</span> Prefix Sum (2D)</a>
+        <a href="#sec-3"><span class="toc-n">19.3</span> Prefix Sum Problems</a>
+        <a href="#sec-4"><span class="toc-n">19.4</span> Difference Array</a>
+        <a href="#sec-5"><span class="toc-n">19.5</span> Kadane's Algorithm</a>
+        <a href="#sec-6"><span class="toc-n">19.6</span> Monotonic Stack</a>
+        <a href="#sec-7"><span class="toc-n">19.7</span> Monotonic Queue</a>
+        <a href="#sec-8"><span class="toc-n">19.8</span> Sweep Line & Events</a>
+        <a href="#sec-9"><span class="toc-n">19.9</span> Matrix Manipulation</a>
+        <a href="#sec-10"><span class="toc-n">19.10</span> String Algorithms</a>
+        <a href="#sec-11"><span class="toc-n">19.11</span> Math Techniques</a>
+        <a href="#sec-12"><span class="toc-n">19.12</span> Bit Manipulation</a>
+        <a href="#sec-13"><span class="toc-n">19.13</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 19.1: Prefix Sum 1D -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">19.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Prefix Sum (1D)</h2>
+      <p class="lead">Transform O(n) range queries into O(1) lookups by precomputing cumulative sums. Essential for interviews involving subarray sums and range queries.</p>
+
+      <h3>Concept</h3>
+      <p>A prefix sum array stores the cumulative sum of elements up to index i. Once built in O(n), any range sum can be answered in O(1).</p>
+
+      <p><strong>Key insight:</strong> <code class="il">sum(i, j) = prefix[j+1] - prefix[i]</code></p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Why it works:</strong> Prefix arrays eliminate overlapping subarray calculations. Build once, query infinitely.</div>
+      </div>
+
+      <h3>Building the Prefix Array</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Build prefix sum array</span>
+<span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">BuildPrefixSum</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span>[] prefix = <span class="kw">new</span> <span class="ty">int</span>[nums.Length + <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        prefix[i + <span class="num">1</span>] = prefix[i] + nums[i];
+    }
+    <span class="kw">return</span> prefix;
+}
+
+<span class="cm">// Query range sum [left, right] (inclusive)</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">RangeSum</span>(<span class="ty">int</span>[] prefix, <span class="ty">int</span> left, <span class="ty">int</span> right)
+{
+    <span class="kw">return</span> prefix[right + <span class="num">1</span>] - prefix[left];
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time: Build</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Time: Query</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+
+      <h3>Template Pattern</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Template: Prefix Sum for Range Queries</span>
+<span class="kw">class</span> <span class="ty">PrefixSumTemplate</span>
+{
+    <span class="ty">int</span>[] prefix;
+
+    <span class="kw">public</span> <span class="fn">PrefixSumTemplate</span>(<span class="ty">int</span>[] nums)
+    {
+        prefix = <span class="kw">new</span> <span class="ty">int</span>[nums.Length + <span class="num">1</span>];
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+            prefix[i + <span class="num">1</span>] = prefix[i] + nums[i];
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">SumRange</span>(<span class="ty">int</span> left, <span class="ty">int</span> right)
+    {
+        <span class="kw">return</span> prefix[right + <span class="num">1</span>] - prefix[left];
+    }
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 19.2: Prefix Sum 2D -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">19.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Prefix Sum (2D)</h2>
+      <p class="lead">Extend prefix sums to 2D matrices for O(1) rectangle sum queries using inclusion-exclusion principle.</p>
+
+      <h3>Concept</h3>
+      <p>For a 2D matrix, <code class="il">prefix[i][j]</code> = sum of all elements in rectangle from (0,0) to (i-1, j-1).</p>
+
+      <p><strong>Inclusion-Exclusion Formula:</strong></p>
+      <p><code class="il">sum(r1,c1,r2,c2) = prefix[r2+1][c2+1] - prefix[r1][c2+1] - prefix[r2+1][c1] + prefix[r1][c1]</code></p>
+
+      <h3>Complete 2D Prefix Sum Implementation</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// 2D Prefix Sum</span>
+<span class="kw">class</span> <span class="ty">NumMatrix</span>
+{
+    <span class="ty">int</span>[][] prefix;
+
+    <span class="kw">public</span> <span class="fn">NumMatrix</span>(<span class="ty">int</span>[][] matrix)
+    {
+        <span class="ty">int</span> m = matrix.Length;
+        <span class="ty">int</span> n = matrix[<span class="num">0</span>].Length;
+        prefix = <span class="kw">new</span> <span class="ty">int</span>[m + <span class="num">1</span>][];
+
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt;= m; i++)
+            prefix[i] = <span class="kw">new</span> <span class="ty">int</span>[n + <span class="num">1</span>];
+
+        <span class="cm">// Build 2D prefix array</span>
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt;= m; i++)
+        {
+            <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">1</span>; j &lt;= n; j++)
+            {
+                prefix[i][j] = matrix[i - <span class="num">1</span>][j - <span class="num">1</span>]
+                              + prefix[i - <span class="num">1</span>][j]
+                              + prefix[i][j - <span class="num">1</span>]
+                              - prefix[i - <span class="num">1</span>][j - <span class="num">1</span>];
+            }
+        }
+    }
+
+    <span class="cm">// Query rectangle sum: rows [row1..row2], cols [col1..col2]</span>
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">SumRegion</span>(<span class="ty">int</span> row1, <span class="ty">int</span> col1, <span class="ty">int</span> row2, <span class="ty">int</span> col2)
+    {
+        <span class="kw">return</span> prefix[row2 + <span class="num">1</span>][col2 + <span class="num">1</span>]
+             - prefix[row1][col2 + <span class="num">1</span>]
+             - prefix[row2 + <span class="num">1</span>][col1]
+             + prefix[row1][col1];
+    }
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time: Build</div>
+          <div class="cx-v">O(m×n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Time: Query</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(m×n)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 19.3: Prefix Sum Problems -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">19.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Prefix Sum Problems</h2>
+      <p class="lead">Six classic problems demonstrating prefix sum patterns in interviews and competitive programming.</p>
+
+      <h3>LC 303: Range Sum Query - Immutable</h3>
+      <p>Given an array, answer multiple range sum queries. Simple baseline problem.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">class</span> <span class="ty">NumArray</span>
+{
+    <span class="ty">int</span>[] prefix;
+
+    <span class="kw">public</span> <span class="fn">NumArray</span>(<span class="ty">int</span>[] nums)
+    {
+        prefix = <span class="kw">new</span> <span class="ty">int</span>[nums.Length + <span class="num">1</span>];
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+            prefix[i + <span class="num">1</span>] = prefix[i] + nums[i];
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">SumRange</span>(<span class="ty">int</span> left, <span class="ty">int</span> right)
+    {
+        <span class="kw">return</span> prefix[right + <span class="num">1</span>] - prefix[left];
+    }
+}</pre>
+      </div>
+
+      <h3>LC 304: Range Sum Query 2D - Immutable</h3>
+      <p>2D matrix range sum queries using 2D prefix sums (shown in 19.2).</p>
+
+      <h3>LC 560: Subarray Sum Equals K</h3>
+      <p>Find count of subarrays with sum equal to k. Use prefix sums with HashMap.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">SubarraySum</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="ty">var</span> prefixMap = <span class="kw">new</span> Dictionary&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    prefixMap[<span class="num">0</span>] = <span class="num">1</span>; <span class="cm">// Base case: prefix sum 0</span>
+
+    <span class="ty">int</span> prefixSum = <span class="num">0</span>, count = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+    {
+        prefixSum += num;
+
+        <span class="cm">// Check if (prefixSum - k) exists</span>
+        <span class="cm">// If yes: subarray from that point to current has sum k</span>
+        <span class="kw">if</span> (prefixMap.ContainsKey(prefixSum - k))
+            count += prefixMap[prefixSum - k];
+
+        <span class="kw">if</span> (!prefixMap.ContainsKey(prefixSum))
+            prefixMap[prefixSum] = <span class="num">0</span>;
+        prefixMap[prefixSum]++;
+    }
+
+    <span class="kw">return</span> count;
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div><strong>Logic:</strong> If current prefix sum is X and we seek sum K, we need prefix (X-K) to exist. The gap = K.</div>
+      </div>
+
+      <h3>LC 523: Continuous Subarray Sum</h3>
+      <p>Check if subarray exists with sum divisible by k. Use modulo prefix sums.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">CheckSubarraySum</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="ty">var</span> modMap = <span class="kw">new</span> Dictionary&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    modMap[<span class="num">0</span>] = <span class="num">-1</span>; <span class="cm">// Track first occurrence</span>
+
+    <span class="ty">int</span> prefixSum = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        prefixSum += nums[i];
+        <span class="ty">int</span> mod = prefixSum % k; <span class="cm">// Handle negative: mod = ((prefixSum % k) + k) % k</span>
+
+        <span class="kw">if</span> (modMap.ContainsKey(mod))
+        {
+            <span class="kw">if</span> (i - modMap[mod] &gt;= <span class="num">2</span>) <span class="cm">// Length >= 2</span>
+                <span class="kw">return</span> <span class="kw">true</span>;
+        }
+        <span class="kw">else</span>
+        {
+            modMap[mod] = i;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre>
+      </div>
+
+      <h3>LC 724: Find Pivot Index</h3>
+      <p>Find index where left sum equals right sum.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">PivotIndex</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> total = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+        total += num;
+
+    <span class="ty">int</span> left = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        <span class="ty">int</span> right = total - left - nums[i];
+
+        <span class="kw">if</span> (left == right)
+            <span class="kw">return</span> i;
+
+        left += nums[i];
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>;
+}</pre>
+      </div>
+
+      <h3>LC 238: Product of Array Except Self</h3>
+      <p>Compute product of all elements except self, without division operator.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">ProductExceptSelf</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> n = nums.Length;
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[n];
+
+    <span class="cm">// Pass 1: prefix products (left to right)</span>
+    result[<span class="num">0</span>] = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; n; i++)
+        result[i] = result[i - <span class="num">1</span>] * nums[i - <span class="num">1</span>];
+
+    <span class="cm">// Pass 2: suffix products (right to left)</span>
+    <span class="ty">int</span> suffix = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = n - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--)
+    {
+        result[i] *= suffix;
+        suffix *= nums[i];
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Insight:</strong> Two-pass solution uses result array as prefix storage, then multiplies by suffix on reverse pass.</div>
+      </div>
+    </section>
+
+    <!-- Section 19.4: Difference Array -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">19.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Difference Array</h2>
+      <p class="lead">Perform range updates in O(1) instead of O(n). Critical for interval-heavy problems.</p>
+
+      <h3>Concept</h3>
+      <p>Instead of updating all elements in a range, store differences. Apply all updates at once with a single pass.</p>
+
+      <h3>Range Update Pattern</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Difference array for range updates</span>
+<span class="kw">class</span> <span class="ty">DifferenceArray</span>
+{
+    <span class="ty">int</span>[] diff;
+
+    <span class="kw">public</span> <span class="fn">DifferenceArray</span>(<span class="ty">int</span> n)
+    {
+        diff = <span class="kw">new</span> <span class="ty">int</span>[n + <span class="num">1</span>];
+    }
+
+    <span class="cm">// Add value to range [left, right] in O(1)</span>
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">RangeAdd</span>(<span class="ty">int</span> left, <span class="ty">int</span> right, <span class="ty">int</span> value)
+    {
+        diff[left] += value;
+        diff[right + <span class="num">1</span>] -= value;
+    }
+
+    <span class="cm">// Apply all updates and return final array</span>
+    <span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">GetResult</span>()
+    {
+        <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[diff.Length - <span class="num">1</span>];
+        <span class="ty">int</span> cumsum = <span class="num">0</span>;
+
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; result.Length; i++)
+        {
+            cumsum += diff[i];
+            result[i] = cumsum;
+        }
+
+        <span class="kw">return</span> result;
+    }
+}</pre>
+      </div>
+
+      <h3>LC 1109: Corporate Flight Bookings</h3>
+      <p>Given booking queries, find final seat occupancy. Classic difference array application.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">CorpFlightBookings</span>(<span class="ty">int</span>[][] bookings, <span class="ty">int</span> n)
+{
+    <span class="ty">int</span>[] diff = <span class="kw">new</span> <span class="ty">int</span>[n + <span class="num">1</span>];
+
+    <span class="cm">// Apply each booking as range update</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span>[] booking <span class="kw">in</span> bookings)
+    {
+        <span class="ty">int</span> first = booking[<span class="num">0</span>] - <span class="num">1</span>; <span class="cm">// Convert to 0-indexed</span>
+        <span class="ty">int</span> last = booking[<span class="num">1</span>] - <span class="num">1</span>;
+        <span class="ty">int</span> seats = booking[<span class="num">2</span>];
+
+        diff[first] += seats;
+        diff[last + <span class="num">1</span>] -= seats;
+    }
+
+    <span class="cm">// Convert difference array to result</span>
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[n];
+    <span class="ty">int</span> cumsum = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    {
+        cumsum += diff[i];
+        result[i] = cumsum;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time: Updates</div>
+          <div class="cx-v">O(k)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Time: Finalize</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 19.5: Kadane's Algorithm -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">19.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Kadane's Algorithm</h2>
+      <p class="lead">Find maximum sum subarray in O(n). Essential greedy dynamic programming pattern.</p>
+
+      <h3>LC 53: Maximum Subarray</h3>
+      <p>Find contiguous subarray with largest sum.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">MaxSubArray</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> maxCurrent = nums[<span class="num">0</span>];
+    <span class="ty">int</span> maxGlobal = nums[<span class="num">0</span>];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; nums.Length; i++)
+    {
+        <span class="cm">// At each step: extend current subarray or start fresh</span>
+        maxCurrent = Math.Max(nums[i], maxCurrent + nums[i]);
+        maxGlobal = Math.Max(maxGlobal, maxCurrent);
+    }
+
+    <span class="kw">return</span> maxGlobal;
+}</pre>
+      </div>
+
+      <h3>LC 152: Maximum Product Subarray</h3>
+      <p>Find contiguous subarray with largest product. Trickier due to negatives.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">MaxProduct</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> maxProd = nums[<span class="num">0</span>];
+    <span class="ty">int</span> minProd = nums[<span class="num">0</span>];
+    <span class="ty">int</span> result = nums[<span class="num">0</span>];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; nums.Length; i++)
+    {
+        <span class="cm">// Track both max and min (negative can become max)</span>
+        <span class="ty">int</span> newMax = Math.Max(nums[i],
+                        Math.Max(maxProd * nums[i], minProd * nums[i]));
+        <span class="ty">int</span> newMin = Math.Min(nums[i],
+                        Math.Min(maxProd * nums[i], minProd * nums[i]));
+
+        maxProd = newMax;
+        minProd = newMin;
+        result = Math.Max(result, maxProd);
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>LC 918: Maximum Sum Circular Subarray</h3>
+      <p>Array is circular. Max sum can wrap around.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">MaxSubarraySumCircular</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> totalSum = <span class="num">0</span>;
+    <span class="ty">int</span> maxKadane = nums[<span class="num">0</span>];
+    <span class="ty">int</span> minKadane = nums[<span class="num">0</span>];
+    <span class="ty">int</span> curMax = nums[<span class="num">0</span>];
+    <span class="ty">int</span> curMin = nums[<span class="num">0</span>];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; nums.Length; i++)
+    {
+        <span class="cm">// Standard Kadane for max</span>
+        curMax = Math.Max(nums[i], curMax + nums[i]);
+        maxKadane = Math.Max(maxKadane, curMax);
+
+        <span class="cm">// Modified Kadane for min</span>
+        curMin = Math.Min(nums[i], curMin + nums[i]);
+        minKadane = Math.Min(minKadane, curMin);
+
+        totalSum += nums[i];
+    }
+
+    <span class="cm">// Either take max subarray (normal) or total - min (wrap around)</span>
+    <span class="kw">return</span> maxKadane &gt; <span class="num">0</span>
+        ? Math.Max(maxKadane, totalSum - minKadane)
+        : maxKadane;
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div><strong>Edge case:</strong> If all numbers are negative, return the single largest (don't use circular wrap).</div>
+      </div>
+    </section>
+
+    <!-- Section 19.6: Monotonic Stack -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">19.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Monotonic Stack</h2>
+      <p class="lead">Find next/previous greater/smaller elements in O(n). Essential for optimization problems.</p>
+
+      <h3>Concept</h3>
+      <p>A monotonic stack maintains elements in increasing or decreasing order, enabling O(n) solutions to problems that naively require O(n²).</p>
+
+      <h3>LC 496: Next Greater Element I</h3>
+      <p>For each element, find the next greater element in the array.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">NextGreaterElement</span>(<span class="ty">int</span>[] nums1, <span class="ty">int</span>[] nums2)
+{
+    <span class="ty">var</span> map = <span class="kw">new</span> Dictionary&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    <span class="ty">var</span> stack = <span class="kw">new</span> Stack&lt;<span class="ty">int</span>&gt;();
+
+    <span class="cm">// Build map using monotonic stack on nums2</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = nums2.Length - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--)
+    {
+        <span class="cm">// Pop smaller elements (they have a greater element)</span>
+        <span class="kw">while</span> (stack.Count &gt; <span class="num">0</span> &amp;&amp; stack.Peek() &lt; nums2[i])
+            stack.Pop();
+
+        <span class="cm">// Current top is next greater (or none if stack empty)</span>
+        map[nums2[i]] = stack.Count == <span class="num">0</span> ? -<span class="num">1</span> : stack.Peek();
+        stack.Push(nums2[i]);
+    }
+
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[nums1.Length];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums1.Length; i++)
+        result[i] = map[nums1[i]];
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>LC 503: Next Greater Element II (Circular)</h3>
+      <p>Circular version: array wraps around.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">NextGreaterElements</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> n = nums.Length;
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[n];
+    Array.Fill(result, -<span class="num">1</span>);
+    <span class="ty">var</span> stack = <span class="kw">new</span> Stack&lt;<span class="ty">int</span>&gt;();
+
+    <span class="cm">// Iterate twice to handle circular nature</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; <span class="num">2</span> * n; i++)
+    {
+        <span class="ty">int</span> idx = i % n;
+
+        <span class="kw">while</span> (stack.Count &gt; <span class="num">0</span> &amp;&amp; nums[stack.Peek()] &lt; nums[idx])
+        {
+            result[stack.Pop()] = nums[idx];
+        }
+
+        <span class="cm">// Only push on first pass</span>
+        <span class="kw">if</span> (i &lt; n)
+            stack.Push(idx);
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>LC 739: Daily Temperatures</h3>
+      <p>Days until a warmer temperature. Stack stores indices.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">DailyTemperatures</span>(<span class="ty">int</span>[] temperatures)
+{
+    <span class="ty">int</span> n = temperatures.Length;
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[n];
+    <span class="ty">var</span> stack = <span class="kw">new</span> Stack&lt;<span class="ty">int</span>&gt;(); <span class="cm">// Store indices</span>
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = n - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--)
+    {
+        <span class="cm">// Pop temperatures <= current</span>
+        <span class="kw">while</span> (stack.Count &gt; <span class="num">0</span> &amp;&amp; temperatures[stack.Peek()] &lt;= temperatures[i])
+            stack.Pop();
+
+        <span class="cm">// Days until warmer day</span>
+        <span class="kw">if</span> (stack.Count &gt; <span class="num">0</span>)
+            result[i] = stack.Peek() - i;
+
+        stack.Push(i);
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>LC 84: Largest Rectangle in Histogram</h3>
+      <p>Find largest rectangle area in histogram using monotonic stack.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">LargestRectangleArea</span>(<span class="ty">int</span>[] heights)
+{
+    <span class="ty">var</span> stack = <span class="kw">new</span> Stack&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">int</span> maxArea = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt;= heights.Length; i++)
+    {
+        <span class="ty">int</span> h = i == heights.Length ? <span class="num">0</span> : heights[i];
+
+        <span class="cm">// Pop smaller heights and calculate areas</span>
+        <span class="kw">while</span> (stack.Count &gt; <span class="num">0</span> &amp;&amp; heights[stack.Peek()] &gt; h)
+        {
+            <span class="ty">int</span> height = heights[stack.Pop()];
+            <span class="ty">int</span> width = stack.Count == <span class="num">0</span> ? i : i - stack.Peek() - <span class="num">1</span>;
+            maxArea = Math.Max(maxArea, height * width);
+        }
+
+        stack.Push(i);
+    }
+
+    <span class="kw">return</span> maxArea;
+}</pre>
+      </div>
+
+      <h3>LC 42: Trapping Rain Water (Stack Approach)</h3>
+      <p>Trap rainwater using monotonic stack.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">Trap</span>(<span class="ty">int</span>[] height)
+{
+    <span class="ty">var</span> stack = <span class="kw">new</span> Stack&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">int</span> water = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; height.Length; i++)
+    {
+        <span class="kw">while</span> (stack.Count &gt; <span class="num">0</span> &amp;&amp; height[stack.Peek()] &lt; height[i])
+        {
+            <span class="ty">int</span> bottom = stack.Pop();
+
+            <span class="kw">if</span> (stack.Count == <span class="num">0</span>) <span class="kw">break</span>;
+
+            <span class="ty">int</span> h = Math.Min(height[stack.Peek()], height[i]) - height[bottom];
+            <span class="ty">int</span> w = i - stack.Peek() - <span class="num">1</span>;
+            water += h * w;
+        }
+
+        stack.Push(i);
+    }
+
+    <span class="kw">return</span> water;
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 19.7: Monotonic Queue -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">19.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Monotonic Queue</h2>
+      <p class="lead">Find min/max in sliding window in O(n). Use deque for efficient front/back operations.</p>
+
+      <h3>LC 239: Sliding Window Maximum</h3>
+      <p>Find max element in every sliding window of size k.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">MaxSlidingWindow</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="ty">var</span> deque = <span class="kw">new</span> LinkedList&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">var</span> result = <span class="kw">new</span> List&lt;<span class="ty">int</span>&gt;();
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        <span class="cm">// Remove elements outside window</span>
+        <span class="kw">if</span> (deque.Count &gt; <span class="num">0</span> &amp;&amp; deque.First.Value &lt; i - k + <span class="num">1</span>)
+            deque.RemoveFirst();
+
+        <span class="cm">// Remove smaller elements (they can't be max)</span>
+        <span class="kw">while</span> (deque.Count &gt; <span class="num">0</span> &amp;&amp; nums[deque.Last.Value] &lt;= nums[i])
+            deque.RemoveLast();
+
+        <span class="cm">// Add current index</span>
+        deque.AddLast(i);
+
+        <span class="cm">// Add max to result (front of deque)</span>
+        <span class="kw">if</span> (i &gt;= k - <span class="num">1</span>)
+            result.Add(nums[deque.First.Value]);
+    }
+
+    <span class="kw">return</span> result.ToArray();
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Key idea:</strong> Deque stores indices in decreasing order of values. Front always holds the window maximum.</div>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(k)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 19.8: Sweep Line & Events -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">19.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Sweep Line & Event-Based Algorithms</h2>
+      <p class="lead">Transform 2D interval problems into 1D by processing events in order.</p>
+
+      <h3>LC 253: Meeting Rooms II</h3>
+      <p>Minimum conference rooms needed. Use event-based sweep line.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">MinMeetingRooms</span>(<span class="ty">int</span>[][] intervals)
+{
+    <span class="ty">var</span> events = <span class="kw">new</span> List&lt;(<span class="ty">int</span>, <span class="ty">int</span>)&gt;(); <span class="cm">// (time, type: 0=start, 1=end)</span>
+
+    <span class="kw">foreach</span> (<span class="ty">var</span> interval <span class="kw">in</span> intervals)
+    {
+        events.Add((interval[<span class="num">0</span>], <span class="num">0</span>)); <span class="cm">// Start</span>
+        events.Add((interval[<span class="num">1</span>], <span class="num">1</span>)); <span class="cm">// End</span>
+    }
+
+    <span class="cm">// Sort: first by time, then ends before starts</span>
+    events.Sort((a, b) =&gt; a.Item1 == b.Item1 ? a.Item2.CompareTo(b.Item2) : a.Item1.CompareTo(b.Item1));
+
+    <span class="ty">int</span> rooms = <span class="num">0</span>, maxRooms = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">var</span> (time, eventType) <span class="kw">in</span> events)
+    {
+        <span class="kw">if</span> (eventType == <span class="num">0</span>)
+            rooms++;
+        <span class="kw">else</span>
+            rooms--;
+
+        maxRooms = Math.Max(maxRooms, rooms);
+    }
+
+    <span class="kw">return</span> maxRooms;
+}</pre>
+      </div>
+
+      <h3>LC 729: My Calendar I</h3>
+      <p>Validate calendar bookings—no overlaps allowed.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">class</span> <span class="ty">MyCalendar</span>
+{
+    <span class="ty">List</span>&lt;(<span class="ty">int</span>, <span class="ty">int</span>)&gt; bookings = <span class="kw">new</span> List&lt;(<span class="ty">int</span>, <span class="ty">int</span>)&gt;();
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">Book</span>(<span class="ty">int</span> start, <span class="ty">int</span> end)
+    {
+        <span class="kw">foreach</span> (<span class="ty">var</span> (s, e) <span class="kw">in</span> bookings)
+        {
+            <span class="cm">// Check overlap: not (end <= s or start >= e)</span>
+            <span class="kw">if</span> (!(end &lt;= s || start &gt;= e))
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+
+        bookings.Add((start, end));
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+}</pre>
+      </div>
+
+      <h3>Coordinate Compression</h3>
+      <p>When values are huge but count is small, map to compressed range.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Compress coordinates: 1,100,1000 -> 0,1,2</span>
+<span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">CompressCoordinates</span>(<span class="ty">int</span>[] coords)
+{
+    <span class="ty">var</span> sorted = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt;(coords);
+    <span class="ty">var</span> map = <span class="kw">new</span> Dictionary&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+
+    <span class="ty">int</span> idx = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> c <span class="kw">in</span> sorted.OrderBy(x =&gt; x))
+        map[c] = idx++;
+
+    <span class="kw">return</span> coords.Select(c =&gt; map[c]).ToArray();
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 19.9: Matrix Manipulation -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">19.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Matrix Manipulation Tricks</h2>
+      <p class="lead">In-place matrix transformations: rotation, spiral traversal, and zero setting.</p>
+
+      <h3>LC 54: Spiral Matrix</h3>
+      <p>Traverse matrix in spiral order.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> IList&lt;<span class="ty">int</span>&gt; <span class="fn">SpiralOrder</span>(<span class="ty">int</span>[][] matrix)
+{
+    <span class="ty">var</span> result = <span class="kw">new</span> List&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">int</span> top = <span class="num">0</span>, bottom = matrix.Length - <span class="num">1</span>;
+    <span class="ty">int</span> left = <span class="num">0</span>, right = matrix[<span class="num">0</span>].Length - <span class="num">1</span>;
+
+    <span class="kw">while</span> (top &lt;= bottom &amp;&amp; left &lt;= right)
+    {
+        <span class="cm">// Traverse right</span>
+        <span class="kw">for</span> (<span class="ty">int</span> i = left; i &lt;= right; i++)
+            result.Add(matrix[top][i]);
+        top++;
+
+        <span class="cm">// Traverse down</span>
+        <span class="kw">for</span> (<span class="ty">int</span> i = top; i &lt;= bottom; i++)
+            result.Add(matrix[i][right]);
+        right--;
+
+        <span class="cm">// Traverse left (if row exists)</span>
+        <span class="kw">if</span> (top &lt;= bottom)
+        {
+            <span class="kw">for</span> (<span class="ty">int</span> i = right; i &gt;= left; i--)
+                result.Add(matrix[bottom][i]);
+            bottom--;
+        }
+
+        <span class="cm">// Traverse up (if column exists)</span>
+        <span class="kw">if</span> (left &lt;= right)
+        {
+            <span class="kw">for</span> (<span class="ty">int</span> i = bottom; i &gt;= top; i--)
+                result.Add(matrix[i][left]);
+            left++;
+        }
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>LC 48: Rotate Image (90° clockwise, in-place)</h3>
+      <p>Rotate n×n matrix 90 degrees clockwise.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">Rotate</span>(<span class="ty">int</span>[][] matrix)
+{
+    <span class="ty">int</span> n = matrix.Length;
+
+    <span class="cm">// Step 1: Transpose (swap across diagonal)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = i + <span class="num">1</span>; j &lt; n; j++)
+        {
+            <span class="ty">int</span> temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+
+    <span class="cm">// Step 2: Reverse each row</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    {
+        Array.Reverse(matrix[i]);
+    }
+}</pre>
+      </div>
+
+      <h3>LC 73: Set Matrix Zeroes (in-place)</h3>
+      <p>Set entire row/column to 0 if element is 0, using O(1) space.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">SetZeroes</span>(<span class="ty">int</span>[][] matrix)
+{
+    <span class="ty">int</span> m = matrix.Length, n = matrix[<span class="num">0</span>].Length;
+    <span class="ty">bool</span> firstRowZero = <span class="kw">false</span>, firstColZero = <span class="kw">false</span>;
+
+    <span class="cm">// Check if first row/column need zeroing</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; m; i++)
+        <span class="kw">if</span> (matrix[i][<span class="num">0</span>] == <span class="num">0</span>) firstColZero = <span class="kw">true</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; n; j++)
+        <span class="kw">if</span> (matrix[<span class="num">0</span>][j] == <span class="num">0</span>) firstRowZero = <span class="kw">true</span>;
+
+    <span class="cm">// Use first row/column as markers</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; m; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">1</span>; j &lt; n; j++)
+        {
+            <span class="kw">if</span> (matrix[i][j] == <span class="num">0</span>)
+            {
+                matrix[i][<span class="num">0</span>] = <span class="num">0</span>;
+                matrix[<span class="num">0</span>][j] = <span class="num">0</span>;
+            }
+        }
+    }
+
+    <span class="cm">// Apply zeros based on markers</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; m; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">1</span>; j &lt; n; j++)
+        {
+            <span class="kw">if</span> (matrix[i][<span class="num">0</span>] == <span class="num">0</span> || matrix[<span class="num">0</span>][j] == <span class="num">0</span>)
+                matrix[i][j] = <span class="num">0</span>;
+        }
+    }
+
+    <span class="cm">// Zero out first row/column if needed</span>
+    <span class="kw">if</span> (firstRowZero)
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; n; j++)
+            matrix[<span class="num">0</span>][j] = <span class="num">0</span>;
+
+    <span class="kw">if</span> (firstColZero)
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; m; i++)
+            matrix[i][<span class="num">0</span>] = <span class="num">0</span>;
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 19.10: String Algorithms -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <span class="sec-num">19.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>String Algorithms</h2>
+      <p class="lead">Pattern matching and substring search: KMP, Rabin-Karp, and Z-Algorithm concepts.</p>
+
+      <h3>KMP (Knuth-Morris-Pratt) Pattern Matching</h3>
+      <p>Find pattern in text in O(n+m) without backtracking.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">KMPSearch</span>(<span class="ty">string</span> text, <span class="ty">string</span> pattern)
+{
+    <span class="ty">int</span> n = text.Length, m = pattern.Length;
+    <span class="ty">int</span>[] lps = <span class="fn">BuildLPS</span>(pattern);
+
+    <span class="ty">int</span> i = <span class="num">0</span>, j = <span class="num">0</span>;
+
+    <span class="kw">while</span> (i &lt; n)
+    {
+        <span class="kw">if</span> (pattern[j] == text[i])
+        {
+            i++;
+            j++;
+        }
+
+        <span class="kw">if</span> (j == m)
+            <span class="kw">return</span> i - j; <span class="cm">// Found at index i-j</span>
+        <span class="kw">else</span> <span class="kw">if</span> (i &lt; n &amp;&amp; pattern[j] != text[i])
+        {
+            j = lps[j - <span class="num">1</span>];
+            <span class="kw">if</span> (j &lt; <span class="num">0</span>)
+            {
+                j = <span class="num">0</span>;
+                i++;
+            }
+        }
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>;
+}
+
+<span class="cm">// Build LPS (Longest Proper Prefix which is also Suffix)</span>
+<span class="kw">private</span> <span class="ty">int</span>[] <span class="fn">BuildLPS</span>(<span class="ty">string</span> pattern)
+{
+    <span class="ty">int</span> m = pattern.Length;
+    <span class="ty">int</span>[] lps = <span class="kw">new</span> <span class="ty">int</span>[m];
+    <span class="ty">int</span> len = <span class="num">0</span>, i = <span class="num">1</span>;
+
+    <span class="kw">while</span> (i &lt; m)
+    {
+        <span class="kw">if</span> (pattern[i] == pattern[len])
+        {
+            lps[i] = ++len;
+            i++;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">if</span> (len != <span class="num">0</span>)
+                len = lps[len - <span class="num">1</span>];
+            <span class="kw">else</span>
+            {
+                lps[i] = <span class="num">0</span>;
+                i++;
+            }
+        }
+    }
+
+    <span class="kw">return</span> lps;
+}</pre>
+      </div>
+
+      <h3>Rabin-Karp Rolling Hash</h3>
+      <p>Fast substring search using polynomial rolling hash.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">RabinKarp</span>(<span class="ty">string</span> text, <span class="ty">string</span> pattern)
+{
+    <span class="kw">const</span> <span class="ty">int</span> prime = <span class="num">101</span>;
+    <span class="kw">const</span> <span class="ty">int</span> mod = <span class="num">1000000007</span>;
+
+    <span class="ty">int</span> n = text.Length, m = pattern.Length;
+    <span class="ty">long</span> patternHash = <span class="num">0</span>, textHash = <span class="num">0</span>;
+    <span class="ty">long</span> basePower = <span class="num">1</span>;
+
+    <span class="cm">// Compute hashes and base power</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; m; i++)
+    {
+        patternHash = (patternHash * prime + pattern[i]) % mod;
+        textHash = (textHash * prime + text[i]) % mod;
+
+        <span class="kw">if</span> (i &lt; m - <span class="num">1</span>)
+            basePower = (basePower * prime) % mod;
+    }
+
+    <span class="cm">// Slide window</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt;= n - m; i++)
+    {
+        <span class="kw">if</span> (patternHash == textHash)
+            <span class="kw">if</span> (text.Substring(i, m) == pattern)
+                <span class="kw">return</span> i;
+
+        <span class="cm">// Roll hash</span>
+        <span class="kw">if</span> (i &lt; n - m)
+        {
+            textHash = (textHash - (text[i] * basePower) % mod + mod) % mod;
+            textHash = (textHash * prime + text[i + m]) % mod;
+        }
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>;
+}</pre>
+      </div>
+
+      <h3>Z-Algorithm Concept</h3>
+      <p>Compute longest common prefix with suffix in O(n). Array Z[i] = length of substring starting at i matching prefix.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Z-Algorithm: Compute Z array where Z[i] = LCP(S, S[i..])</span>
+<span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">ZAlgorithm</span>(<span class="ty">string</span> s)
+{
+    <span class="ty">int</span> n = s.Length;
+    <span class="ty">int</span>[] z = <span class="kw">new</span> <span class="ty">int</span>[n];
+    z[<span class="num">0</span>] = n;
+
+    <span class="ty">int</span> l = <span class="num">0</span>, r = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; n; i++)
+    {
+        <span class="kw">if</span> (i &gt; r)
+        {
+            l = r = i;
+            <span class="kw">while</span> (r &lt; n &amp;&amp; s[r - l] == s[r])
+                r++;
+            z[i] = r - l;
+            r--;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="ty">int</span> k = i - l;
+            <span class="kw">if</span> (z[k] &lt; r - i + <span class="num">1</span>)
+                z[i] = z[k];
+            <span class="kw">else</span>
+            {
+                l = i;
+                <span class="kw">while</span> (r &lt; n &amp;&amp; s[r - l] == s[r])
+                    r++;
+                z[i] = r - l;
+                r--;
+            }
+        }
+    }
+
+    <span class="kw">return</span> z;
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 19.11: Math Techniques -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag">
+        <span class="sec-num">19.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Math-Based Techniques</h2>
+      <p class="lead">GCD, prime sieves, fast exponentiation, and sampling algorithms.</p>
+
+      <h3>GCD & LCM (Euclidean Algorithm)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Euclidean Algorithm for GCD</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">GCD</span>(<span class="ty">int</span> a, <span class="ty">int</span> b)
+{
+    <span class="kw">while</span> (b != <span class="num">0</span>)
+    {
+        <span class="ty">int</span> temp = b;
+        b = a % b;
+        a = temp;
+    }
+    <span class="kw">return</span> a;
+}
+
+<span class="cm">// LCM using GCD</span>
+<span class="kw">public</span> <span class="ty">long</span> <span class="fn">LCM</span>(<span class="ty">long</span> a, <span class="ty">long</span> b)
+{
+    <span class="kw">return</span> (a / <span class="fn">GCD</span>((<span class="ty">int</span>)a, (<span class="ty">int</span>)b)) * b;
+}</pre>
+      </div>
+
+      <h3>Sieve of Eratosthenes</h3>
+      <p>Generate all primes up to n in O(n log log n).</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span>[] <span class="fn">SieveOfEratosthenes</span>(<span class="ty">int</span> n)
+{
+    <span class="ty">bool</span>[] isPrime = <span class="kw">new</span> <span class="ty">bool</span>[n + <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">2</span>; i &lt;= n; i++)
+        isPrime[i] = <span class="kw">true</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">2</span>; i * i &lt;= n; i++)
+    {
+        <span class="kw">if</span> (isPrime[i])
+        {
+            <span class="cm">// Mark multiples as not prime</span>
+            <span class="kw">for</span> (<span class="ty">int</span> j = i * i; j &lt;= n; j += i)
+                isPrime[j] = <span class="kw">false</span>;
+        }
+    }
+
+    <span class="kw">return</span> isPrime;
+}</pre>
+      </div>
+
+      <h3>Fast Exponentiation (Modular)</h3>
+      <p>Compute a^b mod m in O(log b).</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">long</span> <span class="fn">FastExponentiation</span>(<span class="ty">long</span> baseNum, <span class="ty">long</span> exp, <span class="ty">long</span> mod)
+{
+    <span class="ty">long</span> result = <span class="num">1</span>;
+    baseNum %= mod;
+
+    <span class="kw">while</span> (exp &gt; <span class="num">0</span>)
+    {
+        <span class="cm">// If exponent is odd, multiply base with result</span>
+        <span class="kw">if</span> ((exp &amp; <span class="num">1</span>) == <span class="num">1</span>)
+            result = (result * baseNum) % mod;
+
+        <span class="cm">// Square base and halve exponent</span>
+        baseNum = (baseNum * baseNum) % mod;
+        exp &gt;&gt;= <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>Reservoir Sampling</h3>
+      <p>Pick k random elements from stream of unknown size.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">ReservoirSampling</span>(IEnumerable&lt;<span class="ty">int</span>&gt; stream, <span class="ty">int</span> k)
+{
+    <span class="ty">int</span>[] reservoir = <span class="kw">new</span> <span class="ty">int</span>[k];
+    <span class="ty">var</span> random = <span class="kw">new</span> Random();
+    <span class="ty">int</span> count = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> stream)
+    {
+        <span class="kw">if</span> (count &lt; k)
+        {
+            reservoir[count] = num;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="cm">// Random index in [0, count]</span>
+            <span class="ty">int</span> idx = random.Next(count + <span class="num">1</span>);
+            <span class="kw">if</span> (idx &lt; k)
+                reservoir[idx] = num;
+        }
+        count++;
+    }
+
+    <span class="kw">return</span> reservoir;
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 19.12: Bit Manipulation -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag">
+        <span class="sec-num">19.12</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Bit Manipulation Tricks Recap</h2>
+      <p class="lead">Essential bitwise operations for interview optimization.</p>
+
+      <h3>Single Number (XOR Property)</h3>
+      <p>Find element appearing once when others appear twice.</p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">SingleNumber</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> result = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+        result ^= num; <span class="cm">// XOR: a ^ a = 0, a ^ 0 = a</span>
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>Count Set Bits</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">CountSetBits</span>(<span class="ty">int</span> n)
+{
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">while</span> (n &gt; <span class="num">0</span>)
+    {
+        count += n &amp; <span class="num">1</span>;
+        n &gt;&gt;= <span class="num">1</span>;
+    }
+    <span class="kw">return</span> count;
+
+    <span class="cm">// Alternatively: int count = BitOperations.PopCount((uint)n);</span>
+}</pre>
+      </div>
+
+      <h3>Power of 2 Check</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsPowerOfTwo</span>(<span class="ty">int</span> n)
+{
+    <span class="cm">// Power of 2 has single bit set: n &amp; (n-1) == 0</span>
+    <span class="kw">return</span> n &gt; <span class="num">0</span> &amp;&amp; (n &amp; (n - <span class="num">1</span>)) == <span class="num">0</span>;
+}</pre>
+      </div>
+
+      <h3>Common Bitwise Operations</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>Code</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Get bit at position i</td>
+              <td><code class="il">(n >> i) & 1</code></td>
+              <td>Check if i-th bit set</td>
+            </tr>
+            <tr>
+              <td>Set bit at position i</td>
+              <td><code class="il">n |= (1 << i)</code></td>
+              <td>Turn on i-th bit</td>
+            </tr>
+            <tr>
+              <td>Clear bit at position i</td>
+              <td><code class="il">n &= ~(1 << i)</code></td>
+              <td>Turn off i-th bit</td>
+            </tr>
+            <tr>
+              <td>Toggle bit at position i</td>
+              <td><code class="il">n ^= (1 << i)</code></td>
+              <td>Flip i-th bit</td>
+            </tr>
+            <tr>
+              <td>Check if power of 2</td>
+              <td><code class="il">(n & (n-1)) == 0</code></td>
+              <td>Single bit check</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 19.13: Interview Tips -->
+    <section class="section fade" id="sec-13">
+      <div class="sec-tag">
+        <span class="sec-num">19.13</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips & Pattern Recognition</h2>
+      <p class="lead">Identify which technique to apply based on problem constraints and keywords.</p>
+
+      <h3>Pattern Recognition Guide</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Prefix Sum Pattern</div>
+          <div class="proof-body">
+            Look for: "range sum", "multiple queries", "subarray sum"
+            <div class="proof-note"><strong>Apply when:</strong> Need O(1) range lookups after O(n) preprocessing</div>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Difference Array Pattern</div>
+          <div class="proof-body">
+            Look for: "range update", "apply all updates", "final state"
+            <div class="proof-note"><strong>Apply when:</strong> Many range updates, single final query</div>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Kadane's Algorithm</div>
+          <div class="proof-body">
+            Look for: "maximum subarray", "contiguous", "largest sum"
+            <div class="proof-note"><strong>Apply when:</strong> Need max/min subarray in O(n)</div>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Monotonic Stack</div>
+          <div class="proof-body">
+            Look for: "next greater", "largest rectangle", "daily temperatures"
+            <div class="proof-note"><strong>Apply when:</strong> Finding next/prev min/max in O(n)</div>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Monotonic Queue</div>
+          <div class="proof-body">
+            Look for: "sliding window maximum/minimum"
+            <div class="proof-note"><strong>Apply when:</strong> Window queries need O(1) min/max</div>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Sweep Line</div>
+          <div class="proof-body">
+            Look for: "overlapping intervals", "meetings", "events"
+            <div class="proof-note"><strong>Apply when:</strong> Convert 2D intervals to 1D events</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Quick Decision Tree</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about ranges?</strong> Use prefix/difference arrays or 2D prefix for matrices.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about finding next/prev element?</strong> Use monotonic stack.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about sliding window max/min?</strong> Use monotonic queue (deque).
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about maximum/minimum subarray?</strong> Use Kadane's algorithm.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">5</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about overlapping intervals or events?</strong> Use sweep line + sorting.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">6</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about pattern matching or string search?</strong> Use KMP or Rabin-Karp.
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">7</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body">
+            <strong>Is it about primes or number theory?</strong> Use sieve or Euclidean GCD.
+          </div>
+        </div>
+      </div>
+
+      <h3>Complexity Cheat Sheet</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Technique</th>
+              <th>Time (Build)</th>
+              <th>Time (Query)</th>
+              <th>Space</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Prefix Sum 1D</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Prefix Sum 2D</td>
+              <td>O(m×n)</td>
+              <td>O(1)</td>
+              <td>O(m×n)</td>
+            </tr>
+            <tr>
+              <td>Difference Array</td>
+              <td>O(k)</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Kadane's Algorithm</td>
+              <td>N/A</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>Monotonic Stack</td>
+              <td>N/A</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Monotonic Queue</td>
+              <td>N/A</td>
+              <td>O(n)</td>
+              <td>O(k)</td>
+            </tr>
+            <tr>
+              <td>KMP</td>
+              <td>O(m)</td>
+              <td>O(n+m)</td>
+              <td>O(m)</td>
+            </tr>
+            <tr>
+              <td>Sieve</td>
+              <td>O(n log log n)</td>
+              <td>N/A</td>
+              <td>O(n)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Interview Dos & Don'ts</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">✓ Do</div>
+          <div class="vs-item">Start with brute force, explain why it's slow</div>
+          <div class="vs-item">Recognize the pattern before coding</div>
+          <div class="vs-item">Discuss space-time tradeoffs explicitly</div>
+          <div class="vs-item">Test edge cases (empty, single element, all same)</div>
+          <div class="vs-item">Use consistent variable names and clear logic</div>
+          <div class="vs-item">Ask clarifying questions about input size/constraints</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">✗ Don't</div>
+          <div class="vs-item">Jump straight to advanced technique</div>
+          <div class="vs-item">Forget to validate input bounds</div>
+          <div class="vs-item">Write inefficient helper functions</div>
+          <div class="vs-item">Ignore integer overflow for large values</div>
+          <div class="vs-item">Use confusing abbreviations in variable names</div>
+          <div class="vs-item">Skip time complexity analysis in explanation</div>
+        </div>
+      </div>
+
+      <h3>Common Pitfalls</h3>
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div>
+          <strong>Off-by-one errors:</strong> Prefix sums use 1-indexed arrays. Always check boundary conditions in loops.
+        </div>
+      </div>
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div>
+          <strong>Monotonic stack direction:</strong> Increasing vs decreasing matters. Test with examples first.
+        </div>
+      </div>
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div>
+          <strong>Hash collisions:</strong> Rabin-Karp can have false positives. Verify matches with string comparison.
+        </div>
+      </div>
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div>
+          <strong>Modulo arithmetic:</strong> Negative numbers: use <code class="il">((a % m) + m) % m</code> for correct result.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 19: Prefix Sums & Common Algorithm Techniques</p>
+      <p>DSA Complete Book v1 | All code examples in C#</p>
+    </div>
+  </footer>
+
+  <script>
+// Fade-in animation on page load
+window.addEventListener('load', function() {
+  const elements = document.querySelectorAll('.fade');
+  elements.forEach(el => {
+    setTimeout(() => el.classList.add('in'), 50);
+  });
+});
+
+// Copy code to clipboard
+function copyCode(btn) {
+  const preElement = btn.parentElement.nextElementSibling;
+  const text = preElement.textContent;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 2000);
+  }).catch(() => {
+    btn.textContent = 'Copy failed';
+  });
+}
+  </script>
+</body>
+</html>

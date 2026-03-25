@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Trees and Binary Search Trees — traversals (inorder, preorder, postorder), BST operations, balancing, with C# code and visual diagrams.">
+  <meta name="keywords" content="binary tree, BST, binary search tree, tree traversal, inorder, preorder, postorder, C#">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch06-trees-bst.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch06-trees-bst.html">
+  <meta property="og:title" content="Chapter 6: Trees & Binary Search Trees - DSA Complete Book">
+  <meta property="og:description" content="Trees and Binary Search Trees — traversals (inorder, preorder, postorder), BST operations, balancing, with C# code and visual diagrams.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch06-trees-bst.html">
+  <meta name="twitter:title" content="Chapter 6: Trees & Binary Search Trees - DSA Complete Book">
+  <meta name="twitter:description" content="Trees and Binary Search Trees — traversals (inorder, preorder, postorder), BST operations, balancing, with C# code and visual diagrams.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 6: Trees & Binary Search Trees - DSA Complete Book",
+  "description": "Trees and Binary Search Trees \u2014 traversals (inorder, preorder, postorder), BST operations, balancing, with C# code and visual diagrams.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch06-trees-bst.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 6: Trees & Binary Search Trees - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 6</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 6</div>
+      </div>
+      <h1>Trees & <em>Binary Search Trees</em></h1>
+      <p class="hero-sub">Master hierarchical data structures. Learn tree terminology, binary tree properties, tree traversals, BST operations, and balanced variants. Includes 15+ fully solved LeetCode problems with complete C# implementations and interview strategies.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">10</div>
+          <div class="stat-l">Core Concepts</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">8</div>
+          <div class="stat-l">Traversal Methods</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">50+</div>
+          <div class="stat-l">Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">15+</div>
+          <div class="stat-l">Practice Problems</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">6.1</span> Tree Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">6.2</span> Binary Tree Types</a>
+        <a href="#sec-3"><span class="toc-n">6.3</span> Tree Traversals</a>
+        <a href="#sec-4"><span class="toc-n">6.4</span> Morris Traversal</a>
+        <a href="#sec-5"><span class="toc-n">6.5</span> Binary Search Tree Property</a>
+        <a href="#sec-6"><span class="toc-n">6.6</span> BST Operations</a>
+        <a href="#sec-7"><span class="toc-n">6.7</span> Balanced BST Overview</a>
+        <a href="#sec-8"><span class="toc-n">6.8</span> Common Tree Patterns</a>
+        <a href="#sec-9"><span class="toc-n">6.9</span> Practice Problems</a>
+        <a href="#sec-10"><span class="toc-n">6.10</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 6.1: Tree Fundamentals -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <div class="sec-num">6.1</div>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Tree Fundamentals</h2>
+      <p class="lead">A tree is a non-linear, hierarchical data structure consisting of nodes connected by edges. Unlike arrays or linked lists, trees enable efficient searching and organizing of hierarchical data.</p>
+
+      <h3>Key Terminology</h3>
+      <p>Understanding tree vocabulary is essential for communication and problem-solving:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Definition</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Root</td>
+              <td>The topmost node with no parent</td>
+              <td>Node with value 1 in a typical tree diagram</td>
+            </tr>
+            <tr>
+              <td>Leaf</td>
+              <td>Node with no children</td>
+              <td>All terminal nodes</td>
+            </tr>
+            <tr>
+              <td>Parent</td>
+              <td>Node directly above another node</td>
+              <td>In binary tree, a node can have 0-2 parents</td>
+            </tr>
+            <tr>
+              <td>Child</td>
+              <td>Node directly below a parent</td>
+              <td>Left child, right child in binary trees</td>
+            </tr>
+            <tr>
+              <td>Sibling</td>
+              <td>Nodes sharing the same parent</td>
+              <td>Left and right children are siblings</td>
+            </tr>
+            <tr>
+              <td>Subtree</td>
+              <td>A tree formed by a node and its descendants</td>
+              <td>Left subtree, right subtree</td>
+            </tr>
+            <tr>
+              <td>Ancestor</td>
+              <td>Any node on the path from node to root</td>
+              <td>All nodes above current node</td>
+            </tr>
+            <tr>
+              <td>Descendant</td>
+              <td>Any node in a node's subtree</td>
+              <td>All nodes below current node</td>
+            </tr>
+            <tr>
+              <td>Depth</td>
+              <td>Distance from root to a node (number of edges)</td>
+          <thead>
+            <tr>
+              <th>Rotation Type</th>
+              <th>Imbalance Pattern</th>
+              <th>Fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>LL (Left-Left)</td>
+              <td>Left subtree too deep on left</td>
+              <td>Single right rotation</td>
+            </tr>
+            <tr>
+              <td>RR (Right-Right)</td>
+              <td>Right subtree too deep on right</td>
+              <td>Single left rotation</td>
+            </tr>
+            <tr>
+              <td>LR (Left-Right)</td>
+              <td>Left subtree too deep on right</td>
+              <td>Left-right rotation (two rotations)</td>
+            </tr>
+            <tr>
+              <td>RL (Right-Left)</td>
+              <td>Right subtree too deep on left</td>
+              <td>Right-left rotation (two rotations)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Red-Black Trees</h3>
+      <p>Alternative balanced BST with color-based properties:</p>
+      <ul style="margin-left: 20px; margin-bottom: 16px;">
+        <li>Every node is red or black</li>
+        <li>Root is always black</li>
+        <li>Red nodes cannot have red children</li>
+        <li>All paths from node to descendants have same number of black nodes</li>
+      </ul>
+
+      <h3>C# Built-in: SortedSet & SortedDictionary</h3>
+      <p>Use these for automatic balancing instead of manual implementation:</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Automatically balanced BST in C#</span>
+<span class="ty">var</span> <span class="va">set</span> = <span class="kw">new</span> <span class="ty">SortedSet</span>&lt;<span class="ty">int</span>&gt;();
+<span class="va">set</span>.<span class="fn">Add</span>(<span class="num">5</span>);
+<span class="va">set</span>.<span class="fn">Add</span>(<span class="num">3</span>);
+<span class="va">set</span>.<span class="fn">Add</span>(<span class="num">7</span>);
+
+<span class="cm">// O(log n) operations</span>
+<span class="ty">bool</span> <span class="va">contains</span> = <span class="va">set</span>.<span class="fn">Contains</span>(<span class="num">3</span>); <span class="cm">// true</span>
+
+<span class="cm">// Get all elements >= value</span>
+<span class="ty">var</span> <span class="va">view</span> = <span class="va">set</span>.<span class="fn">GetViewBetween</span>(<span class="num">3</span>, <span class="num">7</span>);
+
+<span class="cm">// Sorted dictionary for key-value pairs</span>
+<span class="ty">var</span> <span class="va">dict</span> = <span class="kw">new</span> <span class="ty">SortedDictionary</span>&lt;<span class="ty">int</span>, <span class="ty">string</span>&gt;();
+<span class="va">dict</span>[<span class="num">3</span>] = <span class="str">"three"</span>;
+<span class="va">dict</span>[<span class="num">1</span>] = <span class="str">"one"</span>;</pre>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <strong>Interview Tip:</strong> Always mention SortedSet/SortedDictionary in interviews. Interviewers prefer pragmatic solutions that use library BSTs when appropriate.
+      </div>
+    </section>
+
+    <!-- Section 6.8: Common Tree Patterns -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <div class="sec-num">6.8</div>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Common Tree Patterns</h2>
+      <p class="lead">Recurring problem templates that guide solution design. Recognize these patterns to solve problems faster.</p>
+
+      <h3>DFS vs BFS Decision</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Use DFS When:</div>
+          <div class="vs-item">Finding paths or sequences</div>
+          <div class="vs-item">Exploring all possibilities (backtracking)</div>
+          <div class="vs-item">Computing properties bottom-up</div>
+          <div class="vs-item">Space is limited (iterative DFS)</div>
+        </div>
+        <div class="vs-box good">
+          <div class="vs-title">Use BFS When:</div>
+          <div class="vs-item">Finding shortest path in tree</div>
+          <div class="vs-item">Processing level-by-level</div>
+          <div class="vs-item">Discovering nodes by distance</div>
+          <div class="vs-item">Checking properties level-wise</div>
+        </div>
+      </div>
+
+      <h3>Recursive DFS Template</h3>
+      <p>The classic pattern for tree recursion:</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Base recursive template</span>
+<span class="kw">private</span> <span class="ty">ResultType</span> <span class="fn">DfsHelper</span>(<span class="ty">TreeNode</span> <span class="va">node</span>)
+{
+    <span class="cm">// 1. Base case</span>
+    <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>)
+        <span class="kw">return</span> <span class="va">defaultValue</span>;
+
+    <span class="cm">// 2. Pre-order work (before recursion)</span>
+    <span class="cm">// Process current node</span>
+
+    <span class="cm">// 3. Recurse on children</span>
+    <span class="ty">ResultType</span> <span class="va">left</span> = <span class="fn">DfsHelper</span>(<span class="va">node</span>.<span class="prop">left</span>);
+    <span class="ty">ResultType</span> <span class="va">right</span> = <span class="fn">DfsHelper</span>(<span class="va">node</span>.<span class="prop">right</span>);
+
+    <span class="cm">// 4. Post-order work (after recursion)</span>
+    <span class="cm">// Combine results, return</span>
+
+    <span class="kw">return</span> <span class="va">result</span>;
+}</pre>
+      </div>
+
+      <h3>Path Problems Pattern</h3>
+      <p>Accumulate values while traversing from root to leaves:</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Accumulator pattern for paths</span>
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">DfsPath</span>(<span class="ty">TreeNode</span> <span class="va">node</span>, <span class="ty">int</span> <span class="va">currentSum</span>, <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; <span class="va">path</span>)
+{
+    <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>) <span class="kw">return</span>;
+
+    <span class="cm">// Add current node to path</span>
+    <span class="va">path</span>.<span class="fn">Add</span>(<span class="va">node</span>.<span class="prop">val</span>);
+    <span class="va">currentSum</span> += <span class="va">node</span>.<span class="prop">val</span>;
+
+    <span class="cm">// Check if leaf and condition met</span>
+    <span class="kw">if</span> (<span class="va">node</span>.<span class="prop">left</span> == <span class="kw">null</span> && <span class="va">node</span>.<span class="prop">right</span> == <span class="kw">null</span>)
+    {
+        <span class="kw">if</span> (<span class="va">currentSum</span> == <span class="va">targetSum</span>)
+            <span class="va">result</span>.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;(<span class="va">path</span>));
+    }
+
+    <span class="cm">// Recurse</span>
+    <span class="fn">DfsPath</span>(<span class="va">node</span>.<span class="prop">left</span>, <span class="va">currentSum</span>, <span class="va">path</span>);
+    <span class="fn">DfsPath</span>(<span class="va">node</span>.<span class="prop">right</span>, <span class="va">currentSum</span>, <span class="va">path</span>);
+
+    <span class="cm">// Backtrack</span>
+    <span class="va">path</span>.<span class="fn">RemoveAt</span>(<span class="va">path</span>.<span class="fn">Count</span> - <span class="num">1</span>);
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 6.9: Practice Problems -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <div class="sec-num">6.9</div>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Practice Problems</h2>
+      <p class="lead">15+ fully solved LeetCode problems with complete C# implementations and detailed explanations.</p>
+
+      <!-- Problem 1 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 104: Maximum Depth of Binary Tree</div>
+            <div class="algo-desc">Find the maximum distance from root to any leaf node.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">Easy</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Recursively find height of left and right subtrees, return 1 + max of both.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">MaxDepth</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="num">0</span>;
+        <span class="kw">return</span> <span class="num">1</span> + <span class="fn">Math</span>.<span class="fn">Max</span>(<span class="fn">MaxDepth</span>(<span class="va">root</span>.<span class="prop">left</span>), <span class="fn">MaxDepth</span>(<span class="va">root</span>.<span class="prop">right</span>));
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 2 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 111: Minimum Depth of Binary Tree</div>
+            <div class="algo-desc">Find the minimum distance from root to any leaf node.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">Easy</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Key: a path to a leaf must have both children null. Don't count unary nodes.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">MinDepth</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="num">0</span>;
+
+        <span class="cm">// Leaf node</span>
+        <span class="kw">if</span> (<span class="va">root</span>.<span class="prop">left</span> == <span class="kw">null</span> && <span class="va">root</span>.<span class="prop">right</span> == <span class="kw">null</span>)
+            <span class="kw">return</span> <span class="num">1</span>;
+
+        <span class="cm">// Skip unary nodes - they don't count as leaf</span>
+        <span class="kw">if</span> (<span class="va">root</span>.<span class="prop">left</span> == <span class="kw">null</span>)
+            <span class="kw">return</span> <span class="num">1</span> + <span class="fn">MinDepth</span>(<span class="va">root</span>.<span class="prop">right</span>);
+        <span class="kw">if</span> (<span class="va">root</span>.<span class="prop">right</span> == <span class="kw">null</span>)
+            <span class="kw">return</span> <span class="num">1</span> + <span class="fn">MinDepth</span>(<span class="va">root</span>.<span class="prop">left</span>);
+
+        <span class="kw">return</span> <span class="num">1</span> + <span class="fn">Math</span>.<span class="fn">Min</span>(<span class="fn">MinDepth</span>(<span class="va">root</span>.<span class="prop">left</span>), <span class="fn">MinDepth</span>(<span class="va">root</span>.<span class="prop">right</span>));
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 3 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 98: Validate Binary Search Tree</div>
+            <div class="algo-desc">Check if tree satisfies BST property: all left values < node < all right values.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Track valid min/max range for each subtree. Node must be within bounds.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsValidBST</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="kw">return</span> <span class="fn">Validate</span>(<span class="va">root</span>, <span class="kw">null</span>, <span class="kw">null</span>);
+    }
+
+    <span class="kw">private</span> <span class="ty">bool</span> <span class="fn">Validate</span>(<span class="ty">TreeNode</span> <span class="va">node</span>, <span class="ty">TreeNode</span> <span class="va">min</span>, <span class="ty">TreeNode</span> <span class="va">max</span>) {
+        <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">true</span>;
+
+        <span class="kw">if</span> (<span class="va">min</span> != <span class="kw">null</span> && <span class="va">node</span>.<span class="prop">val</span> <= <span class="va">min</span>.<span class="prop">val</span>) <span class="kw">return</span> <span class="kw">false</span>;
+        <span class="kw">if</span> (<span class="va">max</span> != <span class="kw">null</span> && <span class="va">node</span>.<span class="prop">val</span> >= <span class="va">max</span>.<span class="prop">val</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+        <span class="cm">// Left subtree: values < node.val</span>
+        <span class="kw">if</span> (!<span class="fn">Validate</span>(<span class="va">node</span>.<span class="prop">left</span>, <span class="va">min</span>, <span class="va">node</span>))
+            <span class="kw">return</span> <span class="kw">false</span>;
+
+        <span class="cm">// Right subtree: values > node.val</span>
+        <span class="kw">return</span> <span class="fn">Validate</span>(<span class="va">node</span>.<span class="prop">right</span>, <span class="va">node</span>, <span class="va">max</span>);
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 4 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 101: Symmetric Tree</div>
+            <div class="algo-desc">Check if tree is a mirror of itself.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">Easy</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Compare left and right subtrees recursively, checking mirror positions.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsSymmetric</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="kw">return</span> <span class="fn">IsMirror</span>(<span class="va">root</span>.<span class="prop">left</span>, <span class="va">root</span>.<span class="prop">right</span>);
+    }
+
+    <span class="kw">private</span> <span class="ty">bool</span> <span class="fn">IsMirror</span>(<span class="ty">TreeNode</span> <span class="va">left</span>, <span class="ty">TreeNode</span> <span class="va">right</span>) {
+        <span class="kw">if</span> (<span class="va">left</span> == <span class="kw">null</span> && <span class="va">right</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">true</span>;
+        <span class="kw">if</span> (<span class="va">left</span> == <span class="kw">null</span> || <span class="va">right</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+        <span class="kw">return</span> <span class="va">left</span>.<span class="prop">val</span> == <span class="va">right</span>.<span class="prop">val</span> &&
+               <span class="fn">IsMirror</span>(<span class="va">left</span>.<span class="prop">left</span>, <span class="va">right</span>.<span class="prop">right</span>) &&
+               <span class="fn">IsMirror</span>(<span class="va">left</span>.<span class="prop">right</span>, <span class="va">right</span>.<span class="prop">left</span>);
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 5 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 102: Binary Tree Level Order Traversal</div>
+            <div class="algo-desc">Return nodes grouped by level.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">BFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">5</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Use queue, process all nodes at current level before moving to next.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt; <span class="fn">LevelOrder</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="ty">var</span> <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt;();
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="va">result</span>;
+
+        <span class="ty">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="ty">TreeNode</span>&gt;();
+        <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">root</span>);
+
+        <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> > <span class="num">0</span>) {
+            <span class="ty">int</span> <span class="va">levelSize</span> = <span class="va">queue</span>.<span class="fn">Count</span>;
+            <span class="ty">var</span> <span class="va">level</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+
+            <span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> < <span class="va">levelSize</span>; <span class="va">i</span>++) {
+                <span class="ty">TreeNode</span> <span class="va">node</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+                <span class="va">level</span>.<span class="fn">Add</span>(<span class="va">node</span>.<span class="prop">val</span>);
+
+                <span class="kw">if</span> (<span class="va">node</span>.<span class="prop">left</span> != <span class="kw">null</span>) <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">node</span>.<span class="prop">left</span>);
+                <span class="kw">if</span> (<span class="va">node</span>.<span class="prop">right</span> != <span class="kw">null</span>) <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">node</span>.<span class="prop">right</span>);
+            }
+
+            <span class="va">result</span>.<span class="fn">Add</span>(<span class="va">level</span>);
+        }
+
+        <span class="kw">return</span> <span class="va">result</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(w)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 6 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 103: Binary Tree Zigzag Level Order</div>
+            <div class="algo-desc">Level order traversal alternating left-to-right and right-to-left.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">BFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">6</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Same as level order but reverse every other level using a flag.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt; <span class="fn">ZigzagLevelOrder</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="ty">var</span> <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt;();
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="va">result</span>;
+
+        <span class="ty">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="ty">TreeNode</span>&gt;();
+        <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">root</span>);
+        <span class="ty">bool</span> <span class="va">leftToRight</span> = <span class="kw">true</span>;
+
+        <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> > <span class="num">0</span>) {
+            <span class="ty">int</span> <span class="va">levelSize</span> = <span class="va">queue</span>.<span class="fn">Count</span>;
+            <span class="ty">var</span> <span class="va">level</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+
+            <span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> < <span class="va">levelSize</span>; <span class="va">i</span>++) {
+                <span class="ty">TreeNode</span> <span class="va">node</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+                <span class="va">level</span>.<span class="fn">Add</span>(<span class="va">node</span>.<span class="prop">val</span>);
+
+                <span class="kw">if</span> (<span class="va">node</span>.<span class="prop">left</span> != <span class="kw">null</span>) <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">node</span>.<span class="prop">left</span>);
+                <span class="kw">if</span> (<span class="va">node</span>.<span class="prop">right</span> != <span class="kw">null</span>) <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">node</span>.<span class="prop">right</span>);
+            }
+
+            <span class="kw">if</span> (!<span class="va">leftToRight</span>) <span class="va">level</span>.<span class="fn">Reverse</span>();
+            <span class="va">result</span>.<span class="fn">Add</span>(<span class="va">level</span>);
+            <span class="va">leftToRight</span> = !<span class="va">leftToRight</span>;
+        }
+
+        <span class="kw">return</span> <span class="va">result</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(w)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 7 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 235: Lowest Common Ancestor of BST</div>
+            <div class="algo-desc">Find LCA in a binary search tree (easier case).</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">BST</span>
+            </div>
+          </div>
+          <div class="algo-idx">7</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Use BST property. If both p,q < node, go left. If both > node, go right. Otherwise, node is LCA.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">TreeNode</span> <span class="fn">LowestCommonAncestor</span>(<span class="ty">TreeNode</span> <span class="va">root</span>, <span class="ty">TreeNode</span> <span class="va">p</span>, <span class="ty">TreeNode</span> <span class="va">q</span>) {
+        <span class="kw">while</span> (<span class="va">root</span> != <span class="kw">null</span>) {
+            <span class="kw">if</span> (<span class="va">p</span>.<span class="prop">val</span> < <span class="va">root</span>.<span class="prop">val</span> && <span class="va">q</span>.<span class="prop">val</span> < <span class="va">root</span>.<span class="prop">val</span>)
+                <span class="va">root</span> = <span class="va">root</span>.<span class="prop">left</span>;
+            <span class="kw">else</span> <span class="kw">if</span> (<span class="va">p</span>.<span class="prop">val</span> > <span class="va">root</span>.<span class="prop">val</span> && <span class="va">q</span>.<span class="prop">val</span> > <span class="va">root</span>.<span class="prop">val</span>)
+                <span class="va">root</span> = <span class="va">root</span>.<span class="prop">right</span>;
+            <span class="kw">else</span>
+                <span class="kw">return</span> <span class="va">root</span>;
+        }
+        <span class="kw">return</span> <span class="va">root</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(h)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(1)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 8 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 236: Lowest Common Ancestor of Binary Tree</div>
+            <div class="algo-desc">Find LCA in any binary tree (harder case).</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">8</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Recursively search left and right. If both return non-null, current is LCA.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">TreeNode</span> <span class="fn">LowestCommonAncestor</span>(<span class="ty">TreeNode</span> <span class="va">root</span>, <span class="ty">TreeNode</span> <span class="va">p</span>, <span class="ty">TreeNode</span> <span class="va">q</span>) {
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span> || <span class="va">root</span> == <span class="va">p</span> || <span class="va">root</span> == <span class="va">q</span>)
+            <span class="kw">return</span> <span class="va">root</span>;
+
+        <span class="ty">TreeNode</span> <span class="va">left</span> = <span class="fn">LowestCommonAncestor</span>(<span class="va">root</span>.<span class="prop">left</span>, <span class="va">p</span>, <span class="va">q</span>);
+        <span class="ty">TreeNode</span> <span class="va">right</span> = <span class="fn">LowestCommonAncestor</span>(<span class="va">root</span>.<span class="prop">right</span>, <span class="va">p</span>, <span class="va">q</span>);
+
+        <span class="kw">if</span> (<span class="va">left</span> != <span class="kw">null</span> && <span class="va">right</span> != <span class="kw">null</span>) <span class="kw">return</span> <span class="va">root</span>;
+        <span class="kw">return</span> <span class="va">left</span> != <span class="kw">null</span> ? <span class="va">left</span> : <span class="va">right</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 9 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 226: Invert Binary Tree</div>
+            <div class="algo-desc">Mirror the tree - swap left and right children at each node.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">Easy</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">9</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Simple recursive swap at each node.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">TreeNode</span> <span class="fn">InvertTree</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">null</span>;
+
+        <span class="cm">// Swap</span>
+        <span class="ty">TreeNode</span> <span class="va">temp</span> = <span class="va">root</span>.<span class="prop">left</span>;
+        <span class="va">root</span>.<span class="prop">left</span> = <span class="va">root</span>.<span class="prop">right</span>;
+        <span class="va">root</span>.<span class="prop">right</span> = <span class="va">temp</span>;
+
+        <span class="cm">// Recurse</span>
+        <span class="fn">InvertTree</span>(<span class="va">root</span>.<span class="prop">left</span>);
+        <span class="fn">InvertTree</span>(<span class="va">root</span>.<span class="prop">right</span>);
+
+        <span class="kw">return</span> <span class="va">root</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 10 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 112: Path Sum I</div>
+            <div class="algo-desc">Check if any root-to-leaf path sums to target value.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">Easy</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">10</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> DFS accumulating sum. Check at leaf nodes.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">HasPathSum</span>(<span class="ty">TreeNode</span> <span class="va">root</span>, <span class="ty">int</span> <span class="va">targetSum</span>) {
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+        <span class="cm">// Subtract current value from target</span>
+        <span class="va">targetSum</span> -= <span class="va">root</span>.<span class="prop">val</span>;
+
+        <span class="cm">// Check leaf</span>
+        <span class="kw">if</span> (<span class="va">root</span>.<span class="prop">left</span> == <span class="kw">null</span> && <span class="va">root</span>.<span class="prop">right</span> == <span class="kw">null</span>)
+            <span class="kw">return</span> <span class="va">targetSum</span> == <span class="num">0</span>;
+
+        <span class="kw">return</span> <span class="fn">HasPathSum</span>(<span class="va">root</span>.<span class="prop">left</span>, <span class="va">targetSum</span>) || <span class="fn">HasPathSum</span>(<span class="va">root</span>.<span class="prop">right</span>, <span class="va">targetSum</span>);
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 11 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 113: Path Sum II</div>
+            <div class="algo-desc">Find all root-to-leaf paths that sum to target.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">11</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> DFS with path accumulator and backtracking.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt; <span class="fn">PathSum</span>(<span class="ty">TreeNode</span> <span class="va">root</span>, <span class="ty">int</span> <span class="va">targetSum</span>) {
+        <span class="ty">var</span> <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt;();
+        <span class="fn">Dfs</span>(<span class="va">root</span>, <span class="va">targetSum</span>, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;(), <span class="va">result</span>);
+        <span class="kw">return</span> <span class="va">result</span>;
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Dfs</span>(<span class="ty">TreeNode</span> <span class="va">node</span>, <span class="ty">int</span> <span class="va">sum</span>, <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; <span class="va">path</span>, <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt; <span class="va">result</span>) {
+        <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>) <span class="kw">return</span>;
+
+        <span class="va">path</span>.<span class="fn">Add</span>(<span class="va">node</span>.<span class="prop">val</span>);
+        <span class="va">sum</span> -= <span class="va">node</span>.<span class="prop">val</span>;
+
+        <span class="kw">if</span> (<span class="va">node</span>.<span class="prop">left</span> == <span class="kw">null</span> && <span class="va">node</span>.<span class="prop">right</span> == <span class="kw">null</span> && <span class="va">sum</span> == <span class="num">0</span>)
+            <span class="va">result</span>.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;(<span class="va">path</span>));
+
+        <span class="fn">Dfs</span>(<span class="va">node</span>.<span class="prop">left</span>, <span class="va">sum</span>, <span class="va">path</span>, <span class="va">result</span>);
+        <span class="fn">Dfs</span>(<span class="va">node</span>.<span class="prop">right</span>, <span class="va">sum</span>, <span class="va">path</span>, <span class="va">result</span>);
+
+        <span class="va">path</span>.<span class="fn">RemoveAt</span>(<span class="va">path</span>.<span class="fn">Count</span> - <span class="num">1</span>); <span class="cm">// Backtrack</span>
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 12 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 230: Kth Smallest Element in BST</div>
+            <div class="algo-desc">Find the kth smallest value in BST.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">BST</span>
+            </div>
+          </div>
+          <div class="algo-idx">12</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Inorder traversal visits values in sorted order. Stop at kth element.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="ty">int</span> <span class="va">count</span> = <span class="num">0</span>;
+    <span class="ty">int</span> <span class="va">result</span> = <span class="num">0</span>;
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">KthSmallest</span>(<span class="ty">TreeNode</span> <span class="va">root</span>, <span class="ty">int</span> <span class="va">k</span>) {
+        <span class="fn">Inorder</span>(<span class="va">root</span>, <span class="va">k</span>);
+        <span class="kw">return</span> <span class="va">result</span>;
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Inorder</span>(<span class="ty">TreeNode</span> <span class="va">node</span>, <span class="ty">int</span> <span class="va">k</span>) {
+        <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>) <span class="kw">return</span>;
+
+        <span class="fn">Inorder</span>(<span class="va">node</span>.<span class="prop">left</span>, <span class="va">k</span>);
+
+        <span class="va">count</span>++;
+        <span class="kw">if</span> (<span class="va">count</span> == <span class="va">k</span>) {
+            <span class="va">result</span> = <span class="va">node</span>.<span class="prop">val</span>;
+            <span class="kw">return</span>;
+        }
+
+        <span class="fn">Inorder</span>(<span class="va">node</span>.<span class="prop">right</span>, <span class="va">k</span>);
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(k)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 13 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 199: Binary Tree Right Side View</div>
+            <div class="algo-desc">Return rightmost node at each level.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">BFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">13</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Level order traversal, keep last node of each level.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">int</span>&gt; <span class="fn">RightSideView</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="ty">var</span> <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="va">result</span>;
+
+        <span class="ty">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="ty">TreeNode</span>&gt;();
+        <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">root</span>);
+
+        <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> > <span class="num">0</span>) {
+            <span class="ty">int</span> <span class="va">levelSize</span> = <span class="va">queue</span>.<span class="fn">Count</span>;
+            <span class="ty">TreeNode</span> <span class="va">rightmost</span> = <span class="kw">null</span>;
+
+            <span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> < <span class="va">levelSize</span>; <span class="va">i</span>++) {
+                <span class="va">rightmost</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+
+                <span class="kw">if</span> (<span class="va">rightmost</span>.<span class="prop">left</span> != <span class="kw">null</span>) <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">rightmost</span>.<span class="prop">left</span>);
+                <span class="kw">if</span> (<span class="va">rightmost</span>.<span class="prop">right</span> != <span class="kw">null</span>) <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">rightmost</span>.<span class="prop">right</span>);
+            }
+
+            <span class="va">result</span>.<span class="fn">Add</span>(<span class="va">rightmost</span>.<span class="prop">val</span>);
+        }
+
+        <span class="kw">return</span> <span class="va">result</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(w)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 14 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 543: Diameter of Binary Tree</div>
+            <div class="algo-desc">Find the longest path between any two nodes.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">Easy</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">14</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> For each node, diameter = left height + right height. Track maximum.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="ty">int</span> <span class="va">diameter</span> = <span class="num">0</span>;
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">DiameterOfBinaryTree</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="fn">Height</span>(<span class="va">root</span>);
+        <span class="kw">return</span> <span class="va">diameter</span>;
+    }
+
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">Height</span>(<span class="ty">TreeNode</span> <span class="va">node</span>) {
+        <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="num">0</span>;
+
+        <span class="ty">int</span> <span class="va">left</span> = <span class="fn">Height</span>(<span class="va">node</span>.<span class="prop">left</span>);
+        <span class="ty">int</span> <span class="va">right</span> = <span class="fn">Height</span>(<span class="va">node</span>.<span class="prop">right</span>);
+
+        <span class="va">diameter</span> = <span class="fn">Math</span>.<span class="fn">Max</span>(<span class="va">diameter</span>, <span class="va">left</span> + <span class="va">right</span>);
+
+        <span class="kw">return</span> <span class="num">1</span> + <span class="fn">Math</span>.<span class="fn">Max</span>(<span class="va">left</span>, <span class="va">right</span>);
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 15 -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 114: Flatten Binary Tree to Linked List</div>
+            <div class="algo-desc">Modify tree in-place so right pointers form preorder traversal.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Medium</span>
+              <span class="badge b-orange">DFS</span>
+            </div>
+          </div>
+          <div class="algo-idx">15</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Postorder traversal, connect nodes while returning to parents.</p>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="ty">TreeNode</span> <span class="va">prev</span> = <span class="kw">null</span>;
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Flatten</span>(<span class="ty">TreeNode</span> <span class="va">root</span>) {
+        <span class="kw">if</span> (<span class="va">root</span> == <span class="kw">null</span>) <span class="kw">return</span>;
+
+        <span class="cm">// Reverse preorder: Root, Right, Left</span>
+        <span class="fn">Flatten</span>(<span class="va">root</span>.<span class="prop">right</span>);
+        <span class="fn">Flatten</span>(<span class="va">root</span>.<span class="prop">left</span>);
+
+        <span class="cm">// Connect current to prev (which is next in preorder)</span>
+        <span class="va">root</span>.<span class="prop">right</span> = <span class="va">prev</span>;
+        <span class="va">root</span>.<span class="prop">left</span> = <span class="kw">null</span>;
+        <span class="va">prev</span> = <span class="va">root</span>;
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(h)</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6.10: Interview Tips -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <div class="sec-num">6.10</div>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips</h2>
+
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Tip 1</div>
+          <div class="tip-title">Clarify Edge Cases</div>
+          <div class="tip-body">Ask about null trees, single-node trees, and unbalanced structures. Many bugs hide in edge cases.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Tip 2</div>
+          <div class="tip-title">Draw the Tree</div>
+          <div class="tip-body">Visualize with a concrete example. Helps catch logic errors and shows clear thinking.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Tip 3</div>
+          <div class="tip-title">Choose DFS or BFS</div>
+          <div class="tip-body">DFS for paths, bottom-up properties. BFS for levels, shortest distance.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Tip 4</div>
+          <div class="tip-title">Recursive Template</div>
+          <div class="tip-body">Memorize the base case → recurse → combine pattern. Speeds up coding.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Tip 5</div>
+          <div class="tip-title">Mention Complexity</div>
+          <div class="tip-body">Always state time and space. For BSTs, note that balancing matters for worst-case.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Tip 6</div>
+          <div class="tip-title">Use Built-in Structures</div>
+          <div class="tip-body">SortedSet/SortedDictionary for balanced BSTs. Queue/Stack for traversals.</div>
+        </div>
+      </div>
+
+      <h3>Common Mistakes</h3>
+      <div class="callout danger">
+        <span class="callout-icon">❌</span>
+        <strong>Mistake 1: Leaf vs Unary Node</strong> - Don't confuse leaf (no children) with unary node (one child). Path sums must reach actual leaves.
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">❌</span>
+        <strong>Mistake 2: Forgetting to Return</strong> - In recursive functions, always use return values from child calls. Many problems require combining left+right results.
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">❌</span>
+        <strong>Mistake 3: Not Backtracking</strong> - When accumulating state (paths, sums), remember to restore it after recursion. Use pop/remove.
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">❌</span>
+        <strong>Mistake 4: Assuming Balance</strong> - BSTs can be degenerate. Code defensively for O(n) worst case even with balanced assumptions.
+      </div>
+
+      <h3>Practice Strategy</h3>
+      <ul style="margin-left: 20px; margin-bottom: 16px;">
+        <li><strong>Start Easy:</strong> Master LC 104, 111, 226 (maximum depth, minimum depth, invert)</li>
+        <li><strong>Then Medium:</strong> Path problems (112, 113), LCA (235, 236), level order variants</li>
+        <li><strong>Then Hard:</strong> Serialization, construct from traversals, complex path problems</li>
+        <li><strong>Recognize Patterns:</strong> After solving 10+ problems, patterns emerge. Build intuition.</li>
+        <li><strong>Whiteboard Practice:</strong> Time yourself solving without IDE. Interview conditions matter.</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 6: Trees & Binary Search Trees — Continued</p>
+      <p>DSA Complete Book — Comprehensive algorithmic foundation</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.fade').forEach((el, idx) => {
+      setTimeout(() => el.classList.add('in'), idx * 100);
+    });
+
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const code = this.parentElement.nextElementSibling.textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          const originalText = this.textContent;
+          this.textContent = 'Copied!';
+          setTimeout(() => this.textContent = originalText, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

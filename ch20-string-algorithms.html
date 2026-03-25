@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="String algorithms — KMP, Rabin-Karp, Z-algorithm, string matching, palindromes with C# implementations.">
+  <meta name="keywords" content="string algorithms, KMP, Rabin-Karp, Z-algorithm, string matching, palindrome, C#">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch20-string-algorithms.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch20-string-algorithms.html">
+  <meta property="og:title" content="Chapter 20: String Algorithms - DSA Complete Book">
+  <meta property="og:description" content="String algorithms — KMP, Rabin-Karp, Z-algorithm, string matching, palindromes with C# implementations.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch20-string-algorithms.html">
+  <meta name="twitter:title" content="Chapter 20: String Algorithms - DSA Complete Book">
+  <meta name="twitter:description" content="String algorithms — KMP, Rabin-Karp, Z-algorithm, string matching, palindromes with C# implementations.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 20: String Algorithms - DSA Complete Book",
+  "description": "String algorithms \u2014 KMP, Rabin-Karp, Z-algorithm, string matching, palindromes with C# implementations.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch20-string-algorithms.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 20: String Algorithms - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* SHARED CSS TEMPLATE - Copy this into each chapter HTML file's <style> tag */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 20</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 20</div>
+      </div>
+      <h1>String Algorithms & <em>Pattern Matching</em></h1>
+      <p class="hero-sub">Master advanced string processing techniques from naive approaches to linear-time algorithms. Learn KMP, Rabin-Karp, Z-Algorithm, Manacher's, and string hashing with complete C# implementations and real LeetCode solutions.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">9</div>
+          <div class="stat-l">Core Algorithms</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">15+</div>
+          <div class="stat-l">Practice Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">50+</div>
+          <div class="stat-l">Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">1400+</div>
+          <div class="stat-l">Lines of Content</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">20.1</span> String Basics Review</a>
+        <a href="#sec-2"><span class="toc-n">20.2</span> Brute Force Pattern Matching</a>
+        <a href="#sec-3"><span class="toc-n">20.3</span> KMP Algorithm</a>
+        <a href="#sec-4"><span class="toc-n">20.4</span> Rabin-Karp Algorithm</a>
+        <a href="#sec-5"><span class="toc-n">20.5</span> Z-Algorithm</a>
+        <a href="#sec-6"><span class="toc-n">20.6</span> Manacher's Algorithm</a>
+        <a href="#sec-7"><span class="toc-n">20.7</span> String Hashing</a>
+        <a href="#sec-8"><span class="toc-n">20.8</span> Trie Data Structure</a>
+        <a href="#sec-9"><span class="toc-n">20.9</span> Suffix Array & LCP</a>
+        <a href="#sec-10"><span class="toc-n">20.10</span> Practice Problems</a>
+        <a href="#sec-11"><span class="toc-n">20.11</span> Algorithm Comparison</a>
+        <a href="#sec-12"><span class="toc-n">20.12</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 20.1 -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">20.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>String Basics Review</h2>
+      <p class="lead">Before diving into advanced algorithms, understand the fundamental properties of strings in C# and how they impact algorithm design and performance.</p>
+
+      <h3>Immutability in C#</h3>
+      <p>Strings in C# are <strong>immutable</strong>—once created, they cannot be changed. Every string modification creates a new string object.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">string</span> text = <span class="str">"hello"</span>;
+<span class="kw">string</span> upper = text.<span class="fn">ToUpper</span>(); <span class="cm">// Creates NEW string</span>
+<span class="cm">// Original text still "hello", upper is "HELLO"</span>
+
+<span class="kw">string</span> concat = text + <span class="str">" world"</span>; <span class="cm">// Creates NEW string</span></pre>
+      </div>
+
+      <h3>char vs string</h3>
+      <p><code class="il">char</code> is a single 16-bit Unicode character, while <code class="il">string</code> is a sequence of chars. Understanding this distinction is crucial for efficient string manipulation.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// char operations are O(1)</span>
+<span class="kw">char</span> c = <span class="str">'a'</span>;
+<span class="kw">bool</span> isLetter = <span class="fn">char</span>.<span class="fn">IsLetter</span>(c); <span class="cm">// O(1)</span>
+
+<span class="cm">// string indexing is O(1)</span>
+<span class="kw">string</span> s = <span class="str">"hello"</span>;
+<span class="kw">char</span> first = s[<span class="num">0</span>]; <span class="cm">// Direct access, O(1)</span></pre>
+      </div>
+
+      <h3>Unicode and ASCII</h3>
+      <p>C# uses Unicode (UTF-16) for characters. ASCII is a 7-bit subset (0-127). Understanding character encoding is important for pattern matching and hashing.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Convert char to ASCII value</span>
+<span class="kw">char</span> c = <span class="str">'A'</span>;
+<span class="kw">int</span> ascii = (<span class="kw">int</span>)c; <span class="cm">// 65</span>
+
+<span class="cm">// Check if ASCII (0-127)</span>
+<span class="kw">bool</span> isAscii = ascii &lt; <span class="num">128</span>;
+
+<span class="cm">// Convert ASCII value back to char</span>
+<span class="kw">char</span> fromAscii = (<span class="kw">char</span>)<span class="num">65</span>; <span class="cm">// 'A'</span></pre>
+      </div>
+
+      <h3>StringBuilder for Efficient String Concatenation</h3>
+      <p>Use <code class="il">StringBuilder</code> when building strings in loops to avoid O(n²) concatenation overhead.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// BAD: O(n²) due to string immutability</span>
+<span class="kw">string</span> result = <span class="str">""</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">1000</span>; i++)
+{
+    result += <span class="str">"x"</span>; <span class="cm">// Creates new string each time</span>
+}
+
+<span class="cm">// GOOD: O(n) with StringBuilder</span>
+<span class="ty">StringBuilder</span> sb = <span class="kw">new</span> <span class="ty">StringBuilder</span>();
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">1000</span>; i++)
+{
+    sb.<span class="fn">Append</span>(<span class="str">"x"</span>); <span class="cm">// Efficient</span>
+}
+<span class="kw">string</span> final = sb.<span class="fn">ToString</span>();</pre>
+      </div>
+    </section>
+
+    <!-- Section 20.2 -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">20.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Brute Force Pattern Matching</h2>
+      <p class="lead">The simplest approach: check every position in the text to see if the pattern matches. Easy to understand but inefficient for large texts with long patterns.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n·m)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+      </div>
+
+      <p>The algorithm is straightforward: for each position i in the text, check if the pattern matches starting at position i.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Brute force pattern search O(n*m) &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span> <span class="fn">BruteForceSearch</span>(<span class="kw">string</span> text, <span class="kw">string</span> pattern)
+{
+    <span class="kw">int</span> n = text.<span class="prop">Length</span>;
+    <span class="kw">int</span> m = pattern.<span class="prop">Length</span>;
+
+    <span class="cm">// Try each position in text</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= n - m; i++)
+    {
+        <span class="kw">bool</span> match = <span class="kw">true</span>;
+
+        <span class="cm">// Check if pattern matches at position i</span>
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; m; j++)
+        {
+            <span class="kw">if</span> (text[i + j] != pattern[j])
+            {
+                match = <span class="kw">false</span>;
+                <span class="kw">break</span>;
+            }
+        }
+
+        <span class="kw">if</span> (match)
+            <span class="kw">return</span> i; <span class="cm">// Found at position i</span>
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>; <span class="cm">// Not found</span>
+}</pre>
+      </div>
+
+      <h3>Example Walkthrough</h3>
+      <p>Find "BAC" in "ABABAC":</p>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Position 0: "ABA"</div>
+          <div class="proof-body">First char 'A' vs 'B' → Mismatch</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Position 1: "BAB"</div>
+          <div class="proof-body">First char 'B' matches, but second 'A' vs 'A' matches, third 'B' vs 'C' → Mismatch</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Position 2: "ABA"</div>
+          <div class="proof-body">First char 'A' vs 'B' → Mismatch</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Position 3: "BAC" ✓</div>
+          <div class="proof-body">All characters match! Return index 3</div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>When to use Brute Force:</strong> Small patterns, small texts, or when clarity matters more than performance. Never use for large-scale text search.</div>
+      </div>
+    </section>
+
+    <!-- Section 20.3 -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">20.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>KMP Algorithm (Knuth-Morris-Pratt)</h2>
+      <p class="lead">Linear-time pattern matching O(n + m) by avoiding redundant comparisons using a failure function that encodes pattern structure.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n + m)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(m)</div>
+        </div>
+      </div>
+
+      <h3>Core Idea: The Failure Function</h3>
+      <p>The <strong>failure function</strong> (or LPS—Longest Proper Prefix which is also Suffix) tells us: when we have a mismatch at position j, what is the longest prefix of the pattern that is also a suffix of pattern[0..j-1]? This lets us skip redundant comparisons.</p>
+
+      <h3>Building the LPS Array</h3>
+      <p>The LPS array is built using a two-pointer technique:</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Build LPS (Longest Proper Prefix which is also Suffix) &lt;/summary&gt;</span>
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">int</span>[] <span class="fn">BuildLPS</span>(<span class="kw">string</span> pattern)
+{
+    <span class="kw">int</span> m = pattern.<span class="prop">Length</span>;
+    <span class="kw">int</span>[] lps = <span class="kw">new</span> <span class="kw">int</span>[m];
+    <span class="kw">int</span> len = <span class="num">0</span>; <span class="cm">// Length of previous longest prefix suffix</span>
+    <span class="kw">int</span> i = <span class="num">1</span>;
+
+    <span class="kw">while</span> (i &lt; m)
+    {
+        <span class="kw">if</span> (pattern[i] == pattern[len])
+        {
+            <span class="cm">// Characters match, extend the prefix</span>
+            lps[i] = len + <span class="num">1</span>;
+            len++;
+            i++;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">if</span> (len != <span class="num">0</span>)
+            {
+                <span class="cm">// Fall back to previous state</span>
+                len = lps[len - <span class="num">1</span>];
+            }
+            <span class="kw">else</span>
+            {
+                lps[i] = <span class="num">0</span>;
+                i++;
+            }
+        }
+    }
+
+    <span class="kw">return</span> lps;
+}</pre>
+      </div>
+
+      <h3>LPS Example: Pattern "ABABAC"</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Index 0</div>
+          <div class="proof-body">LPS[0] = 0 (no proper prefix)</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Index 1 ('AB')</div>
+          <div class="proof-body">No prefix matches suffix → LPS[1] = 0</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Index 2 ('ABA')</div>
+          <div class="proof-body">Prefix 'A' = suffix 'A' → LPS[2] = 1</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Index 3 ('ABAB')</div>
+          <div class="proof-body">Prefix 'AB' = suffix 'AB' → LPS[3] = 2</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Index 4 ('ABABA')</div>
+          <div class="proof-body">Prefix 'ABA' = suffix 'ABA' → LPS[4] = 3</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Index 5 ('ABABAC')</div>
+          <div class="proof-body">No match after fallback → LPS[5] = 0</div>
+        </div>
+      </div>
+
+      <h3>KMP Search</h3>
+      <p>Use the LPS array to skip comparisons when mismatches occur:</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; KMP pattern search O(n + m) &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span> <span class="fn">KMPSearch</span>(<span class="kw">string</span> text, <span class="kw">string</span> pattern)
+{
+    <span class="kw">int</span> n = text.<span class="prop">Length</span>;
+    <span class="kw">int</span> m = pattern.<span class="prop">Length</span>;
+
+    <span class="kw">int</span>[] lps = <span class="fn">BuildLPS</span>(pattern);
+
+    <span class="kw">int</span> i = <span class="num">0</span>; <span class="cm">// Index for text</span>
+    <span class="kw">int</span> j = <span class="num">0</span>; <span class="cm">// Index for pattern</span>
+
+    <span class="kw">while</span> (i &lt; n)
+    {
+        <span class="kw">if</span> (pattern[j] == text[i])
+        {
+            i++;
+            j++;
+        }
+
+        <span class="kw">if</span> (j == m)
+        {
+            <span class="cm">// Pattern found at index i - m</span>
+            <span class="kw">return</span> i - m;
+        }
+        <span class="kw">else</span> <span class="kw">if</span> (i &lt; n && pattern[j] != text[i])
+        {
+            <span class="cm">// Use LPS to skip redundant checks</span>
+            <span class="kw">if</span> (j != <span class="num">0</span>)
+                j = lps[j - <span class="num">1</span>];
+            <span class="kw">else</span>
+                i++;
+        }
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>; <span class="cm">// Not found</span>
+}</pre>
+      </div>
+
+      <h3>Complete KMP Example</h3>
+      <p>Find "BAC" in "ABABAC":</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body">Build LPS for "BAC" → [0, 0, 0] (no overlaps)</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body">Compare 'B' with 'A' at position 0 → mismatch, i++</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">Compare 'B' with 'B' at position 1 → match, i++, j++</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body">Compare 'A' with 'A' → match, i++, j++</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">Compare 'C' with 'C' → match, j == 3, return i - m = 3</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>KMP is optimal:</strong> It examines each character in the text and pattern exactly once, making it O(n + m) which is the best possible for single pattern search.</div>
+      </div>
+    </section>
+
+    <!-- Section 20.4 -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">20.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Rabin-Karp Algorithm</h2>
+      <p class="lead">Hash-based pattern matching: compute rolling hash of text and pattern windows. Excel at finding multiple patterns in text; vulnerable to hash collisions.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n + m)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Worst Case</div>
+          <div class="cx-v">O(n·m)</div>
+        </div>
+      </div>
+
+      <h3>Rolling Hash Concept</h3>
+      <p>Instead of comparing strings character-by-character, compute a hash of each substring and compare hashes. When sliding the window, update the hash efficiently using the rolling hash formula:</p>
+      <p><code class="il">new_hash = (old_hash - first_char * base^(m-1)) * base + new_char</code></p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Rabin-Karp pattern search with rolling hash &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span> <span class="fn">RabinKarpSearch</span>(<span class="kw">string</span> text, <span class="kw">string</span> pattern)
+{
+    <span class="kw">int</span> n = text.<span class="prop">Length</span>;
+    <span class="kw">int</span> m = pattern.<span class="prop">Length</span>;
+    <span class="kw">const</span> <span class="kw">long</span> <span class="va">BASE</span> = <span class="num">256</span>; <span class="cm">// Prime for better distribution</span>
+    <span class="kw">const</span> <span class="kw">long</span> <span class="va">MOD</span> = <span class="num">101</span>; <span class="cm">// Prime modulus to avoid overflow</span>
+    <span class="kw">long</span> patternHash = <span class="num">0</span>;
+    <span class="kw">long</span> textHash = <span class="num">0</span>;
+    <span class="kw">long</span> power = <span class="num">1</span>; <span class="cm">// BASE^(m-1) % MOD</span>
+
+    <span class="cm">// Compute BASE^(m-1) % MOD</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; m - <span class="num">1</span>; i++)
+        power = (power * <span class="va">BASE</span>) % <span class="va">MOD</span>;
+
+    <span class="cm">// Compute hash of pattern and first window of text</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; m; i++)
+    {
+        patternHash = (patternHash * <span class="va">BASE</span> + pattern[i]) % <span class="va">MOD</span>;
+        textHash = (textHash * <span class="va">BASE</span> + text[i]) % <span class="va">MOD</span>;
+    }
+
+    <span class="cm">// Slide the window</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= n - m; i++)
+    {
+        <span class="cm">// Hash match found</span>
+        <span class="kw">if</span> (patternHash == textHash)
+        {
+            <span class="cm">// Verify actual match (handle hash collisions)</span>
+            <span class="kw">bool</span> match = <span class="kw">true</span>;
+            <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; m; j++)
+            {
+                <span class="kw">if</span> (text[i + j] != pattern[j])
+                {
+                    match = <span class="kw">false</span>;
+                    <span class="kw">break</span>;
+                }
+            }
+            <span class="kw">if</span> (match)
+                <span class="kw">return</span> i;
+        }
+
+        <span class="cm">// Calculate hash of next window</span>
+        <span class="kw">if</span> (i &lt; n - m)
+        {
+            textHash = (textHash - text[i] * power) % <span class="va">MOD</span>;
+            textHash = (textHash * <span class="va">BASE</span> + text[i + m]) % <span class="va">MOD</span>;
+            <span class="cm">// Handle negative modulo in C#</span>
+            <span class="kw">if</span> (textHash &lt; <span class="num">0</span>)
+                textHash += <span class="va">MOD</span>;
+        }
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>;
+}</pre>
+      </div>
+
+      <h3>When to Use Rabin-Karp</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Good Use Cases</div>
+          <div class="vs-item">Multiple pattern search in single text</div>
+          <div class="vs-item">Finding all occurrences (hash provides quick filtering)</div>
+          <div class="vs-item">Plagiarism detection in documents</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Poor Use Cases</div>
+          <div class="vs-item">Single pattern, single text (KMP is simpler)</div>
+          <div class="vs-item">Very small patterns (brute force faster)</div>
+          <div class="vs-item">Texts with many hash collisions</div>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Hash Collisions:</strong> Always verify actual match when hashes match. A hash collision means the hashes are equal but strings differ—rare but possible.</div>
+      </div>
+    </section>
+
+    <!-- Section 20.5 -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">20.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Z-Algorithm</h2>
+      <p class="lead">Linear-time pattern matching using a Z-array that stores the length of the longest substring starting from position i that matches a prefix of the string.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n + m)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n + m)</div>
+        </div>
+      </div>
+
+      <h3>Z-Array Construction</h3>
+      <p>The Z-array Z[i] represents the length of the longest substring starting from index i that matches a prefix of the string. Built using the "Z-box" concept for O(n) time.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Build Z-array: Z[i] = longest substring from i matching prefix &lt;/summary&gt;</span>
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">int</span>[] <span class="fn">BuildZArray</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">int</span> n = s.<span class="prop">Length</span>;
+    <span class="kw">int</span>[] z = <span class="kw">new</span> <span class="kw">int</span>[n];
+    <span class="kw">int</span> l = <span class="num">0</span>, r = <span class="num">0</span>; <span class="cm">// [l, r] is the rightmost Z-box</span>
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; n; i++)
+    {
+        <span class="kw">if</span> (i &gt; r)
+        {
+            <span class="cm">// Outside rightmost Z-box, compute from scratch</span>
+            l = r = i;
+            <span class="kw">while</span> (r &lt; n && s[r - l] == s[r])
+                r++;
+            z[i] = r - l;
+            r--;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="cm">// Inside rightmost Z-box, use previously computed values</span>
+            <span class="kw">int</span> k = i - l; <span class="cm">// Corresponding index in Z-box</span>
+            <span class="kw">if</span> (z[k] &lt; r - i + <span class="num">1</span>)
+            {
+                z[i] = z[k];
+            }
+            <span class="kw">else</span>
+            {
+                l = i;
+                <span class="kw">while</span> (r &lt; n && s[r - l] == s[r])
+                    r++;
+                z[i] = r - l;
+                r--;
+            }
+        }
+    }
+
+    <span class="kw">return</span> z;
+}</pre>
+      </div>
+
+      <h3>Z-Algorithm Pattern Search</h3>
+      <p>Concatenate pattern and text with a separator, build Z-array. If Z[i] == m, pattern is found at position i - m - 1 in text.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Z-Algorithm pattern search O(n + m) &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span> <span class="fn">ZAlgorithmSearch</span>(<span class="kw">string</span> text, <span class="kw">string</span> pattern)
+{
+    <span class="cm">// Create concatenated string: pattern + separator + text</span>
+    <span class="kw">string</span> combined = pattern + <span class="str">"#"</span> + text;
+    <span class="kw">int</span>[] z = <span class="fn">BuildZArray</span>(combined);
+    <span class="kw">int</span> m = pattern.<span class="prop">Length</span>;
+
+    <span class="cm">// Search for pattern in Z-array</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = m + <span class="num">1</span>; i &lt; combined.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (z[i] == m)
+        {
+            <span class="cm">// Found: return position in original text</span>
+            <span class="kw">return</span> i - m - <span class="num">1</span>;
+        }
+    }
+
+    <span class="kw">return</span> -<span class="num">1</span>;
+}</pre>
+      </div>
+
+      <h3>Z-Array Example</h3>
+      <p>For string "ABAB": Z = [0, 0, 2, 0]</p>
+      <ul style="margin: 16px 0 26px 20px; color: var(--ink2); font-size: 15px;">
+        <li>Z[0] = 0 (by definition)</li>
+        <li>Z[1] = 0 ("B" doesn't match "A")</li>
+        <li>Z[2] = 2 ("AB" matches prefix "AB")</li>
+        <li>Z[3] = 0 ("B" doesn't match "A")</li>
+      </ul>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>Z-Algorithm strength:</strong> Efficient for finding all occurrences of a pattern. Z[i] tells you exactly how much of the prefix matches, which is useful for multiple pattern problems.</div>
+      </div>
+    </section>
+
+    <!-- Section 20.6 -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">20.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Manacher's Algorithm</h2>
+      <p class="lead">Find longest palindromic substring in O(n) time by expanding around centers efficiently using a radius array and center tracking.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+
+      <h3>The Transformed String Trick</h3>
+      <p>To handle both odd and even-length palindromes uniformly, insert a sentinel character between each character: "aba" becomes "#a#b#a#".</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Find longest palindromic substring using Manacher's algorithm &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">string</span> <span class="fn">LongestPalindrome</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">if</span> (s.<span class="prop">Length</span> &lt;= <span class="num">1</span>)
+        <span class="kw">return</span> s;
+
+    <span class="cm">// Transform string to handle even-length palindromes</span>
+    <span class="ty">StringBuilder</span> transformed = <span class="kw">new</span> <span class="ty">StringBuilder</span>(<span class="str">"#"</span>);
+    <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> s)
+    {
+        transformed.<span class="fn">Append</span>(c);
+        transformed.<span class="fn">Append</span>(<span class="str">'#'</span>);
+    }
+    <span class="kw">string</span> t = transformed.<span class="fn">ToString</span>();
+
+    <span class="kw">int</span> n = t.<span class="prop">Length</span>;
+    <span class="kw">int</span>[] p = <span class="kw">new</span> <span class="kw">int</span>[n]; <span class="cm">// Radius of palindrome at each position</span>
+    <span class="kw">int</span> center = <span class="num">0</span>; <span class="cm">// Center of rightmost palindrome found</span>
+    <span class="kw">int</span> right = <span class="num">0</span>; <span class="cm">// Right edge of rightmost palindrome</span>
+    <span class="kw">int</span> maxLen = <span class="num">0</span>;
+    <span class="kw">int</span> centerIndex = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    {
+        <span class="cm">// Mirror of i around center</span>
+        <span class="kw">int</span> mirror = <span class="num">2</span> * center - i;
+
+        <span class="cm">// If i is within the right edge, use mirror's radius</span>
+        <span class="kw">if</span> (i &lt; right)
+        {
+            p[i] = <span class="ty">Math</span>.<span class="fn">Min</span>(right - i, p[mirror]);
+        }
+
+        <span class="cm">// Expand around center</span>
+        <span class="kw">try</span>
+        {
+            <span class="kw">while</span> (i + <span class="num">1</span> + p[i] &lt; n && i - <span class="num">1</span> - p[i] &gt;= <span class="num">0</span> &&
+                   t[i + <span class="num">1</span> + p[i]] == t[i - <span class="num">1</span> - p[i]])
+            {
+                p[i]++;
+            }
+        }
+        <span class="kw">catch</span> { }
+
+        <span class="cm">// Update center and right</span>
+        <span class="kw">if</span> (i + p[i] &gt; right)
+        {
+            center = i;
+            right = i + p[i];
+        }
+
+        <span class="cm">// Track longest palindrome</span>
+        <span class="kw">if</span> (p[i] &gt; maxLen)
+        {
+            maxLen = p[i];
+            centerIndex = i;
+        }
+    }
+
+    <span class="cm">// Extract original palindrome from transformed string</span>
+    <span class="kw">int</span> start = (centerIndex - maxLen) / <span class="num">2</span>;
+    <span class="kw">return</span> s.<span class="fn">Substring</span>(start, maxLen);
+}</pre>
+      </div>
+
+      <h3>Manacher's Walkthrough: "babad"</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body">Transform to "#b#a#b#a#d#" (n=11)</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body">At position 4 (center 'a'): radius expands to 3, covering "bab"</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">Mirror position 6 uses radius knowledge from position 2</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body">Right edge and center updated as better palindromes found</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body">Extract "bab" from original string</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Why linear time?</strong> Each character is expanded from at most twice—once as a center, once during mirror expansion. The right edge only moves right.</div>
+      </div>
+    </section>
+
+    <!-- Section 20.7 -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">20.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>String Hashing</h2>
+      <p class="lead">Use polynomial rolling hash to compare substrings in O(1) time after O(n) preprocessing. Essential for competitive programming and substring problems.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Preprocess</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Compare Substrings</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+
+      <h3>Polynomial Hash Formula</h3>
+      <p>Hash of string s = s[0]·base^(n-1) + s[1]·base^(n-2) + ... + s[n-1], all mod MOD.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; String hashing with polynomial rolling hash &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">StringHash</span>
+{
+    <span class="kw">private</span> <span class="kw">readonly</span> <span class="kw">long</span>[] <span class="va">_hash</span>;
+    <span class="kw">private</span> <span class="kw">readonly</span> <span class="kw">long</span>[] <span class="va">_pow</span>;
+    <span class="kw">private</span> <span class="kw">const</span> <span class="kw">long</span> <span class="va">BASE</span> = <span class="num">31</span>;
+    <span class="kw">private</span> <span class="kw">const</span> <span class="kw">long</span> <span class="va">MOD</span> = <span class="num">1000000007</span>;
+
+    <span class="kw">public</span> <span class="fn">StringHash</span>(<span class="kw">string</span> s)
+    {
+        <span class="kw">int</span> n = s.<span class="prop">Length</span>;
+        <span class="va">_hash</span> = <span class="kw">new</span> <span class="kw">long</span>[n + <span class="num">1</span>];
+        <span class="va">_pow</span> = <span class="kw">new</span> <span class="kw">long</span>[n + <span class="num">1</span>];
+        <span class="va">_pow</span>[<span class="num">0</span>] = <span class="num">1</span>;
+
+        <span class="cm">// Precompute powers of base</span>
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= n; i++)
+        {
+            <span class="va">_pow</span>[i] = (<span class="va">_pow</span>[i - <span class="num">1</span>] * <span class="va">BASE</span>) % <span class="va">MOD</span>;
+        }
+
+        <span class="cm">// Precompute prefix hashes</span>
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        {
+            <span class="va">_hash</span>[i + <span class="num">1</span>] = (<span class="va">_hash</span>[i] * <span class="va">BASE</span> + (s[i] - <span class="str">'a'</span> + <span class="num">1</span>)) % <span class="va">MOD</span>;
+        }
+    }
+
+    <span class="cm">/// &lt;summary&gt; Get hash of substring s[l..r] in O(1) &lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="kw">long</span> <span class="fn">GetHash</span>(<span class="kw">int</span> l, <span class="kw">int</span> r)
+    {
+        <span class="kw">long</span> h = (<span class="va">_hash</span>[r + <span class="num">1</span>] - <span class="va">_hash</span>[l] * <span class="va">_pow</span>[r - l + <span class="num">1</span>]) % <span class="va">MOD</span>;
+        <span class="kw">return</span> h &lt; <span class="num">0</span> ? h + <span class="va">MOD</span> : h;
+    }
+
+    <span class="cm">/// &lt;summary&gt; Check if two substrings are equal in O(1) &lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">AreEqual</span>(<span class="kw">int</span> l1, <span class="kw">int</span> r1, <span class="kw">int</span> l2, <span class="kw">int</span> r2)
+    {
+        <span class="kw">if</span> (r1 - l1 != r2 - l2)
+            <span class="kw">return</span> <span class="kw">false</span>;
+        <span class="kw">return</span> <span class="fn">GetHash</span>(l1, r1) == <span class="fn">GetHash</span>(l2, r2);
+    }
+}</pre>
+      </div>
+
+      <h3>Application: Longest Duplicate Substring</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Find longest duplicate substring using binary search + hashing &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">string</span> <span class="fn">LongestDuplicateSubstring</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">int</span> left = <span class="num">1</span>, right = s.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="kw">string</span> result = <span class="str">""</span>;
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="kw">int</span> mid = (left + right) / <span class="num">2</span>;
+        <span class="kw">string</span> duplicate = <span class="fn">FindDuplicateOfLength</span>(s, mid);
+
+        <span class="kw">if</span> (duplicate != <span class="str">""</span>)
+        {
+            result = duplicate;
+            left = mid + <span class="num">1</span>;
+        }
+        <span class="kw">else</span>
+        {
+            right = mid - <span class="num">1</span>;
+        }
+    }
+
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">string</span> <span class="fn">FindDuplicateOfLength</span>(<span class="kw">string</span> s, <span class="kw">int</span> len)
+{
+    <span class="ty">StringHash</span> sh = <span class="kw">new</span> <span class="ty">StringHash</span>(s);
+    <span class="kw">var</span> seen = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="kw">long</span>&gt;();
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= s.<span class="prop">Length</span> - len; i++)
+    {
+        <span class="kw">long</span> hash = sh.<span class="fn">GetHash</span>(i, i + len - <span class="num">1</span>);
+        <span class="kw">if</span> (seen.<span class="fn">Contains</span>(hash))
+            <span class="kw">return</span> s.<span class="fn">Substring</span>(i, len);
+        seen.<span class="fn">Add</span>(hash);
+    }
+
+    <span class="kw">return</span> <span class="str">""</span>;
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Hash collisions still possible:</strong> For safety in production, verify hashes match the actual substrings, or use double hashing (two different bases/mods).</div>
+      </div>
+    </section>
+
+    <!-- Section 20.8 -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">20.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Trie Data Structure</h2>
+      <p class="lead">Tree structure for storing and searching strings. Essential for autocomplete, prefix matching, and word searches. Space-time tradeoff: O(n) space for O(m) search.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Trie node with children and word flag &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">TrieNode</span>
+{
+    <span class="kw">public</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="ty">TrieNode</span>&gt; children = <span class="kw">new</span>();
+    <span class="kw">public</span> <span class="kw">bool</span> isWord = <span class="kw">false</span>;
+}
+
+<span class="cm">/// &lt;summary&gt; Trie for efficient string search and prefix matching &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">Trie</span>
+{
+    <span class="kw">private</span> <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+
+    <span class="cm">/// &lt;summary&gt; Insert word into trie O(m) where m = word length &lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="cm">/// &lt;summary&gt; Search for exact word O(m) &lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Search</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = <span class="fn">FindNode</span>(word);
+        <span class="kw">return</span> node != <span class="kw">null</span> && node.isWord;
+    }
+
+    <span class="cm">/// &lt;summary&gt; Check if any word starts with prefix O(m) &lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">StartsWith</span>(<span class="kw">string</span> prefix)
+    {
+        <span class="kw">return</span> <span class="fn">FindNode</span>(prefix) != <span class="kw">null</span>;
+    }
+
+    <span class="kw">private</span> <span class="ty">TrieNode</span> <span class="fn">FindNode</span>(<span class="kw">string</span> prefix)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> prefix)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                <span class="kw">return</span> <span class="kw">null</span>;
+            node = node.children[c];
+        }
+        <span class="kw">return</span> node;
+    }
+
+    <span class="cm">/// &lt;summary&gt; Get all words with given prefix &lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; <span class="fn">GetWordsWithPrefix</span>(<span class="kw">string</span> prefix)
+    {
+        <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;();
+        <span class="ty">TrieNode</span> node = <span class="fn">FindNode</span>(prefix);
+        <span class="kw">if</span> (node != <span class="kw">null</span>)
+            <span class="fn">DFS</span>(node, prefix, result);
+        <span class="kw">return</span> result;
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">DFS</span>(<span class="ty">TrieNode</span> node, <span class="kw">string</span> current, <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; result)
+    {
+        <span class="kw">if</span> (node.isWord)
+            result.<span class="fn">Add</span>(current);
+        <span class="kw">foreach</span> (<span class="kw">var</span> pair <span class="kw">in</span> node.children)
+            <span class="fn">DFS</span>(pair.<span class="ty">Value</span>, current + pair.<span class="ty">Key</span>, result);
+    }
+}</pre>
+      </div>
+
+      <h3>Applications</h3>
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Autocomplete</div>
+          <div class="tip-title">Search Suggestions</div>
+          <div class="tip-body">GetWordsWithPrefix returns all words matching prefix in O(m + n) where n is number of results</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Spell Check</div>
+          <div class="tip-title">Word Validation</div>
+          <div class="tip-body">Search determines if word exists. Can extend for edit distance variations.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">IP Router</div>
+          <div class="tip-title">Longest Prefix Match</div>
+          <div class="tip-body">Find longest matching prefix for network routing in O(k) where k is IP length</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 20.9 -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">20.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Suffix Array & LCP</h2>
+      <p class="lead">Suffix array stores all suffixes sorted lexicographically. LCP (Longest Common Prefix) array helps find repeated substrings and string patterns efficiently.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Build suffix array by sorting all suffixes &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span>[] <span class="fn">BuildSuffixArray</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">int</span> n = s.<span class="prop">Length</span>;
+    <span class="kw">var</span> suffixes = <span class="kw">new</span> <span class="ty">List</span>&lt;(<span class="kw">string</span>, <span class="kw">int</span>)&gt;();
+
+    <span class="cm">// Create all suffixes with their original indices</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        suffixes.<span class="fn">Add</span>((s.<span class="fn">Substring</span>(i), i));
+
+    <span class="cm">// Sort lexicographically</span>
+    suffixes.<span class="fn">Sort</span>((a, b) =&gt; a.<span class="ty">Item1</span>.<span class="fn">CompareTo</span>(b.<span class="ty">Item1</span>));
+
+    <span class="kw">int</span>[] result = <span class="kw">new</span> <span class="kw">int</span>[n];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        result[i] = suffixes[i].<span class="ty">Item2</span>;
+
+    <span class="kw">return</span> result;
+}
+
+<span class="cm">/// &lt;summary&gt; Build LCP array from suffix array &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">int</span>[] <span class="fn">BuildLCP</span>(<span class="kw">string</span> s, <span class="kw">int</span>[] sa)
+{
+    <span class="kw">int</span> n = s.<span class="prop">Length</span>;
+    <span class="kw">int</span>[] lcp = <span class="kw">new</span> <span class="kw">int</span>[n];
+    <span class="kw">int</span>[] rank = <span class="kw">new</span> <span class="kw">int</span>[n];
+
+    <span class="cm">// Build rank array (position of suffix in sorted order)</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        rank[sa[i]] = i;
+
+    <span class="kw">int</span> h = <span class="num">0</span>;
+
+    <span class="cm">// Kasai algorithm for LCP construction</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    {
+        <span class="kw">if</span> (rank[i] &gt; <span class="num">0</span>)
+        {
+            <span class="kw">int</span> j = sa[rank[i] - <span class="num">1</span>];
+            <span class="kw">while</span> (i + h &lt; n && j + h &lt; n && s[i + h] == s[j + h])
+                h++;
+            lcp[rank[i]] = h;
+            <span class="kw">if</span> (h &gt; <span class="num">0</span>)
+                h--;
+        }
+    }
+
+    <span class="kw">return</span> lcp;
+}
+</pre>
+      </div>
+
+      <h3>Application: Longest Repeated Substring</h3>
+      <p>Find the longest substring that appears at least twice. The answer is the maximum value in the LCP array.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">/// &lt;summary&gt; Find longest repeated substring using suffix array &lt;/summary&gt;</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">string</span> <span class="fn">LongestRepeatedSubstring</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">int</span>[] sa = <span class="fn">BuildSuffixArray</span>(s);
+    <span class="kw">int</span>[] lcp = <span class="fn">BuildLCP</span>(s, sa);
+
+    <span class="kw">int</span> maxLen = <span class="num">0</span>;
+    <span class="kw">int</span> maxIndex = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; lcp.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (lcp[i] &gt; maxLen)
+        {
+            maxLen = lcp[i];
+            maxIndex = sa[i];
+        }
+    }
+
+    <span class="kw">return</span> s.<span class="fn">Substring</span>(maxIndex, maxLen);
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Suffix arrays are advanced:</strong> Construction is O(n log n) with simple sorting. More sophisticated O(n) algorithms exist (DC3, SA-IS) but are complex. LCP is typically O(n) using Kasai's algorithm.</div>
+      </div>
+    </section>
+
+    <!-- Section 20.10 -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <span class="sec-num">20.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Practice Problems</h2>
+      <p class="lead">15+ LeetCode problems with complete C# solutions using techniques from this chapter.</p>
+
+      <h3>Problem 1: Implement strStr (LC 28)</h3>
+      <p><strong>Find the index of the first occurrence of substring.</strong></p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Solution using KMP (optimal O(n+m))</span>
+<span class="kw">public</span> <span class="kw">int</span> <span class="fn">StrStr</span>(<span class="kw">string</span> haystack, <span class="kw">string</span> needle)
+{
+    <span class="kw">if</span> (needle.<span class="prop">Length</span> == <span class="num">0</span>) <span class="kw">return</span> <span class="num">0</span>;
+    <span class="kw">return</span> <span class="fn">KMPSearch</span>(haystack, needle);
+}
+</pre>
+      </div>
+
+      <h3>Problem 2: Longest Palindromic Substring (LC 5)</h3>
+      <p><strong>Solution: Use Manacher's algorithm for O(n) optimal solution.</strong></p>
+
+      <h3>Problem 3: Repeated Substring Pattern (LC 459)</h3>
+      <p><strong>Check if string is made of repeated pattern using KMP LPS trick.</strong></p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">RepeatedSubstringPattern</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">string</span> doubled = s + s;
+    <span class="kw">return</span> doubled.<span class="fn">IndexOf</span>(s, <span class="num">1</span>) &lt; s.<span class="prop">Length</span>;
+}
+</pre>
+      </div>
+
+      <h3>Problem 2: Longest Palindromic Substring (LC 5)</h3>
+      <p>Solution: Use Manacher's algorithm for O(n) optimal solution.</p>
+
+      <h3>Problem 3: Repeated Substring Pattern (LC 459)</h3>
+      <p>Check if string is made of repeated pattern using KMP LPS trick.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">RepeatedSubstringPattern</span>(<span class="kw">string</span> s)
+{
+    <span class="cm">// Trick: if s is made of repeated pattern,</span>
+    <span class="cm">// then s appears in (s+s)[1..2n-2]</span>
+    <span class="kw">string</span> doubled = s + s;
+    <span class="kw">return</span> doubled.<span class="fn">IndexOf</span>(s, <span class="num">1</span>) &lt; s.<span class="prop">Length</span>;
+}</pre>
+      </div>
+
+      <h3>Problem 4: Shortest Palindrome (LC 214)</h3>
+      <p>Add minimum characters to make string palindrome using KMP on (pattern + '#' + text).</p>
+
+      <h3>Problem 5: Longest Happy Prefix (LC 1392)</h3>
+      <p>Use KMP failure function directly—answer is LPS[n-1].</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">csharp</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">string</span> <span class="fn">LongestPrefix</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">int</span>[] lps = <span class="fn">BuildLPS</span>(s);
+    <span class="kw">return</span> s.<span class="fn">Substring</span>(<span class="num">0</span>, lps[s.<span class="prop">Length</span> - <span class="num">1</span>]);
+}</pre>
+      </div>
+
+      <h3>Problem 6: Distinct Subsequences (LC 115)</h3>
+      <p>Count distinct subsequences of S that equals T using DP.</p>
+
+      <h3>Problem 7: Minimum Window Substring (LC 76)</h3>
+      <p>Sliding window with character frequency map.</p>
+
+      <h3>Problem 8: Edit Distance (LC 72)</h3>
+      <p>Classic DP: dp[i][j] = edit distance between s1[0..i-1] and s2[0..j-1].</p>
+
+      <h3>Problem 9: Palindrome Pairs (LC 336)</h3>
+      <p>Find all pairs that form palindrome. Use Trie + KMP trick.</p>
+
+      <h3>Problem 10: Interleaving String (LC 97)</h3>
+      <p>DP: check if s3 is interleaving of s1 and s2.</p>
+
+      <h3>Problem 11: Count and Say (LC 38)</h3>
+      <p>Simulate the look-and-say sequence.</p>
+
+      <h3>Problem 12: String to Integer (LC 8)</h3>
+      <p>Parse integer from string handling edge cases and whitespace.</p>
+
+      <h3>Problem 13: Longest Common Substring</h3>
+      <p>Use suffix array with LCP array or DP approach.</p>
+
+      <h3>Problem 14: Wildcard Matching (LC 44)</h3>
+      <p>DP or greedy with * and ? wildcards.</p>
+
+      <h3>Problem 15: Regular Expression Matching (LC 10)</h3>
+      <p>DP with . and * metacharacters.</p>
+    </section>
+
+    <!-- Section 20.11 -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag">
+        <span class="sec-num">20.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Algorithm Comparison Table</h2>
+      <p class="lead">Quick reference to choose the right string algorithm for your problem.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Time</th>
+              <th>Space</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Brute Force</td>
+              <td>O(n·m)</td>
+              <td>O(1)</td>
+              <td>Small patterns, learning</td>
+            </tr>
+            <tr>
+              <td>KMP</td>
+              <td>O(n+m)</td>
+              <td>O(m)</td>
+              <td>Single pattern search, optimal</td>
+            </tr>
+            <tr>
+              <td>Rabin-Karp</td>
+              <td>O(n+m)</td>
+              <td>O(1)</td>
+              <td>Multiple patterns, hashing</td>
+            </tr>
+            <tr>
+              <td>Z-Algorithm</td>
+              <td>O(n+m)</td>
+              <td>O(n+m)</td>
+              <td>All occurrences, pattern analysis</td>
+            </tr>
+            <tr>
+              <td>Manacher</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>Longest palindrome, optimal</td>
+            </tr>
+            <tr>
+              <td>Trie</td>
+              <td>O(m)</td>
+              <td>O(n·m)</td>
+              <td>Autocomplete, prefix matching</td>
+            </tr>
+            <tr>
+              <td>Suffix Array</td>
+              <td>O(n log n)</td>
+              <td>O(n)</td>
+              <td>All substrings, advanced queries</td>
+            </tr>
+            <tr>
+              <td>String Hash</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>Substring comparison, duplicate finding</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Decision Tree</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Single Pattern Match</div>
+          <div class="proof-body">KMP for guaranteed O(n+m). Simple IndexOf if pattern small.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Multiple Patterns</div>
+          <div class="proof-body">Rabin-Karp or Aho-Corasick. Hash-based approach efficient for many patterns.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Palindrome</div>
+          <div class="proof-body">Manacher's for O(n) longest palindrome. Expand-around-center for simplicity.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Prefix Queries</div>
+          <div class="proof-body">Trie for autocomplete and prefix matching. O(m) search.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Substring Comparison</div>
+          <div class="proof-body">String hashing for O(1) comparison after O(n) preprocessing.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">All Substrings</div>
+          <div class="proof-body">Suffix array with LCP for advanced queries and pattern finding.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 20.12 -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag">
+        <span class="sec-num">20.12</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips</h2>
+      <p class="lead">Patterns, mistakes, and strategies for string algorithm questions.</p>
+
+      <h3>Common Problem Patterns</h3>
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Pattern 1</div>
+          <div class="tip-title">Find/Count Pattern</div>
+          <div class="tip-body">Use KMP for single pattern. Rabin-Karp for multiple. Always clarify: first occurrence or all occurrences?</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Pattern 2</div>
+          <div class="tip-title">Palindrome</div>
+          <div class="tip-body">Clarify: longest, all palindromes, or just check? Manacher is gold standard for longest.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Pattern 3</div>
+          <div class="tip-title">Prefix/Suffix</div>
+          <div class="tip-body">Often KMP LPS array is key. Look for patterns: "longest prefix is also suffix".</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern 4</div>
+          <div class="tip-title">Edit Distance</div>
+          <div class="tip-body">Always DP. Remember: s[i-1] == t[j-1] means no edit needed, else take min of 3 ops.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern 5</div>
+          <div class="tip-title">Matching</div>
+          <div class="tip-body">Regex or wildcards? Use DP with backtracking. State = (i, j) = position in string and pattern.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern 6</div>
+          <div class="tip-title">Subsequence</div>
+          <div class="tip-body">DP: can skip characters. Subarray: must be contiguous. Know the difference!</div>
+        </div>
+      </div>
+
+      <h3>Common Mistakes</h3>
+      <div class="vs">
+        <div class="vs-box bad">
+          <div class="vs-title">Mistake 1</div>
+          <div class="vs-item">Building LPS with 0-indexing errors in KMP</div>
+          <div class="vs-item">Fix: carefully handle j=0 case, use lps[j-1] for fallback</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Mistake 2</div>
+          <div class="vs-item">Off-by-one errors in substring extraction</div>
+          <div class="vs-item">Fix: test Substring(start, length) carefully</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Mistake 3</div>
+          <div class="vs-item">Forgetting to verify hash match in Rabin-Karp</div>
+          <div class="vs-item">Fix: always double-check actual strings when hashes match</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Mistake 4</div>
+          <div class="vs-item">DP indexing confusion (1-indexed vs 0-indexed)</div>
+          <div class="vs-item">Fix: be explicit: dp[i] = result for s[0..i-1]</div>
+        </div>
+      </div>
+
+      <h3>Strategies</h3>
+      <ul style="margin: 26px 0 26px 20px; color: var(--ink2); font-size: 15px; line-height: 1.8;">
+        <li><strong>Start simple:</strong> Brute force first, then optimize. Interviewer cares about clarity.</li>
+        <li><strong>Use built-in functions:</strong> IndexOf, Substring work well. Optimize only if asked.</li>
+        <li><strong>Edge cases matter:</strong> Empty strings, single character, all same character.</li>
+        <li><strong>Draw diagrams:</strong> Pattern matching is visual. Show the pointer movements.</li>
+        <li><strong>Test assumptions:</strong> Ask: can pattern be empty? Case-sensitive? Unicode?</li>
+        <li><strong>Mention time/space:</strong> Always state complexity. Show tradeoffs (Trie space vs speed).</li>
+        <li><strong>Code cleanly:</strong> Use helper functions (BuildLPS, BuildLCP). Avoid nested loops.</li>
+        <li><strong>Optimize iteratively:</strong> O(n²) → O(n log n) → O(n) shows thought process.</li>
+      </ul>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>KMP is the safest bet:</strong> If you only know one algorithm deeply, master KMP. It's O(n+m), handles all single-pattern problems, and the failure function is a teachable concept.</div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>The "doubled string" trick:</strong> Many pattern problems reduce to string searching. Example: repeated pattern = "pattern appears in (s+s)[1..n-1]".</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 20: String Algorithms & Pattern Matching</p>
+      <p>DSA Complete Book | Comprehensive guide to string processing and advanced pattern matching techniques</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.fade').forEach(el => {
+        el.classList.add('in');
+      });
+
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const codeBlock = this.closest('.code-block').querySelector('pre');
+          const text = codeBlock.innerText;
+          navigator.clipboard.writeText(text).then(() => {
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = 'Copy', 2000);
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

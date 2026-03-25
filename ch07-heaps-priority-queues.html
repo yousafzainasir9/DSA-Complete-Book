@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Complete guide to priority queues and binary heaps — min-heap, max-heap operations, C# implementation, and common coding interview patterns.">
+  <meta name="keywords" content="priority queue, binary heap, min-heap, max-heap, C#, heap operations, interview problems">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch07-heaps-priority-queues.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch07-heaps-priority-queues.html">
+  <meta property="og:title" content="Chapter 7: Heaps & Priority Queues - DSA Complete Book">
+  <meta property="og:description" content="Complete guide to priority queues and binary heaps — min-heap, max-heap operations, C# implementation, and common coding interview patterns.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch07-heaps-priority-queues.html">
+  <meta name="twitter:title" content="Chapter 7: Heaps & Priority Queues - DSA Complete Book">
+  <meta name="twitter:description" content="Complete guide to priority queues and binary heaps — min-heap, max-heap operations, C# implementation, and common coding interview patterns.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 7: Heaps & Priority Queues - DSA Complete Book",
+  "description": "Complete guide to priority queues and binary heaps \u2014 min-heap, max-heap operations, C# implementation, and common coding interview patterns.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch07-heaps-priority-queues.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 7: Heaps & Priority Queues - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}:root{--bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;--ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;--acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;--green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;--blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;--red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;--amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;--sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace}body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}.nav-links a:hover{color:var(--ink);border-color:var(--acc)}.wrap{max-width:960px;margin:0 auto;padding:0 2rem}.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}.eyebrow-line{width:28px;height:2px;background:var(--acc)}.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}.stat{padding:14px 26px;border-right:1px solid var(--rule)}.stat:last-child{border-right:none}.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}.toc-grid a:hover{color:var(--acc)}.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}.section{padding-top:72px}.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}.sec-line{flex:1;height:1px;background:var(--rule)}.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.algo-body{padding:28px 32px}.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}.steps{margin-bottom:26px}.step{display:flex}.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}.step:last-child .step-vline{display:none}.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}.step-body strong{color:var(--ink);font-weight:600}code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}.copy-btn:hover{color:#d4d0c8}pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}.callout strong{color:inherit;font-weight:600}.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}thead tr{background:var(--bg2)}th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg)}.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}.vs-box.good{background:var(--green-l);border-color:var(--green-b)}.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}.proof-note strong{color:var(--ink2)}.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}footer p{font-size:13px;color:var(--ink3)}footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}@media(max-width:700px){.algo-head{grid-template-columns:1fr}.algo-idx{display:none}.vs,.proof-grid,.tips{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book<span class="pill">v1</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 7</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 7</div>
+      </div>
+      <h1>Heaps & <em>Priority Queues</em></h1>
+      <p class="hero-sub">Master hierarchical data structures for efficient sorting and priority-based access. Learn min/max heaps, array representation, heap operations, patterns for top K problems, median finding, and task scheduling.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">13</div><div class="stat-l">Core Topics</div></div>
+        <div class="stat"><div class="stat-n">6</div><div class="stat-l">Full Implementations</div></div>
+        <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Code Examples</div></div>
+        <div class="stat"><div class="stat-n">11</div><div class="stat-l">Practice Problems</div></div>
+      </div>
+    </section>
+
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">7.1</span> Heap Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">7.2</span> Array Representation & Indexing</a>
+        <a href="#sec-3"><span class="toc-n">7.3</span> Core Heap Operations</a>
+        <a href="#sec-4"><span class="toc-n">7.4</span> Build Heap from Array</a>
+        <a href="#sec-5"><span class="toc-n">7.5</span> MinHeap Implementation</a>
+        <a href="#sec-6"><span class="toc-n">7.6</span> MaxHeap Implementation</a>
+        <a href="#sec-7"><span class="toc-n">7.7</span> C# PriorityQueue API</a>
+        <a href="#sec-8"><span class="toc-n">7.8</span> Heap Sort</a>
+        <a href="#sec-9"><span class="toc-n">7.9</span> Top K Pattern</a>
+        <a href="#sec-10"><span class="toc-n">7.10</span> Two Heaps Pattern</a>
+        <a href="#sec-11"><span class="toc-n">7.11</span> K-way Merge Pattern</a>
+        <a href="#sec-12"><span class="toc-n">7.12</span> Practice Problems</a>
+        <a href="#sec-13"><span class="toc-n">7.13</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- 7.1: Heap Fundamentals -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><span class="sec-num">7.1</span><div class="sec-line"></div></div>
+      <h2>Heap Fundamentals</h2>
+      <p class="lead">A heap is a complete binary tree that satisfies the heap property, enabling O(log n) insertion and O(1) extraction of extreme values.</p>
+
+      <h3>Definition & Properties</h3>
+      <p>A <strong>complete binary tree</strong> fills all levels completely except possibly the last, which fills left-to-right. This shape guarantees height = O(log n). The <strong>heap property</strong> defines the ordering:</p>
+      <ul style="margin: 16px 0 16px 32px; color: var(--ink2);">
+        <li><strong>Min-Heap:</strong> Parent ≤ all children. Root = minimum element.</li>
+        <li><strong>Max-Heap:</strong> Parent ≥ all children. Root = maximum element.</li>
+      </ul>
+      <p>Heaps are <strong>not sorted</strong> globally (no O(n log n) guarantee between all elements), only locally along parent-child paths. This allows O(n) construction and O(log n) operations.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div><strong>Why Heaps?</strong> They provide O(log n) priority-based access without full sorting. Use heaps for top K, median finding, Dijkstra, and Huffman coding.</div>
+      </div>
+
+      <h3>Min-Heap vs Max-Heap Visual</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Min-Heap Example</div>
+          <div class="vs-item">Root = 1 (minimum)</div>
+          <div class="vs-item">Parent always ≤ children</div>
+          <div class="vs-item">Extract-min is O(log n)</div>
+          <div class="vs-item">Perfect for priority queues where lower value = higher priority</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Max-Heap Example</div>
+          <div class="vs-item">Root = 99 (maximum)</div>
+          <div class="vs-item">Parent always ≥ children</div>
+          <div class="vs-item">Extract-max is O(log n)</div>
+          <div class="vs-item">Perfect for finding top K largest elements</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7.2: Array Representation -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><span class="sec-num">7.2</span><div class="sec-line"></div></div>
+      <h2>Array Representation & Indexing</h2>
+      <p class="lead">Store heaps in a 0-indexed array where index relationships encode the tree structure without explicit pointers.</p>
+
+      <h3>Index Formulas (0-Indexed)</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="cm">// For node at index i:</span>
+<span class="kw">private</span> <span class="ty">int</span> <span class="fn">Parent</span>(<span class="ty">int</span> i) => (i - <span class="num">1</span>) / <span class="num">2</span>;   <span class="cm">// Integer division</span>
+<span class="kw">private</span> <span class="ty">int</span> <span class="fn">LeftChild</span>(<span class="ty">int</span> i) => <span class="num">2</span> * i + <span class="num">1</span>;
+<span class="kw">private</span> <span class="ty">int</span> <span class="fn">RightChild</span>(<span class="ty">int</span> i) => <span class="num">2</span> * i + <span class="num">2</span>;
+
+<span class="cm">// Example: Node at index 5</span>
+<span class="cm">// Parent: (5-1)/2 = 2</span>
+<span class="cm">// Left child: 2*5+1 = 11</span>
+<span class="cm">// Right child: 2*5+2 = 12</span></pre>
+      </div>
+
+      <h3>Visual Array Layout</h3>
+      <p>For heap [10, 20, 30, 40, 50, 60, 70]:</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">Text</span></div>
+        <pre>        10 (idx 0)
+       /  \
+      20   30    (idx 1,2)
+     / \  / \
+    40 50 60 70 (idx 3,4,5,6)
+
+Array: [10, 20, 30, 40, 50, 60, 70]
+Index:  0   1   2   3   4   5   6
+
+For idx 1 (20):
+  Parent: (1-1)/2 = 0 → 10 ✓
+  Left:   2*1+1 = 3 → 40 ✓
+  Right:  2*1+2 = 4 → 50 ✓</span></pre>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>1-Indexed Alternative:</strong> Parent(i) = i/2, Left(i) = 2i, Right(i) = 2i+1. Wastes index 0 but simplifies math. 0-indexed is more common in production code.</div>
+      </div>
+    </section>
+
+    <!-- 7.3: Core Operations -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><span class="sec-num">7.3</span><div class="sec-line"></div></div>
+      <h2>Core Heap Operations</h2>
+
+      <h3>Insert / BubbleUp - O(log n)</h3>
+      <p>Add element at end of array, then bubble up by comparing with parent and swapping until heap property restored.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body">Add new value to end of array and increment size.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body">Compare with parent. If heap property violated, swap.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">Move to parent position and repeat until root or property satisfied.</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="ty">int</span> value) {
+    <span class="kw">if</span> (size == heap.Length) <span class="fn">Resize</span>();
+    heap[size] = value;
+    <span class="fn">BubbleUp</span>(size);
+    size++;
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">BubbleUp</span>(<span class="ty">int</span> idx) {
+    <span class="kw">while</span> (idx > <span class="num">0</span>) {
+        <span class="ty">int</span> parentIdx = <span class="fn">Parent</span>(idx);
+        <span class="kw">if</span> (heap[parentIdx] <= heap[idx]) <span class="kw">break</span>; <span class="cm">// Min-heap property satisfied</span>
+        <span class="fn">Swap</span>(idx, parentIdx);
+        idx = parentIdx;
+    }
+}</pre>
+      </div>
+
+      <h3>ExtractMin / BubbleDown - O(log n)</h3>
+      <p>Remove root (min element), move last element to root, then bubble down until heap property restored.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body">Save root value (return this).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body">Move last element to root, decrement size.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body">Compare with children, swap with smaller child if needed.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body">Move to child position and repeat until leaf or property satisfied.</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">ExtractMin</span>() {
+    <span class="kw">if</span> (size == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Heap empty"</span>);
+    <span class="ty">int</span> min = heap[<span class="num">0</span>];
+    heap[<span class="num">0</span>] = heap[--size];
+    <span class="fn">BubbleDown</span>(<span class="num">0</span>);
+    <span class="kw">return</span> min;
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">BubbleDown</span>(<span class="ty">int</span> idx) {
+    <span class="kw">while</span> (<span class="fn">LeftChild</span>(idx) < size) {
+        <span class="ty">int</span> smallest = idx;
+        <span class="ty">int</span> left = <span class="fn">LeftChild</span>(idx);
+        <span class="ty">int</span> right = <span class="fn">RightChild</span>(idx);
+
+        <span class="kw">if</span> (heap[left] < heap[smallest]) smallest = left;
+        <span class="kw">if</span> (right < size && heap[right] < heap[smallest]) smallest = right;
+        <span class="kw">if</span> (smallest == idx) <span class="kw">break</span>; <span class="cm">// Heap property satisfied</span>
+
+        <span class="fn">Swap</span>(idx, smallest);
+        idx = smallest;
+    }
+}</pre>
+      </div>
+
+      <h3>Peek - O(1)</h3>
+      <p>Return root without removing it.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">Peek</span>() {
+    <span class="kw">if</span> (size == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Heap empty"</span>);
+    <span class="kw">return</span> heap[<span class="num">0</span>];
+}</pre>
+      </div>
+    </section>
+
+    <!-- 7.4: Build Heap from Array -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><span class="sec-num">7.4</span><div class="sec-line"></div></div>
+      <h2>Build Heap from Array - O(n)</h2>
+      <p class="lead">Convert unsorted array into heap in linear time using bottom-up heapification instead of n insertions.</p>
+
+      <h3>Why O(n) Not O(n log n)?</h3>
+      <p>Naively inserting n elements takes O(n log n). Bottom-up approach is faster because:</p>
+      <ul style="margin: 16px 0 16px 32px; color: var(--ink2);">
+        <li>Leaf nodes (half the heap) need 0 swaps</li>
+        <li>Parent of leaves need ≤1 swap</li>
+        <li>Exponential reduction: i levels up = 2^i nodes doing O(log n - i) work</li>
+        <li>Sum converges to O(n)</li>
+      </ul>
+
+      <h3>Algorithm: Start from Last Parent, BubbleDown</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">void</span> <span class="fn">BuildHeap</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> n = arr.Length;
+    <span class="cm">// Start from last non-leaf node: (n-2)/2</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = (n - <span class="num">2</span>) / <span class="num">2</span>; i >= <span class="num">0</span>; i--) {
+        <span class="fn">HeapifyDown</span>(arr, i, n);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">HeapifyDown</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> idx, <span class="ty">int</span> n) {
+    <span class="kw">while</span> (<span class="num">2</span> * idx + <span class="num">1</span> < n) {
+        <span class="ty">int</span> left = <span class="num">2</span> * idx + <span class="num">1</span>;
+        <span class="ty">int</span> right = <span class="num">2</span> * idx + <span class="num">2</span>;
+        <span class="ty">int</span> smallest = idx;
+
+        <span class="kw">if</span> (arr[left] < arr[smallest]) smallest = left;
+        <span class="kw">if</span> (right < n && arr[right] < arr[smallest]) smallest = right;
+        <span class="kw">if</span> (smallest == idx) <span class="kw">break</span>;
+
+        (<span class="va">arr</span>[idx], <span class="va">arr</span>[smallest]) = (<span class="va">arr</span>[smallest], <span class="va">arr</span>[idx]);
+        idx = smallest;
+    }
+}</pre>
+      </div>
+
+      <h3>Example: BuildHeap from [7, 4, 1, 9, 2, 5]</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">Text</span></div>
+        <pre>Original:   [7, 4, 1, 9, 2, 5]
+Tree:          7
+             /   \
+            4     1
+           / \   /
+          9   2 5
+
+Start from i = (6-2)/2 = 2 (node with value 1)
+  → Already min-heap at 1 since no valid children in tree position
+
+i = 1 (node with value 4)
+  → Left child = 9, Right = 2
+  → Swap with 2 (smaller): [7, 2, 1, 9, 4, 5]
+  → 4 now has no more children below
+
+i = 0 (node with value 7)
+  → Left = 2, Right = 1
+  → Swap with 1 (smaller): [1, 2, 7, 9, 4, 5]
+  → Move to position 2 (value 7)
+  → Children are 4 and 5, swap with 4: [1, 2, 4, 9, 7, 5]
+
+Result:     [1, 2, 4, 9, 7, 5] (valid min-heap)</span></pre>
+      </div>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Proof: O(n) Complexity</div>
+          <div class="proof-body">Let h = log₂(n). Nodes at level k from bottom do O(k) work. Count of nodes at level k = n/2^(k+1).</div>
+          <div class="proof-note">Time = Σ(k * n/2^(k+1)) for k=0 to h-1 = n * Σ(k/2^(k+1)) = n * 1 = O(n)</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Why Start from (n-2)/2?</div>
+          <div class="proof-body">This is the index of the last non-leaf node. Leaf nodes (indices n/2 to n-1) have no children, so they're already valid heap nodes. No need to bubble down.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7.5: MinHeap Full Implementation -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><span class="sec-num">7.5</span><div class="sec-line"></div></div>
+      <h2>MinHeap Full Implementation - 100+ Lines</h2>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">MinHeap</span> {
+    <span class="kw">private</span> <span class="ty">int</span>[] heap;
+    <span class="kw">private</span> <span class="ty">int</span> size;
+    <span class="kw">private</span> <span class="kw">const</span> <span class="ty">int</span> DEFAULT_CAPACITY = <span class="num">10</span>;
+
+    <span class="cm">/// &lt;summary&gt;Initialize empty heap with default capacity&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="fn">MinHeap</span>() {
+        heap = <span class="kw">new</span> <span class="ty">int</span>[DEFAULT_CAPACITY];
+        size = <span class="num">0</span>;
+    }
+
+    <span class="cm">/// &lt;summary&gt;Initialize with specific capacity&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="fn">MinHeap</span>(<span class="ty">int</span> capacity) {
+        heap = <span class="kw">new</span> <span class="ty">int</span>[capacity];
+        size = <span class="num">0</span>;
+    }
+
+    <span class="cm">/// &lt;summary&gt;Build heap from existing array - O(n)&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="fn">MinHeap</span>(<span class="ty">int</span>[] arr) {
+        heap = <span class="kw">new</span> <span class="ty">int</span>[arr.Length];
+        <span class="ty">Array</span>.<span class="fn">Copy</span>(arr, heap, arr.Length);
+        size = arr.Length;
+        <span class="fn">BuildHeap</span>();
+    }
+
+    <span class="cm">// ===== Query Operations =====</span>
+
+    <span class="cm">/// &lt;summary&gt;Get minimum without removing - O(1)&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Peek</span>() {
+        <span class="kw">if</span> (size == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Heap is empty"</span>);
+        <span class="kw">return</span> heap[<span class="num">0</span>];
+    }
+
+    <span class="cm">/// &lt;summary&gt;Check if heap is empty&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => size == <span class="num">0</span>;
+
+    <span class="cm">/// &lt;summary&gt;Get current size&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Size</span>() => size;
+
+    <span class="cm">// ===== Modification Operations =====</span>
+
+    <span class="cm">/// &lt;summary&gt;Add element to heap - O(log n)&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="ty">int</span> value) {
+        <span class="kw">if</span> (size == heap.Length) {
+            <span class="fn">Resize</span>();
+        }
+        heap[size] = value;
+        <span class="fn">BubbleUp</span>(size);
+        size++;
+    }
+
+    <span class="cm">/// &lt;summary&gt;Remove and return minimum - O(log n)&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">ExtractMin</span>() {
+        <span class="kw">if</span> (size == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Heap is empty"</span>);
+
+        <span class="ty">int</span> min = heap[<span class="num">0</span>];
+        heap[<span class="num">0</span>] = heap[--size];
+
+        <span class="kw">if</span> (size > <span class="num">0</span>) {
+            <span class="fn">BubbleDown</span>(<span class="num">0</span>);
+        }
+
+        <span class="kw">return</span> min;
+    }
+
+    <span class="cm">// ===== Internal Helper Methods =====</span>
+
+    <span class="cm">/// &lt;summary&gt;Restore heap property from index upward&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">BubbleUp</span>(<span class="ty">int</span> idx) {
+        <span class="kw">while</span> (idx > <span class="num">0</span>) {
+            <span class="ty">int</span> parentIdx = <span class="fn">Parent</span>(idx);
+            <span class="kw">if</span> (heap[parentIdx] <= heap[idx]) <span class="kw">break</span>;
+            <span class="fn">Swap</span>(idx, parentIdx);
+            idx = parentIdx;
+        }
+    }
+
+    <span class="cm">/// &lt;summary&gt;Restore heap property from index downward&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">BubbleDown</span>(<span class="ty">int</span> idx) {
+        <span class="kw">while</span> (<span class="fn">LeftChild</span>(idx) < size) {
+            <span class="ty">int</span> smallest = idx;
+            <span class="ty">int</span> left = <span class="fn">LeftChild</span>(idx);
+            <span class="ty">int</span> right = <span class="fn">RightChild</span>(idx);
+
+            <span class="kw">if</span> (heap[left] < heap[smallest]) smallest = left;
+            <span class="kw">if</span> (right < size && heap[right] < heap[smallest]) smallest = right;
+
+            <span class="kw">if</span> (smallest == idx) <span class="kw">break</span>;
+
+            <span class="fn">Swap</span>(idx, smallest);
+            idx = smallest;
+        }
+    }
+
+    <span class="cm">/// &lt;summary&gt;Build heap from existing array - O(n)&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">BuildHeap</span>() {
+        <span class="cm">// Start from last non-leaf and work backwards</span>
+        <span class="kw">for</span> (<span class="ty">int</span> i = (size - <span class="num">2</span>) / <span class="num">2</span>; i >= <span class="num">0</span>; i--) {
+            <span class="fn">BubbleDown</span>(i);
+        }
+    }
+
+    <span class="cm">/// &lt;summary&gt;Get parent index of element at position i&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">Parent</span>(<span class="ty">int</span> i) => (i - <span class="num">1</span>) / <span class="num">2</span>;
+
+    <span class="cm">/// &lt;summary&gt;Get left child index of element at position i&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">LeftChild</span>(<span class="ty">int</span> i) => <span class="num">2</span> * i + <span class="num">1</span>;
+
+    <span class="cm">/// &lt;summary&gt;Get right child index of element at position i&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">RightChild</span>(<span class="ty">int</span> i) => <span class="num">2</span> * i + <span class="num">2</span>;
+
+    <span class="cm">/// &lt;summary&gt;Swap elements at two indices&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Swap</span>(<span class="ty">int</span> i, <span class="ty">int</span> j) {
+        (<span class="va">heap</span>[i], <span class="va">heap</span>[j]) = (<span class="va">heap</span>[j], <span class="va">heap</span>[i]);
+    }
+
+    <span class="cm">/// &lt;summary&gt;Double array capacity when full&lt;/summary&gt;</span>
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Resize</span>() {
+        <span class="ty">int</span>[] newHeap = <span class="kw">new</span> <span class="ty">int</span>[heap.Length * <span class="num">2</span>];
+        <span class="ty">Array</span>.<span class="fn">Copy</span>(heap, newHeap, heap.Length);
+        heap = newHeap;
+    }
+
+    <span class="cm">/// &lt;summary&gt;Get array representation (for debugging)&lt;/summary&gt;</span>
+    <span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">ToArray</span>() {
+        <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[size];
+        <span class="ty">Array</span>.<span class="fn">Copy</span>(heap, result, size);
+        <span class="kw">return</span> result;
+    }
+}</span></pre>
+      </div>
+
+      <h3>Usage Example</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="cm">// Create empty heap and insert</span>
+<span class="ty">var</span> heap = <span class="kw">new</span> <span class="ty">MinHeap</span>();
+heap.<span class="fn">Insert</span>(<span class="num">5</span>);
+heap.<span class="fn">Insert</span>(<span class="num">3</span>);
+heap.<span class="fn">Insert</span>(<span class="num">7</span>);
+heap.<span class="fn">Insert</span>(<span class="num">1</span>);
+
+<span class="cm">// Extract in sorted order</span>
+<span class="kw">while</span> (!heap.<span class="fn">IsEmpty</span>()) {
+    <span class="ty">Console</span>.<span class="fn">WriteLine</span>(heap.<span class="fn">ExtractMin</span>()); <span class="cm">// 1, 3, 5, 7</span>
+}
+
+<span class="cm">// Build heap from array - O(n)</span>
+<span class="ty">int</span>[] arr = { <span class="num">7</span>, <span class="num">3</span>, <span class="num">9</span>, <span class="num">1</span> };
+<span class="ty">var</span> heap2 = <span class="kw">new</span> <span class="ty">MinHeap</span>(arr);</span></pre>
+      </div>
+    </section>
+
+    <!-- 7.6: MaxHeap Implementation -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><span class="sec-num">7.6</span><div class="sec-line"></div></div>
+      <h2>MaxHeap Implementation</h2>
+      <p class="lead">Mirror of MinHeap with comparisons reversed. Root is maximum element. Useful for extracting largest values first.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">MaxHeap</span> {
+    <span class="kw">private</span> <span class="ty">int</span>[] heap;
+    <span class="kw">private</span> <span class="ty">int</span> size;
+
+    <span class="kw">public</span> <span class="fn">MaxHeap</span>() => heap = <span class="kw">new</span> <span class="ty">int</span>[<span class="num">10</span>];
+    <span class="kw">public</span> <span class="fn">MaxHeap</span>(<span class="ty">int</span>[] arr) {
+        heap = <span class="kw">new</span> <span class="ty">int</span>[arr.Length];
+        <span class="ty">Array</span>.<span class="fn">Copy</span>(arr, heap, arr.Length);
+        size = arr.Length;
+        <span class="fn">BuildHeap</span>();
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Peek</span>() {
+        <span class="kw">if</span> (size == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Heap empty"</span>);
+        <span class="kw">return</span> heap[<span class="num">0</span>];
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="ty">int</span> value) {
+        <span class="kw">if</span> (size == heap.Length) <span class="fn">Resize</span>();
+        heap[size] = value;
+        <span class="fn">BubbleUp</span>(size);
+        size++;
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">ExtractMax</span>() {
+        <span class="kw">if</span> (size == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Heap empty"</span>);
+        <span class="ty">int</span> max = heap[<span class="num">0</span>];
+        heap[<span class="num">0</span>] = heap[--size];
+        <span class="kw">if</span> (size > <span class="num">0</span>) <span class="fn">BubbleDown</span>(<span class="num">0</span>);
+        <span class="kw">return</span> max;
+    }
+
+    <span class="cm">// Only difference from MinHeap: > instead of &lt; in comparisons</span>
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">BubbleUp</span>(<span class="ty">int</span> idx) {
+        <span class="kw">while</span> (idx > <span class="num">0</span>) {
+            <span class="ty">int</span> parentIdx = (idx - <span class="num">1</span>) / <span class="num">2</span>;
+            <span class="kw">if</span> (heap[parentIdx] >= heap[idx]) <span class="kw">break</span>; <span class="cm">// Reverse for max</span>
+            <span class="fn">Swap</span>(idx, parentIdx);
+            idx = parentIdx;
+        }
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">BubbleDown</span>(<span class="ty">int</span> idx) {
+        <span class="kw">while</span> (<span class="num">2</span> * idx + <span class="num">1</span> < size) {
+            <span class="ty">int</span> largest = idx;
+            <span class="ty">int</span> left = <span class="num">2</span> * idx + <span class="num">1</span>;
+            <span class="ty">int</span> right = <span class="num">2</span> * idx + <span class="num">2</span>;
+
+            <span class="kw">if</span> (heap[left] > heap[largest]) largest = left;
+            <span class="kw">if</span> (right < size && heap[right] > heap[largest]) largest = right;
+
+            <span class="kw">if</span> (largest == idx) <span class="kw">break</span>;
+            <span class="fn">Swap</span>(idx, largest);
+            idx = largest;
+        }
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">BuildHeap</span>() {
+        <span class="kw">for</span> (<span class="ty">int</span> i = (size - <span class="num">2</span>) / <span class="num">2</span>; i >= <span class="num">0</span>; i--)
+            <span class="fn">BubbleDown</span>(i);
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Swap</span>(<span class="ty">int</span> i, <span class="ty">int</span> j) =>
+        (<span class="va">heap</span>[i], <span class="va">heap</span>[j]) = (<span class="va">heap</span>[j], <span class="va">heap</span>[i]);
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Resize</span>() {
+        <span class="ty">int</span>[] newHeap = <span class="kw">new</span> <span class="ty">int</span>[heap.Length * <span class="num">2</span>];
+        <span class="ty">Array</span>.<span class="fn">Copy</span>(heap, newHeap, heap.Length);
+        heap = newHeap;
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => size == <span class="num">0</span>;
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Size</span>() => size;
+}</span></pre>
+      </div>
+    </section>
+
+    <!-- 7.7: C# PriorityQueue API -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><span class="sec-num">7.7</span><div class="sec-line"></div></div>
+      <h2>C# PriorityQueue<T,TPriority> (.NET 6+)</h2>
+      <p class="lead">Built-in generic priority queue with custom priority support. Use this in production instead of manual heap implementation.</p>
+
+      <h3>Basic API</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">using</span> <span class="ty">System.Collections.Generic</span>;
+
+<span class="cm">// Min-heap by default (lower priority value = higher priority)</span>
+<span class="ty">var</span> pq = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt;();
+
+<span class="cm">// Enqueue: Add element with priority</span>
+pq.<span class="fn">Enqueue</span>(<span class="str">"task-high"</span>, <span class="num">1</span>);    <span class="cm">// Priority 1</span>
+pq.<span class="fn">Enqueue</span>(<span class="str">"task-low"</span>, <span class="num">5</span>);     <span class="cm">// Priority 5</span>
+pq.<span class="fn">Enqueue</span>(<span class="str">"task-med"</span>, <span class="num">3</span>);     <span class="cm">// Priority 3</span>
+
+<span class="cm">// Dequeue: Remove and return highest-priority element</span>
+<span class="kw">while</span> (pq.<span class="fn">Count</span> > <span class="num">0</span>) {
+    <span class="ty">string</span> task = pq.<span class="fn">Dequeue</span>();
+    <span class="ty">Console</span>.<span class="fn">WriteLine</span>(task);
+}
+<span class="cm">// Output: task-high, task-med, task-low (ascending priority)</span></pre>
+      </div>
+
+      <h3>Common Operations</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="cm">// Peek without removing</span>
+<span class="ty">var</span> (element, priority) = pq.<span class="fn">Peek</span>();
+
+<span class="cm">// Try operations (safe, return bool)</span>
+<span class="kw">if</span> (pq.<span class="fn">TryDequeue</span>(<span class="kw">out</span> <span class="ty">string</span> elem, <span class="kw">out</span> <span class="ty">int</span> pri)) {
+    <span class="ty">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"Got: {elem} (priority: {pri})"</span>);
+}
+
+<span class="cm">// Get count</span>
+<span class="ty">int</span> remaining = pq.<span class="fn">Count</span>;
+
+<span class="cm">// EnqueueRange: Add multiple elements at once</span>
+<span class="ty">var</span> items = <span class="kw">new</span>[] {
+    (<span class="str">"a"</span>, <span class="num">1</span>),
+    (<span class="str">"b"</span>, <span class="num">2</span>)
+};
+pq.<span class="fn">EnqueueRange</span>(items);</span></pre>
+      </div>
+
+      <h3>Custom Comparers for Max-Heap</h3>
+      <p>By default, lower numeric priority = higher priority (min-heap). For max-heap behavior, negate or use custom comparer.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="cm">// Option 1: Negate values</span>
+<span class="ty">var</span> maxHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+maxHeap.<span class="fn">Enqueue</span>(<span class="num">5</span>, -<span class="num">5</span>);   <span class="cm">// Negate for max-heap</span>
+maxHeap.<span class="fn">Enqueue</span>(<span class="num">3</span>, -<span class="num">3</span>);
+<span class="ty">Console</span>.<span class="fn">WriteLine</span>(maxHeap.<span class="fn">Dequeue</span>()); <span class="cm">// 5</span>
+
+<span class="cm">// Option 2: Custom comparer</span>
+<span class="ty">var</span> reverseComparer = <span class="kw">new</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">int</span>&gt;();
+<span class="ty">var</span> maxHeap2 = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;(reverseComparer);
+maxHeap2.<span class="fn">Enqueue</span>(<span class="num">5</span>, <span class="num">5</span>);
+maxHeap2.<span class="fn">Enqueue</span>(<span class="num">3</span>, <span class="num">3</span>);
+<span class="ty">Console</span>.<span class="fn">WriteLine</span>(maxHeap2.<span class="fn">Dequeue</span>()); <span class="cm">// 5</span>
+
+<span class="cm">// Simple reverse comparer</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">T</span>&gt; : <span class="ty">IComparer</span>&lt;<span class="ty">T</span>&gt; <span class="kw">where</span> <span class="ty">T</span> : <span class="ty">IComparable</span>&lt;<span class="ty">T</span>&gt; {
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Compare</span>(<span class="ty">T</span> a, <span class="ty">T</span> b) => b.<span class="fn">CompareTo</span>(a);
+}</span></pre>
+      </div>
+
+      <h3>Complex Priority Example: Tasks by Priority + Timestamp</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">record</span> <span class="ty">Task</span>(<span class="ty">string</span> Name, <span class="ty">int</span> Priority, <span class="ty">long</span> Timestamp);
+<span class="kw">public</span> <span class="kw">record</span> <span class="ty">TaskPriority</span>(<span class="ty">int</span> Priority, <span class="ty">long</span> Timestamp)
+    : <span class="ty">IComparable</span>&lt;<span class="ty">TaskPriority</span>&gt; {
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">CompareTo</span>(<span class="ty">TaskPriority</span> other) {
+        <span class="cm">// Higher priority first</span>
+        <span class="ty">int</span> pri = other.Priority.<span class="fn">CompareTo</span>(<span class="kw">this</span>.Priority);
+        <span class="kw">if</span> (pri != <span class="num">0</span>) <span class="kw">return</span> pri;
+        <span class="cm">// Then earlier timestamp (FIFO for same priority)</span>
+        <span class="kw">return</span> <span class="kw">this</span>.Timestamp.<span class="fn">CompareTo</span>(other.Timestamp);
+    }
+}
+
+<span class="ty">var</span> pq = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">Task</span>, <span class="ty">TaskPriority</span>&gt;();
+pq.<span class="fn">Enqueue</span>(<span class="kw">new</span> <span class="ty">Task</span>(<span class="str">"A"</span>, <span class="num">1</span>, <span class="num">100</span>), <span class="kw">new</span> <span class="ty">TaskPriority</span>(<span class="num">1</span>, <span class="num">100</span>));
+pq.<span class="fn">Enqueue</span>(<span class="kw">new</span> <span class="ty">Task</span>(<span class="str">"B"</span>, <span class="num">1</span>, <span class="num">50</span>), <span class="kw">new</span> <span class="ty">TaskPriority</span>(<span class="num">1</span>, <span class="num">50</span>));</pre>
+      </div>
+    </section>
+
+    <!-- 7.8: Heap Sort -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><span class="sec-num">7.8</span><div class="sec-line"></div></div>
+      <h2>Heap Sort - O(n log n), In-Place</h2>
+      <p class="lead">Sort array using heap as intermediate structure. Not stable but achieves O(n log n) time and O(1) space.</p>
+
+      <h3>Algorithm: Build Heap, Then Extract All</h3>
+      <div class="steps">
+        <div class="step"><div class="step-left"><div class="step-num">1</div></div><div class="step-body">Build max-heap from array - O(n)</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">2</div></div><div class="step-body">Swap root with last element, reduce heap size</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">3</div></div><div class="step-body">Bubble down new root - O(log n)</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">4</div></div><div class="step-body">Repeat n-1 times - O(n log n) total</div></div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">HeapSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> n = arr.Length;
+    
+    <span class="cm">// Step 1: Build max-heap - O(n)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = (n - <span class="num">2</span>) / <span class="num">2</span>; i >= <span class="num">0</span>; i--) {
+        <span class="fn">HeapifyDown</span>(arr, i, n);
+    }
+    
+    <span class="cm">// Step 2: Extract max n-1 times - O(n log n)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = n - <span class="num">1</span>; i > <span class="num">0</span>; i--) {
+        <span class="cm">// Move current max (root) to end</span>
+        (<span class="va">arr</span>[<span class="num">0</span>], <span class="va">arr</span>[i]) = (<span class="va">arr</span>[i], <span class="va">arr</span>[<span class="num">0</span>]);
+        <span class="cm">// Restore heap property in reduced array</span>
+        <span class="fn">HeapifyDown</span>(arr, <span class="num">0</span>, i);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">HeapifyDown</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> i, <span class="ty">int</span> n) {
+    <span class="kw">while</span> (<span class="num">2</span> * i + <span class="num">1</span> < n) {
+        <span class="ty">int</span> left = <span class="num">2</span> * i + <span class="num">1</span>;
+        <span class="ty">int</span> right = <span class="num">2</span> * i + <span class="num">2</span>;
+        <span class="ty">int</span> largest = i;
+
+        <span class="kw">if</span> (arr[left] > arr[largest]) largest = left;
+        <span class="kw">if</span> (right < n && arr[right] > arr[largest]) largest = right;
+        <span class="kw">if</span> (largest == i) <span class="kw">break</span>;
+
+        (<span class="va">arr</span>[i], <span class="va">arr</span>[largest]) = (<span class="va">arr</span>[largest], <span class="va">arr</span>[i]);
+        i = largest;
+    }
+}
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="cm">// Example: Sort [3, 1, 4, 1, 5, 9, 2]</span>
+<span class="ty">int</span>[] arr = { <span class="num">3</span>, <span class="num">1</span>, <span class="num">4</span>, <span class="num">1</span>, <span class="num">5</span>, <span class="num">9</span>, <span class="num">2</span> };
+<span class="fn">HeapSort</span>(arr);
+<span class="cm">// Result: [1, 1, 2, 3, 4, 5, 9]</span></pre>
+      </div>
+
+      <h3>Complexity Analysis</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Operation</th><th>Best</th><th>Average</th><th>Worst</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Heap Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td></tr>
+            <tr><td>Build Heap</td><td>O(n)</td><td>O(n)</td><td>O(n)</td><td>O(1)</td></tr>
+            <tr><td>Extract Max n times</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Not Stable:</strong> Heap sort doesn't preserve relative order of equal elements (unstable). Example: [1a, 2, 1b] may become [1b, 1a, 2]. For stable sort, use merge sort.</div>
+      </div>
+    </section>
+
+    <!-- 7.9: Top K Pattern -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><span class="sec-num">7.9</span><div class="sec-line"></div></div>
+      <h2>Top K Pattern - Find K Largest/Smallest Efficiently</h2>
+      <p class="lead">Use min-heap for top K largest (size K, discard mins), max-heap for top K smallest (size K, discard maxes).</p>
+
+      <h3>Top K Largest - Min-Heap Template</h3>
+      <p><strong>Idea:</strong> Maintain min-heap of size K containing K largest elements. When new element > min, remove min and add new element. Time: O(n log K).</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; <span class="fn">TopKLargest</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k) {
+    <span class="cm">// Min-heap: smallest of K largest elements at root</span>
+    <span class="ty">var</span> minHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        minHeap.<span class="fn">Enqueue</span>(num, num);
+        
+        <span class="cm">// Keep heap size at most K</span>
+        <span class="kw">if</span> (minHeap.<span class="fn">Count</span> > k) {
+            minHeap.<span class="fn">Dequeue</span>();
+        }
+    }
+    
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="kw">while</span> (minHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+        result.<span class="fn">Add</span>(minHeap.<span class="fn">Dequeue</span>());
+    }
+    result.<span class="fn">Reverse</span>(); <span class="cm">// Reverse to get descending order</span>
+    <span class="kw">return</span> result;
+}
+
+<span class="cm">// Example</span>
+<span class="ty">int</span>[] nums = { <span class="num">3</span>, <span class="num">2</span>, <span class="num">1</span>, <span class="num">5</span>, <span class="num">6</span>, <span class="num">4</span> };
+<span class="ty">var</span> topK = <span class="fn">TopKLargest</span>(nums, <span class="num">2</span>);
+<span class="cm">// Result: [6, 5]</span></pre>
+      </div>
+
+      <h3>Top K Smallest - Max-Heap Template</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; <span class="fn">TopKSmallest</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k) {
+    <span class="cm">// Max-heap: largest of K smallest elements at root</span>
+    <span class="ty">var</span> maxHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;(
+        <span class="kw">new</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">int</span>&gt;());
+    
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        maxHeap.<span class="fn">Enqueue</span>(num, num);
+        
+        <span class="cm">// Keep heap size at most K</span>
+        <span class="kw">if</span> (maxHeap.<span class="fn">Count</span> > k) {
+            maxHeap.<span class="fn">Dequeue</span>();
+        }
+    }
+    
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="kw">while</span> (maxHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+        result.<span class="fn">Add</span>(maxHeap.<span class="fn">Dequeue</span>());
+    }
+    result.<span class="fn">Reverse</span>(); <span class="cm">// Reverse to get ascending order</span>
+    <span class="kw">return</span> result;
+}
+    </section>
+
+    <!-- 7.10: Two Heaps Pattern -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag"><span class="sec-num">7.10</span><div class="sec-line"></div></div>
+      <h2>Two Heaps Pattern - Median from Data Stream</h2>
+      <p class="lead">Use max-heap for left half (smaller values) and min-heap for right half (larger values) to find median in O(log n).</p>
+
+      <h3>Algorithm</h3>
+      <ul style="margin: 16px 0 16px 32px; color: var(--ink2);">
+        <li>Max-heap stores values ≤ median. Min-heap stores values ≥ median.</li>
+        <li>Keep |maxHeap.size - minHeap.size| ≤ 1 for balance.</li>
+        <li>Add: O(log n) for insertion + balancing. Median: O(1) peek.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">MedianFinder</span> {
+    <span class="kw">private</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt; maxHeap; <span class="cm">// Left half</span>
+    <span class="kw">private</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt; minHeap; <span class="cm">// Right half</span>
+
+    <span class="kw">public</span> <span class="fn">MedianFinder</span>() {
+        maxHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;(
+            <span class="kw">new</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">int</span>&gt;());
+        minHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">AddNum</span>(<span class="ty">int</span> num) {
+        <span class="cm">// Add to max-heap first</span>
+        <span class="kw">if</span> (maxHeap.<span class="fn">Count</span> == <span class="num">0</span> || num <= maxHeap.<span class="fn">Peek</span>()) {
+            maxHeap.<span class="fn">Enqueue</span>(num, num);
+        } <span class="kw">else</span> {
+            minHeap.<span class="fn">Enqueue</span>(num, num);
+        }
+
+        <span class="cm">// Balance heaps: maxHeap can have at most 1 more element</span>
+        <span class="kw">if</span> (maxHeap.<span class="fn">Count</span> > minHeap.<span class="fn">Count</span> + <span class="num">1</span>) {
+            minHeap.<span class="fn">Enqueue</span>(maxHeap.<span class="fn">Dequeue</span>(), 
+                maxHeap.<span class="fn">Peek</span>());
+        }
+        <span class="kw">if</span> (minHeap.<span class="fn">Count</span> > maxHeap.<span class="fn">Count</span>) {
+            maxHeap.<span class="fn">Enqueue</span>(minHeap.<span class="fn">Dequeue</span>(), 
+                minHeap.<span class="fn">Peek</span>());
+        }
+    }
+
+    <span class="kw">public</span> <span class="ty">double</span> <span class="fn">FindMedian</span>() {
+        <span class="ty">int</span> total = maxHeap.<span class="fn">Count</span> + minHeap.<span class="fn">Count</span>;
+        
+        <span class="kw">if</span> (total % <span class="num">2</span> == <span class="num">1</span>) {
+            <span class="cm">// Odd: return max of left half</span>
+            <span class="kw">return</span> maxHeap.<span class="fn">Peek</span>();
+        } <span class="kw">else</span> {
+            <span class="cm">// Even: return average of both roots</span>
+            <span class="kw">return</span> (maxHeap.<span class="fn">Peek</span>() + minHeap.<span class="fn">Peek</span>()) / <span class="num">2.0</span>;
+        }
+    }
+}
+
+<span class="cm">// Example</span>
+<span class="ty">var</span> mf = <span class="kw">new</span> <span class="ty">MedianFinder</span>();
+mf.<span class="fn">AddNum</span>(<span class="num">1</span>);
+<span class="ty">Console</span>.<span class="fn">WriteLine</span>(mf.<span class="fn">FindMedian</span>()); <span class="cm">// 1.0</span>
+mf.<span class="fn">AddNum</span>(<span class="num">2</span>);
+<span class="ty">Console</span>.<span class="fn">WriteLine</span>(mf.<span class="fn">FindMedian</span>()); <span class="cm">// 1.5</span>
+mf.<span class="fn">AddNum</span>(<span class="num">3</span>);
+<span class="ty">Console</span>.<span class="fn">WriteLine</span>(mf.<span class="fn">FindMedian</span>()); <span class="cm">// 2.0</span></pre>
+      </div>
+    </section>
+
+    <!-- 7.11: K-way Merge Pattern -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag"><span class="sec-num">7.11</span><div class="sec-line"></div></div>
+      <h2>K-way Merge Pattern - Merge K Sorted Lists</h2>
+      <p class="lead">Use min-heap to efficiently merge K sorted lists. Store (value, listIndex, elementIndex) to track source.</p>
+
+      <h3>Algorithm: Track Source with Tuples</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; <span class="fn">MergeKSortedLists</span>(<span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="ty">int</span>&gt;&gt; lists) {
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+    
+    <span class="cm">// Min-heap: (value, listIndex, elementIndex)</span>
+    <span class="ty">var</span> minHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;(<span class="ty">int</span> val, <span class="ty">int</span> li, <span class="ty">int</span> ei), <span class="ty">int</span>&gt;();
+    
+    <span class="cm">// Add first element from each list</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < lists.<span class="fn">Count</span>; i++) {
+        <span class="kw">if</span> (lists[i].<span class="fn">Count</span> > <span class="num">0</span>) {
+            minHeap.<span class="fn">Enqueue</span>((lists[i][<span class="num">0</span>], i, <span class="num">0</span>), lists[i][<span class="num">0</span>]);
+        }
+    }
+    
+    <span class="cm">// Extract min, add next from same list</span>
+    <span class="kw">while</span> (minHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+        <span class="kw">var</span> (val, li, ei) = minHeap.<span class="fn">Dequeue</span>();
+        result.<span class="fn">Add</span>(val);
+        
+        <span class="cm">// Add next element from same list</span>
+        <span class="kw">if</span> (ei + <span class="num">1</span> < lists[li].<span class="fn">Count</span>) {
+            <span class="ty">int</span> nextVal = lists[li][ei + <span class="num">1</span>];
+            minHeap.<span class="fn">Enqueue</span>((nextVal, li, ei + <span class="num">1</span>), nextVal);
+        }
+    }
+    
+    <span class="kw">return</span> result;
+}
+
+<span class="cm">// Example: Merge [[1,4,5], [1,3,4], [2,6]]</span>
+<span class="ty">var</span> lists = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="ty">int</span>&gt;&gt; {
+    <span class="kw">new</span>() { <span class="num">1</span>, <span class="num">4</span>, <span class="num">5</span> },
+    <span class="kw">new</span>() { <span class="num">1</span>, <span class="num">3</span>, <span class="num">4</span> },
+    <span class="kw">new</span>() { <span class="num">2</span>, <span class="num">6</span> }
+};
+<span class="ty">var</span> merged = <span class="fn">MergeKSortedLists</span>(lists);
+<span class="cm">// Result: [1, 1, 2, 3, 4, 4, 5, 6]</span></pre>
+      </div>
+    </section>
+
+    <!-- 7.12: Practice Problems -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag"><span class="sec-num">7.12</span><div class="sec-line"></div></div>
+      <h2>Practice Problems with Full C# Solutions</h2>
+
+      <!-- Problem 1: Kth Largest -->
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">1</div>
+          <div>
+            <div class="algo-name">Kth Largest Element in Array (LeetCode 215)</div>
+            <div class="algo-desc">Find the kth largest element in an unsorted array. Expected O(n log k) solution using min-heap.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Heap</span>
+              <span class="badge b-blue">Top K</span>
+              <span class="badge b-green">O(n log k)</span>
+            </div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Maintain min-heap of size k. When heap has k elements and new element is larger than root, remove root and add new element. Final root is kth largest.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">FindKthLargest</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k) {
+    <span class="ty">var</span> minHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        minHeap.<span class="fn">Enqueue</span>(num, num);
+        <span class="kw">if</span> (minHeap.<span class="fn">Count</span> > k) {
+            minHeap.<span class="fn">Dequeue</span>();
+        }
+    }
+    
+    <span class="kw">return</span> minHeap.<span class="fn">Peek</span>();
+}
+
+<span class="cm">// Time: O(n log k) | Space: O(k)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 2: Top K Frequent -->
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">2</div>
+          <div>
+            <div class="algo-name">Top K Frequent Elements (LeetCode 347)</div>
+            <div class="algo-desc">Find k most frequent elements. Count frequencies, use min-heap of size k keyed by frequency.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Heap</span>
+              <span class="badge b-blue">Hash Table</span>
+              <span class="badge b-green">O(n log k)</span>
+            </div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TopKFrequent</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k) {
+    <span class="cm">// Count frequencies</span>
+    <span class="ty">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        freq[num] = freq.<span class="fn">GetValueOrDefault</span>(num) + <span class="num">1</span>;
+    }
+    
+    <span class="cm">// Min-heap by frequency</span>
+    <span class="ty">var</span> minHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    
+    <span class="kw">foreach</span> (<span class="kw">var</span> (num, count) <span class="kw">in</span> freq) {
+        minHeap.<span class="fn">Enqueue</span>(num, count);
+        <span class="kw">if</span> (minHeap.<span class="fn">Count</span> > k) {
+            minHeap.<span class="fn">Dequeue</span>();
+        }
+    }
+    
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">int</span>[k];
+    <span class="ty">int</span> idx = <span class="num">0</span>;
+    <span class="kw">while</span> (minHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+        result[idx++] = minHeap.<span class="fn">Dequeue</span>();
+    }
+    <span class="kw">return</span> result;
+}
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 3: Last Stone Weight -->
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">3</div>
+          <div>
+            <div class="algo-name">Last Stone Weight (LeetCode 1046)</div>
+            <div class="algo-desc">Destroy stones pairwise taking the two heaviest. Return weight of last remaining stone or 0.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Max-Heap</span>
+              <span class="badge b-green">O(n log n)</span>
+            </div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">LastStoneWeight</span>(<span class="ty">int</span>[] stones) {
+    <span class="cm">// Max-heap of stone weights</span>
+    <span class="ty">var</span> maxHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;(
+        <span class="kw">new</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">int</span>&gt;());
+    
+    <span class="kw">foreach</span> (<span class="ty">int</span> stone <span class="kw">in</span> stones) {
+        maxHeap.<span class="fn">Enqueue</span>(stone, stone);
+    }
+    
+    <span class="kw">while</span> (maxHeap.<span class="fn">Count</span> > <span class="num">1</span>) {
+        <span class="ty">int</span> first = maxHeap.<span class="fn">Dequeue</span>();
+        <span class="ty">int</span> second = maxHeap.<span class="fn">Dequeue</span>();
+        
+        <span class="kw">if</span> (first != second) {
+            <span class="ty">int</span> diff = first - second;
+            maxHeap.<span class="fn">Enqueue</span>(diff, diff);
+        }
+    }
+    
+    <span class="kw">return</span> maxHeap.<span class="fn">Count</span> == <span class="num">0</span> ? <span class="num">0</span> : maxHeap.<span class="fn">Dequeue</span>();
+}
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 4: Find Median from Data Stream -->
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">4</div>
+          <div>
+            <div class="algo-name">Find Median from Data Stream (LeetCode 295)</div>
+            <div class="algo-desc">Design class to find median of data stream. Add element O(log n), find median O(1).</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Two Heaps</span>
+              <span class="badge b-green">O(log n) add / O(1) find</span>
+            </div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p>Already covered in section 7.10 - use max-heap for left half, min-heap for right half.</p>
+        </div>
+      </div>
+
+      <!-- Problem 5: Reorganize String -->
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">5</div>
+          <div>
+            <div class="algo-name">Reorganize String (LeetCode 767)</div>
+            <div class="algo-desc">Rearrange characters so no two adjacent are the same. Return answer or empty if impossible.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Max-Heap</span>
+              <span class="badge b-blue">Greedy</span>
+              <span class="badge b-green">O(n log n)</span>
+            </div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span></div>
+            <pre><span class="kw">public</span> <span class="ty">string</span> <span class="fn">ReorganizeString</span>(<span class="ty">string</span> s) {
+    <span class="cm">// Count character frequencies</span>
+    <span class="ty">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> s) {
+        freq[c] = freq.<span class="fn">GetValueOrDefault</span>(c) + <span class="num">1</span>;
+    }
+    
+    <span class="cm">// If any char appears more than (n+1)/2 times, impossible</span>
+    <span class="ty">int</span> maxFreq = freq.<span class="fn">Values</span>.<span class="fn">Max</span>();
+    <span class="kw">if</span> (<span class="num">2</span> * maxFreq > s.Length + <span class="num">1</span>) <span class="kw">return</span> <span class="str">""</span>;
+    
+    <span class="cm">// Max-heap by frequency</span>
+    <span class="ty">var</span> maxHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;(<span class="ty">char</span>, <span class="ty">int</span>), <span class="ty">int</span>&gt;(
+        <span class="kw">new</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">int</span>&gt;());
+    
+    <span class="kw">foreach</span> (<span class="kw">var</span> (c, count) <span class="kw">in</span> freq) {
+        maxHeap.<span class="fn">Enqueue</span>((c, count), count);
+    }
+    
+    <span class="ty">var</span> sb = <span class="kw">new</span> <span class="ty">StringBuilder</span>();
+    <span class="kw">while</span> (maxHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+        <span class="kw">var</span> (c1, cnt1) = maxHeap.<span class="fn">Dequeue</span>();
+        sb.<span class="fn">Append</span>(c1);
+        
+        <span class="kw">if</span> (maxHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+            <span class="kw">var</span> (c2, cnt2) = maxHeap.<span class="fn">Dequeue</span>();
+            sb.<span class="fn">Append</span>(c2);
+            
+            <span class="cm">// Re-add if count remains</span>
+            <span class="kw">if</span> (cnt1 > <span class="num">1</span>) maxHeap.<span class="fn">Enqueue</span>((c1, cnt1 - <span class="num">1</span>), cnt1 - <span class="num">1</span>);
+            <span class="kw">if</span> (cnt2 > <span class="num">1</span>) maxHeap.<span class="fn">Enqueue</span>((c2, cnt2 - <span class="num">1</span>), cnt2 - <span class="num">1</span>);
+        }
+    }
+    
+    <span class="kw">return</span> sb.<span class="fn">ToString</span>();
+}
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 6: Task Scheduler -->
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">6</div>
+          <div>
+            <div class="algo-name">Task Scheduler (LeetCode 621)</div>
+            <div class="algo-desc">Schedule tasks with cooldown. Use greedy + max-heap to always schedule most frequent remaining task.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Max-Heap</span>
+              <span class="badge b-blue">Greedy</span>
+              <span class="badge b-green">O(n)</span>
+            </div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">LeastInterval</span>(<span class="ty">char</span>[] tasks, <span class="ty">int</span> n) {
+    <span class="cm">// Count task frequencies</span>
+    <span class="ty">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">char</span> t <span class="kw">in</span> tasks) {
+        freq[t] = freq.<span class="fn">GetValueOrDefault</span>(t) + <span class="num">1</span>;
+    }
+    
+    <span class="cm">// Max-heap by frequency</span>
+    <span class="ty">var</span> maxHeap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;(
+        <span class="kw">new</span> <span class="ty">ReverseComparer</span>&lt;<span class="ty">int</span>&gt;());
+    
+    <span class="kw">foreach</span> (<span class="ty">int</span> count <span class="kw">in</span> freq.<span class="fn">Values</span>) {
+        maxHeap.<span class="fn">Enqueue</span>(count, count);
+    }
+    
+    <span class="ty">int</span> intervals = <span class="num">0</span>;
+    <span class="kw">while</span> (maxHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+        <span class="ty">int</span> cycles = n + <span class="num">1</span>;
+        <span class="ty">int</span> taskCount = <span class="num">0</span>;
+        
+        <span class="cm">// Execute tasks greedily (pick n+1 most frequent)</span>
+        <span class="kw">var</span> temp = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+        <span class="kw">while</span> (taskCount < cycles && maxHeap.<span class="fn">Count</span> > <span class="num">0</span>) {
+            <span class="ty">int</span> count = maxHeap.<span class="fn">Dequeue</span>();
+            <span class="kw">if</span> (count > <span class="num">1</span>) {
+                temp.<span class="fn">Add</span>(count - <span class="num">1</span>);
+            }
+            taskCount++;
+        }
+        
+        <span class="cm">// Re-add remaining tasks</span>
+        <span class="kw">foreach</span> (<span class="ty">int</span> count <span class="kw">in</span> temp) {
+            maxHeap.<span class="fn">Enqueue</span>(count, count);
+        }
+        
+        <span class="cm">// Add intervals (either n+1 or remaining tasks if last cycle)</span>
+        intervals += maxHeap.<span class="fn">Count</span> == <span class="num">0</span> ? taskCount : cycles;
+    }
+    
+    <span class="kw">return</span> intervals;
+}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7.13: Comparison & Interview Tips -->
+    <section class="section fade" id="sec-13">
+      <div class="sec-tag"><span class="sec-num">7.13</span><div class="sec-line"></div></div>
+      <h2>Heap vs BST vs Sorted Array - Comparison</h2>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Operation</th><th>Heap</th><th>BST</th><th>Sorted Array</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Find Min/Max</td><td>O(1)</td><td>O(log n)</td><td>O(1)</td></tr>
+            <tr><td>Extract Min/Max</td><td>O(log n)</td><td>O(log n)</td><td>O(n)</td></tr>
+            <tr><td>Insert</td><td>O(log n)</td><td>O(log n)</td><td>O(n)</td></tr>
+            <tr><td>Find kth Element</td><td>O(n)</td><td>O(log n)*</td><td>O(1)</td></tr>
+            <tr><td>Range Query</td><td>O(n)</td><td>O(log n + k)</td><td>O(log n + k)</td></tr>
+            <tr><td>Build from Array</td><td>O(n)</td><td>O(n log n)</td><td>O(n log n)</td></tr>
+            <tr><td>Space Efficiency</td><td>Perfect</td><td>Extra pointers</td><td>Array size</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">💡</span>
+        <div><strong>When to Use Heap:</strong> Priority queues, top K problems, median finding, Dijkstra, Huffman. Fast extraction of extremes.</div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>When to Use BST:</strong> Balanced access to all elements, range queries, successor/predecessor, sorted iteration. O(log n) for all ops.</div>
+      </div>
+
+      <h2>Interview Tips</h2>
+
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">7.13.1</div>
+          <div class="tip-title">Always Use Built-in PriorityQueue</div>
+          <div class="tip-body">In interviews, use <code class="il">PriorityQueue&lt;T, TPriority&gt;</code> (.NET 6+) instead of manual heap. It's tested, fast, and saves time. Only implement manually if explicitly asked to "understand heap".</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">7.13.2</div>
+          <div class="tip-title">Handle Edge Cases</div>
+          <div class="tip-body">Empty heap, single element, duplicates, all same values. Test with k = 1, k = n, negative numbers if applicable.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">7.13.3</div>
+          <div class="tip-title">Explain Time Complexity</div>
+          <div class="tip-body">For top K: O(n log k) beats O(n log n) sorting for small K. Mention space trade-off: O(k) vs O(n). Show why BuildHeap is O(n) not O(n log n).</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">7.13.4</div>
+          <div class="tip-title">Recognize Heap Patterns</div>
+          <div class="tip-body">"Top K" → min-heap of size K. "Median from stream" → two heaps. "Merge K lists" → heap with source tracking. "Frequent" → heap by frequency not value.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">7.13.5</div>
+          <div class="tip-title">Custom Comparers</div>
+          <div class="tip-body">PriorityQueue uses ascending order by default. Negate values for descending, or pass custom IComparer for complex criteria (e.g., frequency then timestamp).</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">7.13.6</div>
+          <div class="tip-title">Mention Stability & In-place</div>
+          <div class="tip-body">Heap sort is not stable (may reorder equal elements) but is in-place. Mention tradeoffs: QuickSort unstable/in-place, MergeSort stable/O(n) space, HeapSort unstable/in-place.</div>
+        </div>
+      </div>
+
+      <h3>Common Mistakes to Avoid</h3>
+      <div class="callout danger">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Mistake 1:</strong> Using min-heap when you need max-heap (or vice versa). Always clarify: "Find K largest" = min-heap, "Find K smallest" = max-heap.</div>
+      </div>
+      <div class="callout danger">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Mistake 2:</strong> Forgetting to balance two heaps properly in median finding. maxHeap size should be ≥ minHeap size, differ by at most 1.</div>
+      </div>
+      <div class="callout danger">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Mistake 3:</strong> Implementing naive bubble-up/down with wrong termination. Check parent index ≥ 0 for bubble-up, left child < size for bubble-down.</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 7: Heaps & Priority Queues - Complete Reference Guide</p>
+      <p>Master priority-based data structures for interviews and production systems.</p>
+    </div>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+    document.querySelectorAll('.fade').forEach(el => {
+      el.classList.add('in');
+    });
+  </script>
+</body>
+</html>

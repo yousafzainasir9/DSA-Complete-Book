@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Recursion and backtracking — recursive thinking, call stack, permutations, combinations, N-Queens, Sudoku solver with C# solutions.">
+  <meta name="keywords" content="recursion, backtracking, permutations, combinations, N-Queens, Sudoku, C#, recursive algorithms">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch11-recursion-backtracking.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch11-recursion-backtracking.html">
+  <meta property="og:title" content="Chapter 11: Recursion & Backtracking - DSA Complete Book">
+  <meta property="og:description" content="Recursion and backtracking — recursive thinking, call stack, permutations, combinations, N-Queens, Sudoku solver with C# solutions.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch11-recursion-backtracking.html">
+  <meta name="twitter:title" content="Chapter 11: Recursion & Backtracking - DSA Complete Book">
+  <meta name="twitter:description" content="Recursion and backtracking — recursive thinking, call stack, permutations, combinations, N-Queens, Sudoku solver with C# solutions.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 11: Recursion & Backtracking - DSA Complete Book",
+  "description": "Recursion and backtracking \u2014 recursive thinking, call stack, permutations, combinations, N-Queens, Sudoku solver with C# solutions.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch11-recursion-backtracking.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 11: Recursion & Backtracking - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 11</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 11</div>
+      </div>
+      <h1>Recursion & <em>Backtracking</em></h1>
+      <p class="hero-sub">Master the art of solving problems by exploring all possibilities. From recursive fundamentals and design patterns to advanced backtracking algorithms like N-Queens and Sudoku solvers, learn how to elegantly handle complex search problems with pruning optimization.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">16</div>
+          <div class="stat-l">Topics Covered</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">50+</div>
+          <div class="stat-l">Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">13</div>
+          <div class="stat-l">Classic Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">8</div>
+          <div class="stat-l">Interview Tips</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">11.1</span> Recursion Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">11.2</span> The Call Stack & Stack Overflow</a>
+        <a href="#sec-3"><span class="toc-n">11.3</span> Recursion Patterns</a>
+        <a href="#sec-4"><span class="toc-n">11.4</span> Recursion vs Iteration</a>
+        <a href="#sec-5"><span class="toc-n">11.5</span> Backtracking Concept</a>
+        <a href="#sec-6"><span class="toc-n">11.6</span> Subsets & Power Set</a>
+        <a href="#sec-7"><span class="toc-n">11.7</span> Combinations</a>
+        <a href="#sec-8"><span class="toc-n">11.8</span> Permutations</a>
+        <a href="#sec-9"><span class="toc-n">11.9</span> N-Queens Problem</a>
+        <a href="#sec-10"><span class="toc-n">11.10</span> Sudoku Solver</a>
+        <a href="#sec-11"><span class="toc-n">11.11</span> Word Search</a>
+        <a href="#sec-12"><span class="toc-n">11.12</span> Phone Letter Combinations</a>
+        <a href="#sec-13"><span class="toc-n">11.13</span> Generate Parentheses</a>
+        <a href="#sec-14"><span class="toc-n">11.14</span> Palindrome Partitioning</a>
+        <a href="#sec-15"><span class="toc-n">11.15</span> Pruning Techniques</a>
+        <a href="#sec-16"><span class="toc-n">11.16</span> Interview Tips & Complexity</a>
+      </div>
+    </section>
+
+
+    <!-- Section 11.1: Recursion Fundamentals -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">11.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Recursion Fundamentals</h2>
+      <p class="lead">Recursion is a problem-solving technique where a function calls itself to solve smaller instances of the same problem.</p>
+
+      <p>Every recursive function requires two essential components:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body"><strong>Base Case:</strong> The condition that stops recursion. Without it, your function calls itself infinitely.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body"><strong>Recursive Case:</strong> The function calls itself with a simpler or smaller input, moving closer to the base case.</div>
+        </div>
+      </div>
+
+      <h3>Classic Example: Factorial</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static int</span> <span class="fn">Factorial</span>(<span class="kw">int</span> n)
+{
+    <span class="cm">// Base case: 0! = 1</span>
+    <span class="kw">if</span> (n == <span class="num">0</span>) <span class="kw">return</span> <span class="num">1</span>;
+
+    <span class="cm">// Recursive case: n! = n * (n-1)!</span>
+    <span class="kw">return</span> n * <span class="fn">Factorial</span>(n - <span class="num">1</span>);
+}</pre>
+      </div>
+
+      <p>For <code class="il">Factorial(5)</code>: 5 * Factorial(4) = 5 * (4 * (3 * (2 * (1 * 1)))) = 120</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time Complexity</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space Complexity</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+
+      <h3>Fibonacci Sequence - Naive vs Memoized</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Naive recursive - Exponential time O(2^n), redoes work</span>
+<span class="kw">public static int</span> <span class="fn">FibNaive</span>(<span class="kw">int</span> n)
+{
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">FibNaive</span>(n - <span class="num">1</span>) + <span class="fn">FibNaive</span>(n - <span class="num">2</span>);
+}
+
+<span class="cm">// Memoized - O(n) time, O(n) space</span>
+<span class="kw">public static int</span> <span class="fn">FibMemo</span>(<span class="kw">int</span> n, <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt; memo = <span class="kw">null</span>)
+{
+    memo ??= <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt;();
+
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">if</span> (memo.<span class="fn">ContainsKey</span>(n)) <span class="kw">return</span> memo[n];
+
+    <span class="kw">int</span> result = <span class="fn">FibMemo</span>(n - <span class="num">1</span>, memo) + <span class="fn">FibMemo</span>(n - <span class="num">2</span>, memo);
+    memo[n] = result;
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div><strong>Performance Impact:</strong> FibNaive(40) takes ~2 seconds. FibMemo(40) takes microseconds by caching computed values.</div>
+      </div>
+
+      <h3>Power Function with Divide-and-Conquer</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Calculate x^n in O(log n) time using exponentiation by squaring</span>
+<span class="kw">public static double</span> <span class="fn">Power</span>(<span class="kw">double</span> x, <span class="kw">int</span> n)
+{
+    <span class="kw">if</span> (n == <span class="num">0</span>) <span class="kw">return</span> <span class="num">1.0</span>;
+
+    <span class="kw">double</span> half = <span class="fn">Power</span>(x, n / <span class="num">2</span>);
+
+    <span class="kw">if</span> (n % <span class="num">2</span> == <span class="num">0</span>)
+        <span class="kw">return</span> half * half;
+    <span class="kw">else</span>
+        <span class="kw">return</span> half * half * x;
+}</pre>
+      </div>
+
+      <p>Time Complexity: O(log n) - Each call reduces exponent by half. Space: O(log n) for recursion depth.</p>
+    </section>
+
+    <!-- Section 11.2: Call Stack & Stack Overflow -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">11.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>The Call Stack & Stack Overflow</h2>
+      <p class="lead">Understanding how function calls are managed is critical for writing correct and efficient recursive code.</p>
+
+      <h3>How the Call Stack Works</h3>
+
+      <p>When a function is called, a new stack frame is created containing:</p>
+      <ul style="color:var(--ink2);margin:16px 0 16px 32px">
+        <li>Local variables and parameters</li>
+        <li>Return address (where to resume after function returns)</li>
+        <li>Previous frame pointer</li>
+      </ul>
+
+      <p>The stack has maximum depth (typically 1000-10000 frames). Each recursive call uses memory.</p>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠</div>
+        <div><strong>Stack Overflow Prevention:</strong> Every recursive function must have a base case guaranteed to be reached. The recursive case must make measurable progress toward the base case.</div>
+      </div>
+
+      <h3>Common Mistakes</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// WRONG: No base case - infinite recursion</span>
+<span class="kw">public static void</span> <span class="fn">BadRecursion</span>(<span class="kw">int</span> n)
+{
+    <span class="fn">Console</span>.<span class="fn">WriteLine</span>(n);
+    <span class="fn">BadRecursion</span>(n + <span class="num">1</span>); <span class="cm">// Always recurses!</span>
+}
+
+<span class="cm">// CORRECT: Proper base case</span>
+<span class="kw">public static void</span> <span class="fn">GoodRecursion</span>(<span class="kw">int</span> n)
+{
+    <span class="kw">if</span> (n &gt; <span class="num">100</span>) <span class="kw">return</span>; <span class="cm">// Base case</span>
+    <span class="fn">Console</span>.<span class="fn">WriteLine</span>(n);
+    <span class="fn">GoodRecursion</span>(n + <span class="num">1</span>);
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 11.3: Recursion Patterns -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">11.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Recursion Patterns</h2>
+      <p class="lead">Different problem structures call for different recursive approaches. Master these patterns.</p>
+
+      <h3>Pattern 1: Linear Recursion (Single Call)</h3>
+      <p>Function makes exactly one recursive call. Examples: factorial, array sum, searching.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Linear recursion: one recursive call per invocation</span>
+<span class="kw">public static int</span> <span class="fn">SumArray</span>(<span class="kw">int</span>[] arr, <span class="kw">int</span> index)
+{
+    <span class="kw">if</span> (index == arr.<span class="prop">Length</span>) <span class="kw">return</span> <span class="num">0</span>; <span class="cm">// Base case</span>
+    <span class="kw">return</span> arr[index] + <span class="fn">SumArray</span>(arr, index + <span class="num">1</span>); <span class="cm">// Single call</span>
+}
+
+<span class="kw">public static int</span> <span class="fn">BinarySearch</span>(<span class="kw">int</span>[] arr, <span class="kw">int</span> target, <span class="kw">int</span> left, <span class="kw">int</span> right)
+{
+    <span class="kw">if</span> (left &gt; right) <span class="kw">return</span> -<span class="num">1</span>;
+
+    <span class="kw">int</span> mid = left + (right - left) / <span class="num">2</span>;
+    <span class="kw">if</span> (arr[mid] == target) <span class="kw">return</span> mid;
+    <span class="kw">if</span> (arr[mid] &lt; target)
+        <span class="kw">return</span> <span class="fn">BinarySearch</span>(arr, target, mid + <span class="num">1</span>, right);
+    <span class="kw">else</span>
+        <span class="kw">return</span> <span class="fn">BinarySearch</span>(arr, target, left, mid - <span class="num">1</span>);
+}</pre>
+      </div>
+
+      <h3>Pattern 2: Binary Recursion (Two Calls)</h3>
+      <p>Function makes two recursive calls. Examples: tree traversal, merge sort, quicksort.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Binary tree traversal - two recursive calls</span>
+<span class="kw">public static void</span> <span class="fn">Traverse</span>(<span class="ty">TreeNode</span> root)
+{
+    <span class="kw">if</span> (root == <span class="kw">null</span>) <span class="kw">return</span>;
+
+    <span class="fn">Console</span>.<span class="fn">WriteLine</span>(root.<span class="prop">Val</span>);
+    <span class="fn">Traverse</span>(root.<span class="prop">Left</span>);   <span class="cm">// First call</span>
+    <span class="fn">Traverse</span>(root.<span class="prop">Right</span>);  <span class="cm">// Second call</span>
+}</pre>
+      </div>
+
+      <h3>Pattern 3: Tail Recursion (Optimizable)</h3>
+      <p>Recursive call is the last operation. Compilers can optimize to iteration.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Tail recursive: last operation is recursive call</span>
+<span class="kw">public static int</span> <span class="fn">FactorialTail</span>(<span class="kw">int</span> n, <span class="kw">int</span> acc = <span class="num">1</span>)
+{
+    <span class="kw">if</span> (n == <span class="num">0</span>) <span class="kw">return</span> acc;
+    <span class="kw">return</span> <span class="fn">FactorialTail</span>(n - <span class="num">1</span>, acc * n); <span class="cm">// Last operation is call</span>
+}
+
+<span class="cm">// Non-tail: work happens after recursive call</span>
+<span class="kw">public static int</span> <span class="fn">FactorialNonTail</span>(<span class="kw">int</span> n)
+{
+    <span class="kw">if</span> (n == <span class="num">0</span>) <span class="kw">return</span> <span class="num">1</span>;
+    <span class="kw">int</span> result = <span class="fn">FactorialNonTail</span>(n - <span class="num">1</span>);
+    <span class="kw">return</span> n * result; <span class="cm">// Work happens AFTER call</span>
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Tail Call Optimization:</strong> Modern compilers (especially in functional languages) can convert tail-recursive functions to iterative loops, using O(1) stack space instead of O(n).</div>
+      </div>
+    </section>
+
+    <!-- Section 11.4: Recursion vs Iteration -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">11.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Recursion vs Iteration</h2>
+      <p class="lead">Every recursive algorithm can be converted to iteration using an explicit stack. Understanding both perspectives is invaluable.</p>
+
+      <h3>Tree Traversal Example</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// RECURSIVE: Elegant and intuitive</span>
+<span class="kw">public static void</span> <span class="fn">InorderRecursive</span>(<span class="ty">TreeNode</span> root, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; result)
+{
+    <span class="kw">if</span> (root == <span class="kw">null</span>) <span class="kw">return</span>;
+
+    <span class="fn">InorderRecursive</span>(root.<span class="prop">Left</span>, result);
+    result.<span class="fn">Add</span>(root.<span class="prop">Val</span>);
+    <span class="fn">InorderRecursive</span>(root.<span class="prop">Right</span>, result);
+}
+
+<span class="cm">// ITERATIVE: Uses explicit stack, avoids function call overhead</span>
+<span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; <span class="fn">InorderIterative</span>(<span class="ty">TreeNode</span> root)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="kw">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">TreeNode</span>&gt;();
+    <span class="kw">var</span> current = root;
+
+    <span class="kw">while</span> (current != <span class="kw">null</span> || stack.<span class="prop">Count</span> &gt; <span class="num">0</span>)
+    {
+        <span class="kw">while</span> (current != <span class="kw">null</span>)
+        {
+            stack.<span class="fn">Push</span>(current);
+            current = current.<span class="prop">Left</span>;
+        }
+
+        current = stack.<span class="fn">Pop</span>();
+        result.<span class="fn">Add</span>(current.<span class="prop">Val</span>);
+        current = current.<span class="prop">Right</span>;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">✓ Recursion Strengths</div>
+          <div class="vs-item">Simpler, cleaner code</div>
+          <div class="vs-item">Natural for tree/graph problems</div>
+          <div class="vs-item">Easier to reason about</div>
+          <div class="vs-item">Fewer bugs in implementations</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">✗ Recursion Weaknesses</div>
+          <div class="vs-item">Stack space consumption (O(depth))</div>
+          <div class="vs-item">Function call overhead</div>
+          <div class="vs-item">Risk of stack overflow</div>
+          <div class="vs-item">Harder to debug/profile</div>
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">✓ Iteration Strengths</div>
+          <div class="vs-item">Explicit control over stack</div>
+          <div class="vs-item">No recursion depth limits</div>
+          <div class="vs-item">Can be faster (no call overhead)</div>
+          <div class="vs-item">Easier to profile and debug</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">✗ Iteration Weaknesses</div>
+          <div class="vs-item">More verbose code</div>
+          <div class="vs-item">Must manage stack manually</div>
+          <div class="vs-item">Harder to understand initially</div>
+          <div class="vs-item">More error-prone to implement</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Section 11.5: Backtracking Concept -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">11.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Backtracking Concept</h2>
+      <p class="lead">Backtracking systematically explores all possible solutions by building candidates incrementally and abandoning branches that cannot lead to valid solutions.</p>
+
+      <h3>The Universal Backtracking Template</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">private static void</span> <span class="fn">Backtrack</span>(<span class="ty">List</span>&lt;T&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;T&gt;&gt; results)
+{
+    <span class="cm">// 1. BASE CASE: Solution is complete</span>
+    <span class="kw">if</span> (<span class="fn">IsComplete</span>(current))
+    {
+        results.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;T&gt;(current));
+        <span class="kw">return</span>;
+    }
+
+    <span class="cm">// 2. EXPLORE: Try all possible next candidates</span>
+    <span class="kw">foreach</span> (var candidate <span class="kw">in</span> <span class="fn">GetCandidates</span>(current))
+    {
+        <span class="cm">// 3. CHOOSE: Add candidate</span>
+        current.<span class="fn">Add</span>(candidate);
+
+        <span class="cm">// 4. PRUNE: Check if still valid</span>
+        <span class="kw">if</span> (<span class="fn">IsValid</span>(current))
+        {
+            <span class="cm">// 5. RECURSE: Explore deeper</span>
+            <span class="fn">Backtrack</span>(current, results);
+        }
+
+        <span class="cm">// 6. UNCHOOSE: Remove candidate (backtrack)</span>
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+    }
+}</pre>
+      </div>
+
+      <h3>The Four Key Steps</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">1. Choose</div>
+          <div class="proof-body">Add a candidate element to the current partial solution.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">2. Explore</div>
+          <div class="proof-body">Recursively build upon the current partial solution.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">3. Prune</div>
+          <div class="proof-body">Validate constraints. Skip invalid branches early.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">4. Unchoose</div>
+          <div class="proof-body">Remove the candidate to try the next option (backtrack).</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div><strong>Key Insight:</strong> Backtracking explores a solution space systematically. By pruning invalid branches early, it avoids exploring the entire exponential search space unnecessarily.</div>
+      </div>
+
+      <h3>Complexity Pattern</h3>
+
+      <p>Backtracking problems typically have:</p>
+      <ul style="color:var(--ink2);margin:16px 0 16px 32px">
+        <li><strong>Time:</strong> O(N! × N) or O(2^N × N) depending on problem (factorial or exponential possibilities)</li>
+        <li><strong>Space:</strong> O(N) for recursion depth plus output storage</li>
+      </ul>
+    </section>
+
+    <!-- Section 11.6: Subsets & Power Set -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">11.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Subsets & Power Set</h2>
+      <p class="lead">Generate all possible subsets of a given set. The power set of n elements has 2^n members.</p>
+
+      <h3>Problem: Subsets (All Unique Elements)</h3>
+      <p>Given: [1, 2, 3] → Return: [[], [1], [2], [3], [1,2], [1,3], [2,3], [1,2,3]]</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">Subsets</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="fn">BacktrackSubsets</span>(nums, <span class="num">0</span>, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackSubsets</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> start, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; result)
+{
+    <span class="cm">// Add current subset (including empty set)</span>
+    result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(current));
+
+    <span class="cm">// Try adding each remaining element</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = start; i &lt; nums.<span class="prop">Length</span>; i++)
+    {
+        current.<span class="fn">Add</span>(nums[i]);           <span class="cm">// Choose</span>
+        <span class="fn">BacktrackSubsets</span>(nums, i + <span class="num">1</span>, current, result); <span class="cm">// Explore</span>
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>); <span class="cm">// Unchoose</span>
+    }
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(n × 2^n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(2^n)</div>
+        </div>
+      </div>
+
+      <h3>Problem: Subsets II (With Duplicates)</h3>
+      <p>Given: [1, 2, 2] → Return unique subsets only (skip duplicate combinations)</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">SubsetsWithDup</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(nums); <span class="cm">// Sort to group duplicates together</span>
+    <span class="fn">BacktrackSubsetsDup</span>(nums, <span class="num">0</span>, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackSubsetsDup</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> start, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; result)
+{
+    result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(current));
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = start; i &lt; nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="cm">// PRUNE: Skip duplicate at same recursion level</span>
+        <span class="kw">if</span> (i &gt; start && nums[i] == nums[i - <span class="num">1</span>]) <span class="kw">continue</span>;
+
+        current.<span class="fn">Add</span>(nums[i]);
+        <span class="fn">BacktrackSubsetsDup</span>(nums, i + <span class="num">1</span>, current, result);
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+    }
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Duplicate Handling:</strong> Sorting first allows us to detect consecutive duplicates. Skip if current element equals previous AND we haven't yet chosen the previous at this recursion level.</div>
+      </div>
+    </section>
+
+    <!-- Section 11.7: Combinations -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">11.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Combinations</h2>
+      <p class="lead">Generate all combinations of k elements from n elements. Order doesn't matter: [1,2] = [2,1].</p>
+
+      <h3>Problem: Combinations (n choose k)</h3>
+      <p>Given: n=4, k=2 → Return: [[1,2], [1,3], [1,4], [2,3], [2,4], [3,4]]</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">Combine</span>(<span class="kw">int</span> n, <span class="kw">int</span> k)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="fn">BacktrackCombine</span>(n, k, <span class="num">1</span>, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackCombine</span>(<span class="kw">int</span> n, <span class="kw">int</span> k, <span class="kw">int</span> start, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; result)
+{
+    <span class="cm">// Base case: combination is complete</span>
+    <span class="kw">if</span> (current.<span class="prop">Count</span> == k)
+    {
+        result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(current));
+        <span class="kw">return</span>;
+    }
+
+    <span class="cm">// Prune: not enough remaining numbers</span>
+    <span class="kw">int</span> remaining = k - current.<span class="prop">Count</span>;
+    <span class="kw">if</span> (n - start + <span class="num">1</span> &lt; remaining) <span class="kw">return</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = start; i &lt;= n; i++)
+    {
+        current.<span class="fn">Add</span>(i);
+        <span class="fn">BacktrackCombine</span>(n, k, i + <span class="num">1</span>, current, result);
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+    }
+}</pre>
+      </div>
+
+      <h3>Problem: Combination Sum</h3>
+      <p>Given: candidates=[2,3,6,7], target=7 → Return: [[2,2,3], [7]]</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">CombinationSum</span>(<span class="kw">int</span>[] candidates, <span class="kw">int</span> target)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(candidates);
+    <span class="fn">BacktrackCombSum</span>(candidates, target, <span class="num">0</span>, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackCombSum</span>(<span class="kw">int</span>[] candidates, <span class="kw">int</span> target, <span class="kw">int</span> start, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; result)
+{
+    <span class="kw">if</span> (target == <span class="num">0</span>)
+    {
+        result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(current));
+        <span class="kw">return</span>;
+    }
+
+    <span class="cm">// Prune: target is negative</span>
+    <span class="kw">if</span> (target &lt; <span class="num">0</span>) <span class="kw">return</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = start; i &lt; candidates.<span class="prop">Length</span>; i++)
+    {
+        <span class="cm">// Prune: candidate exceeds target</span>
+        <span class="kw">if</span> (candidates[i] &gt; target) <span class="kw">break</span>;
+
+        current.<span class="fn">Add</span>(candidates[i]);
+        <span class="cm">// Note: start stays same - can reuse candidates</span>
+        <span class="fn">BacktrackCombSum</span>(candidates, target - candidates[i], i, current, result);
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+    }
+}</pre>
+      </div>
+
+      <p><strong>Key Difference:</strong> Pass <code class="il">i</code> (not i+1) to allow reusing the same candidate.</p>
+    </section>
+
+    <!-- Section 11.8: Permutations -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">11.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Permutations</h2>
+      <p class="lead">Generate all arrangements of elements. Order matters: [1,2] ≠ [2,1]. Total: n! permutations.</p>
+
+      <h3>Problem: Permutations (Unique Elements)</h3>
+      <p>Given: [1,2,3] → Return: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">Permute</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="kw">var</span> used = <span class="kw">new</span> <span class="kw">bool</span>[nums.<span class="prop">Length</span>];
+    <span class="fn">BacktrackPermute</span>(nums, used, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackPermute</span>(<span class="kw">int</span>[] nums, <span class="kw">bool</span>[] used, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; result)
+{
+    <span class="kw">if</span> (current.<span class="prop">Count</span> == nums.<span class="prop">Length</span>)
+    {
+        result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(current));
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (used[i]) <span class="kw">continue</span>; <span class="cm">// Skip already used elements</span>
+
+        used[i] = <span class="kw">true</span>;
+        current.<span class="fn">Add</span>(nums[i]);
+        <span class="fn">BacktrackPermute</span>(nums, used, current, result);
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+        used[i] = <span class="kw">false</span>;
+    }
+}</pre>
+      </div>
+
+      <h3>Problem: Permutations II (With Duplicates)</h3>
+      <p>Given: [1,1,2] → Return unique permutations only</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">PermuteUnique</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(nums);
+    <span class="kw">var</span> used = <span class="kw">new</span> <span class="kw">bool</span>[nums.<span class="prop">Length</span>];
+    <span class="fn">BacktrackPermuteUnique</span>(nums, used, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackPermuteUnique</span>(<span class="kw">int</span>[] nums, <span class="kw">bool</span>[] used, <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; result)
+{
+    <span class="kw">if</span> (current.<span class="prop">Count</span> == nums.<span class="prop">Length</span>)
+    {
+        result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;(current));
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (used[i]) <span class="kw">continue</span>;
+
+        <span class="cm">// PRUNE: Skip duplicate at same level</span>
+        <span class="kw">if</span> (i &gt; <span class="num">0</span> && nums[i] == nums[i - <span class="num">1</span>] && !used[i - <span class="num">1</span>]) <span class="kw">continue</span>;
+
+        used[i] = <span class="kw">true</span>;
+        current.<span class="fn">Add</span>(nums[i]);
+        <span class="fn">BacktrackPermuteUnique</span>(nums, used, current, result);
+        current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+        used[i] = <span class="kw">false</span>;
+    }
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div><strong>Duplicate Pruning:</strong> Skip if current number equals previous AND the previous hasn't been used yet. This ensures duplicates appear in canonical order.</div>
+      </div>
+    </section>
+
+    <!-- Section 11.9: N-Queens -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">11.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>N-Queens Problem</h2>
+      <p class="lead">Place n queens on an n×n board so no two queens attack each other. A classic backtracking problem demonstrating constraint pruning.</p>
+
+      <h3>Full Solution</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt; <span class="fn">SolveNQueens</span>(<span class="kw">int</span> n)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt;();
+    <span class="kw">var</span> board = <span class="kw">new</span> <span class="kw">char</span>[n][];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        board[i] = <span class="kw">new</span> <span class="kw">char</span>[n];
+
+    <span class="fn">InitBoard</span>(board, n);
+    <span class="fn">BacktrackNQueens</span>(board, <span class="num">0</span>, n, result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">InitBoard</span>(<span class="kw">char</span>[][] board, <span class="kw">int</span> n)
+{
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; n; j++)
+            board[i][j] = <span class="str">'.'</span>;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackNQueens</span>(<span class="kw">char</span>[][] board, <span class="kw">int</span> row, <span class="kw">int</span> n, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt; result)
+{
+    <span class="cm">// Base case: all queens placed</span>
+    <span class="kw">if</span> (row == n)
+    {
+        result.<span class="fn">Add</span>(<span class="fn">ConvertBoard</span>(board));
+        <span class="kw">return</span>;
+    }
+
+    <span class="cm">// Try placing queen in each column of current row</span>
+    <span class="kw">for</span> (<span class="kw">int</span> col = <span class="num">0</span>; col &lt; n; col++)
+    {
+        <span class="cm">// Prune: check if placement is safe</span>
+        <span class="kw">if</span> (<span class="fn">IsSafe</span>(board, row, col, n))
+        {
+            board[row][col] = <span class="str">'Q'</span>;
+            <span class="fn">BacktrackNQueens</span>(board, row + <span class="num">1</span>, n, result);
+            board[row][col] = <span class="str">'.'</span>;
+        }
+    }
+}
+
+<span class="kw">private static bool</span> <span class="fn">IsSafe</span>(<span class="kw">char</span>[][] board, <span class="kw">int</span> row, <span class="kw">int</span> col, <span class="kw">int</span> n)
+{
+    <span class="cm">// Check column</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; row; i++)
+        <span class="kw">if</span> (board[i][col] == <span class="str">'Q'</span>) <span class="kw">return false</span>;
+
+    <span class="cm">// Check upper left diagonal</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = row - <span class="num">1</span>, j = col - <span class="num">1</span>; i &gt;= <span class="num">0</span> && j &gt;= <span class="num">0</span>; i--, j--)
+        <span class="kw">if</span> (board[i][j] == <span class="str">'Q'</span>) <span class="kw">return false</span>;
+
+    <span class="cm">// Check upper right diagonal</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = row - <span class="num">1</span>, j = col + <span class="num">1</span>; i &gt;= <span class="num">0</span> && j &lt; n; i--, j++)
+        <span class="kw">if</span> (board[i][j] == <span class="str">'Q'</span>) <span class="kw">return false</span>;
+
+    <span class="kw">return true</span>;
+}
+
+<span class="kw">private static</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; <span class="fn">ConvertBoard</span>(<span class="kw">char</span>[][] board)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;();
+    <span class="kw">foreach</span> (<span class="kw">var</span> row <span class="kw">in</span> board)
+        result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">string</span>(row));
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(N!)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(N²)</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div><strong>Pruning Power:</strong> Without constraint checks, we'd explore all n^n possibilities. With pruning, we explore ~N! valid configurations, drastically reducing search space.</div>
+      </div>
+    </section>
+
+    <!-- Section 11.10: Sudoku Solver -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <span class="sec-num">11.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Sudoku Solver</h2>
+      <p class="lead">Solve a Sudoku puzzle using backtracking. A complex constraint satisfaction problem.</p>
+
+      <h3>Full Solution</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static void</span> <span class="fn">SolveSudoku</span>(<span class="kw">char</span>[][] board)
+{
+    <span class="fn">BacktrackSudoku</span>(board);
+}
+
+<span class="kw">private static bool</span> <span class="fn">BacktrackSudoku</span>(<span class="kw">char</span>[][] board)
+{
+    <span class="cm">// Find next empty cell</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">9</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; <span class="num">9</span>; j++)
+        {
+            <span class="kw">if</span> (board[i][j] != <span class="str">'.'</span>) <span class="kw">continue</span>;
+
+            <span class="cm">// Try digits 1-9</span>
+            <span class="kw">for</span> (<span class="kw">char</span> digit = <span class="str">'1'</span>; digit &lt;= <span class="str">'9'</span>; digit++)
+            {
+                <span class="cm">// Prune: check if digit is valid</span>
+                <span class="kw">if</span> (<span class="fn">IsValidSudoku</span>(board, i, j, digit))
+                {
+                    board[i][j] = digit;
+                    <span class="kw">if</span> (<span class="fn">BacktrackSudoku</span>(board))
+                        <span class="kw">return true</span>;
+                    board[i][j] = <span class="str">'.'</span>; <span class="cm">// Unchoose</span>
+                }
+            }
+            <span class="kw">return false</span>; <span class="cm">// No valid digit found</span>
+        }
+    }
+    <span class="kw">return true</span>; <span class="cm">// All cells filled</span>
+}
+
+<span class="kw">private static bool</span> <span class="fn">IsValidSudoku</span>(<span class="kw">char</span>[][] board, <span class="kw">int</span> row, <span class="kw">int</span> col, <span class="kw">char</span> digit)
+{
+    <span class="cm">// Check row</span>
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; <span class="num">9</span>; j++)
+        <span class="kw">if</span> (board[row][j] == digit) <span class="kw">return false</span>;
+
+    <span class="cm">// Check column</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">9</span>; i++)
+        <span class="kw">if</span> (board[i][col] == digit) <span class="kw">return false</span>;
+
+    <span class="cm">// Check 3x3 box</span>
+    <span class="kw">int</span> boxRow = (row / <span class="num">3</span>) * <span class="num">3</span>;
+    <span class="kw">int</span> boxCol = (col / <span class="num">3</span>) * <span class="num">3</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = boxRow; i &lt; boxRow + <span class="num">3</span>; i++)
+        <span class="kw">for</span> (<span class="kw">int</span> j = boxCol; j &lt; boxCol + <span class="num">3</span>; j++)
+            <span class="kw">if</span> (board[i][j] == digit) <span class="kw">return false</span>;
+
+    <span class="kw">return true</span>;
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(9^(81-m))</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+      </div>
+
+      <p><em>m = number of given clues. Pruning constraints make it practical despite theoretical worst-case.</em></p>
+    </section>
+
+
+    <!-- Section 11.11: Word Search -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag">
+        <span class="sec-num">11.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Word Search</h2>
+      <p class="lead">Search for a word in a 2D board. Each cell can only be used once per path.</p>
+
+      <h3>Problem: Word Search I</h3>
+      <p>Given 2D board and word, determine if word exists in board (can move up/down/left/right).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static bool</span> <span class="fn">Exist</span>(<span class="kw">char</span>[][] board, <span class="kw">string</span> word)
+{
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; board.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; board[i].<span class="prop">Length</span>; j++)
+        {
+            <span class="kw">if</span> (board[i][j] == word[<span class="num">0</span>])
+            {
+                <span class="kw">if</span> (<span class="fn">BacktrackWordSearch</span>(board, word, <span class="num">0</span>, i, j))
+                    <span class="kw">return true</span>;
+            }
+        }
+    }
+    <span class="kw">return false</span>;
+}
+
+<span class="kw">private static bool</span> <span class="fn">BacktrackWordSearch</span>(<span class="kw">char</span>[][] board, <span class="kw">string</span> word, <span class="kw">int</span> index, <span class="kw">int</span> row, <span class="kw">int</span> col)
+{
+    <span class="cm">// Base case: entire word found</span>
+    <span class="kw">if</span> (index == word.<span class="prop">Length</span>)
+        <span class="kw">return true</span>;
+
+    <span class="cm">// Prune: out of bounds or cell mismatch</span>
+    <span class="kw">if</span> (row &lt; <span class="num">0</span> || row &gt;= board.<span class="prop">Length</span> ||
+        col &lt; <span class="num">0</span> || col &gt;= board[<span class="num">0</span>].<span class="prop">Length</span> ||
+        board[row][col] != word[index])
+        <span class="kw">return false</span>;
+
+    <span class="cm">// Prune: already visited</span>
+    <span class="kw">if</span> (board[row][col] == <span class="str">'#'</span>) <span class="kw">return false</span>;
+
+    <span class="cm">// Choose: mark visited</span>
+    <span class="kw">char</span> temp = board[row][col];
+    board[row][col] = <span class="str">'#'</span>;
+
+    <span class="cm">// Explore: try all 4 directions</span>
+    <span class="kw">bool</span> found = <span class="fn">BacktrackWordSearch</span>(board, word, index + <span class="num">1</span>, row + <span class="num">1</span>, col) ||
+                 <span class="fn">BacktrackWordSearch</span>(board, word, index + <span class="num">1</span>, row - <span class="num">1</span>, col) ||
+                 <span class="fn">BacktrackWordSearch</span>(board, word, index + <span class="num">1</span>, row, col + <span class="num">1</span>) ||
+                 <span class="fn">BacktrackWordSearch</span>(board, word, index + <span class="num">1</span>, row, col - <span class="num">1</span>);
+
+    <span class="cm">// Unchoose: unmark visited</span>
+    board[row][col] = temp;
+
+    <span class="kw">return</span> found;
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(N × 4^L)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(L)</div>
+        </div>
+      </div>
+
+      <p><em>N = board cells, L = word length. Each cell can branch to 4 neighbors.</em></p>
+    </section>
+
+    <!-- Section 11.12: Phone Letter Combinations -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag">
+        <span class="sec-num">11.12</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Letter Combinations of Phone Number</h2>
+      <p class="lead">Generate all possible letter combinations from a phone number (like old T9 texting).</p>
+
+      <h3>Full Solution</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; <span class="fn">LetterCombinations</span>(<span class="kw">string</span> digits)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;();
+
+    <span class="kw">if</span> (<span class="kw">string</span>.<span class="fn">IsNullOrEmpty</span>(digits)) <span class="kw">return</span> result;
+
+    <span class="kw">var</span> phoneMap = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">string</span>, <span class="kw">string</span>&gt;
+    {
+        { <span class="str">"2"</span>, <span class="str">"abc"</span> },
+        { <span class="str">"3"</span>, <span class="str">"def"</span> },
+        { <span class="str">"4"</span>, <span class="str">"ghi"</span> },
+        { <span class="str">"5"</span>, <span class="str">"jkl"</span> },
+        { <span class="str">"6"</span>, <span class="str">"mno"</span> },
+        { <span class="str">"7"</span>, <span class="str">"pqrs"</span> },
+        { <span class="str">"8"</span>, <span class="str">"tuv"</span> },
+        { <span class="str">"9"</span>, <span class="str">"wxyz"</span> }
+    };
+
+    <span class="fn">BacktrackPhone</span>(digits, <span class="num">0</span>, phoneMap, <span class="kw">new</span> <span class="ty">StringBuilder</span>(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackPhone</span>(<span class="kw">string</span> digits, <span class="kw">int</span> index, <span class="ty">Dictionary</span>&lt;<span class="kw">string</span>, <span class="kw">string</span>&gt; phoneMap, <span class="ty">StringBuilder</span> current, <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; result)
+{
+    <span class="cm">// Base case: all digits processed</span>
+    <span class="kw">if</span> (index == digits.<span class="prop">Length</span>)
+    {
+        result.<span class="fn">Add</span>(current.<span class="fn">ToString</span>());
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">string</span> digit = digits[index].<span class="fn">ToString</span>();
+    <span class="kw">string</span> letters = phoneMap[digit];
+
+    <span class="cm">// Try each letter for current digit</span>
+    <span class="kw">foreach</span> (<span class="kw">char</span> letter <span class="kw">in</span> letters)
+    {
+        current.<span class="fn">Append</span>(letter);
+        <span class="fn">BacktrackPhone</span>(digits, index + <span class="num">1</span>, phoneMap, current, result);
+        current.<span class="fn">Length</span>--;
+    }
+}</pre>
+      </div>
+
+      <p><strong>Example:</strong> Input: "23" → Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(4^n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(4^n)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11.13: Generate Parentheses -->
+    <section class="section fade" id="sec-13">
+      <div class="sec-tag">
+        <span class="sec-num">11.13</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Generate Parentheses</h2>
+      <p class="lead">Generate all valid combinations of n pairs of parentheses.</p>
+
+      <h3>Full Solution</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; <span class="fn">GenerateParenthesis</span>(<span class="kw">int</span> n)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;();
+    <span class="fn">BacktrackParens</span>(n, <span class="num">0</span>, <span class="num">0</span>, <span class="kw">new</span> <span class="ty">StringBuilder</span>(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackParens</span>(<span class="kw">int</span> n, <span class="kw">int</span> openCount, <span class="kw">int</span> closeCount, <span class="ty">StringBuilder</span> current, <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; result)
+{
+    <span class="cm">// Base case: 2n chars added</span>
+    <span class="kw">if</span> (current.<span class="prop">Length</span> == <span class="num">2</span> * n)
+    {
+        result.<span class="fn">Add</span>(current.<span class="fn">ToString</span>());
+        <span class="kw">return</span>;
+    }
+
+    <span class="cm">// Prune & Choose: can add opening paren?</span>
+    <span class="kw">if</span> (openCount &lt; n)
+    {
+        current.<span class="fn">Append</span>(<span class="str">'('</span>);
+        <span class="fn">BacktrackParens</span>(n, openCount + <span class="num">1</span>, closeCount, current, result);
+        current.<span class="fn">Length</span>--;
+    }
+
+    <span class="cm">// Prune & Choose: can add closing paren?</span>
+    <span class="kw">if</span> (closeCount &lt; openCount)
+    {
+        current.<span class="fn">Append</span>(<span class="str">')'</span>);
+        <span class="fn">BacktrackParens</span>(n, openCount, closeCount + <span class="num">1</span>, current, result);
+        current.<span class="fn">Length</span>--;
+    }
+}</pre>
+      </div>
+
+      <p><strong>Key Insight:</strong> Can only add ')' if we have more '(' than ')'. This pruning avoids invalid sequences entirely.</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(Catalan(n))</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(n)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11.14: Palindrome Partitioning -->
+    <section class="section fade" id="sec-14">
+      <div class="sec-tag">
+        <span class="sec-num">11.14</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Palindrome Partitioning</h2>
+      <p class="lead">Partition a string into all possible ways where each substring is a palindrome.</p>
+
+      <h3>Full Solution</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt; <span class="fn">Partition</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt;();
+    <span class="fn">BacktrackPartition</span>(s, <span class="num">0</span>, <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;(), result);
+    <span class="kw">return</span> result;
+}
+
+<span class="kw">private static void</span> <span class="fn">BacktrackPartition</span>(<span class="kw">string</span> s, <span class="kw">int</span> start, <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; current, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt; result)
+{
+    <span class="cm">// Base case: reached end of string</span>
+    <span class="kw">if</span> (start == s.<span class="prop">Length</span>)
+    {
+        result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;(current));
+        <span class="kw">return</span>;
+    }
+
+    <span class="cm">// Try all substrings starting from 'start'</span>
+    <span class="kw">for</span> (<span class="kw">int</span> end = start; end &lt; s.<span class="prop">Length</span>; end++)
+    {
+        <span class="cm">// Prune: only continue if substring is palindrome</span>
+        <span class="kw">if</span> (<span class="fn">IsPalindrome</span>(s, start, end))
+        {
+            current.<span class="fn">Add</span>(s.<span class="fn">Substring</span>(start, end - start + <span class="num">1</span>));
+            <span class="fn">BacktrackPartition</span>(s, end + <span class="num">1</span>, current, result);
+            current.<span class="fn">RemoveAt</span>(current.<span class="prop">Count</span> - <span class="num">1</span>);
+        }
+    }
+}
+
+<span class="kw">private static bool</span> <span class="fn">IsPalindrome</span>(<span class="kw">string</span> s, <span class="kw">int</span> left, <span class="kw">int</span> right)
+{
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="kw">if</span> (s[left] != s[right]) <span class="kw">return false</span>;
+        left++;
+        right--;
+    }
+    <span class="kw">return true</span>;
+}</pre>
+      </div>
+
+      <p><strong>Example:</strong> Input: "nitin" → Output: [["nitin"], ["n", "i", "t", "i", "n"], ["n", "iti", "n"]]</p>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time</div>
+          <div class="cx-v">O(N × 2^N)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(2^N)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11.15: Pruning Techniques -->
+    <section class="section fade" id="sec-15">
+      <div class="sec-tag">
+        <span class="sec-num">11.15</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Pruning Techniques</h2>
+      <p class="lead">Effective pruning can reduce search space exponentially. Master these techniques to optimize backtracking.</p>
+
+      <h3>Technique 1: Constraint Checking (Early Termination)</h3>
+      <p>Check validity before recursing deeper. Example: N-Queens checking if placement is safe.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// GOOD: Check constraints before recursing</span>
+<span class="kw">if</span> (<span class="fn">IsValid</span>(currentSolution))
+{
+    <span class="fn">Backtrack</span>(currentSolution);
+}
+
+<span class="cm">// BAD: Recurse first, then validate</span>
+<span class="fn">Backtrack</span>(currentSolution);
+<span class="kw">if</span> (!<span class="fn">IsValid</span>(currentSolution))
+    <span class="kw">return</span>;</pre>
+      </div>
+
+      <h3>Technique 2: Duplicate Skipping</h3>
+      <p>Skip equivalent candidates that lead to identical subtrees.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Sort input first to group duplicates</span>
+<span class="ty">Array</span>.<span class="fn">Sort</span>(nums);
+
+<span class="kw">for</span> (<span class="kw">int</span> i = start; i &lt; nums.<span class="prop">Length</span>; i++)
+{
+    <span class="cm">// Skip if same as previous at this recursion level</span>
+    <span class="kw">if</span> (i &gt; start && nums[i] == nums[i - <span class="num">1</span>])
+        <span class="kw">continue</span>;
+
+    <span class="fn">Backtrack</span>(nums, i + <span class="num">1</span>);
+}</pre>
+      </div>
+
+      <h3>Technique 3: Bound Checking (Mathematical Pruning)</h3>
+      <p>Use math to eliminate branches that cannot yield solutions.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Example: Combination generation - not enough remaining elements</span>
+<span class="kw">int</span> remaining = k - current.<span class="prop">Count</span>;
+<span class="kw">if</span> (n - start + <span class="num">1</span> &lt; remaining)
+    <span class="kw">return</span>; <span class="cm">// Not enough elements left, prune</span>
+
+<span class="cm">// Example: Target sum - exceeds limit</span>
+<span class="kw">if</span> (currentSum &gt; target)
+    <span class="kw">return</span>; <span class="cm">// Can't reach target, prune</span></pre>
+      </div>
+
+      <h3>Technique 4: Memoization</h3>
+      <p>Cache subproblem results to avoid recomputing.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm">// Store computed results</span>
+<span class="kw">private</span> <span class="ty">HashSet</span>&lt;<span class="kw">string</span>&gt; memo = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="kw">string</span>&gt;();
+
+<span class="kw">private void</span> <span class="fn">Backtrack</span>(...)
+{
+    <span class="kw">string</span> key = <span class="fn">GetKey</span>(currentState);
+    <span class="kw">if</span> (memo.<span class="fn">Contains</span>(key))
+        <span class="kw">return</span>;
+
+    <span class="cm">// Solve and memoize</span>
+    memo.<span class="fn">Add</span>(key);
+}</pre>
+      </div>
+
+      <h3>Summary of Pruning Impact</h3>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Without Pruning</th>
+              <th>With Pruning</th>
+              <th>Problem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>n^n</td>
+              <td>N! or 2^N</td>
+              <td>N-Queens</td>
+            </tr>
+            <tr>
+              <td>9^81</td>
+              <td>Practical</td>
+              <td>Sudoku</td>
+            </tr>
+            <tr>
+              <td>2^N × N</td>
+              <td>N × 2^N</td>
+              <td>Subsets with duplicates</td>
+            </tr>
+            <tr>
+              <td>Unlimited</td>
+              <td>Finishes</td>
+              <td>Word Search</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 11.16: Interview Tips & Complexity -->
+    <section class="section fade" id="sec-16">
+      <div class="sec-tag">
+        <span class="sec-num">11.16</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips & Complexity Analysis</h2>
+      <p class="lead">Practical guidance for solving recursion and backtracking problems in technical interviews.</p>
+
+      <h3>Interview Approach Checklist</h3>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body"><strong>Identify the Type:</strong> Is it pure recursion, divide-and-conquer, or backtracking? Subsets/Permutations are backtracking; merge sort is divide-and-conquer.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body"><strong>Define Base Cases:</strong> What stops recursion? Multiple base cases okay (e.g., null check AND array length check).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body"><strong>Identify Constraints:</strong> What makes partial solutions invalid? These become your pruning conditions.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body"><strong>Implement Carefully:</strong> Track state transitions precisely (add/remove for backtracking). Off-by-one errors are common.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body"><strong>Analyze Complexity:</strong> Count the branching factor and depth. Time = O(branches^depth × work_per_node).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">6</div></div>
+          <div class="step-body"><strong>Test Edge Cases:</strong> Empty input, single element, already solved, unsolvable. Use small examples to trace.</div>
+        </div>
+      </div>
+
+      <h3>Common Patterns to Recognize</h3>
+
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Pattern A</div>
+          <div class="tip-title">Subset Generation</div>
+          <div class="tip-body">2^N subsets. Use index-based iteration. Watch for duplicates – sort and skip consecutive equals.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Pattern B</div>
+          <div class="tip-title">Permutation</div>
+          <div class="tip-body">N! permutations. Track used elements with boolean array or swap-in-place. Need all elements per solution.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern C</div>
+          <div class="tip-title">Combination</div>
+          <div class="tip-body">C(N,K) combinations. Use index-based, increment start. Only K elements per solution.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern D</div>
+          <div class="tip-title">Path Finding</div>
+          <div class="tip-body">Board/Graph search. Mark visited cells, try 4 directions, unmark on backtrack. Watch dimensions.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Pattern E</div>
+          <div class="tip-title">Constraint Satisfaction</div>
+          <div class="tip-body">N-Queens, Sudoku. Check validity before recurse. Strong pruning is essential.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Pattern F</div>
+          <div class="tip-title">String Decomposition</div>
+          <div class="tip-body">Palindrome partitioning, word break. Partition by substring validity. May need DP for optimization.</div>
+        </div>
+      </div>
+
+      <h3>Complexity Analysis Framework</h3>
+
+      <p><strong>Time Complexity:</strong></p>
+      <ul style="color:var(--ink2);margin:16px 0 16px 32px">
+        <li><strong>Subsets:</strong> O(N × 2^N) – 2^N subsets, each takes O(N) to copy</li>
+        <li><strong>Permutations:</strong> O(N! × N) – N! perms, each takes O(N) to build</li>
+        <li><strong>Combinations:</strong> O(C(N,K) × K) – binomial choices, K-length strings</li>
+        <li><strong>N-Queens:</strong> O(N!) – pruning cuts exponential to factorial</li>
+        <li><strong>Backtracking (General):</strong> O(B^D × W) where B=branching factor, D=depth, W=work per node</li>
+      </ul>
+
+      <p><strong>Space Complexity:</strong></p>
+      <ul style="color:var(--ink2);margin:16px 0 16px 32px">
+        <li><strong>Recursion Depth:</strong> O(D) for call stack (D = depth)</li>
+        <li><strong>Output Storage:</strong> O(number_of_solutions) for result lists</li>
+        <li><strong>Memoization:</strong> O(states) for caching</li>
+      </ul>
+
+      <h3>Red Flags to Avoid</h3>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠</div>
+        <div><strong>Missing Base Case:</strong> Infinite recursion crash. Always have a guaranteed termination.</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠</div>
+        <div><strong>State Not Cleaned Up:</strong> Backtracking works only if you unchoose. Forget to remove → corrupted state.</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠</div>
+        <div><strong>Inefficient Pruning:</strong> Pruning late (after recursing) defeats the purpose. Check early.</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠</div>
+        <div><strong>Off-by-One Errors:</strong> Index boundaries, loop ranges, recursion terminators. Trace through manually with small input.</div>
+      </div>
+
+      <h3>How to Explain in Interview</h3>
+
+      <p><strong>Example Script:</strong></p>
+      <p><em>"This is a subset generation problem. I need all 2^N combinations of the array. I'll use backtracking: iterate through elements, choose each one, recurse, then unchoose to try alternatives. Since there are duplicates, I'll sort first, then skip consecutive equal elements at each recursion level to avoid duplicate subsets. Time is O(N × 2^N) because I have 2^N subsets and each takes O(N) to copy. Space is O(2^N) for storing results."</em></p>
+
+      <h3>Practice Problem Progression</h3>
+
+      <ol style="color:var(--ink2);margin:16px 0 16px 32px">
+        <li><strong>Warm-up:</strong> Factorial, Fibonacci (understand base case and recursion)</li>
+        <li><strong>Fundamentals:</strong> Subsets, Combinations, Permutations (core backtracking)</li>
+        <li><strong>Intermediate:</strong> Phone combinations, Parentheses, Palindrome partition (string operations)</li>
+        <li><strong>Advanced:</strong> N-Queens, Sudoku, Word Search (complex constraints and state)</li>
+        <li><strong>Optimization:</strong> Add memoization, pruning enhancements, iterative conversions</li>
+      </ol>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>DSA Complete Book - Chapter 11: Recursion & Backtracking</p>
+      <p>Master recursive thinking and explore solution spaces systematically with constraint pruning</p>
+    </div>
+  </footer>
+
+  <script>
+function copyCode(button) {
+  const codeBlock = button.parentElement.parentElement.querySelector('pre');
+  const text = codeBlock.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = button.textContent;
+    button.textContent = 'Copied!';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 2000);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const fadeElements = document.querySelectorAll('.fade');
+  fadeElements.forEach((el, index) => {
+    setTimeout(() => el.classList.add('in'), 50 + index * 50);
+  });
+});
+  </script>
+</body>
+</html>

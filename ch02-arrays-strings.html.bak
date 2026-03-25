@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 2: Arrays & Strings - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book <span class="pill">v1</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 2</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 2</div>
+      </div>
+      <h1>Arrays & <em>Strings</em></h1>
+      <p class="hero-sub">Master fundamental linear data structures. Learn memory layouts, essential techniques like two pointers and sliding window, and solve real-world problems with complete C# solutions.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">6</div><div class="stat-l">Core Techniques</div></div>
+        <div class="stat"><div class="stat-n">11</div><div class="stat-l">Practice Problems</div></div>
+        <div class="stat"><div class="stat-n">40+</div><div class="stat-l">Code Examples</div></div>
+        <div class="stat"><div class="stat-n">8</div><div class="stat-l">Interview Tips</div></div>
+      </div>
+    </section>
+
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">2.1</span> Array Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">2.2</span> Operations Complexity</a>
+        <a href="#sec-3"><span class="toc-n">2.3</span> String Fundamentals</a>
+        <a href="#sec-4"><span class="toc-n">2.4</span> Two Pointers Technique</a>
+        <a href="#sec-5"><span class="toc-n">2.5</span> Sliding Window</a>
+        <a href="#sec-6"><span class="toc-n">2.6</span> Prefix Sum & Kadane</a>
+        <a href="#sec-7"><span class="toc-n">2.7</span> In-Place Operations</a>
+        <a href="#sec-8"><span class="toc-n">2.8</span> Practice Problems</a>
+        <a href="#sec-9"><span class="toc-n">2.9</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><span class="sec-num">2.1</span><div class="sec-line"></div></div>
+      <h2>Array Fundamentals</h2>
+      <p class="lead">Arrays store contiguous elements in memory with O(1) random access.</p>
+
+      <h3>Static vs Dynamic</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Static array - fixed size</span>
+<span class="kw">int</span>[] nums = <span class="kw">new</span> <span class="kw">int</span>[<span class="num">10</span>];
+
+<span class="cm">// Dynamic array - List&lt;T&gt;</span>
+<span class="ty">List</span>&lt;<span class="kw">int</span>&gt; nums = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+nums.<span class="fn">Add</span>(<span class="num">5</span>);  <span class="cm">// O(1) amortized</span></pre></div>
+
+      <h3>Multi-Dimensional & Jagged Arrays</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// 2D rectangular</span>
+<span class="kw">int</span>[,] matrix = <span class="kw">new</span> <span class="kw">int</span>[<span class="num">3</span>, <span class="num">3</span>];
+
+<span class="cm">// Jagged (array of arrays)</span>
+<span class="kw">int</span>[][] jagged = <span class="kw">new</span> <span class="kw">int</span>[<span class="num">3</span>][];
+jagged[<span class="num">0</span>] = <span class="kw">new</span> <span class="kw">int</span>[<span class="num">2</span>];</pre></div>
+    </section>
+
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><span class="sec-num">2.2</span><div class="sec-line"></div></div>
+      <h2>Operations Complexity Table</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Operation</th><th>Time</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Access</td><td>O(1)</td><td>Direct index lookup</td></tr>
+          <tr><td>Search</td><td>O(n)</td><td>Unsorted array</td></tr>
+          <tr><td>Insert</td><td>O(n)</td><td>May shift elements</td></tr>
+          <tr><td>Delete</td><td>O(n)</td><td>Requires shifting</td></tr>
+          <tr><td>List.Add()</td><td>O(1)†</td><td>† = amortized</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><span class="sec-num">2.3</span><div class="sec-line"></div></div>
+      <h2>String Fundamentals in C#</h2>
+      <p class="lead">Strings are immutable; use StringBuilder for mutations to avoid O(n²) performance.</p>
+
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Strings are immutable</span>
+<span class="kw">string</span> s = <span class="str">"hello"</span>;
+s = s + <span class="str">" world"</span>;  <span class="cm">// Creates new string object</span>
+
+<span class="cm">// StringBuilder for efficient mutations</span>
+<span class="ty">StringBuilder</span> sb = <span class="kw">new</span> <span class="ty">StringBuilder</span>();
+sb.<span class="fn">Append</span>(<span class="str">"a"</span>);  <span class="cm">// O(1)</span>
+<span class="kw">string</span> result = sb.<span class="fn">ToString</span>();
+
+<span class="cm">// Char array for indexing</span>
+<span class="kw">char</span>[] chars = s.<span class="fn">ToCharArray</span>();</pre></div>
+    </section>
+
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><span class="sec-num">2.4</span><div class="sec-line"></div></div>
+      <h2>Two Pointers Technique</h2>
+      <p class="lead">Use two indices moving toward each other or at different speeds to solve problems in O(n) time.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Problem 1: Valid Palindrome</div>
+            <div class="algo-desc">Check if string is palindrome (alphanumeric only, case-insensitive).</div>
+            <div class="algo-tags"><span class="badge b-green">Two Pointers</span><span class="badge b-blue">O(n)</span></div></div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">IsPalindrome</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">int</span> left = <span class="num">0</span>, right = s.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="kw">while</span> (left < right)
+    {
+        <span class="kw">while</span> (left < right && !<span class="kw">char</span>.<span class="fn">IsLetterOrDigit</span>(s[left]))
+            left++;
+        <span class="kw">while</span> (left < right && !<span class="kw">char</span>.<span class="fn">IsLetterOrDigit</span>(s[right]))
+            right--;
+
+        <span class="kw">if</span> (<span class="kw">char</span>.<span class="fn">ToLower</span>(s[left]) != <span class="kw">char</span>.<span class="fn">ToLower</span>(s[right]))
+            <span class="kw">return</span> <span class="kw">false</span>;
+        left++; right--;
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Problem 2: Container With Most Water</div>
+            <div class="algo-desc">Find two lines that maximize water capacity using greedy two pointers.</div>
+            <div class="algo-tags"><span class="badge b-green">Two Pointers</span><span class="badge b-blue">O(n)</span></div></div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">MaxArea</span>(<span class="kw">int</span>[] height)
+{
+    <span class="kw">int</span> left = <span class="num">0</span>, right = height.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="kw">int</span> maxArea = <span class="num">0</span>;
+
+    <span class="kw">while</span> (left < right)
+    {
+        <span class="kw">int</span> area = <span class="fn">Math</span>.<span class="fn">Min</span>(height[left], height[right]) * (right - left);
+        maxArea = <span class="fn">Math</span>.<span class="fn">Max</span>(maxArea, area);
+
+        <span class="cm">// Move the shorter pointer (greedy)</span>
+        <span class="kw">if</span> (height[left] < height[right])
+            left++;
+        <span class="kw">else</span>
+            right--;
+    }
+    <span class="kw">return</span> maxArea;
+}</pre></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><span class="sec-num">2.5</span><div class="sec-line"></div></div>
+      <h2>Sliding Window Technique</h2>
+      <p class="lead">Maintain a dynamic window of elements satisfying a condition. Expand and contract to achieve O(n).</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Problem 1: Min Window Substring</div>
+            <div class="algo-desc">Find smallest window containing all characters from target string.</div>
+            <div class="algo-tags"><span class="badge b-green">Sliding Window</span><span class="badge b-blue">O(n)</span></div></div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">string</span> <span class="fn">MinWindow</span>(<span class="kw">string</span> s, <span class="kw">string</span> t)
+{
+    <span class="kw">var</span> dictT = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> t)
+        dictT[c] = dictT.<span class="fn">GetValueOrDefault</span>(c) + <span class="num">1</span>;
+
+    <span class="kw">int</span> required = dictT.<span class="prop">Count</span>, formed = <span class="num">0</span>;
+    <span class="kw">var</span> windowCounts = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">int</span> left = <span class="num">0</span>, minLen = <span class="kw">int</span>.<span class="prop">MaxValue</span>, minStart = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> right = <span class="num">0</span>; right < s.<span class="prop">Length</span>; right++)
+    {
+        <span class="kw">char</span> c = s[right];
+        windowCounts[c] = windowCounts.<span class="fn">GetValueOrDefault</span>(c) + <span class="num">1</span>;
+
+        <span class="kw">if</span> (dictT.<span class="fn">ContainsKey</span>(c) && windowCounts[c] == dictT[c])
+            formed++;
+
+        <span class="kw">while</span> (left <= right && formed == required)
+        {
+            <span class="kw">if</span> (right - left + <span class="num">1</span> < minLen)
+            {
+                minLen = right - left + <span class="num">1</span>;
+                minStart = left;
+            }
+
+            windowCounts[s[left]]--;
+            <span class="kw">if</span> (dictT.<span class="fn">ContainsKey</span>(s[left]) && windowCounts[s[left]] < dictT[s[left]])
+                formed--;
+            left++;
+        }
+    }
+
+    <span class="kw">return</span> minLen == <span class="kw">int</span>.<span class="prop">MaxValue</span> ? <span class="str">""</span> : s.<span class="fn">Substring</span>(minStart, minLen);
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Problem 2: Longest Substring No Repeats</div>
+            <div class="algo-desc">Find length of longest substring without repeating characters.</div>
+            <div class="algo-tags"><span class="badge b-green">Sliding Window</span><span class="badge b-blue">O(n)</span></div></div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">LengthOfLongestSubstring</span>(<span class="kw">string</span> s)
+{
+    <span class="kw">var</span> charIndex = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">int</span> maxLen = <span class="num">0</span>, left = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> right = <span class="num">0</span>; right < s.<span class="prop">Length</span>; right++)
+    {
+        <span class="kw">if</span> (charIndex.<span class="fn">ContainsKey</span>(s[right]))
+            left = <span class="fn">Math</span>.<span class="fn">Max</span>(left, charIndex[s[right]] + <span class="num">1</span>);
+
+        charIndex[s[right]] = right;
+        maxLen = <span class="fn">Math</span>.<span class="fn">Max</span>(maxLen, right - left + <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> maxLen;
+}</pre></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><span class="sec-num">2.6</span><div class="sec-line"></div></div>
+      <h2>Prefix Sum & Kadane's Algorithm</h2>
+
+      <h3>Prefix Sum</h3>
+      <p>Build cumulative sum array to compute range sums in O(1) after O(n) preprocessing.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">int</span>[] nums = {<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>};
+<span class="kw">int</span>[] prefix = <span class="kw">new</span> <span class="kw">int</span>[nums.<span class="prop">Length</span> + <span class="num">1</span>];
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < nums.<span class="prop">Length</span>; i++)
+    prefix[i + <span class="num">1</span>] = prefix[i] + nums[i];
+
+<span class="cm">// Sum from index i to j: prefix[j+1] - prefix[i]</span>
+<span class="kw">int</span> sum = prefix[<span class="num">3</span>] - prefix[<span class="num">1</span>];  <span class="cm">// sum of nums[1..2]</span></pre></div>
+
+      <h3>Kadane's Algorithm</h3>
+      <p>Find maximum subarray sum in O(n) with single pass tracking current and max sums.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">MaxSubArray</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">int</span> maxSum = nums[<span class="num">0</span>], currentSum = nums[<span class="num">0</span>];
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i < nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="cm">// Either extend current subarray or start new one</span>
+        currentSum = <span class="fn">Math</span>.<span class="fn">Max</span>(nums[i], currentSum + nums[i]);
+        maxSum = <span class="fn">Math</span>.<span class="fn">Max</span>(maxSum, currentSum);
+    }
+
+    <span class="kw">return</span> maxSum;
+}</pre></div>
+    </section>
+
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><span class="sec-num">2.7</span><div class="sec-line"></div></div>
+      <h2>In-Place Operations</h2>
+
+      <h3>Remove Duplicates</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Two pointers: i writes unique, j scans</span>
+<span class="kw">public</span> <span class="kw">int</span> <span class="fn">RemoveDuplicates</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">int</span> i = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">1</span>; j < nums.<span class="prop">Length</span>; j++)
+    {
+        <span class="kw">if</span> (nums[j] != nums[i])
+            nums[++i] = nums[j];
+    }
+    <span class="kw">return</span> i + <span class="num">1</span>;
+}</pre></div>
+
+      <h3>Rotate Array</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Reverse technique: reverse all, then reverse parts</span>
+<span class="kw">public</span> <span class="kw">void</span> <span class="fn">Rotate</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> k)
+{
+    k %= nums.<span class="prop">Length</span>;
+    <span class="fn">Reverse</span>(nums, <span class="num">0</span>, nums.<span class="prop">Length</span> - <span class="num">1</span>);
+    <span class="fn">Reverse</span>(nums, <span class="num">0</span>, k - <span class="num">1</span>);
+    <span class="fn">Reverse</span>(nums, k, nums.<span class="prop">Length</span> - <span class="num">1</span>);
+}
+
+<span class="kw">void</span> <span class="fn">Reverse</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> start, <span class="kw">int</span> end)
+{
+    <span class="kw">while</span> (start < end)
+        (<span class="va">nums</span>[start++], nums[end--]) = (nums[end], nums[start]);
+}</pre></div>
+    </section>
+
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><span class="sec-num">2.8</span><div class="sec-line"></div></div>
+      <h2>Practice Problems with Full Solutions</h2>
+
+      <h3>Problem 1: Two Sum</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Find two numbers that sum to target</span>
+<span class="kw">public</span> <span class="kw">int</span>[] <span class="fn">TwoSum</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> target)
+{
+    <span class="kw">var</span> seen = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">int</span> complement = target - nums[i];
+        <span class="kw">if</span> (seen.<span class="fn">ContainsKey</span>(complement))
+            <span class="kw">return</span> <span class="kw">new</span> <span class="kw">int</span>[] { seen[complement], i };
+        seen[nums[i]] = i;
+    }
+    <span class="kw">return</span> <span class="kw">new</span> <span class="kw">int</span>[] {};
+}</pre></div>
+
+      <h3>Problem 2: Three Sum</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Find all unique triplets that sum to 0</span>
+<span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">ThreeSum</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(nums);
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">int</span>&gt;&gt;();
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < nums.<span class="prop">Length</span> - <span class="num">2</span>; i++)
+    {
+        <span class="kw">if</span> (i > <span class="num">0</span> && nums[i] == nums[i - <span class="num">1</span>]) <span class="kw">continue</span>;
+
+        <span class="kw">int</span> left = i + <span class="num">1</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+        <span class="kw">while</span> (left < right)
+        {
+            <span class="kw">int</span> sum = nums[i] + nums[left] + nums[right];
+            <span class="kw">if</span> (sum == <span class="num">0</span>)
+            {
+                result.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; { nums[i], nums[left], nums[right] });
+                <span class="kw">while</span> (left < right && nums[left] == nums[left + <span class="num">1</span>]) left++;
+                <span class="kw">while</span> (left < right && nums[right] == nums[right - <span class="num">1</span>]) right--;
+                left++; right--;
+            }
+            <span class="kw">else</span> <span class="kw">if</span> (sum < <span class="num">0</span>) left++;
+            <span class="kw">else</span> right--;
+        }
+    }
+    <span class="kw">return</span> result;
+}</pre></div>
+
+      <h3>Problem 3: Move Zeroes</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Move all zeroes to end maintaining order</span>
+<span class="kw">public</span> <span class="kw">void</span> <span class="fn">MoveZeroes</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">int</span> pos = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (nums[i] != <span class="num">0</span>)
+            nums[pos++] = nums[i];
+    }
+    <span class="kw">while</span> (pos < nums.<span class="prop">Length</span>)
+        nums[pos++] = <span class="num">0</span>;
+}</pre></div>
+
+      <h3>Problem 4: Product of Array Except Self</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// No division; compute product at each position</span>
+<span class="kw">public</span> <span class="kw">int</span>[] <span class="fn">ProductExceptSelf</span>(<span class="kw">int</span>[] nums)
+{
+    <span class="kw">int</span>[] result = <span class="kw">new</span> <span class="kw">int</span>[nums.<span class="prop">Length</span>];
+    result[<span class="num">0</span>] = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i < nums.<span class="prop">Length</span>; i++)
+        result[i] = result[i - <span class="num">1</span>] * nums[i - <span class="num">1</span>];
+
+    <span class="kw">int</span> suffix = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = nums.<span class="prop">Length</span> - <span class="num">1</span>; i >= <span class="num">0</span>; i--)
+    {
+        result[i] *= suffix;
+        suffix *= nums[i];
+    }
+    <span class="kw">return</span> result;
+}</pre></div>
+
+      <h3>Problem 5: Valid Anagram</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Check if two strings are anagrams</span>
+<span class="kw">public</span> <span class="kw">bool</span> <span class="fn">IsAnagram</span>(<span class="kw">string</span> s, <span class="kw">string</span> t)
+{
+    <span class="kw">if</span> (s.<span class="prop">Length</span> != t.<span class="prop">Length</span>) <span class="kw">return</span> <span class="kw">false</span>;
+    <span class="kw">var</span> counts = <span class="kw">new</span> <span class="kw">int</span>[<span class="num">26</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < s.<span class="prop">Length</span>; i++)
+    {
+        counts[s[i] - <span class="str">'a'</span>]++;
+        counts[t[i] - <span class="str">'a'</span>]--;
+    }
+    <span class="kw">return</span> counts.<span class="fn">All</span>(c => c == <span class="num">0</span>);
+}</pre></div>
+    </section>
+
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><span class="sec-num">2.9</span><div class="sec-line"></div></div>
+      <h2>Interview Tips</h2>
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <div><strong>In-place modifications:</strong> Always clarify if modifying the input is allowed. Saves space when O(1) extra space is required.</div>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <div><strong>Edge cases:</strong> Handle empty arrays, single elements, duplicates, and negative numbers explicitly.</div>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <div><strong>Sorting trade-offs:</strong> Sorting costs O(n log n) but simplifies many problems. Consider if it's allowed.</div>
+      </div>
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <div><strong>Two pointers:</strong> Always works on sorted arrays. Moving the pointer with smaller value is often greedy-optimal.</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>DSA Complete Book - Chapter 2: Arrays & Strings</p>
+      <p>Master fundamental data structures and solve real-world problems with proven techniques.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const pre = this.closest('.code-block').querySelector('pre');
+        const text = pre.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const original = this.innerText;
+          this.innerText = 'Copied!';
+          setTimeout(() => this.innerText = original, 2000);
+        });
+      });
+    });
+
+    document.querySelectorAll('.fade').forEach(el => {
+      setTimeout(() => el.classList.add('in'), 100);
+    });
+  </script>
+</body>
+</html>

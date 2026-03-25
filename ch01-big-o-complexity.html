@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Understanding Big-O notation and time/space complexity — learn to analyze algorithm efficiency with practical examples and visual comparisons.">
+  <meta name="keywords" content="Big-O notation, time complexity, space complexity, algorithm analysis, O(n), O(log n), asymptotic analysis">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch01-big-o-complexity.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch01-big-o-complexity.html">
+  <meta property="og:title" content="Chapter 1: Big O Notation & Complexity Analysis - DSA Complete Book">
+  <meta property="og:description" content="Understanding Big-O notation and time/space complexity — learn to analyze algorithm efficiency with practical examples and visual comparisons.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch01-big-o-complexity.html">
+  <meta name="twitter:title" content="Chapter 1: Big O Notation & Complexity Analysis - DSA Complete Book">
+  <meta name="twitter:description" content="Understanding Big-O notation and time/space complexity — learn to analyze algorithm efficiency with practical examples and visual comparisons.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 1: Big O Notation & Complexity Analysis - DSA Complete Book",
+  "description": "Understanding Big-O notation and time/space complexity \u2014 learn to analyze algorithm efficiency with practical examples and visual comparisons.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch01-big-o-complexity.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 1: Big O Notation & Complexity Analysis - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* SHARED CSS TEMPLATE - Copy this into each chapter HTML file's <style> tag */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 1</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 1</div>
+      </div>
+      <h1>Big O Notation & <em>Complexity Analysis</em></h1>
+      <p class="hero-sub">Master the mathematical foundation for analyzing algorithm efficiency. Learn to evaluate code performance, calculate time and space complexity, and make data structure decisions based on rigorous analysis rather than intuition.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">13</div>
+          <div class="stat-l">Topics Covered</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">7</div>
+          <div class="stat-l">Complexity Classes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">35+</div>
+          <div class="stat-l">Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">12</div>
+          <div class="stat-l">Practice Problems</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">1.1</span> What is Algorithm Analysis?</a>
+        <a href="#sec-2"><span class="toc-n">1.2</span> Big O Notation</a>
+        <a href="#sec-3"><span class="toc-n">1.3</span> Big Omega & Big Theta</a>
+        <a href="#sec-4"><span class="toc-n">1.4</span> Common Complexity Classes</a>
+        <a href="#sec-5"><span class="toc-n">1.5</span> Space Complexity</a>
+        <a href="#sec-6"><span class="toc-n">1.6</span> Rules for Calculating Big O</a>
+        <a href="#sec-7"><span class="toc-n">1.7</span> Amortized Analysis</a>
+        <a href="#sec-8"><span class="toc-n">1.8</span> Best, Worst, Average Cases</a>
+        <a href="#sec-9"><span class="toc-n">1.9</span> Analyzing Recursive Algorithms</a>
+        <a href="#sec-10"><span class="toc-n">1.10</span> Pattern Recognition</a>
+        <a href="#sec-11"><span class="toc-n">1.11</span> Practice Problems</a>
+        <a href="#sec-12"><span class="toc-n">1.12</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 1.1 -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">1.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>What is Algorithm Analysis?</h2>
+      <p class="lead">Algorithm analysis is the process of evaluating an algorithm's resource consumption—primarily time and memory—as a function of input size. This mathematical framework allows us to predict performance, compare solutions objectively, and design scalable systems.</p>
+
+      <h3>Why We Analyze Algorithms</h3>
+      <p>Before computers became ubiquitous, algorithm analysis was an academic exercise. Today, it's essential. Consider a sorting algorithm that works perfectly for 1,000 items but takes hours for 100,000 items. A web service that handles 100 concurrent users gracefully might crash at 10,000. Without analysis, we build systems that fail catastrophically under real-world load.</p>
+
+      <p>Rigorous algorithm analysis helps us:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Predict scaling behavior:</strong> Know how performance degrades as input grows from thousands to millions of items</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Compare solutions objectively:</strong> Choose between algorithms based on mathematical proof, not gut feeling or single benchmarks</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Identify bottlenecks:</strong> Spot the real performance limits before they become production issues</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Design efficient systems:</strong> Make architectural decisions that remain valid as your system grows</div>
+        </div>
+      </div>
+
+      <h3>The RAM Model of Computation</h3>
+      <p>Algorithm analysis uses the <strong>Random Access Machine (RAM) model</strong>—an abstract computational model that approximates real hardware behavior. In this model:</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">RAM Model Assumptions</div>
+          <div class="proof-body">
+            <ul style="margin-left: 16px; line-height: 1.8;">
+              <li>Each primitive operation (arithmetic, assignment, comparison) takes exactly 1 unit of time</li>
+              <li>Loops and functions are not primitive—we count their internal operations</li>
+              <li>Memory access takes 1 unit of time (ignoring cache effects)</li>
+              <li>Infinite memory is available</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Why These Simplifications?</div>
+          <div class="proof-body">
+            Real hardware is complex: CPUs have caches, branch prediction, parallelization. Analyzing actual hardware costs is nearly impossible. The RAM model ignores low-level details to focus on <strong>algorithmic scalability</strong>—how the cost grows with input size. This captures the essence of algorithmic efficiency.
+          </div>
+        </div>
+      </div>
+
+      <p>The critical insight: we count operations, not wall-clock time. A sorting algorithm that performs 5n² comparisons is more efficient than one that performs 100n comparisons for small n, but the O(n) algorithm wins when n is large. This is the power of asymptotic analysis.</p>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div>
+          <strong>Asymptotic analysis focuses on growth rates, not absolute times.</strong> We care about how the cost function behaves as n approaches infinity, not whether code runs in 5ms or 50ms on your laptop.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.2 -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">1.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Big O Notation (O)</h2>
+      <p class="lead">Big O notation describes the <strong>upper bound</strong> of an algorithm's growth rate. It tells us the worst-case scenario: what's the maximum number of operations we might need as input size increases?</p>
+
+      <h3>Formal Definition</h3>
+      <p>In mathematical terms, f(n) = O(g(n)) if there exist positive constants c and n₀ such that:</p>
+      <div class="algo">
+        <div class="algo-body" style="text-align: center; font-family: var(--serif); font-size: 16px;">
+          f(n) ≤ c·g(n) for all n ≥ n₀
+        </div>
+      </div>
+
+      <p>What does this mean in plain English? If an algorithm performs 3n² + 5n + 12 operations, we say it's O(n²) because:</p>
+      <ul style="margin-left: 16px; margin-bottom: 16px; line-height: 1.8;">
+        <li>We can choose c = 4 and n₀ = 1</li>
+        <li>For any input size n ≥ 1, the expression 3n² + 5n + 12 is always ≤ 4n²</li>
+        <li>The constant factors and lower-order terms don't matter for asymptotic behavior</li>
+      </ul>
+
+      <h3>Upper Bound Interpretation</h3>
+      <p>Think of Big O as a pessimistic guarantee. When we say an algorithm is O(n), we're promising it will never need more than cn operations for any input of size n (for some constant c and sufficiently large n). This is <strong>safe to rely on</strong>—we know the algorithm won't surprise us with exponential behavior.</p>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Common misconception:</strong> O(n) means "takes exactly n operations." Wrong. It means "takes at most cn operations for some constant c." An algorithm performing n/2 operations is still O(n). An algorithm performing 1000n operations is also O(n). We ignore constants.
+        </div>
+      </div>
+
+      <h3>Example: Linear Search</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">LinearSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (arr[i] == target)
+            <span class="kw">return</span> i;
+    }
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <p>In the worst case, the loop executes n times (checking every element). Even with the comparison and potential early return, the dominant operation count is n. We say this algorithm is <strong>O(n)</strong>.</p>
+    </section>
+
+    <!-- Section 1.3 -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">1.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Big Omega (Ω) & Big Theta (Θ)</h2>
+      <p class="lead">While Big O describes upper bounds, Big Omega describes lower bounds, and Big Theta describes tight bounds. Together, they provide complete information about algorithm behavior.</p>
+
+      <h3>Big Omega (Ω) — Lower Bound</h3>
+      <p>f(n) = Ω(g(n)) if there exist positive constants c and n₀ such that f(n) ≥ c·g(n) for all n ≥ n₀.</p>
+
+      <p>Big Omega tells us the <strong>minimum</strong> work an algorithm must do. For example, any algorithm that must examine every element of an array has an Ω(n) lower bound. Even if we find the target immediately, the algorithm might still need to check each element in different scenarios—so we know it's at least O(n).</p>
+
+      <h3>Big Theta (Θ) — Tight Bound</h3>
+      <p>f(n) = Θ(g(n)) if f(n) = O(g(n)) AND f(n) = Ω(g(n)). In other words, the function grows at exactly the same rate as g(n), ignoring constants.</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Big O (Upper)</div>
+          <div class="proof-body">
+            f(n) ≤ c₁·g(n)<br/>
+            <span style="font-size: 12px; color: var(--ink3); margin-top: 8px; display: block;">"We promise it won't exceed this"</span>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Big Theta (Tight)</div>
+          <div class="proof-body">
+            c₁·g(n) ≤ f(n) ≤ c₂·g(n)<br/>
+            <span style="font-size: 12px; color: var(--ink3); margin-top: 8px; display: block;">"The actual growth rate"</span>
+          </div>
+        </div>
+      </div>
+
+      <p>When someone says "this algorithm is O(n log n)," they often mean Θ(n log n)—the algorithm's growth rate is precisely n log n (ignoring constants), not some unspecified upper bound. In interviews and technical communication, we usually use Big O loosely, but understanding the distinction matters for precision.</p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>For most practical purposes, use Big O.</strong> It's the standard in industry. But if you're analyzing an algorithm and you know both the upper and lower bounds are the same, mentioning Big Theta shows deep understanding.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.4 -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">1.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Common Complexity Classes</h2>
+      <p class="lead">A handful of complexity classes cover 99% of real algorithms. Understanding each one—how to recognize them, what they mean, and which algorithms fall into each class—is fundamental.</p>
+
+      <div class="tbl-wrap fade">
+        <table>
+          <thead>
+            <tr>
+              <th>Notation</th>
+              <th>Name</th>
+              <th>Rank</th>
+              <th>Growth</th>
+              <th>Typical Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>O(1)</td>
+              <td>Constant</td>
+              <td><span class="badge b-green">Excellent</span></td>
+              <td>No growth—always the same cost</td>
+              <td>Hash table lookup, array access</td>
+            </tr>
+            <tr>
+              <td>O(log n)</td>
+              <td>Logarithmic</td>
+              <td><span class="badge b-green">Excellent</span></td>
+              <td>Grows very slowly (10 ops for 1M items)</td>
+              <td>Binary search, balanced tree operations</td>
+            </tr>
+            <tr>
+              <td>O(n)</td>
+              <td>Linear</td>
+              <td><span class="badge b-blue">Good</span></td>
+              <td>Proportional to input</td>
+              <td>Linear search, iteration</td>
+            </tr>
+            <tr>
+              <td>O(n log n)</td>
+              <td>Linearithmic</td>
+              <td><span class="badge b-blue">Good</span></td>
+              <td>Just slightly worse than linear</td>
+              <td>Efficient sorting (merge, quick)</td>
+            </tr>
+            <tr>
+              <td>O(n²)</td>
+              <td>Quadratic</td>
+              <td><span class="badge b-amber">Fair</span></td>
+              <td>Doubles 4x when input doubles</td>
+              <td>Nested loops, simple sorting</td>
+            </tr>
+            <tr>
+              <td>O(2ⁿ)</td>
+              <td>Exponential</td>
+              <td><span class="badge b-red">Poor</span></td>
+              <td>Doubles when input grows by 1</td>
+              <td>Brute-force recursion, subsets</td>
+            </tr>
+            <tr>
+              <td>O(n!)</td>
+              <td>Factorial</td>
+              <td><span class="badge b-red">Terrible</span></td>
+              <td>Explodes for even modest n</td>
+              <td>Permutation generation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>O(1) — Constant Time</h3>
+      <p>An O(1) algorithm performs a fixed amount of work regardless of input size. This is the holy grail of performance.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Dictionary/hashtable lookup: O(1) average case</span>
+<span class="kw">var</span> value = myDictionary[key];
+
+<span class="cm">// Array access by index: always O(1)</span>
+<span class="ty">int</span> third = arr[<span class="num">2</span>];
+
+<span class="cm">// Arithmetic operations: O(1)</span>
+<span class="ty">int</span> sum = a + b;
+<span class="ty">double</span> average = sum / <span class="num">2</span>;</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div>
+          Hash table lookup is O(1) <strong>on average</strong>. Worst case (all hash collisions) is O(n), but this is rare with good hash functions. We discuss this with best/worst/average cases later.
+        </div>
+      </div>
+
+      <h3>O(log n) — Logarithmic Time</h3>
+      <p>The operation count grows logarithmically with input size. Classic example: binary search eliminates half the remaining items each iteration.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Binary search on sorted array</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">BinarySearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>, right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+        <span class="kw">if</span> (arr[mid] == target) <span class="kw">return</span> mid;
+        <span class="kw">if</span> (arr[mid] &lt; target) left = mid + <span class="num">1</span>;
+        <span class="kw">else</span> right = mid - <span class="num">1</span>;
+    }
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <p>Why O(log n)? The search space halves each iteration. For 1 million items, binary search needs at most log₂(1,000,000) ≈ 20 comparisons. For 1 billion items, still only about 30 comparisons. This is incredibly efficient.</p>
+
+      <h3>O(n) — Linear Time</h3>
+      <p>Work is proportional to input size. We touch every element roughly once.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Find maximum: O(n)</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindMax</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> max = arr[<span class="num">0</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; arr.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (arr[i] &gt; max)
+            max = arr[i];
+    }
+    <span class="kw">return</span> max;
+}</pre>
+      </div>
+
+      <p>Linear is excellent for most applications. You can process millions of items in seconds. O(n) algorithms scale directly with data: double the input, double the time. Predictable and manageable.</p>
+
+      <h3>O(n log n) — Linearithmic Time</h3>
+      <p>Slightly worse than linear, but vastly better than quadratic. This is the complexity of efficient sorting algorithms like merge sort, quicksort, and heap sort.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Merge sort (simplified pseudocode)</span>
+<span class="kw">void</span> <span class="fn">MergeSort</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="kw">if</span> (arr.<span class="prop">Length</span> &lt;= <span class="num">1</span>) <span class="kw">return</span>;
+
+    <span class="cm">// Divide: O(log n) depth</span>
+    <span class="ty">int</span> mid = arr.<span class="prop">Length</span> / <span class="num">2</span>;
+    <span class="fn">MergeSort</span>(Left(arr, mid));
+    <span class="fn">MergeSort</span>(Right(arr, mid));
+
+    <span class="cm">// Conquer: O(n) work per level</span>
+    <span class="fn">Merge</span>(arr, mid);
+}</pre>
+      </div>
+
+      <p>For 1 million items, O(n log n) requires about 20 million operations. O(n²) would require a trillion operations—vastly slower. This is why choosing the right sorting algorithm matters.</p>
+
+      <h3>O(n²) — Quadratic Time</h3>
+      <p>Typical of algorithms with nested loops over the input.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Bubble sort: O(n²)</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">BubbleSort</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span> - <span class="num">1</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; arr.<span class="prop">Length</span> - i - <span class="num">1</span>; j++)
+        {
+            <span class="kw">if</span> (arr[j] &gt; arr[j + <span class="num">1</span>])
+                <span class="fn">Swap</span>(<span class="kw">ref</span> arr[j], <span class="kw">ref</span> arr[j + <span class="num">1</span>]);
+        }
+    }
+}</pre>
+      </div>
+
+      <p>Quadratic is acceptable for small inputs (< 10,000 items) but becomes painful at scale. For 10,000 items, 100 million operations. For 100,000 items, 10 billion operations. Avoid for large datasets.</p>
+
+      <h3>O(2ⁿ) — Exponential Time</h3>
+      <p>The work doubles for each unit increase in input size. Exponential algorithms are impractical for n > 30 or so.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Naive Fibonacci: O(2ⁿ)</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">Fibonacci</span>(<span class="ty">int</span> n)
+{
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">Fibonacci</span>(n - <span class="num">1</span>) + <span class="fn">Fibonacci</span>(n - <span class="num">2</span>);
+    <span class="cm">// For each recursive call, we make 2 more calls!</span>
+}</pre>
+      </div>
+
+      <p>Computing Fibonacci(40) requires billions of function calls. Computing Fibonacci(50) requires trillions. This is why we use dynamic programming—to reduce the complexity from O(2ⁿ) to O(n).</p>
+
+      <h3>O(n!) — Factorial Time</h3>
+      <p>The worst of the worst. Factorial grows explosively: 10! = 3.6 million, 15! = 1.3 trillion.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Generating all permutations: O(n!)</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">GeneratePermutations</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> start)
+{
+    <span class="kw">if</span> (start == arr.<span class="prop">Length</span> - <span class="num">1</span>)
+    {
+        <span class="cm">// Process permutation</span>
+        <span class="kw">return</span>;
+    }
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = start; i &lt; arr.<span class="prop">Length</span>; i++)
+    {
+        <span class="fn">Swap</span>(<span class="kw">ref</span> arr[start], <span class="kw">ref</span> arr[i]);
+        <span class="fn">GeneratePermutations</span>(arr, start + <span class="num">1</span>);
+        <span class="fn">Swap</span>(<span class="kw">ref</span> arr[start], <span class="kw">ref</span> arr[i]);
+    }
+}</pre>
+      </div>
+
+      <p>Only use these algorithms for tiny inputs (n < 10). For anything larger, you need a different approach—usually dynamic programming or accepting an approximate solution.</p>
+    </section>
+
+    <!-- Section 1.5 -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">1.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Space Complexity</h2>
+      <p class="lead">Time isn't the only resource that matters. Space (memory) is equally important. An algorithm using gigabytes of RAM is impractical, regardless of speed. We analyze space complexity using the same Big O framework.</p>
+
+      <h3>Auxiliary Space vs Total Space</h3>
+      <p>There are two ways to think about space:</p>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Auxiliary Space (Often Reported)</div>
+          <div class="vs-item">Memory used by the algorithm <strong>excluding</strong> input and output</div>
+          <div class="vs-item">What we typically report as "space complexity"</div>
+          <div class="vs-item">More relevant for comparing algorithm variants</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Total Space</div>
+          <div class="vs-item">Memory for input + algorithm + output</div>
+          <div class="vs-item">Important for absolute resource planning</div>
+          <div class="vs-item">Less useful for algorithm comparison</div>
+        </div>
+      </div>
+
+      <h3>Examples: Time vs Space Tradeoff</h3>
+
+      <p><strong>Linear Search — O(n) time, O(1) space</strong></p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">LinearSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="cm">// Only uses: index variable i</span>
+    <span class="cm">// Space complexity: O(1)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span>; i++)
+        <span class="kw">if</span> (arr[i] == target)
+            <span class="kw">return</span> i;
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <p><strong>Hash Table Lookup — O(1) time, O(n) space</strong></p>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Preprocess: build a dictionary</span>
+<span class="kw">var</span> lookup = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">bool</span>&gt;();
+<span class="kw">foreach</span> (<span class="ty">var</span> num <span class="kw">in</span> arr)
+    lookup[num] = <span class="kw">true</span>;
+
+<span class="cm">// Space complexity: O(n) for the dictionary</span>
+<span class="cm">// Time complexity for lookup: O(1)</span>
+<span class="kw">bool</span> found = lookup.<span class="fn">ContainsKey</span>(target);</pre>
+      </div>
+
+      <p>This is a classic tradeoff: spend more space upfront to gain speed later. Hash tables, indexes, and caches all follow this pattern.</p>
+
+      <h3>Merge Sort Space Complexity</h3>
+      <p>Merge sort is O(n log n) time but O(n) space—it needs temporary arrays for merging. Quick sort, by contrast, is O(n log n) time but O(log n) space (just recursion stack), making it preferable when memory is tight.</p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>Always consider space complexity.</strong> In-place algorithms (O(1) auxiliary space) are valuable. When space is unlimited, algorithms with worse time complexity but better space usage (like storing precomputed results) might make sense.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.6 -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">1.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Rules for Calculating Big O</h2>
+      <p class="lead">Analyzing complexity from code requires understanding several rules. These rules let you determine Big O from first principles rather than memorizing tables.</p>
+
+      <h3>Rule 1: Drop Constants</h3>
+      <p>Constants don't affect asymptotic growth. O(2n) = O(n), O(5n²) = O(n²), O(100) = O(1).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// This does 3n operations (two loops)</span>
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++) <span class="fn">ProcessA</span>(i);
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++) <span class="fn">ProcessB</span>(i);
+
+<span class="cm">// But 3n is still O(n), not O(3n)</span>
+<span class="cm">// Constant is dropped</span></pre>
+      </div>
+
+      <h3>Rule 2: Drop Lower-Order Terms</h3>
+      <p>When you have multiple terms, only the largest one matters asymptotically. O(n² + n) = O(n²), O(n + log n) = O(n).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// O(n²) nested loop dominates</span>
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; n; j++)
+        <span class="fn">Process</span>(i, j);  <span class="cm">// O(n²)</span>
+
+<span class="cm">// This O(n) loop is negligible</span>
+<span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="fn">Cleanup</span>(i);  <span class="cm">// O(n)</span>
+
+<span class="cm">// Total: O(n² + n) = O(n²)</span></pre>
+      </div>
+
+      <h3>Rule 3: Different Variables for Different Inputs</h3>
+      <p>If a function operates on two independent inputs, don't combine them into a single variable.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Process two arrays independently</span>
+<span class="kw">public</span> <span class="kw">void</span> <span class="fn">ProcessArrays</span>(<span class="ty">int</span>[] a, <span class="ty">int</span>[] b)
+{
+    <span class="cm">// This is O(a.Length), not O(n)</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span> x <span class="kw">in</span> a)
+        <span class="fn">Process</span>(x);
+
+    <span class="cm">// This is O(b.Length), not O(n)</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span> y <span class="kw">in</span> b)
+        <span class="fn">Process</span>(y);
+
+    <span class="cm">// Total: O(a.Length + b.Length), or O(m + n)</span>
+}</pre>
+      </div>
+
+      <p>This is crucial. A function that processes m elements from one array and n from another is O(m + n), not O(n). Merging two sorted arrays is O(m + n), not O(n²).</p>
+
+      <h3>Rule 4: Multiplication vs Addition</h3>
+      <p>When loops are <strong>nested</strong>, multiply. When they're <strong>sequential</strong>, add.</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Nested Loops → Multiply</div>
+          <div class="proof-body">
+            <code class="il" style="display: block; margin: 8px 0;">for i in 1..n:<br/>    for j in 1..n:</code>
+            Total iterations: n × n = n²<br/>
+            Complexity: <strong>O(n²)</strong>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Sequential Loops → Add</div>
+          <div class="proof-body">
+            <code class="il" style="display: block; margin: 8px 0;">for i in 1..n:<br/>for j in 1..n:</code>
+            Total iterations: n + n = 2n<br/>
+            Complexity: <strong>O(n)</strong> (constant dropped)
+          </div>
+        </div>
+      </div>
+
+      <h3>Rule 5: Recursion and Branching</h3>
+      <p>When a function calls itself multiple times, the branches multiply. Binary tree traversal visits 2^d nodes at depth d.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Naive recursive Fibonacci calls itself twice per invocation</span>
+<span class="kw">long</span> <span class="fn">Fib</span>(<span class="ty">int</span> n)
+{
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">Fib</span>(n-<span class="num">1</span>) + <span class="fn">Fib</span>(n-<span class="num">2</span>);
+    <span class="cm">// Two branches per call = O(2ⁿ)</span>
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 1.7 -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">1.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Amortized Analysis</h2>
+      <p class="lead">Some operations are expensive individually but cheap on average across many invocations. Amortized analysis reveals the true cost.</p>
+
+      <h3>Dynamic Array Example</h3>
+      <p>A dynamic array (C# List&lt;T&gt;) doubles its capacity when it runs out of space. Appending usually takes O(1), but occasionally requires copying all elements, taking O(n). How do we characterize this?</p>
+
+      <div class="algo">
+        <div class="algo-body" style="padding: 24px;">
+          <p style="margin-bottom: 16px;"><strong>Amortized complexity: O(1) per operation.</strong></p>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;">Why? If we perform n append operations on an initially empty list:</p>
+          <ul style="margin: 12px 0 0 16px; font-size: 14px; color: var(--ink2); line-height: 1.7;">
+            <li>First append: 1 element (cost 1)</li>
+            <li>When capacity 1 is full, double to 2 (copy 1 element, cost 1)</li>
+            <li>When capacity 2 is full, double to 4 (copy 2 elements, cost 2)</li>
+            <li>When capacity 4 is full, double to 8 (copy 4 elements, cost 4)</li>
+            <li>...and so on</li>
+            <li>Total copying cost: 1 + 1 + 2 + 4 + 8 + ... + n/2 &lt; 2n</li>
+            <li><strong>Total for n operations: n (appends) + 2n (copying) = 3n = O(n)</strong></li>
+            <li><strong>Average per operation: 3n/n = O(1)</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div>
+          <strong>Amortized ≠ Average case.</strong> Average case assumes random inputs. Amortized assumes a sequence of operations and distributes the expensive operations across many cheap ones. Amortized analysis is often tighter and more useful.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.8 -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">1.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Best, Worst, Average Case</h2>
+      <p class="lead">An algorithm's performance depends on input data. The same algorithm might be fast on one input and slow on another. We characterize performance in three scenarios.</p>
+
+      <h3>Example: Linear Search</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Best Case</div>
+          <div class="proof-body">
+            Target is at index 0. We find it immediately.<br/><br/>
+            <strong>Operations: 1</strong><br/>
+            <strong>Complexity: O(1)</strong><br/>
+            <span class="proof-note"><strong>Note:</strong> Rarely useful to report. Usually too optimistic.</span>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Worst Case</div>
+          <div class="proof-body">
+            Target is at the last index (or missing). We scan the entire array.<br/><br/>
+            <strong>Operations: n</strong><br/>
+            <strong>Complexity: O(n)</strong><br/>
+            <span class="proof-note"><strong>Note:</strong> Most important. This is our guarantee.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-body">
+          <div class="proof-title">Average Case</div>
+          <div class="proof-body">
+            On average, the target is at position n/2. We examine half the array.<br/><br/>
+            <strong>Operations: n/2</strong><br/>
+            <strong>Complexity: O(n)</strong><br/>
+            <span class="proof-note"><strong>Note:</strong> Often same Big O as worst case, just with different constants.</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Example: Quicksort</h3>
+      <p>Quicksort partitions the array around a pivot. If the pivot is always at the median (balanced partition), it's O(n log n). If the pivot is always at an extreme (worst partition), it's O(n²).</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Pivot Choice</th>
+              <th>Complexity</th>
+              <th>Typical Scenario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Best</td>
+              <td>Always median (balanced partition)</td>
+              <td>O(n log n)</td>
+              <td>Random pivot on random data</td>
+            </tr>
+            <tr>
+              <td>Average</td>
+              <td>Random pivot on average data</td>
+              <td>O(n log n)</td>
+              <td>Real-world usage</td>
+            </tr>
+            <tr>
+              <td>Worst</td>
+              <td>Always smallest/largest element</td>
+              <td>O(n²)</td>
+              <td>Already sorted data + naive pivot selection</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Why We Usually Report Worst Case</h3>
+      <p>Worst case is the default because:</p>
+      <ul style="margin-left: 16px; margin-bottom: 16px; line-height: 1.8;">
+        <li><strong>It's a guarantee.</strong> You know the algorithm will never be slower than this.</li>
+        <li><strong>It's predictable.</strong> You can plan system capacity around it.</li>
+        <li><strong>It's conservative.</strong> Overestimating is safer than underestimating performance.</li>
+      </ul>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>In interviews, specify which case you're analyzing.</strong> "This algorithm is O(n log n) on average, O(n²) worst case" is more precise than just saying "O(n log n)".
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.9 -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">1.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Analyzing Recursive Algorithms</h2>
+      <p class="lead">Recursion requires special analysis techniques. We use recurrence relations and the Master Theorem to determine complexity.</p>
+
+      <h3>Recurrence Relations</h3>
+      <p>A recurrence relation expresses the total work in terms of smaller subproblems. For example, merge sort divides the problem into two halves, solves each recursively, then merges in O(n) time:</p>
+
+      <div class="algo">
+        <div class="algo-body" style="text-align: center; font-family: var(--serif); font-size: 16px;">
+          T(n) = 2·T(n/2) + n
+        </div>
+      </div>
+
+      <p>Breaking this down:</p>
+      <ul style="margin-left: 16px; margin-bottom: 16px; line-height: 1.8;">
+        <li><code class="il">2·T(n/2)</code>: Two recursive calls on arrays of size n/2</li>
+        <li><code class="il">+ n</code>: O(n) work to merge the results</li>
+        <li><code class="il">T(1) = 1</code>: Base case—single element takes O(1)</li>
+      </ul>
+
+      <h3>The Master Theorem</h3>
+      <p>For recurrences of the form <code class="il">T(n) = a·T(n/b) + f(n)</code>, the Master Theorem gives us the solution:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Condition</th>
+              <th>Solution</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>f(n) = O(n^(log_b(a) - ε)) for some ε > 0</td>
+              <td>T(n) = Θ(n^(log_b(a)))</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>f(n) = Θ(n^(log_b(a)) · log^k(n))</td>
+              <td>T(n) = Θ(n^(log_b(a)) · log^(k+1)(n))</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>f(n) = Ω(n^(log_b(a) + ε)) and a·f(n/b) ≤ c·f(n)</td>
+              <td>T(n) = Θ(f(n))</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Example: Merge Sort</h3>
+      <p><code class="il">T(n) = 2·T(n/2) + n</code></p>
+      <p>Using the Master Theorem: a = 2, b = 2, f(n) = n.</p>
+      <p>log_b(a) = log_2(2) = 1, so n^(log_b(a)) = n^1 = n.</p>
+      <p>f(n) = n = Θ(n^1), which matches Case 2 with k = 0.</p>
+      <p><strong>Solution: T(n) = Θ(n · log(n)) = O(n log n)</strong></p>
+
+      <h3>Example: Binary Search</h3>
+      <p><code class="il">T(n) = 1·T(n/2) + 1</code></p>
+      <p>a = 1, b = 2, f(n) = 1.</p>
+      <p>log_b(a) = log_2(1) = 0, so n^(log_b(a)) = n^0 = 1.</p>
+      <p>f(n) = 1 = Θ(1), Case 2 with k = 0.</p>
+      <p><strong>Solution: T(n) = Θ(log n)</strong></p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>Memorize the Master Theorem for interviews.</strong> Most recursive algorithms follow this pattern. If you can identify a, b, and f(n), you can solve the complexity immediately.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.10 -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <span class="sec-num">1.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Common Patterns to Recognize</h2>
+      <p class="lead">In practice, you don't solve every recurrence with the Master Theorem. You learn to recognize patterns instantly.</p>
+
+      <h3>Single Loop: O(n)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="fn">DoSomething</span>();</pre>
+      </div>
+      <p><strong>Pattern:</strong> Loop runs n times, O(1) work per iteration.</p>
+      <p><strong>Complexity: O(n)</strong></p>
+
+      <h3>Nested Loops: O(n²)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n; i++)
+    <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; n; j++)
+        <span class="fn">DoSomething</span>();</pre>
+      </div>
+      <p><strong>Pattern:</strong> Two nested loops, each running n times.</p>
+      <p><strong>Complexity: O(n²)</strong></p>
+
+      <h3>Halving the Problem: O(log n)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">while</span> (n &gt; <span class="num">1</span>)
+{
+    <span class="fn">DoSomething</span>();
+    n = n / <span class="num">2</span>;
+}</pre>
+      </div>
+      <p><strong>Pattern:</strong> Halving the input each iteration (binary search, halving log₂(n) times).</p>
+      <p><strong>Complexity: O(log n)</strong></p>
+
+      <h3>Halving with Linear Work: O(n log n)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">void</span> <span class="fn">SortHelper</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> start, <span class="ty">int</span> end)
+{
+    <span class="kw">if</span> (start >= end) <span class="kw">return</span>;
+
+    <span class="ty">int</span> mid = start + (end - start) / <span class="num">2</span>;
+    <span class="fn">SortHelper</span>(arr, start, mid);      <span class="cm">// T(n/2)</span>
+    <span class="fn">SortHelper</span>(arr, mid + <span class="num">1</span>, end);  <span class="cm">// T(n/2)</span>
+    <span class="fn">Merge</span>(arr, start, mid, end);     <span class="cm">// O(n)</span>
+}</pre>
+      </div>
+      <p><strong>Pattern:</strong> Recursion depth is log n, O(n) work at each level.</p>
+      <p><strong>Complexity: O(n log n)</strong></p>
+
+      <h3>Independent Collections: O(m + n)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">void</span> <span class="fn">Process</span>(<span class="ty">int</span>[] a, <span class="ty">int</span>[] b)
+{
+    <span class="kw">foreach</span> (<span class="ty">int</span> x <span class="kw">in</span> a) <span class="fn">ProcessA</span>(x);  <span class="cm">// O(m)</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span> y <span class="kw">in</span> b) <span class="fn">ProcessB</span>(y);  <span class="cm">// O(n)</span>
+}</pre>
+      </div>
+      <p><strong>Pattern:</strong> Two separate loops on different inputs.</p>
+      <p><strong>Complexity: O(m + n)</strong></p>
+
+      <h3>Exponential Branching: O(2ⁿ)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="ty">int</span> <span class="fn">Fib</span>(<span class="ty">int</span> n)
+{
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+    <span class="kw">return</span> <span class="fn">Fib</span>(n-<span class="num">1</span>) + <span class="fn">Fib</span>(n-<span class="num">2</span>);
+}</pre>
+      </div>
+      <p><strong>Pattern:</strong> Each call makes multiple recursive calls (branching factor ≥ 2).</p>
+      <p><strong>Complexity: O(2ⁿ) without memoization</strong></p>
+    </section>
+
+    <!-- Section 1.11 -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag">
+        <span class="sec-num">1.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Practice Problems</h2>
+      <p class="lead">Apply complexity analysis to real code. Work through these problems to internalize the patterns.</p>
+
+      <h3>Problem 1: Simple Array Processing</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Find Sum</div>
+            <div class="algo-desc">Calculate the sum of all elements in an array.</div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindSum</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> sum = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span>; i++)
+        sum += arr[i];
+    <span class="kw">return</span> sum;
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Single loop through all n elements, constant space for sum variable.</p>
+        </div>
+      </div>
+
+      <h3>Problem 2: Nested Loop with Condition</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Print Pairs</div>
+            <div class="algo-desc">Print all pairs (i,j) where i < j.</div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">PrintPairs</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = i + <span class="num">1</span>; j &lt; arr.<span class="prop">Length</span>; j++)
+        {
+            <span class="fn">Console</span>.<span class="fn">WriteLine</span>($<span class="str">"{i}, {j}"</span>);
+        }
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n²)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Nested loops generate all pairs. Even though inner loop doesn't always run n times, the total iterations are n + (n-1) + (n-2) + ... + 1 = n(n+1)/2 = O(n²).</p>
+        </div>
+      </div>
+
+      <h3>Problem 3: Dictionary Lookup</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Check Duplicates</div>
+            <div class="algo-desc">Determine if array contains duplicate values.</div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">ContainsDuplicate</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="kw">var</span> seen = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> arr)
+    {
+        <span class="kw">if</span> (seen.<span class="fn">Contains</span>(num))
+            <span class="kw">return</span> <span class="kw">true</span>;
+        seen.<span class="fn">Add</span>(num);
+    }
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Single pass through array, each lookup/insert in HashSet is O(1) average. Space used for HashSet is O(n) in worst case.</p>
+        </div>
+      </div>
+
+      <h3>Problem 4: Recursive Doubling</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Power Function</div>
+            <div class="algo-desc">Calculate 2^n recursively.</div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">Power</span>(<span class="ty">int</span> n)
+{
+    <span class="kw">if</span> (n == <span class="num">0</span>) <span class="kw">return</span> <span class="num">1</span>;
+    <span class="kw">return</span> <span class="num">2</span> * <span class="fn">Power</span>(n - <span class="num">1</span>);
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Recursion depth is n, each call does O(1) work. Total O(n). Stack depth also O(n).</p>
+        </div>
+      </div>
+
+      <h3>Problem 5: Binary Search Variant</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Count in Range</div>
+            <div class="algo-desc">Count elements in a sorted array within a value range using binary search.</div>
+          </div>
+          <div class="algo-idx">5</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">CountInRange</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high)
+{
+    <span class="cm">// Two binary searches: O(log n) each</span>
+    <span class="ty">int</span> leftIdx = <span class="fn">FindFirst</span>(arr, low);
+    <span class="ty">int</span> rightIdx = <span class="fn">FindLast</span>(arr, high);
+    <span class="kw">return</span> rightIdx - leftIdx + <span class="num">1</span>;
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Two sequential binary searches, each O(log n). Total O(log n + log n) = O(log n).</p>
+        </div>
+      </div>
+
+      <h3>Problem 6: Nested with Different Sizes</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Cross Product</div>
+            <div class="algo-desc">Process elements from two different-sized arrays.</div>
+          </div>
+          <div class="algo-idx">6</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">ProcessCrossProduct</span>(<span class="ty">int</span>[] a, <span class="ty">int</span>[] b)
+{
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; a.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; b.<span class="prop">Length</span>; j++)
+        {
+            <span class="fn">Process</span>(a[i], b[j]);
+        }
+    }
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(m·n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Nested loops on different inputs. Outer runs m times, inner n times, total m×n operations. Don't use 'n' for both!</p>
+        </div>
+      </div>
+
+      <h3>Problem 7: Logarithmic Reduction</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Sum Powers of 2</div>
+            <div class="algo-desc">Sum all powers of 2 up to 2^n.</div>
+          </div>
+          <div class="algo-idx">7</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">SumPowersOfTwo</span>(<span class="ty">int</span> n)
+{
+    <span class="ty">long</span> sum = <span class="num">0</span>, power = <span class="num">1</span>;
+    <span class="kw">while</span> (power &lt;= n)
+    {
+        sum += power;
+        power *= <span class="num">2</span>;  <span class="cm">// Doubles each iteration</span>
+    }
+    <span class="kw">return</span> sum;
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Power grows exponentially (1, 2, 4, 8, ...), so loop runs log₂(n) times.</p>
+        </div>
+      </div>
+
+      <h3>Problem 8: Complex Recursion</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Fibonacci with Memoization</div>
+            <div class="algo-desc">Calculate Fibonacci number using memoization.</div>
+          </div>
+          <div class="algo-idx">8</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">private</span> <span class="kw">static</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">long</span>&gt; memo = <span class="kw">new</span>();
+
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">Fib</span>(<span class="ty">int</span> n)
+{
+    <span class="kw">if</span> (memo.<span class="fn">ContainsKey</span>(n))
+        <span class="kw">return</span> memo[n];
+
+    <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+
+    <span class="ty">long</span> result = <span class="fn">Fib</span>(n-<span class="num">1</span>) + <span class="fn">Fib</span>(n-<span class="num">2</span>);
+    memo[n] = result;
+    <span class="kw">return</span> result;
+}</pre>
+          </div>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--ink2); line-height: 1.7;"><strong>Explanation:</strong> Each unique subproblem computed once. We compute Fib(0) through Fib(n), so n + 1 unique problems. Each takes O(1) with memoization. Total O(n) time and space.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1.12 -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag">
+        <span class="sec-num">1.12</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Toptal Interview Tips</h2>
+      <p class="lead">Algorithm interviews at Toptal and similar companies always involve complexity analysis. Here's how to ace the complexity discussion.</p>
+
+      <h3>Tip 1: Always State Both Time and Space</h3>
+      <p>Never say just "O(n)." Say "The time complexity is O(n) and space complexity is O(1)" or "This solution uses O(n) extra space." Volunteers information demonstrates completeness.</p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>Example answer format:</strong> "My solution iterates through the array once—that's O(n) time. It only uses a couple of variables for tracking, so O(1) auxiliary space. The space complexity is better than a hash table approach, which would be O(n)."
+        </div>
+      </div>
+
+      <h3>Tip 2: Justify Your Complexity Analysis</h3>
+      <p>Don't just state the answer. Explain your reasoning so the interviewer can follow your logic (and correct you if you're wrong).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">Bad</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">"This is O(n log n)."</span></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">Good</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">"We have a loop that runs n times, and inside we do a binary</span>
+<span class="cm">search which is log n. So that's n times (log n) operations</span>
+<span class="cm">each, giving us O(n log n)."</span></pre>
+      </div>
+
+      <h3>Tip 3: Compare Approaches</h3>
+      <p>Strong candidates compare multiple solutions. Show you understand the tradeoffs.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Approach</th>
+              <th>Time</th>
+              <th>Space</th>
+              <th>When to Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Linear scan</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+              <td>Simplest, good when n is small</td>
+            </tr>
+            <tr>
+              <td>Hash table</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>Fast lookups, space isn't constrained</td>
+            </tr>
+            <tr>
+              <td>Sorted + binary search</td>
+              <td>O(n log n)</td>
+              <td>O(1)</td>
+              <td>Space is critical, or data is already sorted</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Tip 4: Specify Best/Worst/Average When Relevant</h3>
+      <p>For algorithms where this matters, mention all three. It shows sophistication.</p>
+
+      <div class="algo">
+        <div class="algo-body" style="padding: 24px;">
+          <p style="margin-bottom: 12px;"><strong>Example:</strong> "Quicksort has O(n log n) average case, but O(n²) worst case if we always pick a bad pivot. To avoid this, we can randomize the pivot selection, which gives us O(n log n) expected time with high probability."</p>
+        </div>
+      </div>
+
+      <h3>Tip 5: Discuss Optimization Possibilities</h3>
+      <p>Show you're thinking beyond the first solution. Can you reduce space? Trade time for space?</p>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div>
+          <strong>"This first pass is O(n²) because of nested loops. But I could sort first in O(n log n) and then use a two-pointer approach to get O(n log n) overall instead."</strong> This demonstrates optimization thinking.
+        </div>
+      </div>
+
+      <h3>Tip 6: Know When Complexity Doesn't Matter</h3>
+      <p>Sometimes, code clarity trumps micro-optimizations. Show judgment.</p>
+
+      <p>"Both approaches are O(n), so I'd choose the clearer implementation rather than the one that saves a constant factor. Readability matters."</p>
+
+      <h3>Tip 7: Recognize Patterns Instantly</h3>
+      <p>Practice pattern recognition until you don't have to think. Seeing nested loops → O(n²) should be automatic.</p>
+
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">PATTERN</div>
+          <div class="tip-title">Single Loop</div>
+          <div class="tip-body">One loop through n items → O(n)</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">PATTERN</div>
+          <div class="tip-title">Nested Loops</div>
+          <div class="tip-body">Loop in loop over same input → O(n²)</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">PATTERN</div>
+          <div class="tip-title">Halving</div>
+          <div class="tip-body">Divide in half each iteration → O(log n)</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">PATTERN</div>
+          <div class="tip-title">Hash Lookup</div>
+          <div class="tip-body">Dictionary/HashSet operation → O(1) avg</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">PATTERN</div>
+          <div class="tip-title">Sort + Process</div>
+          <div class="tip-body">Sort then iterate → O(n log n)</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">PATTERN</div>
+          <div class="tip-title">Multiple Recursions</div>
+          <div class="tip-body">f(n) calls f multiple times → exponential</div>
+        </div>
+      </div>
+
+      <h3>Tip 8: Practice Writing Detailed Explanations</h3>
+      <p>In Toptal interviews, you'll explain your code via video or text. Practice writing clear complexity explanations.</p>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Common mistakes to avoid:</strong>
+          <ul style="margin: 12px 0 0 16px;">
+            <li>Confusing "worst case" with "Big O" (Big O is usually worst case, but always clarify)</li>
+            <li>Forgetting to account for hidden operations (string concatenation, array resizing)</li>
+            <li>Using 'n' for multiple different inputs</li>
+            <li>Assuming operations take O(1) when they don't (copying arrays, string operations)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Tip 9: Code Along and Analyze Simultaneously</h3>
+      <p>As you code, narrate your complexity analysis. Don't save it for the end.</p>
+
+      <p>"I'll iterate once through the array here—that's O(n). I'm using a hash set for lookups, which is O(1) on average, so no additional complexity. The total time is O(n)."</p>
+
+      <h3>Tip 10: Master the Master Theorem</h3>
+      <p>For recursive problems, quickly apply the Master Theorem. This impresses interviewers and speeds up your analysis.</p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>"This has T(n) = 2·T(n/2) + n. Using the Master Theorem with a=2, b=2, f(n)=n, we get T(n) = Θ(n log n)."</strong> This is cleaner than working through the recursion manually.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>DSA Complete Book — Chapter 1: Big O Notation & Complexity Analysis</p>
+      <p>Master algorithms through rigorous, practical analysis and real-world patterns.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const codeBlock = this.closest('.code-block');
+        const pre = codeBlock.querySelector('pre');
+        const text = pre.innerText;
+
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = this.innerText;
+          this.innerText = 'Copied!';
+          setTimeout(() => {
+            this.innerText = originalText;
+          }, 2000);
+        });
+      });
+    });
+
+    // Fade-in animation observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

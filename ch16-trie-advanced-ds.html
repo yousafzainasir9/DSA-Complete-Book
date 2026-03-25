@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Trie and advanced data structures — prefix trees, segment trees, Fenwick trees, with C# implementations and use cases.">
+  <meta name="keywords" content="trie, prefix tree, segment tree, Fenwick tree, advanced data structures, C#">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch16-trie-advanced-ds.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch16-trie-advanced-ds.html">
+  <meta property="og:title" content="Chapter 16: Trie & Advanced Data Structures - DSA Complete Book">
+  <meta property="og:description" content="Trie and advanced data structures — prefix trees, segment trees, Fenwick trees, with C# implementations and use cases.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch16-trie-advanced-ds.html">
+  <meta name="twitter:title" content="Chapter 16: Trie & Advanced Data Structures - DSA Complete Book">
+  <meta name="twitter:description" content="Trie and advanced data structures — prefix trees, segment trees, Fenwick trees, with C# implementations and use cases.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 16: Trie & Advanced Data Structures - DSA Complete Book",
+  "description": "Trie and advanced data structures \u2014 prefix trees, segment trees, Fenwick trees, with C# implementations and use cases.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch16-trie-advanced-ds.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 16: Trie & Advanced Data Structures - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 16</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 16</div>
+      </div>
+      <h1>Trie & <em>Advanced Data Structures</em></h1>
+      <p class="hero-sub">Master prefix trees and specialized data structures for optimal performance. Learn Tries for string problems, Segment Trees for range queries, Fenwick Trees for efficient updates, Union-Find for connectivity, and more. Build production-grade implementations with complete C# code for 10+ interview problems.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">15</div>
+          <div class="stat-l">Topics Covered</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">10+</div>
+          <div class="stat-l">LeetCode Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">150+</div>
+          <div class="stat-l">Lines of Code</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">20</div>
+          <div class="stat-l">Implementation Tips</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">16.1</span> Trie Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">16.2</span> Trie Operations</a>
+        <a href="#sec-3"><span class="toc-n">16.3</span> Complete Trie Class</a>
+        <a href="#sec-4"><span class="toc-n">16.4</span> Trie Problems</a>
+        <a href="#sec-5"><span class="toc-n">16.5</span> Segment Trees</a>
+        <a href="#sec-6"><span class="toc-n">16.6</span> Fenwick Trees</a>
+        <a href="#sec-7"><span class="toc-n">16.7</span> Tree Comparison</a>
+        <a href="#sec-8"><span class="toc-n">16.8</span> Union-Find (DSU)</a>
+        <a href="#sec-9"><span class="toc-n">16.9</span> Union-Find Problems</a>
+        <a href="#sec-10"><span class="toc-n">16.10</span> Skip Lists</a>
+        <a href="#sec-11"><span class="toc-n">16.11</span> LRU & LFU Caches</a>
+        <a href="#sec-12"><span class="toc-n">16.12</span> Bloom Filters</a>
+        <a href="#sec-13"><span class="toc-n">16.13</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 16.1: Trie Fundamentals -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">16.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Trie Fundamentals</h2>
+      <p class="lead">A Trie (prefix tree) is a tree-based data structure optimized for string search and prefix matching. Each node represents a character, enabling O(m) search where m is the word length, independent of dictionary size.</p>
+
+      <h3>What is a Trie?</h3>
+      <p>A Trie stores strings in a tree where:</p>
+      <ul style="margin: 14px 0 16px 20px; font-size: 15px; color: var(--ink2);">
+        <li>Root is empty, children are letters a-z</li>
+        <li>Each path from root to node spells a prefix</li>
+        <li>Leaf (or marked) nodes indicate word endings</li>
+        <li>Search, insert, delete all operate in O(m) time</li>
+        <li>Space: O(N*M) where N=words, M=avg length</li>
+      </ul>
+
+      <h3>TrieNode Structure</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">TrieNode</span>
+{
+    <span class="kw">public</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="ty">TrieNode</span>&gt; children = <span class="kw">new</span>();
+    <span class="kw">public</span> <span class="kw">bool</span> isWord = <span class="kw">false</span>;
+    <span class="kw">public</span> <span class="kw">int</span> count = <span class="num">0</span>;  <span class="cm">// For frequency tracking</span>
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <strong>Trie vs Hash Table:</strong> Tries excel at prefix queries and autocomplete; hash tables excel at exact matches. Tries use more space but provide ordered iteration.
+      </div>
+    </section>
+
+    <!-- Section 16.2: Trie Operations -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">16.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Trie Operations</h2>
+
+      <h3>Insert Operation</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="kw">string</span> word)
+{
+    <span class="ty">TrieNode</span> node = root;
+    <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+    {
+        <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+            node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+        node = node.children[c];
+    }
+    node.isWord = <span class="kw">true</span>;
+    node.count++;
+}</pre>
+      </div>
+      <p><strong>Time:</strong> O(m) where m = word length | <strong>Space:</strong> O(1) amortized</p>
+
+      <h3>Search Operation</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Search</span>(<span class="kw">string</span> word)
+{
+    <span class="ty">TrieNode</span> node = root;
+    <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+    {
+        <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+            <span class="kw">return</span> <span class="kw">false</span>;
+        node = node.children[c];
+    }
+    <span class="kw">return</span> node.isWord;
+}</pre>
+      </div>
+      <p><strong>Time:</strong> O(m) | <strong>Space:</strong> O(1)</p>
+
+      <h3>StartsWith Prefix Check</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">StartsWith</span>(<span class="kw">string</span> prefix)
+{
+    <span class="ty">TrieNode</span> node = root;
+    <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> prefix)
+    {
+        <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+            <span class="kw">return</span> <span class="kw">false</span>;
+        node = node.children[c];
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre>
+      </div>
+      <p><strong>Time:</strong> O(m) | <strong>Space:</strong> O(1)</p>
+
+      <h3>Delete Operation</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Delete</span>(<span class="kw">string</span> word)
+{
+    <span class="kw">return</span> <span class="fn">DeleteHelper</span>(root, word, <span class="num">0</span>);
+}
+
+<span class="kw">private</span> <span class="kw">bool</span> <span class="fn">DeleteHelper</span>(<span class="ty">TrieNode</span> node, <span class="kw">string</span> word, <span class="kw">int</span> idx)
+{
+    <span class="kw">if</span> (idx == word.<span class="prop">Length</span>)
+    {
+        <span class="kw">if</span> (!node.isWord) <span class="kw">return</span> <span class="kw">false</span>;
+        node.isWord = <span class="kw">false</span>;
+        <span class="kw">return</span> node.children.<span class="prop">Count</span> == <span class="num">0</span>;
+    }
+
+    <span class="kw">char</span> c = word[idx];
+    <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+        <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="ty">TrieNode</span> child = node.children[c];
+    <span class="kw">bool</span> shouldDeleteChild = <span class="fn">DeleteHelper</span>(child, word, idx + <span class="num">1</span>);
+
+    <span class="kw">if</span> (shouldDeleteChild)
+        node.children.<span class="fn">Remove</span>(c);
+
+    <span class="kw">return</span> !node.isWord && node.children.<span class="prop">Count</span> == <span class="num">0</span>;
+}</pre>
+      </div>
+      <p><strong>Time:</strong> O(m) | <strong>Space:</strong> O(m) recursive depth</p>
+    </section>
+
+    <!-- Section 16.3: Complete Trie Class -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">16.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Complete Trie Implementation</h2>
+      <p class="lead">Full Trie class with all operations, supporting word insertion, exact search, prefix matching, deletion, and autocomplete.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Trie</span>
+{
+    <span class="kw">private</span> <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Search</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = <span class="fn">FindNode</span>(word);
+        <span class="kw">return</span> node != <span class="kw">null</span> && node.isWord;
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">StartsWith</span>(<span class="kw">string</span> prefix)
+    {
+        <span class="kw">return</span> <span class="fn">FindNode</span>(prefix) != <span class="kw">null</span>;
+    }
+
+    <span class="kw">private</span> <span class="ty">TrieNode</span> <span class="fn">FindNode</span>(<span class="kw">string</span> s)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> s)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                <span class="kw">return</span> <span class="kw">null</span>;
+            node = node.children[c];
+        }
+        <span class="kw">return</span> node;
+    }
+
+    <span class="kw">public</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; <span class="fn">GetWordsWithPrefix</span>(<span class="kw">string</span> prefix)
+    {
+        <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; result = <span class="kw">new</span>();
+        <span class="ty">TrieNode</span> node = <span class="fn">FindNode</span>(prefix);
+        <span class="kw">if</span> (node == <span class="kw">null</span>) <span class="kw">return</span> result;
+
+        <span class="fn">DFS</span>(node, prefix, result);
+        <span class="kw">return</span> result;
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">DFS</span>(<span class="ty">TrieNode</span> node, <span class="kw">string</span> path, <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; result)
+    {
+        <span class="kw">if</span> (node.isWord)
+            result.<span class="fn">Add</span>(path);
+        <span class="kw">foreach</span> (<span class="kw">var</span> (c, child) <span class="kw">in</span> node.children)
+            <span class="fn">DFS</span>(child, path + c, result);
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Delete</span>(<span class="kw">string</span> word)
+    {
+        <span class="kw">return</span> <span class="fn">DeleteHelper</span>(root, word, <span class="num">0</span>);
+    }
+
+    <span class="kw">private</span> <span class="kw">bool</span> <span class="fn">DeleteHelper</span>(<span class="ty">TrieNode</span> node, <span class="kw">string</span> word, <span class="kw">int</span> idx)
+    {
+        <span class="kw">if</span> (idx == word.<span class="prop">Length</span>)
+        {
+            <span class="kw">if</span> (!node.isWord) <span class="kw">return</span> <span class="kw">false</span>;
+            node.isWord = <span class="kw">false</span>;
+            <span class="kw">return</span> node.children.<span class="prop">Count</span> == <span class="num">0</span>;
+        }
+
+        <span class="kw">char</span> c = word[idx];
+        <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+            <span class="kw">return</span> <span class="kw">false</span>;
+
+        <span class="ty">TrieNode</span> child = node.children[c];
+        <span class="kw">bool</span> shouldDelete = <span class="fn">DeleteHelper</span>(child, word, idx + <span class="num">1</span>);
+
+        <span class="kw">if</span> (shouldDelete)
+            node.children.<span class="fn">Remove</span>(c);
+
+        <span class="kw">return</span> !node.isWord && node.children.<span class="prop">Count</span> == <span class="num">0</span>;
+    }
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 16.4: Trie Problems -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">16.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Trie Problems</h2>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 208: Implement Trie (Prefix Tree)</div>
+            <p class="algo-desc">Design and implement a trie with insert, search, and startsWith methods.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">String</span>
+              <span class="badge b-blue">Design</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(m) per operation</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(N*M)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Trie</span>
+{
+    <span class="kw">private</span> <span class="ty">TrieNode</span> root;
+
+    <span class="kw">public</span> <span class="fn">Trie</span>() { root = <span class="kw">new</span> <span class="ty">TrieNode</span>(); }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Insert</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Search</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                <span class="kw">return</span> <span class="kw">false</span>;
+            node = node.children[c];
+        }
+        <span class="kw">return</span> node.isWord;
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">StartsWith</span>(<span class="kw">string</span> prefix)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> prefix)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                <span class="kw">return</span> <span class="kw">false</span>;
+            node = node.children[c];
+        }
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 212: Word Search II</div>
+            <p class="algo-desc">Find all words from a dictionary that exist in an m×n board. Words can be constructed by sequentially adjacent cells (horizontally or vertically).</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">String</span>
+              <span class="badge b-blue">Backtracking</span>
+              <span class="badge b-red">Hard</span>
+            </div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(m*n*4^L)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(W*L)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="kw">string</span>&gt; <span class="fn">FindWords</span>(<span class="kw">char</span>[][] board, <span class="kw">string</span>[] words)
+{
+    <span class="ty">HashSet</span>&lt;<span class="kw">string</span>&gt; result = <span class="kw">new</span>();
+    <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> word <span class="kw">in</span> words)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="kw">int</span> rows = board.<span class="prop">Length</span>, cols = board[<span class="num">0</span>].<span class="prop">Length</span>;
+    <span class="kw">bool</span>[][] visited = <span class="kw">new</span> <span class="kw">bool</span>[rows][];
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; rows; i++)
+    {
+        visited[i] = <span class="kw">new</span> <span class="kw">bool</span>[cols];
+        <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">0</span>; j &lt; cols; j++)
+        {
+            <span class="fn">DFS</span>(board, visited, i, j, root, <span class="str">""</span>, result);
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;(result);
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">DFS</span>(<span class="kw">char</span>[][] board, <span class="kw">bool</span>[][] visited, <span class="kw">int</span> i, <span class="kw">int</span> j,
+    <span class="ty">TrieNode</span> node, <span class="kw">string</span> path, <span class="ty">HashSet</span>&lt;<span class="kw">string</span>&gt; result)
+{
+    <span class="kw">if</span> (i < <span class="num">0</span> || i >= board.<span class="prop">Length</span> || j < <span class="num">0</span> || j >= board[<span class="num">0</span>].<span class="prop">Length</span> ||
+        visited[i][j])
+        <span class="kw">return</span>;
+
+    <span class="kw">char</span> c = board[i][j];
+    <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+        <span class="kw">return</span>;
+
+    visited[i][j] = <span class="kw">true</span>;
+    node = node.children[c];
+
+    <span class="kw">if</span> (node.isWord)
+        result.<span class="fn">Add</span>(path + c);
+
+    <span class="fn">DFS</span>(board, visited, i + <span class="num">1</span>, j, node, path + c, result);
+    <span class="fn">DFS</span>(board, visited, i - <span class="num">1</span>, j, node, path + c, result);
+    <span class="fn">DFS</span>(board, visited, i, j + <span class="num">1</span>, node, path + c, result);
+    <span class="fn">DFS</span>(board, visited, i, j - <span class="num">1</span>, node, path + c, result);
+
+    visited[i][j] = <span class="kw">false</span>;
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 211: Add and Search Word</div>
+            <p class="algo-desc">Design a data structure that supports adding words and searching for words with '.' as wildcard matching any single letter.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">String</span>
+              <span class="badge b-blue">Design</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">Search: O(N*26^m)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(N*M)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">WordDictionary</span>
+{
+    <span class="kw">private</span> <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">AddWord</span>(<span class="kw">string</span> word)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Search</span>(<span class="kw">string</span> word)
+    {
+        <span class="kw">return</span> <span class="fn">SearchDFS</span>(root, word, <span class="num">0</span>);
+    }
+
+    <span class="kw">private</span> <span class="kw">bool</span> <span class="fn">SearchDFS</span>(<span class="ty">TrieNode</span> node, <span class="kw">string</span> word, <span class="kw">int</span> idx)
+    {
+        <span class="kw">if</span> (idx == word.<span class="prop">Length</span>)
+            <span class="kw">return</span> node.isWord;
+
+        <span class="kw">char</span> c = word[idx];
+        <span class="kw">if</span> (c == <span class="str">'.'</span>)
+        {
+            <span class="kw">foreach</span> (<span class="kw">var</span> child <span class="kw">in</span> node.children.<span class="prop">Values</span>)
+                <span class="kw">if</span> (<span class="fn">SearchDFS</span>(child, word, idx + <span class="num">1</span>))
+                    <span class="kw">return</span> <span class="kw">true</span>;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                <span class="kw">return</span> <span class="kw">false</span>;
+            <span class="kw">return</span> <span class="fn">SearchDFS</span>(node.children[c], word, idx + <span class="num">1</span>);
+        }
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 648: Replace Words</div>
+            <p class="algo-desc">Replace words in a sentence with their shortest dictionary root if the root exists.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">String</span>
+              <span class="badge b-blue">Trie</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(N*M)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(D)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">string</span> <span class="fn">ReplaceWords</span>(<span class="ty">IList</span>&lt;<span class="kw">string</span>&gt; dictionary, <span class="kw">string</span> sentence)
+{
+    <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> word <span class="kw">in</span> dictionary)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="kw">string</span>[] words = sentence.<span class="fn">Split</span>(<span class="str">' '</span>);
+    <span class="ty">StringBuilder</span> result = <span class="kw">new</span>();
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> word <span class="kw">in</span> words)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">string</span> root_word = <span class="str">""</span>;
+
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c) || node.isWord)
+                <span class="kw">break</span>;
+            root_word += c;
+            node = node.children[c];
+        }
+
+        <span class="kw">if</span> (node.isWord)
+            result.<span class="fn">Append</span>(root_word);
+        <span class="kw">else</span>
+            result.<span class="fn">Append</span>(word);
+        result.<span class="fn">Append</span>(<span class="str">' '</span>);
+    }
+
+    <span class="kw">return</span> result.<span class="fn">ToString</span>().<span class="fn">TrimEnd</span>();
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 720: Longest Word in Dictionary</div>
+            <p class="algo-desc">Find the longest word in a dictionary that can be built by iteratively adding one letter at a time, starting from a single letter word.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">String</span>
+              <span class="badge b-blue">Trie</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">5</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(N*M*log N)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(N)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">string</span> <span class="fn">LongestWord</span>(<span class="kw">string</span>[] words)
+{
+    <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> word <span class="kw">in</span> words)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            <span class="kw">if</span> (!node.children.<span class="fn">ContainsKey</span>(c))
+                node.children[c] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[c];
+        }
+        node.isWord = <span class="kw">true</span>;
+    }
+
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(words, (a, b) =>
+        b.<span class="prop">Length</span> != a.<span class="prop">Length</span> ? b.<span class="prop">Length</span>.<span class="fn">CompareTo</span>(a.<span class="prop">Length</span>) : a.<span class="fn">CompareTo</span>(b));
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> word <span class="kw">in</span> words)
+    {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">bool</span> valid = <span class="kw">true</span>;
+
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> word)
+        {
+            node = node.children[c];
+            <span class="kw">if</span> (!node.isWord)
+            {
+                valid = <span class="kw">false</span>;
+                <span class="kw">break</span>;
+            }
+        }
+
+        <span class="kw">if</span> (valid)
+            <span class="kw">return</span> word;
+    }
+
+    <span class="kw">return</span> <span class="str">""</span>;
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 16.5: Segment Trees -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">16.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Segment Trees</h2>
+      <p class="lead">A Segment Tree is a binary tree where each node stores an aggregate function (sum, min, max) over a range. Enables O(log n) range queries and O(log n) point updates.</p>
+
+      <h3>Segment Tree Concepts</h3>
+      <ul style="margin: 14px 0 16px 20px; font-size: 15px; color: var(--ink2);">
+        <li><strong>Structure:</strong> Binary tree with n leaves (array elements)</li>
+        <li><strong>Build:</strong> O(n) - bottom-up construction</li>
+        <li><strong>Query:</strong> O(log n) - find aggregate over range [L, R]</li>
+        <li><strong>Update:</strong> O(log n) - modify single element</li>
+        <li><strong>Space:</strong> O(4n) - array-based implementation</li>
+      </ul>
+
+      <h3>Segment Tree Implementation (100+ lines)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">SegmentTree</span>
+{
+    <span class="kw">private</span> <span class="kw">int</span>[] tree;
+    <span class="kw">private</span> <span class="kw">int</span> n;
+
+    <span class="kw">public</span> <span class="fn">SegmentTree</span>(<span class="kw">int</span>[] nums)
+    {
+        n = nums.<span class="prop">Length</span>;
+        tree = <span class="kw">new</span> <span class="kw">int</span>[<span class="num">4</span> * n];
+        <span class="kw">if</span> (n > <span class="num">0</span>)
+            <span class="fn">Build</span>(nums, <span class="num">0</span>, <span class="num">0</span>, n - <span class="num">1</span>);
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">Build</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> node, <span class="kw">int</span> start, <span class="kw">int</span> end)
+    {
+        <span class="kw">if</span> (start == end)
+        {
+            tree[node] = nums[start];
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">int</span> mid = start + (end - start) / <span class="num">2</span>;
+            <span class="fn">Build</span>(nums, <span class="num">2</span> * node + <span class="num">1</span>, start, mid);
+            <span class="fn">Build</span>(nums, <span class="num">2</span> * node + <span class="num">2</span>, mid + <span class="num">1</span>, end);
+            tree[node] = tree[<span class="num">2</span> * node + <span class="num">1</span>] + tree[<span class="num">2</span> * node + <span class="num">2</span>];
+        }
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Update</span>(<span class="kw">int</span> index, <span class="kw">int</span> val)
+    {
+        <span class="fn">UpdateHelper</span>(<span class="num">0</span>, <span class="num">0</span>, n - <span class="num">1</span>, index, val);
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">UpdateHelper</span>(<span class="kw">int</span> node, <span class="kw">int</span> start, <span class="kw">int</span> end, <span class="kw">int</span> idx, <span class="kw">int</span> val)
+    {
+        <span class="kw">if</span> (start == end)
+        {
+            tree[node] = val;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">int</span> mid = start + (end - start) / <span class="num">2</span>;
+            <span class="kw">if</span> (idx <= mid)
+                <span class="fn">UpdateHelper</span>(<span class="num">2</span> * node + <span class="num">1</span>, start, mid, idx, val);
+            <span class="kw">else</span>
+                <span class="fn">UpdateHelper</span>(<span class="num">2</span> * node + <span class="num">2</span>, mid + <span class="num">1</span>, end, idx, val);
+            tree[node] = tree[<span class="num">2</span> * node + <span class="num">1</span>] + tree[<span class="num">2</span> * node + <span class="num">2</span>];
+        }
+    }
+
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">QuerySum</span>(<span class="kw">int</span> left, <span class="kw">int</span> right)
+    {
+        <span class="kw">return</span> <span class="fn">QueryHelper</span>(<span class="num">0</span>, <span class="num">0</span>, n - <span class="num">1</span>, left, right);
+    }
+
+    <span class="kw">private</span> <span class="kw">int</span> <span class="fn">QueryHelper</span>(<span class="kw">int</span> node, <span class="kw">int</span> start, <span class="kw">int</span> end, <span class="kw">int</span> L, <span class="kw">int</span> R)
+    {
+        <span class="kw">if</span> (R < start || end < L)
+            <span class="kw">return</span> <span class="num">0</span>;
+
+        <span class="kw">if</span> (L <= start && end <= R)
+            <span class="kw">return</span> tree[node];
+
+        <span class="kw">int</span> mid = start + (end - start) / <span class="num">2</span>;
+        <span class="kw">int</span> p1 = <span class="fn">QueryHelper</span>(<span class="num">2</span> * node + <span class="num">1</span>, start, mid, L, R);
+        <span class="kw">int</span> p2 = <span class="fn">QueryHelper</span>(<span class="num">2</span> * node + <span class="num">2</span>, mid + <span class="num">1</span>, end, L, R);
+        <span class="kw">return</span> p1 + p2;
+    }
+
+    <span class="cm">// Query minimum in range</span>
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">QueryMin</span>(<span class="kw">int</span> left, <span class="kw">int</span> right)
+    {
+        <span class="kw">return</span> <span class="fn">QueryMinHelper</span>(<span class="num">0</span>, <span class="num">0</span>, n - <span class="num">1</span>, left, right);
+    }
+
+    <span class="kw">private</span> <span class="kw">int</span> <span class="fn">QueryMinHelper</span>(<span class="kw">int</span> node, <span class="kw">int</span> start, <span class="kw">int</span> end, <span class="kw">int</span> L, <span class="kw">int</span> R)
+    {
+        <span class="kw">if</span> (R < start || end < L)
+            <span class="kw">return</span> <span class="kw">int</span>.<span class="prop">MaxValue</span>;
+
+        <span class="kw">if</span> (L <= start && end <= R)
+            <span class="kw">return</span> tree[node];
+
+        <span class="kw">int</span> mid = start + (end - start) / <span class="num">2</span>;
+        <span class="kw">int</span> p1 = <span class="fn">QueryMinHelper</span>(<span class="num">2</span> * node + <span class="num">1</span>, start, mid, L, R);
+        <span class="kw">int</span> p2 = <span class="fn">QueryMinHelper</span>(<span class="num">2</span> * node + <span class="num">2</span>, mid + <span class="num">1</span>, end, L, R);
+        <span class="kw">return</span> <span class="ty">Math</span>.<span class="fn">Min</span>(p1, p2);
+    }
+}</pre>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 307: Range Sum Query - Mutable</div>
+            <p class="algo-desc">Implement a class for range sum queries with element updates using segment tree.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">SegmentTree</span>
+              <span class="badge b-blue">RangeQuery</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">6</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(4n)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">NumArray</span>
+{
+    <span class="kw">private</span> <span class="ty">SegmentTree</span> st;
+
+    <span class="kw">public</span> <span class="fn">NumArray</span>(<span class="kw">int</span>[] nums)
+    {
+        st = <span class="kw">new</span> <span class="ty">SegmentTree</span>(nums);
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Update</span>(<span class="kw">int</span> index, <span class="kw">int</span> val)
+    {
+        st.<span class="fn">Update</span>(index, val);
+    }
+
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">SumRange</span>(<span class="kw">int</span> left, <span class="kw">int</span> right)
+    {
+        <span class="kw">return</span> st.<span class="fn">QuerySum</span>(left, right);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 16.6: Fenwick Trees -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">16.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Fenwick Tree (Binary Indexed Tree)</h2>
+      <p class="lead">A Fenwick Tree is a space-efficient data structure for prefix sum queries and point updates in O(log n) time, using only O(n) space.</p>
+
+      <h3>Fenwick Tree Implementation</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">FenwickTree</span>
+{
+    <span class="kw">private</span> <span class="kw">int</span>[] tree;
+    <span class="kw">private</span> <span class="kw">int</span> n;
+
+    <span class="kw">public</span> <span class="fn">FenwickTree</span>(<span class="kw">int</span> size)
+    {
+        n = size;
+        tree = <span class="kw">new</span> <span class="kw">int</span>[n + <span class="num">1</span>];
+    }
+
+    <span class="cm">// Point update: add delta to index</span>
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Update</span>(<span class="kw">int</span> index, <span class="kw">int</span> delta)
+    {
+        index++;  <span class="cm">// 1-indexed</span>
+        <span class="kw">while</span> (index <= n)
+        {
+            tree[index] += delta;
+            index += index & (-index);  <span class="cm">// Add lowest set bit</span>
+        }
+    }
+
+    <span class="cm">// Prefix sum query [0, index]</span>
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">Query</span>(<span class="kw">int</span> index)
+    {
+        index++;  <span class="cm">// 1-indexed</span>
+        <span class="kw">int</span> sum = <span class="num">0</span>;
+        <span class="kw">while</span> (index > <span class="num">0</span>)
+        {
+            sum += tree[index];
+            index -= index & (-index);
+        }
+        <span class="kw">return</span> sum;
+    }
+
+    <span class="cm">// Range sum [left, right]</span>
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">RangeQuery</span>(<span class="kw">int</span> left, <span class="kw">int</span> right)
+    {
+        <span class="kw">if</span> (left == <span class="num">0</span>)
+            <span class="kw">return</span> <span class="fn">Query</span>(right);
+        <span class="kw">return</span> <span class="fn">Query</span>(right) - <span class="fn">Query</span>(left - <span class="num">1</span>);
+    }
+
+    <span class="cm">// Build from array in O(n log n)</span>
+    <span class="kw">public</span> <span class="kw">static</span> <span class="ty">FenwickTree</span> <span class="fn">Build</span>(<span class="kw">int</span>[] nums)
+    {
+        <span class="ty">FenwickTree</span> ft = <span class="kw">new</span> <span class="ty">FenwickTree</span>(nums.<span class="prop">Length</span>);
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < nums.<span class="prop">Length</span>; i++)
+            ft.<span class="fn">Update</span>(i, nums[i]);
+        <span class="kw">return</span> ft;
+    }
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <strong>Key Insight:</strong> <code class="il">index & (-index)</code> isolates the lowest set bit. This enables O(log n) navigation of the tree structure without explicit pointers.
+      </div>
+    </section>
+
+    <!-- Section 16.7: Tree Comparison -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">16.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Segment Tree vs Fenwick Tree</h2>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Segment Tree</th>
+              <th>Fenwick Tree</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Query Time</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Update Time</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Space</td>
+              <td>O(4n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Build Time</td>
+              <td>O(n)</td>
+              <td>O(n log n)</td>
+            </tr>
+            <tr>
+              <td>Range Min/Max</td>
+              <td>Yes</td>
+              <td>No (sum only)</td>
+            </tr>
+            <tr>
+              <td>Range Update</td>
+              <td>With lazy prop</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Implementation</td>
+              <td>Recursive</td>
+              <td>Iterative</td>
+            </tr>
+            <tr>
+              <td>Use When</td>
+              <td>Multiple functions, complex queries</td>
+              <td>Sum queries, space-efficient</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <strong>Interview Tip:</strong> Use Fenwick Tree for sum queries to impress with space efficiency. Use Segment Tree when you need min/max or range updates.
+      </div>
+    </section>
+
+    <!-- Section 16.8: Union-Find -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">16.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Union-Find (Disjoint Set Union)</h2>
+      <p class="lead">Union-Find efficiently manages a collection of disjoint sets with two operations: Find (with path compression) and Union (with rank optimization). Both approach O(1) amortized time.</p>
+
+      <h3>Complete Union-Find Class</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">UnionFind</span>
+{
+    <span class="kw">private</span> <span class="kw">int</span>[] parent;
+    <span class="kw">private</span> <span class="kw">int</span>[] rank;
+    <span class="kw">private</span> <span class="kw">int</span> count;
+
+    <span class="kw">public</span> <span class="fn">UnionFind</span>(<span class="kw">int</span> n)
+    {
+        parent = <span class="kw">new</span> <span class="kw">int</span>[n];
+        rank = <span class="kw">new</span> <span class="kw">int</span>[n];
+        count = n;
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < n; i++)
+            parent[i] = i;
+    }
+
+    <span class="cm">// Find with path compression</span>
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">Find</span>(<span class="kw">int</span> x)
+    {
+        <span class="kw">if</span> (parent[x] != x)
+            parent[x] = <span class="fn">Find</span>(parent[x]);  <span class="cm">// Path compression</span>
+        <span class="kw">return</span> parent[x];
+    }
+
+    <span class="cm">// Union by rank</span>
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Union</span>(<span class="kw">int</span> x, <span class="kw">int</span> y)
+    {
+        <span class="kw">int</span> rootX = <span class="fn">Find</span>(x);
+        <span class="kw">int</span> rootY = <span class="fn">Find</span>(y);
+
+        <span class="kw">if</span> (rootX == rootY)
+            <span class="kw">return</span> <span class="kw">false</span>;  <span class="cm">// Already connected</span>
+
+        <span class="kw">if</span> (rank[rootX] < rank[rootY])
+            parent[rootX] = rootY;
+        <span class="kw">else</span> <span class="kw">if</span> (rank[rootX] > rank[rootY])
+            parent[rootY] = rootX;
+        <span class="kw">else</span>
+        {
+            parent[rootY] = rootX;
+            rank[rootX]++;
+        }
+        count--;
+        <span class="kw">return</span> <span class="kw">true</span>;  <span class="cm">// Successfully merged</span>
+    }
+
+    <span class="cm">// Check if two elements are in same set</span>
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Connected</span>(<span class="kw">int</span> x, <span class="kw">int</span> y)
+    {
+        <span class="kw">return</span> <span class="fn">Find</span>(x) == <span class="fn">Find</span>(y);
+    }
+
+    <span class="cm">// Number of connected components</span>
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">GetCount</span>()
+    {
+        <span class="kw">return</span> count;
+    }
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠</span>
+        <strong>Path Compression:</strong> Every find operation updates parent pointers to point directly to root, flattening the tree structure. Combined with union by rank, achieves near-O(1) amortized time.
+      </div>
+    </section>
+
+    <!-- Section 16.9: Union-Find Problems -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">16.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Union-Find Problems</h2>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 323: Number of Connected Components in an Undirected Graph</div>
+            <p class="algo-desc">Find the number of connected components in an undirected graph.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">UnionFind</span>
+              <span class="badge b-blue">Graph</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">7</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(n*α(n))</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">CountComponents</span>(<span class="kw">int</span> n, <span class="kw">int</span>[][] edges)
+{
+    <span class="ty">UnionFind</span> uf = <span class="kw">new</span> <span class="ty">UnionFind</span>(n);
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> edge <span class="kw">in</span> edges)
+        uf.<span class="fn">Union</span>(edge[<span class="num">0</span>], edge[<span class="num">1</span>]);
+
+    <span class="kw">return</span> uf.<span class="fn">GetCount</span>();
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 684: Redundant Connection</div>
+            <p class="algo-desc">Find an edge that creates a cycle in an undirected tree (n nodes, n edges). Return any redundant edge.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">UnionFind</span>
+              <span class="badge b-blue">Graph</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">8</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(n*α(n))</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">int</span>[] <span class="fn">FindRedundantConnection</span>(<span class="kw">int</span>[][] edges)
+{
+    <span class="ty">UnionFind</span> uf = <span class="kw">new</span> <span class="ty">UnionFind</span>(edges.<span class="prop">Length</span> + <span class="num">1</span>);
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> edge <span class="kw">in</span> edges)
+    {
+        <span class="kw">if</span> (!uf.<span class="fn">Union</span>(edge[<span class="num">0</span>], edge[<span class="num">1</span>]))
+            <span class="kw">return</span> edge;  <span class="cm">// Found cycle</span>
+    }
+
+    <span class="kw">return</span> <span class="kw">new</span> <span class="kw">int</span>[] { };
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 721: Accounts Merge</div>
+            <p class="algo-desc">Merge accounts with shared email addresses. Return accounts with all merged emails in sorted order.</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">UnionFind</span>
+              <span class="badge b-blue">String</span>
+              <span class="badge b-red">Hard</span>
+            </div>
+          </div>
+          <div class="algo-idx">9</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(n*k*α(n))</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(n*k)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">string</span>&gt;&gt; <span class="fn">AccountsMerge</span>(<span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">string</span>&gt;&gt; accounts)
+{
+    <span class="ty">Dictionary</span>&lt;<span class="kw">string</span>, <span class="kw">int</span>&gt; emailToId = <span class="kw">new</span>();
+    <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;&gt; idToEmails = <span class="kw">new</span>();
+    <span class="ty">UnionFind</span> uf = <span class="kw">new</span> <span class="ty">UnionFind</span>(accounts.<span class="prop">Count</span>);
+
+    <span class="kw">int</span> idx = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="kw">var</span> account <span class="kw">in</span> accounts)
+    {
+        <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; emails = <span class="kw">new</span>(account);
+        <span class="kw">string</span> name = emails[<span class="num">0</span>];
+        emails.<span class="fn">RemoveAt</span>(<span class="num">0</span>);
+
+        <span class="kw">int</span> firstEmailId = -<span class="num">1</span>;
+        <span class="kw">foreach</span> (<span class="kw">var</span> email <span class="kw">in</span> emails)
+        {
+            <span class="kw">if</span> (!emailToId.<span class="fn">ContainsKey</span>(email))
+            {
+                emailToId[email] = idx;
+                firstEmailId = idx;
+            }
+            <span class="kw">else</span>
+            {
+                firstEmailId = emailToId[email];
+            }
+            uf.<span class="fn">Union</span>(idx, firstEmailId);
+        }
+        idx++;
+    }
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> (email, accountId) <span class="kw">in</span> emailToId)
+    {
+        <span class="kw">int</span> root = uf.<span class="fn">Find</span>(accountId);
+        <span class="kw">if</span> (!idToEmails.<span class="fn">ContainsKey</span>(root))
+            idToEmails[root] = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">string</span>&gt;();
+        idToEmails[root].<span class="fn">Add</span>(email);
+    }
+
+    <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">string</span>&gt;&gt; result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">string</span>&gt;&gt;();
+    idx = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="kw">var</span> account <span class="kw">in</span> accounts)
+    {
+        <span class="kw">int</span> root = uf.<span class="fn">Find</span>(idx);
+        <span class="kw">if</span> (idToEmails.<span class="fn">ContainsKey</span>(root))
+        {
+            <span class="ty">List</span>&lt;<span class="kw">string</span>&gt; merged = <span class="kw">new</span>();
+            merged.<span class="fn">Add</span>(account[<span class="num">0</span>]);
+            idToEmails[root].<span class="fn">Sort</span>();
+            merged.<span class="fn">AddRange</span>(idToEmails[root]);
+            result.<span class="fn">Add</span>(merged);
+            idToEmails.<span class="fn">Remove</span>(root);
+        }
+        idx++;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">LC 547: Number of Provinces</div>
+            <p class="algo-desc">Find the number of provinces given an isConnected matrix (0=not connected, 1=connected).</p>
+            <div class="algo-tags">
+              <span class="badge b-orange">UnionFind</span>
+              <span class="badge b-blue">Graph</span>
+              <span class="badge b-amber">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">10</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(n²*α(n))</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">FindCircleNum</span>(<span class="kw">int</span>[][] isConnected)
+{
+    <span class="kw">int</span> n = isConnected.<span class="prop">Length</span>;
+    <span class="ty">UnionFind</span> uf = <span class="kw">new</span> <span class="ty">UnionFind</span>(n);
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < n; i++)
+    {
+        <span class="kw">for</span> (<span class="kw">int</span> j = i + <span class="num">1</span>; j < n; j++)
+        {
+            <span class="kw">if</span> (isConnected[i][j] == <span class="num">1</span>)
+                uf.<span class="fn">Union</span>(i, j);
+        }
+    }
+
+    <span class="kw">return</span> uf.<span class="fn">GetCount</span>();
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 16.10: Skip Lists -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <span class="sec-num">16.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Skip Lists</h2>
+      <p class="lead">A Skip List is a probabilistic data structure that maintains sorted sequences with O(log n) search, insertion, and deletion in expectation. Alternative to balanced trees.</p>
+
+      <h3>Skip List Concepts</h3>
+      <ul style="margin: 14px 0 16px 20px; font-size: 15px; color: var(--ink2);">
+        <li><strong>Structure:</strong> Multiple levels of sorted linked lists; higher levels act as "express lanes"</li>
+        <li><strong>Height Assignment:</strong> Probabilistic - flip coin to decide if node belongs to next level</li>
+        <li><strong>Search:</strong> O(log n) expected - start at highest level, descend when overshooting</li>
+        <li><strong>Insert/Delete:</strong> O(log n) expected - find position, update pointers</li>
+        <li><strong>Space:</strong> O(n) expected - average node has 1 + 1/p pointers</li>
+        <li><strong>Advantage:</strong> Simpler than AVL/Red-Black trees; probabilistic guarantees</li>
+      </ul>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <strong>Practical Use:</strong> Skip Lists are used in Redis, LevelDB, and ConcurrentSkipListMap in Java. Good for distributed systems where rebalancing is expensive.
+      </div>
+    </section>
+
+    <!-- Section 16.11: LRU & LFU Caches -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag">
+        <span class="sec-num">16.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>LRU & LFU Caches</h2>
+
+      <h3>LRU Cache - Least Recently Used (LC 146)</h3>
+      <p class="lead">Design a cache that evicts the least recently used item when capacity is exceeded. O(1) get and put operations using HashMap + Doubly Linked List.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">LRUCache</span>
+{
+    <span class="kw">private</span> <span class="kw">class</span> <span class="ty">Node</span>
+    {
+        <span class="kw">public</span> <span class="kw">int</span> key, val;
+        <span class="kw">public</span> <span class="ty">Node</span> prev, next;
+        <span class="kw">public</span> <span class="fn">Node</span>(<span class="kw">int</span> k, <span class="kw">int</span> v) { key = k; val = v; }
+    }
+
+    <span class="kw">private</span> <span class="kw">int</span> capacity;
+    <span class="kw">private</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="ty">Node</span>&gt; cache = <span class="kw">new</span>();
+    <span class="kw">private</span> <span class="ty">Node</span> head = <span class="kw">new</span> <span class="ty">Node</span>(<span class="num">0</span>, <span class="num">0</span>);
+    <span class="kw">private</span> <span class="ty">Node</span> tail = <span class="kw">new</span> <span class="ty">Node</span>(<span class="num">0</span>, <span class="num">0</span>);
+
+    <span class="kw">public</span> <span class="fn">LRUCache</span>(<span class="kw">int</span> capacity)
+    {
+        <span class="kw">this</span>.capacity = capacity;
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">Get</span>(<span class="kw">int</span> key)
+    {
+        <span class="kw">if</span> (!cache.<span class="fn">ContainsKey</span>(key))
+            <span class="kw">return</span> -<span class="num">1</span>;
+
+        <span class="ty">Node</span> node = cache[key];
+        <span class="fn">MoveToHead</span>(node);
+        <span class="kw">return</span> node.val;
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Put</span>(<span class="kw">int</span> key, <span class="kw">int</span> value)
+    {
+        <span class="kw">if</span> (cache.<span class="fn">ContainsKey</span>(key))
+        {
+            <span class="ty">Node</span> node = cache[key];
+            node.val = value;
+            <span class="fn">MoveToHead</span>(node);
+        }
+        <span class="kw">else</span>
+        {
+            <span class="ty">Node</span> newNode = <span class="kw">new</span> <span class="ty">Node</span>(key, value);
+            cache[key] = newNode;
+            <span class="fn">AddToHead</span>(newNode);
+
+            <span class="kw">if</span> (cache.<span class="prop">Count</span> > capacity)
+            {
+                <span class="ty">Node</span> oldest = tail.prev;
+                <span class="fn">RemoveNode</span>(oldest);
+                cache.<span class="fn">Remove</span>(oldest.key);
+            }
+        }
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">AddToHead</span>(<span class="ty">Node</span> node)
+    {
+        node.next = head.next;
+        node.prev = head;
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">RemoveNode</span>(<span class="ty">Node</span> node)
+    {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    <span class="kw">private</span> <span class="kw">void</span> <span class="fn">MoveToHead</span>(<span class="ty">Node</span> node)
+    {
+        <span class="fn">RemoveNode</span>(node);
+        <span class="fn">AddToHead</span>(node);
+    }
+}</pre>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Get Time</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Put Time</div>
+          <div class="cx-v">O(1)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space</div>
+          <div class="cx-v">O(capacity)</div>
+        </div>
+      </div>
+
+      <h3>LFU Cache - Least Frequently Used (LC 460)</h3>
+      <p>Evicts the item with the lowest frequency. If tied, evict the least recently used among those with the lowest frequency.</p>
+
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <strong>LFU Implementation:</strong> Requires three layers: HashMap(key→Node), HashMap(freq→list of nodes), HashMap(node→freq). When incrementing frequency, move node to next frequency list.
+      </div>
+    </section>
+
+    <!-- Section 16.12: Bloom Filters -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag">
+        <span class="sec-num">16.12</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Bloom Filters</h2>
+      <p class="lead">A Bloom Filter is a space-efficient probabilistic data structure for membership testing. Uses multiple hash functions and bit array with O(1) insert and lookup, but allows false positives.</p>
+
+      <h3>Bloom Filter Concepts</h3>
+      <ul style="margin: 14px 0 16px 20px; font-size: 15px; color: var(--ink2);">
+        <li><strong>Structure:</strong> Bit array of size m, k independent hash functions</li>
+        <li><strong>Insert:</strong> Hash element k times, set those k bit positions to 1. O(k) = O(1)</li>
+        <li><strong>Lookup:</strong> Hash element k times, check if all k positions are 1. O(k) = O(1)</li>
+        <li><strong>False Positives:</strong> Possible (element not added but all bits set). Tunable with m and k.</li>
+        <li><strong>False Negatives:</strong> Never (if element was added, bits are definitely set)</li>
+        <li><strong>Space:</strong> O(m bits) - much smaller than hash table for same set</li>
+      </ul>
+
+      <h3>Simple Bloom Filter Implementation</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">BloomFilter</span>
+{
+    <span class="kw">private</span> <span class="ty">BitArray</span> bits;
+    <span class="kw">private</span> <span class="kw">int</span> k;  <span class="cm">// number of hash functions</span>
+
+    <span class="kw">public</span> <span class="fn">BloomFilter</span>(<span class="kw">int</span> size, <span class="kw">int</span> hashFunctions)
+    {
+        bits = <span class="kw">new</span> <span class="ty">BitArray</span>(size, <span class="kw">false</span>);
+        k = hashFunctions;
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">Add</span>(<span class="kw">string</span> element)
+    {
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < k; i++)
+        {
+            <span class="kw">int</span> hash = <span class="fn">Hash</span>(element, i) % bits.<span class="prop">Length</span>;
+            bits[hash] = <span class="kw">true</span>;
+        }
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">MightContain</span>(<span class="kw">string</span> element)
+    {
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < k; i++)
+        {
+            <span class="kw">int</span> hash = <span class="fn">Hash</span>(element, i) % bits.<span class="prop">Length</span>;
+            <span class="kw">if</span> (!bits[hash])
+                <span class="kw">return</span> <span class="kw">false</span>;  <span class="cm">// Definitely not present</span>
+        }
+        <span class="kw">return</span> <span class="kw">true</span>;  <span class="cm">// Probably present</span>
+    }
+
+    <span class="kw">private</span> <span class="kw">int</span> <span class="fn">Hash</span>(<span class="kw">string</span> s, <span class="kw">int</span> seed)
+    {
+        <span class="kw">int</span> hash = seed;
+        <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> s)
+            hash = hash * <span class="num">31</span> + c;
+        <span class="kw">return</span> <span class="ty">Math</span>.<span class="fn">Abs</span>(hash);
+    }
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠</span>
+        <strong>Use Cases:</strong> Web crawlers (visited URLs), distributed caches (CDN existence checks), spell checkers, duplicate detection. NOT suitable when false positives are unacceptable.
+      </div>
+    </section>
+
+    <!-- Section 16.13: Interview Tips -->
+    <section class="section fade" id="sec-13">
+      <div class="sec-tag">
+        <span class="sec-num">16.13</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips & When to Use Each DS</h2>
+
+      <div class="tips">
+        <div class="tip-card">
+          <div class="tip-n">Trie</div>
+          <div class="tip-title">Use When:</div>
+          <div class="tip-body">
+            — Autocomplete/prefix search
+            — Spell checking
+            — IP routing
+            — Dictionary problems
+            — Word search with board
+          </div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Segment Tree</div>
+          <div class="tip-title">Use When:</div>
+          <div class="tip-body">
+            — Range min/max/sum queries
+            — Complex range updates
+            — Lazy propagation needed
+            — Multiple aggregate functions
+          </div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Fenwick Tree</div>
+          <div class="tip-title">Use When:</div>
+          <div class="tip-body">
+            — Sum queries & updates only
+            — Need space efficiency (O(n))
+            — Cleaner/simpler code preferred
+            — Competitive programming
+          </div>
+        </div>
+      </div>
+
+      <div class="tips">
+        <div class="tip-card a">
+          <div class="tip-n">Union-Find</div>
+          <div class="tip-title">Use When:</div>
+          <div class="tip-body">
+            — Connected components
+            — Cycle detection in graph
+            — Merge disjoint sets
+            — Kruskal's algorithm
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-n">Skip List</div>
+          <div class="tip-title">Use When:</div>
+          <div class="tip-body">
+            — Ordered data needed
+            — Simpler than AVL/Red-Black
+            — Distributed systems
+            — Probabilistic OK
+          </div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">LRU Cache</div>
+          <div class="tip-title">Use When:</div>
+          <div class="tip-body">
+            — Temporal locality matters
+            — Fixed capacity eviction
+            — Database/page caching
+            — Most recently used = best
+          </div>
+        </div>
+      </div>
+
+      <h3>Interview Strategy</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Before Coding</div>
+          <div class="proof-body">
+            1. Understand problem constraints (n, memory, operations)
+            2. Identify key pattern (string search, range query, connectivity)
+            3. State time/space tradeoff clearly
+            4. Mention pros/cons vs alternatives
+            5. Check edge cases (empty, single element, capacity)
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">While Coding</div>
+          <div class="proof-body">
+            1. Write clear variable names
+            2. Add comments for complex logic
+            3. Test immediately with examples
+            4. Handle boundary conditions
+            5. Optimize iteratively, don't prematurely optimize
+          </div>
+        </div>
+      </div>
+
+      <h3>Common Mistakes to Avoid</h3>
+      <div class="callout danger">
+        <span class="callout-icon">✗</span>
+        <strong>Trie:</strong> Forgetting to mark end of word OR not handling wildcard searches
+      </div>
+      <div class="callout danger">
+        <span class="callout-icon">✗</span>
+        <strong>Segment Tree:</strong> Off-by-one errors in range boundaries, forgetting to update parent nodes
+      </div>
+      <div class="callout danger">
+        <span class="callout-icon">✗</span>
+        <strong>Union-Find:</strong> Skipping path compression OR union by rank, leading to O(n) operations
+      </div>
+      <div class="callout danger">
+        <span class="callout-icon">✗</span>
+        <strong>LRU Cache:</strong> Not properly linking/unlinking nodes from doubly linked list on eviction
+      </div>
+
+      <h3>Performance Cheat Sheet</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>DS</th>
+              <th>Insert</th>
+              <th>Search</th>
+              <th>Delete</th>
+              <th>Space</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Trie</td>
+              <td>O(m)</td>
+              <td>O(m)</td>
+              <td>O(m)</td>
+              <td>O(N*M)</td>
+              <td>Prefix search</td>
+            </tr>
+            <tr>
+              <td>SegTree</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>N/A</td>
+              <td>O(4n)</td>
+              <td>Range queries</td>
+            </tr>
+            <tr>
+              <td>FenwickTree</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>N/A</td>
+              <td>O(n)</td>
+              <td>Sum queries</td>
+            </tr>
+            <tr>
+              <td>UnionFind</td>
+              <td>O(α(n))</td>
+              <td>O(α(n))</td>
+              <td>O(α(n))</td>
+              <td>O(n)</td>
+              <td>Connectivity</td>
+            </tr>
+            <tr>
+              <td>SkipList</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>O(n)</td>
+              <td>Ordered data</td>
+            </tr>
+            <tr>
+              <td>LRUCache</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(capacity)</td>
+              <td>Caching</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 16: Trie & Advanced Data Structures | DSA Complete Book</p>
+      <p>Master advanced tree-based and probabilistic structures for interviews and production systems.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.fade').forEach((el, i) => {
+      setTimeout(() => el.classList.add('in'), i * 50);
+    });
+
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.closest('.code-block').querySelector('pre').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = orig, 1500);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Sorting algorithms complete reference — quicksort, mergesort, heapsort, counting sort, and more with C# implementations and complexity analysis.">
+  <meta name="keywords" content="sorting algorithms, quicksort, mergesort, heapsort, counting sort, C#, comparison sort">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch09-sorting.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch09-sorting.html">
+  <meta property="og:title" content="Chapter 9: Sorting Algorithms - DSA Complete Book">
+  <meta property="og:description" content="Sorting algorithms complete reference — quicksort, mergesort, heapsort, counting sort, and more with C# implementations and complexity analysis.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch09-sorting.html">
+  <meta name="twitter:title" content="Chapter 9: Sorting Algorithms - DSA Complete Book">
+  <meta name="twitter:description" content="Sorting algorithms complete reference — quicksort, mergesort, heapsort, counting sort, and more with C# implementations and complexity analysis.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 9: Sorting Algorithms - DSA Complete Book",
+  "description": "Sorting algorithms complete reference \u2014 quicksort, mergesort, heapsort, counting sort, and more with C# implementations and complexity analysis.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch09-sorting.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 9: Sorting Algorithms - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book <span class="pill">v1</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 9</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Chapter 9</div></div>
+      <h1>Sorting <em>Algorithms</em></h1>
+      <p class="hero-sub">Master fundamental and advanced sorting techniques from bubble sort to radix sort. Learn algorithm properties like stability and in-place behavior, understand complexity tradeoffs, and know exactly which sort to use in any interview or production scenario.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">13</div><div class="stat-l">Sections</div></div>
+        <div class="stat"><div class="stat-n">10+</div><div class="stat-l">Algorithms</div></div>
+        <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Code Examples</div></div>
+        <div class="stat"><div class="stat-n">10</div><div class="stat-l">Practice Problems</div></div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">9.1</span> Sorting Overview</a>
+        <a href="#sec-2"><span class="toc-n">9.2</span> Bubble Sort</a>
+        <a href="#sec-3"><span class="toc-n">9.3</span> Selection Sort</a>
+        <a href="#sec-4"><span class="toc-n">9.4</span> Insertion Sort</a>
+        <a href="#sec-5"><span class="toc-n">9.5</span> Merge Sort</a>
+        <a href="#sec-6"><span class="toc-n">9.6</span> Quick Sort</a>
+        <a href="#sec-7"><span class="toc-n">9.7</span> Heap Sort</a>
+        <a href="#sec-8"><span class="toc-n">9.8</span> Counting & Radix Sort</a>
+        <a href="#sec-9"><span class="toc-n">9.9</span> Bucket Sort</a>
+        <a href="#sec-10"><span class="toc-n">9.10</span> C# Built-in Sorting</a>
+        <a href="#sec-11"><span class="toc-n">9.11</span> Stability & Comparison</a>
+        <a href="#sec-12"><span class="toc-n">9.12</span> Practice Problems</a>
+        <a href="#sec-13"><span class="toc-n">9.13</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 9.1: Sorting Overview -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><span class="sec-num">9.1</span><div class="sec-line"></div></div>
+      <h2>Sorting Overview</h2>
+      <p class="lead">Sorting is the process of arranging data in a specified order. It's fundamental to computer science: enables binary search, simplifies numerous algorithmic problems, and is often a bottleneck in performance-critical systems. Understanding when and which sorting algorithm to use is essential for any software engineer.</p>
+
+      <h3>Why Sorting Matters</h3>
+      <p>Sorting unlocks efficiency. An unsorted array requires O(n) for linear search; a sorted array enables O(log n) binary search. Many problems become trivial once data is ordered: finding medians, detecting duplicates, merging datasets, and computing ranges all become simpler. In interviews, candidates who recognize when sorting solves a problem stand out.</p>
+
+      <h3>Comparison vs Non-Comparison Sorts</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Comparison Sorts</div>
+          <div class="vs-item">Bubble, Selection, Insertion, Merge, Quick, Heap</div>
+          <div class="vs-item">Lower bound: Ω(n log n) proven by information theory</div>
+          <div class="vs-item">Can sort any comparable type</div>
+          <div class="vs-item">More memory-efficient for small datasets</div>
+        </div>
+        <div class="vs-box good">
+          <div class="vs-title">Non-Comparison Sorts</div>
+          <div class="vs-item">Counting, Radix, Bucket</div>
+          <div class="vs-item">Can achieve O(n) under specific constraints</div>
+          <div class="vs-item">Require knowledge of data distribution</div>
+          <div class="vs-item">Excellent for integers, strings with known ranges</div>
+        </div>
+      </div>
+
+      <h3>Stability in Sorting</h3>
+      <p>A sort is <strong>stable</strong> if elements with equal keys maintain their relative order. Example: sorting [("Alice", 25), ("Bob", 30), ("Charlie", 25)] by age—stable sorts keep Alice before Charlie; unstable sorts might not.</p>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>When stability matters:</strong> Multi-key sorting (sort by age, then keep original order for same age). Sorting objects where you need to preserve insertion order for equal elements. When combining sorts (primary key by price, secondary by rating).</div>
+      </div>
+
+      <h3>In-Place vs Out-of-Place</h3>
+      <p><strong>In-place:</strong> Uses O(1) or O(log n) extra space (quick sort, heap sort). <strong>Out-of-place:</strong> Uses O(n) extra space (merge sort, counting sort). In-place is preferable for memory-constrained systems; out-of-place often enables stability and parallelization.</p>
+
+      <h3>Master Comparison Table</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Best Case</th>
+              <th>Avg Case</th>
+              <th>Worst Case</th>
+              <th>Space</th>
+              <th>Stable</th>
+              <th>In-Place</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Bubble Sort</td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Selection Sort</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Insertion Sort</td>
+              <td>O(n)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(1)</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Merge Sort</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n)</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Quick Sort</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n²)</td>
+              <td>O(log n)</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Heap Sort</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(n log n)</td>
+              <td>O(1)</td>
+              <td>No</td>
+              <td>Yes</td>
+            </tr>
+            <tr>
+              <td>Counting Sort</td>
+              <td>O(n+k)</td>
+              <td>O(n+k)</td>
+              <td>O(n+k)</td>
+              <td>O(k)</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Radix Sort</td>
+              <td>O(nk)</td>
+              <td>O(nk)</td>
+              <td>O(nk)</td>
+              <td>O(n+k)</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Bucket Sort</td>
+              <td>O(n+k)</td>
+              <td>O(n+k)</td>
+              <td>O(n²)</td>
+              <td>O(n+k)</td>
+              <td>Yes</td>
+              <td>No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 9.2: Bubble Sort -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><span class="sec-num">9.2</span><div class="sec-line"></div></div>
+      <h2>Bubble Sort</h2>
+      <p class="lead">The simplest sorting algorithm. Repeatedly scan the array, swapping adjacent elements if they're in wrong order. Largest values "bubble" to the end. Useful primarily for teaching or tiny datasets where simplicity trumps speed.</p>
+
+      <h3>Algorithm Walkthrough</h3>
+      <p>Bubble sort makes multiple passes through the array. On each pass, it compares adjacent pairs and swaps if the left element is greater. After pass i, the last i elements are in final position. Early termination optimization: if a pass makes no swaps, the array is sorted.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Pass 1:</strong> Compare arr[0] and arr[1], swap if needed. Continue to end. Largest element is now at final position.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Pass 2:</strong> Repeat but ignore last element. Second-largest element finds final position.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Repeat:</strong> Continue until no swaps occur or array is sorted.</div>
+        </div>
+      </div>
+
+      <h3>Full C# Implementation</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Bubble Sort (Optimized)</div><div class="algo-desc">With early termination flag for nearly sorted data.</div></div>
+          <div class="algo-idx">01</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Best</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Average</div><div class="cx-v">O(n²)</div></div>
+            <div class="cx"><div class="cx-l">Worst</div><div class="cx-v">O(n²)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(1)</div></div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">BubbleSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> n = arr.<span class="prop">Length</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n - <span class="num">1</span>; i++) {
+        <span class="ty">bool</span> swapped = <span class="kw">false</span>;
+        <span class="cm">// Last i elements already in place</span>
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; n - i - <span class="num">1</span>; j++) {
+            <span class="kw">if</span> (arr[j] &gt; arr[j + <span class="num">1</span>]) {
+                <span class="cm">// Swap</span>
+                <span class="ty">int</span> temp = arr[j];
+                arr[j] = arr[j + <span class="num">1</span>];
+                arr[j + <span class="num">1</span>] = temp;
+                swapped = <span class="kw">true</span>;
+            }
+        }
+        <span class="cm">// If no swaps, array is sorted</span>
+        <span class="kw">if</span> (!swapped) <span class="kw">break</span>;
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card g">
+        <div class="tip-title">When to Use Bubble Sort</div>
+        <div class="tip-body">Only for n &lt; 50 with simplicity as priority. Nearly sorted arrays with early termination. Educational purposes. Never in production for unsorted data.</div>
+      </div>
+    </section>
+
+    <!-- Section 9.3: Selection Sort -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><span class="sec-num">9.3</span><div class="sec-line"></div></div>
+      <h2>Selection Sort</h2>
+      <p class="lead">Find the minimum element in unsorted portion and place it at the beginning. Repeat. Always O(n²) regardless of input, but minimizes memory writes—useful when writes are expensive.</p>
+
+      <h3>Algorithm: Step-by-Step</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Find minimum:</strong> Search unsorted portion (index i to n-1) for smallest element.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Swap:</strong> Place minimum at position i. Now arr[0..i] is sorted with minimum values.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Repeat:</strong> Move i forward and repeat until entire array sorted.</div>
+        </div>
+      </div>
+
+      <h3>C# Implementation</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">SelectionSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> n = arr.<span class="prop">Length</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; n - <span class="num">1</span>; i++) {
+        <span class="ty">int</span> minIdx = i;
+        <span class="cm">// Find minimum in remaining array</span>
+        <span class="kw">for</span> (<span class="ty">int</span> j = i + <span class="num">1</span>; j &lt; n; j++) {
+            <span class="kw">if</span> (arr[j] &lt; arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+        <span class="cm">// Swap minimum to position i</span>
+        <span class="ty">int</span> temp = arr[i];
+        arr[i] = arr[minIdx];
+        arr[minIdx] = temp;
+    }
+}</pre>
+      </div>
+
+      <h3>Why Always O(n²)?</h3>
+      <p>Even if the array is already sorted, selection sort must scan the remaining unsorted portion to confirm there's no smaller element. First scan: n-1 comparisons. Second: n-2. Total: (n-1) + (n-2) + ... + 1 = n(n-1)/2 = Θ(n²).</p>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Selection Sort Pros</div>
+          <div class="vs-item">Minimal memory writes (at most n swaps)</div>
+          <div class="vs-item">Deterministic O(n²) regardless of input</div>
+          <div class="vs-item">Simple implementation</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Selection Sort Cons</div>
+          <div class="vs-item">Always O(n²)—no best case improvement</div>
+          <div class="vs-item">Not stable (same-key elements may change order)</div>
+          <div class="vs-item">Poor cache locality</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 9.4: Insertion Sort -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><span class="sec-num">9.4</span><div class="sec-line"></div></div>
+      <h2>Insertion Sort</h2>
+      <p class="lead">Build sorted array one element at a time. Excellent for nearly sorted data, small arrays, and as the base case in hybrid sorts like Timsort. Best case O(n) when array is already sorted.</p>
+
+      <h3>Algorithm: Build Left to Right</h3>
+      <p>Maintain a sorted region on the left. For each new element, insert it into correct position within the sorted region by shifting larger elements right.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Start with element 1:</strong> Elements 0..0 form sorted region.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>For each element i from 1 to n-1:</strong> Find correct position in sorted region 0..i-1.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Shift and insert:</strong> Shift larger elements right, insert element at correct position.</div>
+        </div>
+      </div>
+
+      <h3>Full C# Implementation</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Insertion Sort</div><div class="algo-desc">Stable, in-place, excellent for nearly sorted data.</div></div>
+          <div class="algo-idx">02</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Best</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Average</div><div class="cx-v">O(n²)</div></div>
+            <div class="cx"><div class="cx-l">Worst</div><div class="cx-v">O(n²)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(1)</div></div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">InsertionSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; arr.<span class="prop">Length</span>; i++) {
+        <span class="ty">int</span> key = arr[i];
+        <span class="ty">int</span> j = i - <span class="num">1</span>;
+        <span class="cm">// Shift larger elements right</span>
+        <span class="kw">while</span> (j &gt;= <span class="num">0</span> &amp;&amp; arr[j] &gt; key) {
+            arr[j + <span class="num">1</span>] = arr[j];
+            j--;
+        }
+        <span class="cm">// Insert key at correct position</span>
+        arr[j + <span class="num">1</span>] = key;
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3>Binary Insertion Sort Variant</h3>
+      <p>Use binary search to find insertion position—reduces comparisons from O(n²) to O(n log n). However, shifts still cost O(n), so overall remains O(n²). Useful when comparisons are expensive but shifts are cheap.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">BinaryInsertionSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; arr.<span class="prop">Length</span>; i++) {
+        <span class="ty">int</span> key = arr[i];
+        <span class="cm">// Binary search for position</span>
+        <span class="ty">int</span> pos = <span class="fn">BinarySearch</span>(arr, <span class="num">0</span>, i - <span class="num">1</span>, key);
+        <span class="cm">// Shift and insert</span>
+        <span class="kw">for</span> (<span class="ty">int</span> j = i - <span class="num">1</span>; j &gt;= pos; j--) {
+            arr[j + <span class="num">1</span>] = arr[j];
+        }
+        arr[pos] = key;
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">BinarySearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> left, <span class="ty">int</span> right, <span class="ty">int</span> key) {
+    <span class="kw">while</span> (left &lt;= right) {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+        <span class="kw">if</span> (arr[mid] &lt; key) left = mid + <span class="num">1</span>;
+        <span class="kw">else</span> right = mid - <span class="num">1</span>;
+    }
+    <span class="kw">return</span> left;
+}</pre>
+      </div>
+
+      <h3>Role in Timsort</h3>
+      <p>Python's built-in sort (Timsort) and Java's Arrays.sort() use insertion sort as the base case for small subarrays (typically 32-64 elements). Why? Insertion sort has low overhead, excellent cache behavior on small arrays, and O(n) best case for nearly sorted data—common within larger sorted runs.</p>
+
+      <div class="tip-card g">
+        <div class="tip-title">Use Insertion Sort When</div>
+        <div class="tip-body">Data nearly sorted. Array size &lt; 50. Hybrid sort's base case. Stable sort needed and memory constrained. Comparisons expensive, shifts cheap.</div>
+      </div>
+    </section>
+
+    <!-- Section 9.5: Merge Sort -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><span class="sec-num">9.5</span><div class="sec-line"></div></div>
+      <h2>Merge Sort</h2>
+      <p class="lead">Divide-and-conquer algorithm with guaranteed O(n log n) time in all cases. Stable sort that requires O(n) extra space. Excellent for linked lists and external sorting (sorting data larger than memory).</p>
+
+      <h3>Algorithm: Divide & Conquer</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Divide:</strong> Split array at midpoint. Recursively sort left half and right half.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Conquer:</strong> Base case: arrays of size 1 are trivially sorted.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Merge:</strong> Combine two sorted halves into single sorted array in O(n) time.</div>
+        </div>
+      </div>
+
+      <h3>Recursive Merge Sort Implementation</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Merge Sort (Top-Down)</div><div class="algo-desc">Classic recursive divide-and-conquer implementation.</div></div>
+          <div class="algo-idx">03</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time All</div><div class="cx-v">O(n log n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(n)</div></div>
+            <div class="cx"><div class="cx-l">Stable</div><div class="cx-v">Yes</div></div>
+            <div class="cx"><div class="cx-l">In-Place</div><div class="cx-v">No</div></div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">MergeSort</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> left, <span class="ty">int</span> right) {
+    <span class="kw">if</span> (left &lt; right) {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+        <span class="fn">MergeSort</span>(arr, left, mid);
+        <span class="fn">MergeSort</span>(arr, mid + <span class="num">1</span>, right);
+        <span class="fn">Merge</span>(arr, left, mid, right);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">Merge</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> left, <span class="ty">int</span> mid, <span class="ty">int</span> right) {
+    <span class="cm">// Copy to temp arrays</span>
+    <span class="ty">int</span>[] leftArr = <span class="kw">new</span> <span class="ty">int</span>[mid - left + <span class="num">1</span>];
+    <span class="ty">int</span>[] rightArr = <span class="kw">new</span> <span class="ty">int</span>[right - mid];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; leftArr.<span class="prop">Length</span>; i++)
+        leftArr[i] = arr[left + i];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; rightArr.<span class="prop">Length</span>; i++)
+        rightArr[i] = arr[mid + <span class="num">1</span> + i];
+
+    <span class="cm">// Merge back</span>
+    <span class="ty">int</span> l = <span class="num">0</span>, r = <span class="num">0</span>, k = left;
+    <span class="kw">while</span> (l &lt; leftArr.<span class="prop">Length</span> &amp;&amp; r &lt; rightArr.<span class="prop">Length</span>) {
+        <span class="kw">if</span> (leftArr[l] &lt;= rightArr[r]) {
+            arr[k++] = leftArr[l++];
+        } <span class="kw">else</span> {
+            arr[k++] = rightArr[r++];
+        }
+    }
+    <span class="cm">// Copy remaining elements</span>
+    <span class="kw">while</span> (l &lt; leftArr.<span class="prop">Length</span>)
+        arr[k++] = leftArr[l++];
+    <span class="kw">while</span> (r &lt; rightArr.<span class="prop">Length</span>)
+        arr[k++] = rightArr[r++];
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3>Bottom-Up (Iterative) Merge Sort</h3>
+      <p>Build sorted array bottom-up instead of recursively. Start with size 1, merge to size 2, then 4, 8, etc. Avoids recursion overhead and is more cache-friendly.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">BottomUpMergeSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> n = arr.<span class="prop">Length</span>;
+
+    <span class="cm">// Start with merge subarrays of size 1, then 2, 4, 8...</span>
+    <span class="kw">for</span> (<span class="ty">int</span> currSize = <span class="num">1</span>; currSize &lt; n; currSize *= <span class="num">2</span>) {
+        <span class="kw">for</span> (<span class="ty">int</span> leftStart = <span class="num">0</span>; leftStart &lt; n - <span class="num">1</span>; leftStart += currSize * <span class="num">2</span>) {
+            <span class="ty">int</span> mid = <span class="ty">Math</span>.<span class="fn">Min</span>(leftStart + currSize - <span class="num">1</span>, n - <span class="num">1</span>);
+            <span class="ty">int</span> rightEnd = <span class="ty">Math</span>.<span class="fn">Min</span>(leftStart + currSize * <span class="num">2</span> - <span class="num">1</span>, n - <span class="num">1</span>);
+            <span class="fn">Merge</span>(arr, leftStart, mid, rightEnd);
+        }
+    }
+}</pre>
+      </div>
+
+      <h3>Merge Sort for Linked Lists</h3>
+      <p>Merge sort is ideal for linked lists (unlike quicksort which needs random access). It maintains O(n log n) time and O(log n) space (recursion stack) without needing contiguous memory.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">ListNode</span> {
+    <span class="kw">public</span> <span class="ty">int</span> val;
+    <span class="kw">public</span> <span class="ty">ListNode</span> next;
+}
+
+<span class="kw">public</span> <span class="ty">ListNode</span> <span class="fn">MergeSortList</span>(<span class="ty">ListNode</span> head) {
+    <span class="kw">if</span> (head == <span class="kw">null</span> || head.next == <span class="kw">null</span>) <span class="kw">return</span> head;
+
+    <span class="cm">// Find middle using slow/fast pointers</span>
+    <span class="ty">ListNode</span> slow = head, fast = head.next;
+    <span class="ty">ListNode</span> prev = <span class="kw">null</span>;
+    <span class="kw">while</span> (fast != <span class="kw">null</span> &amp;&amp; fast.next != <span class="kw">null</span>) {
+        prev = slow;
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    <span class="kw">if</span> (prev != <span class="kw">null</span>) prev.next = <span class="kw">null</span>;
+
+    <span class="ty">ListNode</span> left = <span class="fn">MergeSortList</span>(head);
+    <span class="ty">ListNode</span> right = <span class="fn">MergeSortList</span>(slow);
+
+    <span class="kw">return</span> <span class="fn">MergeLists</span>(left, right);
+}
+
+<span class="kw">private</span> <span class="ty">ListNode</span> <span class="fn">MergeLists</span>(<span class="ty">ListNode</span> l1, <span class="ty">ListNode</span> l2) {
+    <span class="ty">ListNode</span> dummy = <span class="kw">new</span> <span class="ty">ListNode</span> { val = <span class="num">0</span> };
+    <span class="ty">ListNode</span> curr = dummy;
+    <span class="kw">while</span> (l1 != <span class="kw">null</span> &amp;&amp; l2 != <span class="kw">null</span>) {
+        <span class="kw">if</span> (l1.val &lt; l2.val) {
+            curr.next = l1;
+            l1 = l1.next;
+        } <span class="kw">else</span> {
+            curr.next = l2;
+            l2 = l2.next;
+        }
+        curr = curr.next;
+    }
+    curr.next = l1 ?? l2;
+    <span class="kw">return</span> dummy.next;
+}</pre>
+      </div>
+
+      <h3>Counting Inversions Using Merge Sort</h3>
+      <p>An inversion is a pair (i, j) where i &lt; j but arr[i] &gt; arr[j]. Count inversions by augmenting merge sort: when merging, if an element from the right subarray is chosen before one from the left, that's an inversion.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">CountInversions</span>(<span class="ty">int</span>[] arr) {
+    <span class="kw">return</span> <span class="fn">MergeSortCount</span>(arr, <span class="num">0</span>, arr.<span class="prop">Length</span> - <span class="num">1</span>);
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">MergeSortCount</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> left, <span class="ty">int</span> right) {
+    <span class="ty">long</span> invCount = <span class="num">0</span>;
+    <span class="kw">if</span> (left &lt; right) {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+        invCount += <span class="fn">MergeSortCount</span>(arr, left, mid);
+        invCount += <span class="fn">MergeSortCount</span>(arr, mid + <span class="num">1</span>, right);
+        invCount += <span class="fn">MergeCount</span>(arr, left, mid, right);
+    }
+    <span class="kw">return</span> invCount;
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">long</span> <span class="fn">MergeCount</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> left, <span class="ty">int</span> mid, <span class="ty">int</span> right) {
+    <span class="ty">int</span>[] leftArr = <span class="kw">new</span> <span class="ty">int</span>[mid - left + <span class="num">1</span>];
+    <span class="ty">int</span>[] rightArr = <span class="kw">new</span> <span class="ty">int</span>[right - mid];
+    <span class="ty">long</span> invCount = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; leftArr.<span class="prop">Length</span>; i++)
+        leftArr[i] = arr[left + i];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; rightArr.<span class="prop">Length</span>; i++)
+        rightArr[i] = arr[mid + <span class="num">1</span> + i];
+
+    <span class="ty">int</span> l = <span class="num">0</span>, r = <span class="num">0</span>, k = left;
+    <span class="kw">while</span> (l &lt; leftArr.<span class="prop">Length</span> &amp;&amp; r &lt; rightArr.<span class="prop">Length</span>) {
+        <span class="kw">if</span> (leftArr[l] &lt;= rightArr[r]) {
+            arr[k++] = leftArr[l++];
+        } <span class="kw">else</span> {
+            arr[k++] = rightArr[r++];
+            invCount += (leftArr.<span class="prop">Length</span> - l);
+        }
+    }
+    <span class="kw">while</span> (l &lt; leftArr.<span class="prop">Length</span>)
+        arr[k++] = leftArr[l++];
+    <span class="kw">while</span> (r &lt; rightArr.<span class="prop">Length</span>)
+        arr[k++] = rightArr[r++];
+
+    <span class="kw">return</span> invCount;
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Merge Sort Guarantee:</strong> Θ(n log n) worst-case is unmatched by quicksort. When you need guaranteed performance (real-time systems, worst-case SLAs), merge sort is the answer.</div>
+      </div>
+    </section>
+
+    <!-- Section 9.6: Quick Sort -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><span class="sec-num">9.6</span><div class="sec-line"></div></div>
+      <h2>Quick Sort</h2>
+      <p class="lead">Fastest average-case sort (O(n log n)) and most cache-friendly. Based on partitioning around a pivot. Worst case O(n²) but rarely happens in practice with good pivot selection. Preferred in production (built into most languages).</p>
+
+      <h3>Partitioning: Lomuto Scheme</h3>
+      <p>Pick last element as pivot. Partition array so all elements ≤ pivot are on left, all &gt; pivot on right. Return pivot's final position. Time O(n).</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Initialize i:</strong> Start at -1 (will track rightmost element ≤ pivot).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Scan j from low to high-1:</strong> If arr[j] &lt; pivot, swap with arr[i+1], increment i.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Place pivot:</strong> Swap pivot with arr[i+1]. Return i+1 as pivot's final position.</div>
+        </div>
+      </div>
+
+      <h3>Quick Sort with Lomuto Partition</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Quick Sort (Lomuto)</div><div class="algo-desc">Simple partition scheme. Pivot is last element.</div></div>
+          <div class="algo-idx">04</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Avg</div><div class="cx-v">O(n log n)</div></div>
+            <div class="cx"><div class="cx-l">Worst</div><div class="cx-v">O(n²)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(log n)</div></div>
+            <div class="cx"><div class="cx-l">Stable</div><div class="cx-v">No</div></div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">QuickSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="fn">QuickSortHelper</span>(arr, <span class="num">0</span>, arr.<span class="prop">Length</span> - <span class="num">1</span>);
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">QuickSortHelper</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high) {
+    <span class="kw">if</span> (low &lt; high) {
+        <span class="ty">int</span> pi = <span class="fn">Partition</span>(arr, low, high);
+        <span class="fn">QuickSortHelper</span>(arr, low, pi - <span class="num">1</span>);
+        <span class="fn">QuickSortHelper</span>(arr, pi + <span class="num">1</span>, high);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">Partition</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high) {
+    <span class="ty">int</span> pivot = arr[high];
+    <span class="ty">int</span> i = low - <span class="num">1</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> j = low; j &lt; high; j++) {
+        <span class="kw">if</span> (arr[j] &lt; pivot) {
+            i++;
+            <span class="cm">// Swap arr[i] and arr[j]</span>
+            <span class="ty">int</span> temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    <span class="cm">// Place pivot at its correct position</span>
+    <span class="ty">int</span> pivotTemp = arr[i + <span class="num">1</span>];
+    arr[i + <span class="num">1</span>] = arr[high];
+    arr[high] = pivotTemp;
+
+    <span class="kw">return</span> i + <span class="num">1</span>;
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3>Hoare Partition Scheme</h3>
+      <p>More efficient than Lomuto. Two pointers start at opposite ends, move toward center. Swap when left finds element &gt; pivot and right finds element &lt; pivot. Often 3x faster in practice.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">private</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">HoarePartition</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high) {
+    <span class="ty">int</span> pivot = arr[low];
+    <span class="ty">int</span> i = low - <span class="num">1</span>;
+    <span class="ty">int</span> j = high + <span class="num">1</span>;
+
+    <span class="kw">while</span> (<span class="kw">true</span>) {
+        <span class="cm">// Find element on left > pivot</span>
+        <span class="kw">do</span> { i++; } <span class="kw">while</span> (arr[i] &lt; pivot);
+        <span class="cm">// Find element on right < pivot</span>
+        <span class="kw">do</span> { j--; } <span class="kw">while</span> (arr[j] &gt; pivot);
+
+        <span class="cm">// Swap if pointers haven't crossed</span>
+        <span class="kw">if</span> (i &lt; j) {
+            <span class="ty">int</span> temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> j;
+        }
+    }
+}</pre>
+      </div>
+
+      <h3>Randomized Pivot Selection</h3>
+      <p>Worst case O(n²) occurs when pivot is always smallest/largest element (sorted array with middle pivot). Solution: pick random element as pivot. Guarantees O(n log n) with high probability regardless of input.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">private</span> <span class="kw">static</span> <span class="ty">Random</span> <span class="va">rand</span> = <span class="kw">new</span> <span class="ty">Random</span>();
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">RandomizedPartition</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high) {
+    <span class="cm">// Pick random index and swap with high</span>
+    <span class="ty">int</span> randomIdx = low + <span class="va">rand</span>.<span class="fn">Next</span>(high - low + <span class="num">1</span>);
+    <span class="ty">int</span> temp = arr[randomIdx];
+    arr[randomIdx] = arr[high];
+    arr[high] = temp;
+
+    <span class="cm">// Continue with standard Lomuto partition</span>
+    <span class="kw">return</span> <span class="fn">Partition</span>(arr, low, high);
+}</pre>
+      </div>
+
+      <h3>3-Way Partition for Duplicates</h3>
+      <p>If array has many duplicates, standard partitioning wastes time. 3-way partition (Dutch National Flag) divides array into &lt; pivot, = pivot, &gt; pivot. Elements equal to pivot are already in final position—no recursion needed.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">QuickSortThreeWay</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high) {
+    <span class="kw">if</span> (low &lt; high) {
+        <span class="ty">int</span>[] indices = <span class="fn">PartitionThreeWay</span>(arr, low, high);
+        <span class="fn">QuickSortThreeWay</span>(arr, low, indices[<span class="num">0</span>] - <span class="num">1</span>);
+        <span class="fn">QuickSortThreeWay</span>(arr, indices[<span class="num">1</span>] + <span class="num">1</span>, high);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">int</span>[] <span class="fn">PartitionThreeWay</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high) {
+    <span class="ty">int</span> pivot = arr[high];
+    <span class="ty">int</span> i = low;
+    <span class="ty">int</span> j = high - <span class="num">1</span>;
+
+    <span class="kw">while</span> (i &lt;= j) {
+        <span class="kw">if</span> (arr[i] &lt; pivot) {
+            i++;
+        } <span class="kw">else</span> <span class="kw">if</span> (arr[i] &gt; pivot) {
+            <span class="ty">int</span> temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            j--;
+        } <span class="kw">else</span> {
+            i++;
+        }
+    }
+    <span class="cm">// Place pivot</span>
+    <span class="ty">int</span> pivotTemp = arr[i];
+    arr[i] = arr[high];
+    arr[high] = pivotTemp;
+
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[] { i - <span class="cm">// first equal</span>, i <span class="cm">// first greater</span> };
+}</pre>
+      </div>
+
+      <h3>Quick Select: Finding Kth Smallest Element</h3>
+      <p>Quick select uses the partitioning logic from quicksort but without recursing on both sides. After partitioning, if pivot's position equals k, we found it. Otherwise, recurse only on relevant side. Average O(n).</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">QuickSelect</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> k) {
+    <span class="cm">// Find kth smallest (0-indexed)</span>
+    <span class="kw">return</span> <span class="fn">QuickSelectHelper</span>(arr, <span class="num">0</span>, arr.<span class="prop">Length</span> - <span class="num">1</span>, k - <span class="num">1</span>);
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">QuickSelectHelper</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> low, <span class="ty">int</span> high, <span class="ty">int</span> k) {
+    <span class="kw">if</span> (low == high) <span class="kw">return</span> arr[low];
+
+    <span class="ty">int</span> pi = <span class="fn">Partition</span>(arr, low, high);
+
+    <span class="kw">if</span> (k == pi) {
+        <span class="kw">return</span> arr[k];
+    } <span class="kw">else</span> <span class="kw">if</span> (k &lt; pi) {
+        <span class="kw">return</span> <span class="fn">QuickSelectHelper</span>(arr, low, pi - <span class="num">1</span>, k);
+    } <span class="kw">else</span> {
+        <span class="kw">return</span> <span class="fn">QuickSelectHelper</span>(arr, pi + <span class="num">1</span>, high, k);
+    }
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Worst Case Warning:</strong> Sorted array + fixed pivot (e.g., middle) = O(n²). Always use randomized pivot or median-of-three in production code.</div>
+      </div>
+    </section>
+
+    <!-- Section 9.7: Heap Sort -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><span class="sec-num">9.7</span><div class="sec-line"></div></div>
+      <h2>Heap Sort</h2>
+      <p class="lead">Guaranteed O(n log n) in all cases, in-place, unstable. Build max-heap from array, repeatedly extract max element and place at end. Not cache-friendly despite asymptotic optimality—quicksort usually faster in practice.</p>
+
+      <h3>Heapify Process</h3>
+      <p>Transform unsorted array into valid max-heap (parent ≥ children). Start from last non-leaf node, sift down each element to maintain heap property.</p>
+
+      <h3>Heap Sort Implementation</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div><div class="algo-name">Heap Sort</div><div class="algo-desc">Build heap, extract max repeatedly.</div></div>
+          <div class="algo-idx">05</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx"><div class="cx-l">Time All</div><div class="cx-v">O(n log n)</div></div>
+            <div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(1)</div></div>
+            <div class="cx"><div class="cx-l">Stable</div><div class="cx-v">No</div></div>
+            <div class="cx"><div class="cx-l">In-Place</div><div class="cx-v">Yes</div></div>
+          </div>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">HeapSort</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> n = arr.<span class="prop">Length</span>;
+
+    <span class="cm">// Build max heap in O(n)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = n / <span class="num">2</span> - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--) {
+        <span class="fn">Heapify</span>(arr, n, i);
+    }
+
+    <span class="cm">// Extract elements from heap one by one</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = n - <span class="num">1</span>; i &gt; <span class="num">0</span>; i--) {
+        <span class="cm">// Swap root (max) with last element</span>
+        <span class="ty">int</span> temp = arr[<span class="num">0</span>];
+        arr[<span class="num">0</span>] = arr[i];
+        arr[i] = temp;
+
+        <span class="cm">// Heapify reduced heap</span>
+        <span class="fn">Heapify</span>(arr, i, <span class="num">0</span>);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">Heapify</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> n, <span class="ty">int</span> i) {
+    <span class="ty">int</span> largest = i;
+    <span class="ty">int</span> left = <span class="num">2</span> * i + <span class="num">1</span>;
+    <span class="ty">int</span> right = <span class="num">2</span> * i + <span class="num">2</span>;
+
+    <span class="cm">// Find largest among node, left child, right child</span>
+    <span class="kw">if</span> (left &lt; n &amp;&amp; arr[left] &gt; arr[largest]) {
+        largest = left;
+    }
+    <span class="kw">if</span> (right &lt; n &amp;&amp; arr[right] &gt; arr[largest]) {
+        largest = right;
+    }
+
+    <span class="cm">// If largest not root, swap and recurse</span>
+    <span class="kw">if</span> (largest != i) {
+        <span class="ty">int</span> temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        <span class="fn">Heapify</span>(arr, n, largest);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3>Why Heap Sort Isn't Cache-Friendly</h3>
+      <p>Heap sort accesses memory in scattered patterns (jumping between parent and child indices). Unlike merge sort or quicksort which process sequential memory, heap sort misses the cache frequently, leading to poor real-world performance despite O(n log n) guarantee.</p>
+
+      <div class="tip-card a">
+        <div class="tip-title">Use Heap Sort When</div>
+        <div class="tip-body">You need guaranteed O(n log n) worst case with O(1) space. Memory extremely constrained. But prefer quicksort or introsort for typical scenarios.</div>
+      </div>
+    </section>
+
+    <!-- Section 9.8: Counting & Radix Sort -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><span class="sec-num">9.8</span><div class="sec-line"></div></div>
+      <h2>Counting Sort & Radix Sort</h2>
+      <p class="lead">Non-comparison sorts that break the O(n log n) lower bound. Counting sort works for small integer ranges. Radix sort processes integers digit-by-digit using counting sort. Both O(n+k) where k is range or digit count.</p>
+
+      <h3>Counting Sort</h3>
+      <p>Assumes integers in range [0, k]. Count frequency of each value, reconstruct sorted array. Stable if we iterate counts backward. Space O(k).</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span>[] <span class="fn">CountingSort</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> maxVal) {
+    <span class="ty">int</span>[] count = <span class="kw">new</span> <span class="ty">int</span>[maxVal + <span class="num">1</span>];
+
+    <span class="cm">// Count frequencies</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> arr) {
+        count[num]++;
+    }
+
+    <span class="cm">// Reconstruct sorted array</span>
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[arr.<span class="prop">Length</span>];
+    <span class="ty">int</span> idx = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt;= maxVal; i++) {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; count[i]; j++) {
+            result[idx++] = i;
+        }
+    }
+
+    <span class="kw">return</span> result;
+}
+
+<span class="cm">// Stable version using cumulative counts</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span>[] <span class="fn">CountingSortStable</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> maxVal) {
+    <span class="ty">int</span>[] count = <span class="kw">new</span> <span class="ty">int</span>[maxVal + <span class="num">1</span>];
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[arr.<span class="prop">Length</span>];
+
+    <span class="cm">// Count frequencies</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> arr) {
+        count[num]++;
+    }
+
+    <span class="cm">// Convert to cumulative counts</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt;= maxVal; i++) {
+        count[i] += count[i - <span class="num">1</span>];
+    }
+
+    <span class="cm">// Iterate backwards to maintain stability</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = arr.<span class="prop">Length</span> - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--) {
+        result[count[arr[i]] - <span class="num">1</span>] = arr[i];
+        count[arr[i]]--;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>Radix Sort: Least Significant Digit (LSD)</h3>
+      <p>Sort by rightmost digit first using counting sort, then second-rightmost, etc. Each digit pass is stable, so earlier digits' ordering is preserved. Time O(d·n) where d is number of digits.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">RadixSortLSD</span>(<span class="ty">int</span>[] arr) {
+    <span class="ty">int</span> maxNum = <span class="ty">Array</span>.<span class="fn">MaxValue</span>(arr);
+
+    <span class="cm">// Sort by each digit position (10 digits for base 10)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> exp = <span class="num">1</span>; maxNum / exp &gt; <span class="num">0</span>; exp *= <span class="num">10</span>) {
+        <span class="fn">CountingSortByDigit</span>(arr, exp);
+    }
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">CountingSortByDigit</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> exp) {
+    <span class="ty">int</span>[] count = <span class="kw">new</span> <span class="ty">int</span>[<span class="num">10</span>];
+    <span class="ty">int</span>[] result = <span class="kw">new</span> <span class="ty">int</span>[arr.<span class="prop">Length</span>];
+
+    <span class="cm">// Count by current digit</span>
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> arr) {
+        count[(num / exp) % <span class="num">10</span>]++;
+    }
+
+    <span class="cm">// Cumulative count</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; <span class="num">10</span>; i++) {
+        count[i] += count[i - <span class="num">1</span>];
+    }
+
+    <span class="cm">// Build result (iterate backwards for stability)</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = arr.<span class="prop">Length</span> - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--) {
+        <span class="ty">int</span> digit = (arr[i] / exp) % <span class="num">10</span>;
+        result[count[digit] - <span class="num">1</span>] = arr[i];
+        count[digit]--;
+    }
+
+    <span class="cm">// Copy result back</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span>; i++) {
+        arr[i] = result[i];
+    }
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Radix Sort Best For:</strong> Integers with known max value. Strings with known alphabet size. When comparison-based sort would be O(n log n) but digits/characters are few.</div>
+      </div>
+    </section>
+
+    <!-- Section 9.9: Bucket Sort -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><span class="sec-num">9.9</span><div class="sec-line"></div></div>
+      <h2>Bucket Sort</h2>
+      <p class="lead">Distribute elements into buckets based on value ranges, sort each bucket independently, concatenate. Excellent for uniformly distributed data. O(n+k) average, O(n²) worst case.</p>
+
+      <h3>Algorithm</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Create buckets:</strong> Divide range [min, max] into k equal-sized buckets.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Distribute:</strong> Place each element into appropriate bucket.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Sort buckets:</strong> Sort each bucket (using insertion sort for small buckets).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Concatenate:</strong> Merge sorted buckets in order.</div>
+        </div>
+      </div>
+
+      <h3>C# Implementation</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">BucketSort</span>(<span class="ty">double</span>[] arr) {
+    <span class="ty">int</span> n = arr.<span class="prop">Length</span>;
+    <span class="ty">int</span> bucketCount = <span class="ty">Math</span>.<span class="fn">Max</span>(<span class="num">1</span>, n / <span class="num">10</span>); <span class="cm">// heuristic</span>
+
+    <span class="kw">var</span> buckets = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">double</span>&gt;[bucketCount];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; bucketCount; i++) {
+        buckets[i] = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">double</span>&gt;();
+    }
+
+    <span class="cm">// Find min and max</span>
+    <span class="ty">double</span> min = arr[<span class="num">0</span>], max = arr[<span class="num">0</span>];
+    <span class="kw">foreach</span> (<span class="ty">double</span> num <span class="kw">in</span> arr) {
+        <span class="kw">if</span> (num &lt; min) min = num;
+        <span class="kw">if</span> (num &gt; max) max = num;
+    }
+
+    <span class="ty">double</span> range = (max - min) / bucketCount;
+
+    <span class="cm">// Distribute elements</span>
+    <span class="kw">foreach</span> (<span class="ty">double</span> num <span class="kw">in</span> arr) {
+        <span class="ty">int</span> bucketIdx = (num == max) ? bucketCount - <span class="num">1</span> : (<span class="ty">int</span>)((num - min) / range);
+        buckets[bucketIdx].<span class="fn">Add</span>(num);
+    }
+
+    <span class="cm">// Sort individual buckets</span>
+    <span class="ty">int</span> idx = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="kw">var</span> bucket <span class="kw">in</span> buckets) {
+        bucket.<span class="fn">Sort</span>(); <span class="cm">// or InsertionSort for small buckets</span>
+        <span class="kw">foreach</span> (<span class="ty">double</span> num <span class="kw">in</span> bucket) {
+            arr[idx++] = num;
+        }
+    }
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 9.10: C# Built-in Sorting -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag"><span class="sec-num">9.10</span><div class="sec-line"></div></div>
+      <h2>C# Built-in Sorting</h2>
+      <p class="lead">C# uses IntroSort: quicksort with heapsort fallback and insertion sort for small subarrays. Extremely optimized. Use Array.Sort() or List.Sort() and supply custom comparers for non-default ordering.</p>
+
+      <h3>IntroSort: QuickSort + HeapSort + InsertionSort</h3>
+      <p>Starts with quicksort. If recursion depth exceeds 2·log(n), switches to heapsort to avoid O(n²). For subarrays &lt; 16 elements, uses insertion sort. Combines best of all worlds.</p>
+
+      <h3>Array.Sort() vs List.Sort()</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="cm">// In-place sort of array</span>
+<span class="ty">int</span>[] arr = { <span class="num">3</span>, <span class="num">1</span>, <span class="num">4</span>, <span class="num">1</span>, <span class="num">5</span> };
+<span class="ty">Array</span>.<span class="fn">Sort</span>(arr);
+
+<span class="cm">// In-place sort of list</span>
+<span class="kw">var</span> list = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; { <span class="num">3</span>, <span class="num">1</span>, <span class="num">4</span>, <span class="num">1</span>, <span class="num">5</span> };
+list.<span class="fn">Sort</span>();
+
+<span class="cm">// LINQ OrderBy (creates new collection, not in-place)</span>
+<span class="kw">var</span> sorted = arr.<span class="fn">OrderBy</span>(x =&gt; x).<span class="fn">ToList</span>();</pre>
+      </div>
+
+      <h3>Custom Comparers: IComparer</h3>
+      <p>Implement IComparer interface for custom sorting logic. CompareTo returns negative if first &lt; second, zero if equal, positive if first &gt; second.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Person</span> {
+    <span class="kw">public</span> <span class="ty">string</span> Name { <span class="kw">get</span>; <span class="kw">set</span>; }
+    <span class="kw">public</span> <span class="ty">int</span> Age { <span class="kw">get</span>; <span class="kw">set</span>; }
+}
+
+<span class="cm">// Sort by age ascending</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">AgeComparer</span> : <span class="ty">IComparer</span>&lt;<span class="ty">Person</span>&gt; {
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Compare</span>(<span class="ty">Person</span> a, <span class="ty">Person</span> b) {
+        <span class="kw">return</span> a.Age.<span class="fn">CompareTo</span>(b.Age);
+    }
+}
+
+<span class="ty">var</span> people = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Person</span>&gt; {
+    <span class="kw">new</span> <span class="ty">Person</span> { Name = <span class="str">"Alice"</span>, Age = <span class="num">30</span> },
+    <span class="kw">new</span> <span class="ty">Person</span> { Name = <span class="str">"Bob"</span>, Age = <span class="num">25</span> }
+};
+
+people.<span class="fn">Sort</span>(<span class="kw">new</span> <span class="ty">AgeComparer</span>());</pre>
+      </div>
+
+      <h3>Lambda Comparers with Comparison Delegate</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="cm">// Sort by age descending using lambda</span>
+people.<span class="fn">Sort</span>((a, b) =&gt; b.Age.<span class="fn">CompareTo</span>(a.Age));
+
+<span class="cm">// Sort by name (case-insensitive)</span>
+people.<span class="fn">Sort</span>((a, b) =&gt; <span class="ty">string</span>.<span class="fn">Compare</span>(a.Name, b.Name, <span class="ty">StringComparison</span>.OrdinalIgnoreCase));
+
+<span class="cm">// Sort by age, then by name</span>
+people.<span class="fn">Sort</span>((a, b) =&gt; {
+    <span class="ty">int</span> ageCompare = a.Age.<span class="fn">CompareTo</span>(b.Age);
+    <span class="kw">return</span> ageCompare != <span class="num">0</span> ? ageCompare : a.Name.<span class="fn">CompareTo</span>(b.Name);
+});</pre>
+      </div>
+
+      <h3>LINQ OrderBy with Multiple Keys</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="cm">// Multi-key sort: by age ascending, then by name ascending</span>
+<span class="kw">var</span> sorted = people
+    .<span class="fn">OrderBy</span>(p =&gt; p.Age)
+    .<span class="fn">ThenBy</span>(p =&gt; p.Name)
+    .<span class="fn">ToList</span>();
+
+<span class="cm">// Descending age, ascending name</span>
+sorted = people
+    .<span class="fn">OrderByDescending</span>(p =&gt; p.Age)
+    .<span class="fn">ThenBy</span>(p =&gt; p.Name)
+    .<span class="fn">ToList</span>();</pre>
+      </div>
+    </section>
+
+    <!-- Section 9.11: Stability & Comparison -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag"><span class="sec-num">9.11</span><div class="sec-line"></div></div>
+      <h2>Stability & Comprehensive Comparison</h2>
+      <p class="lead">Stability determines whether equal-key elements maintain relative order. Critical for multi-key sorting and data integrity in complex systems.</p>
+
+      <h3>What is Stability?</h3>
+      <p>If array contains [("Alice", 25), ("Bob", 30), ("Charlie", 25)] and we sort by age, a stable sort preserves Alice before Charlie (both age 25). An unstable sort might swap them.</p>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Stable Sorts</div>
+          <div class="vs-item">Bubble, Insertion, Merge, Counting, Radix, Bucket</div>
+          <div class="vs-item">Preserve relative order of equal elements</div>
+          <div class="vs-item">Required for multi-stage sorts</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Unstable Sorts</div>
+          <div class="vs-item">Selection, Quick, Heap</div>
+          <div class="vs-item">May reorder equal elements</div>
+          <div class="vs-item">Simpler, often faster in practice</div>
+        </div>
+      </div>
+
+      <h3>When Stability Matters</h3>
+      <p><strong>Scenario:</strong> Sort employee data by age, then by seniority (hire date). If unstable sort after age, it loses seniority ordering. Solution: sort by hire date first, then age with stable sort (preserves hire date order for same age).</p>
+
+      <h3>Algorithm Comparison Summary</h3>
+      <p>See the master table in Section 9.1 for detailed complexity and property comparison across all algorithms.</p>
+    </section>
+
+    <!-- Section 9.12: Practice Problems -->
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag"><span class="sec-num">9.12</span><div class="sec-line"></div></div>
+      <h2>Practice Problems with Solutions</h2>
+
+      <h3>1. Sort Colors (LeetCode 75)</h3>
+      <p>Sort array containing 0s, 1s, 2s in-place with one pass. Use 3-way partition (Dutch National Flag).</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">SortColors</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">int</span> low = <span class="num">0</span>, mid = <span class="num">0</span>, high = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="kw">while</span> (mid &lt;= high) {
+        <span class="kw">if</span> (nums[mid] == <span class="num">0</span>) {
+            <span class="kw">swap</span>(nums, low++, mid++);
+        } <span class="kw">else</span> <span class="kw">if</span> (nums[mid] == <span class="num">2</span>) {
+            <span class="kw">swap</span>(nums, mid, high--);
+        } <span class="kw">else</span> {
+            mid++;
+        }
+    }
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">swap</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> i, <span class="ty">int</span> j) {
+    <span class="ty">int</span> temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+}</pre>
+      </div>
+
+      <h3>2. Merge Intervals (LeetCode 56)</h3>
+      <p>Sort intervals by start time, merge overlapping intervals.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[][] <span class="fn">Merge</span>(<span class="ty">int</span>[][] intervals) {
+    <span class="kw">if</span> (intervals.<span class="prop">Length</span> == <span class="num">0</span>) <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[<span class="num">0</span>][];
+
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(intervals, (a, b) =&gt; a[<span class="num">0</span>].<span class="fn">CompareTo</span>(b[<span class="num">0</span>]));
+
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>[]&gt;();
+    <span class="kw">var</span> current = <span class="kw">new</span> <span class="ty">int</span>[] { intervals[<span class="num">0</span>][<span class="num">0</span>], intervals[<span class="num">0</span>][<span class="num">1</span>] };
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> interval <span class="kw">in</span> intervals) {
+        <span class="kw">if</span> (interval[<span class="num">0</span>] &lt;= current[<span class="num">1</span>]) {
+            current[<span class="num">1</span>] = <span class="ty">Math</span>.<span class="fn">Max</span>(current[<span class="num">1</span>], interval[<span class="num">1</span>]);
+        } <span class="kw">else</span> {
+            result.<span class="fn">Add</span>(current);
+            current = <span class="kw">new</span> <span class="ty">int</span>[] { interval[<span class="num">0</span>], interval[<span class="num">1</span>] };
+        }
+    }
+    result.<span class="fn">Add</span>(current);
+
+    <span class="kw">return</span> result.<span class="fn">ToArray</span>();
+}</pre>
+      </div>
+
+      <h3>3. Largest Number (LeetCode 179)</h3>
+      <p>Arrange numbers to form largest possible number. Custom comparator: compare concatenations.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">string</span> <span class="fn">LargestNumber</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">var</span> strs = <span class="ty">Array</span>.<span class="fn">ConvertAll</span>(nums, x =&gt; x.<span class="fn">ToString</span>());
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(strs, (a, b) =&gt; {
+        <span class="ty">string</span> ab = a + b;
+        <span class="ty">string</span> ba = b + a;
+        <span class="kw">return</span> ba.<span class="fn">CompareTo</span>(ab); <span class="cm">// descending</span>
+    });
+
+    <span class="kw">if</span> (strs[<span class="num">0</span>][<span class="num">0</span>] == <span class="str">'0'</span>) <span class="kw">return</span> <span class="str">"0"</span>;
+
+    <span class="kw">return</span> <span class="ty">string</span>.<span class="fn">Concat</span>(strs);
+}</pre>
+      </div>
+
+      <h3>4. Kth Largest Element (LeetCode 215)</h3>
+      <p>Find kth largest element. Use quickselect O(n) average, or heap O(n log k).</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="cm">// Method 1: Sort (simplest)</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">FindKthLargest</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k) {
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(nums);
+    <span class="kw">return</span> nums[nums.<span class="prop">Length</span> - k];
+}
+
+<span class="cm">// Method 2: Min heap of size k</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">FindKthLargestHeap</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k) {
+    <span class="kw">var</span> heap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        heap.<span class="fn">Enqueue</span>(num, num);
+        <span class="kw">if</span> (heap.<span class="fn">Count</span> &gt; k) heap.<span class="fn">Dequeue</span>();
+    }
+    <span class="kw">return</span> heap.<span class="fn">Peek</span>();
+}</pre>
+      </div>
+
+      <h3>5. Valid Anagram (LeetCode 242)</h3>
+      <p>Check if two strings are anagrams. Sort both and compare.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsAnagram</span>(<span class="ty">string</span> s, <span class="ty">string</span> t) {
+    <span class="ty">char</span>[] s1 = s.<span class="fn">ToCharArray</span>();
+    <span class="ty">char</span>[] t1 = t.<span class="fn">ToCharArray</span>();
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(s1);
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(t1);
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">string</span>(s1) == <span class="kw">new</span> <span class="ty">string</span>(t1);
+}</pre>
+      </div>
+
+      <h3>6. Sort List (LeetCode 148)</h3>
+      <p>Merge sort for linked list (O(n log n) time, O(log n) space).</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">ListNode</span> <span class="fn">SortList</span>(<span class="ty">ListNode</span> head) {
+    <span class="kw">if</span> (head?.next == <span class="kw">null</span>) <span class="kw">return</span> head;
+
+    <span class="ty">ListNode</span> slow = head, fast = head.next, prev = <span class="kw">null</span>;
+    <span class="kw">while</span> (fast?.next != <span class="kw">null</span>) {
+        prev = slow;
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    prev.next = <span class="kw">null</span>;
+    <span class="ty">ListNode</span> left = <span class="fn">SortList</span>(head);
+    <span class="ty">ListNode</span> right = <span class="fn">SortList</span>(slow);
+
+    <span class="kw">return</span> <span class="fn">Merge</span>(left, right);
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 9.13: Interview Tips -->
+    <section class="section fade" id="sec-13">
+      <div class="sec-tag"><span class="sec-num">9.13</span><div class="sec-line"></div></div>
+      <h2>Interview Tips & Best Practices</h2>
+
+      <h3>Choosing the Right Sort</h3>
+      <div class="tip-card">
+        <div class="tip-title">Decision Tree</div>
+        <div class="tip-body">
+          <strong>Guaranteed O(n log n) needed?</strong> Use merge sort or heap sort.
+          <br><strong>In-place O(1) space critical?</strong> Use quicksort (with randomized pivot) or heap sort.
+          <br><strong>Nearly sorted data?</strong> Use insertion sort or bubble sort with early termination.
+          <br><strong>Small integers (known max)?</strong> Use counting sort or radix sort.
+          <br><strong>Stability required?</strong> Use merge sort, counting sort, or insertion sort.
+          <br><strong>Production code?</strong> Use language built-ins (IntroSort in C#, Timsort in Python).
+        </div>
+      </div>
+
+      <h3>Red Flags in Interviews</h3>
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Saying "use quicksort":</strong> Good instinct, but explain worst-case and randomization.
+          <br><strong>Forgetting stability:</strong> Ask "do equal elements need to maintain order?"
+          <br><strong>Not considering space:</strong> "Can I use O(n) extra space?" determines merge vs. quicksort.
+          <br><strong>Always sorting:</strong> Sometimes sorting isn't optimal. Hash tables, binary search, or frequency counting might be faster.
+        </div>
+      </div>
+
+      <h3>Stability Questions</h3>
+      <p><strong>Interviewer asks:</strong> "Why does this sort fail for this data structure?" <strong>Your answer:</strong> Likely stability issue. Explain: equal-key elements lost relative order, causing incorrect secondary sort.</p>
+
+      <h3>Custom Comparator Mistakes</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn" onclick="copy(this)">Copy</button></div>
+        <pre><span class="cm">// WRONG: Subtraction can overflow</span>
+<span class="kw">return</span> a - b; <span class="cm">// If a = -2B31, b = 1, result overflows</span>
+
+<span class="cm">// CORRECT: Use CompareTo or safe comparison</span>
+<span class="kw">return</span> a.<span class="fn">CompareTo</span>(b);</pre>
+      </div>
+
+      <h3>Time Complexity Proof Sketches</h3>
+      <p><strong>Why merge sort is O(n log n):</strong> Splits array n times (log n depth). Each level does n merging work. Total: n · log n.</p>
+      <p><strong>Why quicksort average O(n log n):</strong> Each partition splits roughly in half. Expected depth log n. Each level O(n) work.</p>
+      <p><strong>Why counting sort is O(n+k):</strong> Count pass O(n). Reconstruct pass O(n+k) (k buckets).</p>
+
+      <div class="tip-card g">
+        <div class="tip-title">Final Interview Checklist</div>
+        <div class="tip-body">
+          □ Understand the problem (sortable type, constraints, stability needed)
+          <br>□ Pick algorithm with clearest reasoning
+          <br>□ Explain time/space complexity
+          <br>□ Code carefully (off-by-one errors, edge cases)
+          <br>□ Test on examples (already sorted, reverse sorted, duplicates)
+          <br>□ Ask clarifications: "Can I modify in-place?" "Memory constraints?"
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 9: Sorting Algorithms</p>
+      <p>Part of DSA Complete Book v1. Master data structures and algorithms for coding interviews.</p>
+    </div>
+  </footer>
+
+  <script>
+function copy(button) {
+  const pre = button.parentElement.parentElement.querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    button.textContent = 'Copied!';
+    setTimeout(() => button.textContent = 'Copy', 2000);
+  });
+}
+
+document.querySelectorAll('.fade').forEach(el => {
+  setTimeout(() => el.classList.add('in'), 50);
+});
+  </script>
+</body>
+</html>

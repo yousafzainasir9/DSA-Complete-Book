@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Graph algorithms comprehensive guide — BFS, DFS, Dijkstra, Bellman-Ford, topological sort, union-find, with C# implementations.">
+  <meta name="keywords" content="graphs, BFS, DFS, Dijkstra, Bellman-Ford, topological sort, union-find, adjacency list, C#">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch08-graphs.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch08-graphs.html">
+  <meta property="og:title" content="Chapter 8: Graphs - DSA Complete Book">
+  <meta property="og:description" content="Graph algorithms comprehensive guide — BFS, DFS, Dijkstra, Bellman-Ford, topological sort, union-find, with C# implementations.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch08-graphs.html">
+  <meta name="twitter:title" content="Chapter 8: Graphs - DSA Complete Book">
+  <meta name="twitter:description" content="Graph algorithms comprehensive guide — BFS, DFS, Dijkstra, Bellman-Ford, topological sort, union-find, with C# implementations.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 8: Graphs - DSA Complete Book",
+  "description": "Graph algorithms comprehensive guide \u2014 BFS, DFS, Dijkstra, Bellman-Ford, topological sort, union-find, with C# implementations.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch08-graphs.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 8: Graphs - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}:root{--bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;--ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;--acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;--green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;--blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;--red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;--amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;--sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;}body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}.nav-links a:hover{color:var(--ink);border-color:var(--acc)}.wrap{max-width:960px;margin:0 auto;padding:0 2rem}.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}.eyebrow-line{width:28px;height:2px;background:var(--acc)}.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}.stat{padding:14px 26px;border-right:1px solid var(--rule)}.stat:last-child{border-right:none}.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}.toc-grid a:hover{color:var(--acc)}.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}.section{padding-top:72px}.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}.sec-line{flex:1;height:1px;background:var(--rule)}.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.algo-body{padding:28px 32px}.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}.steps{margin-bottom:26px}.step{display:flex}.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}.step:last-child .step-vline{display:none}.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}.step-body strong{color:var(--ink);font-weight:600}code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}.copy-btn:hover{color:#d4d0c8}pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}.callout strong{color:inherit;font-weight:600}.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}thead tr{background:var(--bg2)}th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg)}.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}.vs-box.good{background:var(--green-l);border-color:var(--green-b)}.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}.proof-note strong{color:var(--ink2)}.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}footer p{font-size:13px;color:var(--ink3)}footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}@media(max-width:700px){.algo-head{grid-template-columns:1fr}.algo-idx{display:none}.vs,.proof-grid,.tips{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book<span class="pill">v1</span></a>
+      <div class="nav-links"><a href="index.html">Home</a><a href="#toc">Chapter 8</a></div>
+    </div>
+  </nav>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Chapter 8</div></div>
+      <h1>Graphs: Theory, <em>Algorithms & Applications</em></h1>
+      <p class="hero-sub">Master graph theory and its most powerful algorithms. From BFS and DFS to shortest paths, minimum spanning trees, and topological sorting—learn to solve real-world connectivity, pathfinding, and network problems with deep theoretical understanding and production-ready C# code.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">21</div><div class="stat-l">Algorithms</div></div>
+        <div class="stat"><div class="stat-n">11</div><div class="stat-l">Problem Categories</div></div>
+        <div class="stat"><div class="stat-n">40+</div><div class="stat-l">C# Examples</div></div>
+        <div class="stat"><div class="stat-n">2000+</div><div class="stat-l">Lines of Code</div></div>
+      </div>
+    </section>
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">8.1</span> Graph Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">8.2</span> Graph Representations</a>
+        <a href="#sec-3"><span class="toc-n">8.3</span> BFS - Breadth-First Search</a>
+        <a href="#sec-4"><span class="toc-n">8.4</span> DFS - Depth-First Search</a>
+        <a href="#sec-5"><span class="toc-n">8.5</span> Topological Sort</a>
+        <a href="#sec-6"><span class="toc-n">8.6</span> Shortest Path Algorithms</a>
+        <a href="#sec-7"><span class="toc-n">8.7</span> Minimum Spanning Trees</a>
+        <a href="#sec-8"><span class="toc-n">8.8</span> Union-Find (Disjoint Set)</a>
+        <a href="#sec-9"><span class="toc-n">8.9</span> Grid Problems</a>
+        <a href="#sec-10"><span class="toc-n">8.10</span> Bipartite Graphs</a>
+        <a href="#sec-11"><span class="toc-n">8.11</span> Interview Tips</a>
+      </div>
+    </section>
+    <section class="section" id="sec-1">
+      <div class="sec-tag"><span class="sec-num">8.1</span><div class="sec-line"></div></div>
+      <h2>Graph Fundamentals</h2>
+      <p class="lead">A graph is a fundamental data structure representing relationships between objects through vertices (nodes) and edges (connections). Master the terminology and taxonomy that forms the foundation for all graph algorithms.</p>
+      <h3>Core Concepts</h3>
+      <p>A graph <code class="il">G = (V, E)</code> consists of vertices (nodes) and edges (connections). Graphs model networks: social connections, road systems, dependencies, and more.</p>
+      <h3>Graph Properties & Types</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Directed vs Undirected</div>
+          <div class="proof-body"><strong>Undirected:</strong> Edges have no direction; bidirectional. Edge (u,v) means u↔v.<br><br><strong>Directed:</strong> Edges point from source to destination. Edge u→v means direction matters.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Weighted vs Unweighted</div>
+          <div class="proof-body"><strong>Unweighted:</strong> All edges equal; unit cost of 1.<br><br><strong>Weighted:</strong> Each edge has associated cost/distance/capacity.</div>
+        </div>
+      </div>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Cyclic vs Acyclic</div>
+          <div class="proof-body"><strong>Acyclic:</strong> DAG (Directed Acyclic Graph) has no cycles. Essential for dependencies.<br><br><strong>Cyclic:</strong> Contains cycles; requires detection in many algorithms.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Connected vs Disconnected</div>
+          <div class="proof-body"><strong>Connected:</strong> Path exists between every pair of vertices.<br><br><strong>Disconnected:</strong> Has isolated components unreachable from others.</div>
+        </div>
+      </div>
+      <h3>Essential Terminology</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Term</th><th>Definition</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Degree</td><td>Edges incident to vertex. Directed: in-degree, out-degree.</td><td>Vertex with 3 edges: degree 3</td></tr>
+            <tr><td>Path</td><td>Sequence where adjacent vertices connected by edge</td><td>A→B→C→D</td></tr>
+            <tr><td>Simple Path</td><td>Path with no repeating vertices</td><td>A→B→C valid; A→B→A invalid</td></tr>
+            <tr><td>Cycle</td><td>Path starting and ending at same vertex</td><td>A→B→C→A (length 3)</td></tr>
+            <tr><td>Connected Component</td><td>Maximal subset with all vertices mutually reachable</td><td>Separate clusters in disconnected graph</td></tr>
+            <tr><td>Strongly Connected</td><td>All vertices mutually reachable (directed graphs)</td><td>A→B→C→A forms strongly connected component</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Key Insight:</strong> Before applying an algorithm, identify graph type. Is it directed/undirected, weighted/unweighted, cyclic/acyclic, connected/disconnected? Wrong assumptions cause incorrect solutions.</div></div>
+    </section>
+
+    <section class="section" id="sec-2">
+      <div class="sec-tag"><span class="sec-num">8.2</span><div class="sec-line"></div></div>
+      <h2>Graph Representations</h2>
+      <p class="lead">Three primary representations: adjacency matrix, adjacency list, and edge list. Each has distinct trade-offs in space, time complexity, and practical use cases.</p>
+      <h3>1. Adjacency Matrix</h3>
+      <p>2D array <code class="il">matrix[u][v]</code> where entry indicates edge. Unweighted: 0/1. Weighted: stores weight.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Adjacency Matrix Implementation</div><div class="algo-desc">Directed weighted graph using 2D array. O(1) edge lookup, O(V²) space.</div><div class="algo-tags"><span class="badge b-orange">Dense Graphs</span><span class="badge b-blue">2D Array</span><span class="badge b-green">Fast Lookup</span></div></div><div class="algo-idx">1</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time Lookup</div><div class="cx-v">O(1)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V²)</div></div><div class="cx"><div class="cx-l">Neighbors</div><div class="cx-v">O(V)</div></div><div class="cx"><div class="cx-l">Best For</div><div class="cx-v">Dense Graphs</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">AdjacencyMatrixGraph</span> {
+    <span class="kw">private</span> <span class="kw">int</span>[][] <span class="va">matrix</span>;
+    <span class="kw">private</span> <span class="kw">int</span> <span class="va">vertices</span>;
+    <span class="kw">private</span> <span class="kw">const</span> <span class="kw">int</span> <span class="va">INF</span> = <span class="num">int</span>.<span class="fn">MaxValue</span> / <span class="num">2</span>;
+
+    <span class="kw">public</span> <span class="fn">AdjacencyMatrixGraph</span>(<span class="kw">int</span> <span class="va">v</span>) {
+        <span class="va">vertices</span> = <span class="va">v</span>;
+        <span class="va">matrix</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">v</span>][];
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">v</span>; <span class="va">i</span>++) {
+            <span class="va">matrix</span>[<span class="va">i</span>] = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">v</span>];
+            <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">v</span>; <span class="va">j</span>++)
+                <span class="va">matrix</span>[<span class="va">i</span>][<span class="va">j</span>] = <span class="va">INF</span>;
+            <span class="va">matrix</span>[<span class="va">i</span>][<span class="va">i</span>] = <span class="num">0</span>;
+        }
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">AddEdge</span>(<span class="kw">int</span> <span class="va">u</span>, <span class="kw">int</span> <span class="va">v</span>, <span class="kw">int</span> <span class="va">weight</span> = <span class="num">1</span>) {
+        <span class="va">matrix</span>[<span class="va">u</span>][<span class="va">v</span>] = <span class="va">weight</span>;
+    }
+
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">GetWeight</span>(<span class="kw">int</span> <span class="va">u</span>, <span class="kw">int</span> <span class="va">v</span>) =&gt; <span class="va">matrix</span>[<span class="va">u</span>][<span class="va">v</span>];
+
+    <span class="kw">public</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; <span class="fn">GetNeighbors</span>(<span class="kw">int</span> <span class="va">u</span>) {
+        <span class="kw">var</span> <span class="va">neighbors</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">v</span> = <span class="num">0</span>; <span class="va">v</span> &lt; <span class="va">vertices</span>; <span class="va">v</span>++)
+            <span class="kw">if</span> (<span class="va">matrix</span>[<span class="va">u</span>][<span class="va">v</span>] != <span class="va">INF</span>)
+                <span class="va">neighbors</span>.<span class="fn">Add</span>(<span class="va">v</span>);
+        <span class="kw">return</span> <span class="va">neighbors</span>;
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>2. Adjacency List</h3>
+      <p>Dictionary/array mapping each vertex to list of neighbors. Most common, space-efficient for sparse graphs.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Adjacency List Implementation</div><div class="algo-desc">Using Dictionary&lt;int, List&lt;int&gt;&gt; or List&lt;List&lt;int&gt;&gt;. O(1) average neighbor lookup, O(V+E) space.</div><div class="algo-tags"><span class="badge b-green">Sparse Graphs</span><span class="badge b-blue">Hash Map</span><span class="badge b-green">Efficient</span></div></div><div class="algo-idx">2</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V+E)</div></div><div class="cx"><div class="cx-l">Neighbors</div><div class="cx-v">O(degree)</div></div><div class="cx"><div class="cx-l">Add Edge</div><div class="cx-v">O(1)</div></div><div class="cx"><div class="cx-l">Best For</div><div class="cx-v">Sparse Graphs</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">AdjacencyListGraph</span> {
+    <span class="kw">private</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt;&gt; <span class="va">adjList</span>;
+    <span class="cm">// Tuple: (neighbor, weight)</span>
+    <span class="kw">private</span> <span class="kw">int</span> <span class="va">vertices</span>;
+
+    <span class="kw">public</span> <span class="fn">AdjacencyListGraph</span>(<span class="kw">int</span> <span class="va">v</span>) {
+        <span class="va">vertices</span> = <span class="va">v</span>;
+        <span class="va">adjList</span> = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt;&gt;();
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">v</span>; <span class="va">i</span>++)
+            <span class="va">adjList</span>[<span class="va">i</span>] = <span class="kw">new</span> <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt;();
+    }
+
+    <span class="kw">public</span> <span class="kw">void</span> <span class="fn">AddEdge</span>(<span class="kw">int</span> <span class="va">u</span>, <span class="kw">int</span> <span class="va">v</span>, <span class="kw">int</span> <span class="va">weight</span> = <span class="num">1</span>) {
+        <span class="va">adjList</span>[<span class="va">u</span>].<span class="fn">Add</span>((<span class="va">v</span>, <span class="va">weight</span>));
+    }
+
+    <span class="kw">public</span> <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt; <span class="fn">GetNeighbors</span>(<span class="kw">int</span> <span class="va">u</span>) {
+        <span class="kw">return</span> <span class="va">adjList</span>.<span class="fn">ContainsKey</span>(<span class="va">u</span>) ? <span class="va">adjList</span>[<span class="va">u</span>] : <span class="kw">new</span> <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt;();
+    }
+
+    <span class="kw">public</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; <span class="fn">GetUnweightedNeighbors</span>(<span class="kw">int</span> <span class="va">u</span>) {
+        <span class="kw">var</span> <span class="va">neighbors</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">neighbor</span>, _) <span class="kw">in</span> <span class="va">adjList</span>[<span class="va">u</span>])
+            <span class="va">neighbors</span>.<span class="fn">Add</span>(<span class="va">neighbor</span>);
+        <span class="kw">return</span> <span class="va">neighbors</span>;
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>3. Edge List</h3>
+      <p>Array of edges <code class="il">Edge { from, to, weight }</code>. Simple, useful for Kruskal's MST algorithm.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Edge List Implementation</div><div class="algo-desc">Simple list of Edge objects. O(E) space, good for algorithms like Kruskal's.</div><div class="algo-tags"><span class="badge b-blue">Edge Based</span><span class="badge b-orange">Simple</span></div></div><div class="algo-idx">3</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Edge</span> : <span class="ty">IComparable</span>&lt;<span class="ty">Edge</span>&gt; {
+    <span class="kw">public</span> <span class="kw">int</span> <span class="va">From</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+    <span class="kw">public</span> <span class="kw">int</span> <span class="va">To</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+    <span class="kw">public</span> <span class="kw">int</span> <span class="va">Weight</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+
+    <span class="kw">public</span> <span class="fn">Edge</span>(<span class="kw">int</span> <span class="va">from</span>, <span class="kw">int</span> <span class="va">to</span>, <span class="kw">int</span> <span class="va">weight</span>) {
+        <span class="va">From</span> = <span class="va">from</span>;
+        <span class="va">To</span> = <span class="va">to</span>;
+        <span class="va">Weight</span> = <span class="va">weight</span>;
+    }
+
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">CompareTo</span>(<span class="ty">Edge</span> <span class="va">other</span>) {
+        <span class="kw">return</span> <span class="va">Weight</span>.<span class="fn">CompareTo</span>(<span class="va">other</span>.<span class="va">Weight</span>);
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Representation Comparison</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Adjacency Matrix</th><th>Adjacency List</th><th>Edge List</th></tr></thead>
+          <tbody>
+            <tr><td>Space</td><td>O(V²)</td><td>O(V+E)</td><td>O(E)</td></tr>
+            <tr><td>Edge Lookup (u,v)</td><td>O(1)</td><td>O(degree(u))</td><td>O(E)</td></tr>
+            <tr><td>Get Neighbors</td><td>O(V)</td><td>O(degree(u))</td><td>O(E)</td></tr>
+            <tr><td>Add Edge</td><td>O(1)</td><td>O(1)</td><td>O(1)</td></tr>
+            <tr><td>Best For</td><td>Dense graphs, frequent lookups</td><td>Sparse graphs, most algorithms</td><td>Sorting edges, Kruskal's MST</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Practical Choice:</strong> Use adjacency list for most problems (BFS, DFS, Dijkstra, Prim's). Use edge list when sorting edges (Kruskal's). Use matrix only for dense graphs or when edge lookup is critical.</div></div>
+    </section>
+    <section class="section" id="sec-3">
+      <div class="sec-tag"><span class="sec-num">8.3</span><div class="sec-line"></div></div>
+      <h2>BFS - Breadth-First Search</h2>
+      <p class="lead">Explores graph level-by-level using a queue. Essential for shortest paths in unweighted graphs, level-order traversal, and multi-source problems.</p>
+      <h3>Algorithm Theory</h3>
+      <p><strong>BFS explores vertices by distance:</strong> visits all vertices at distance k before distance k+1. Uses a queue (FIFO). Perfect for shortest paths in unweighted graphs.</p>
+      <div class="steps">
+        <div class="step"><div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div><div class="step-body"><strong>Initialize:</strong> Create queue, add source, mark source as visited</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div><div class="step-body"><strong>Process:</strong> Dequeue vertex u, explore all unvisited neighbors v</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div><div class="step-body"><strong>Enqueue:</strong> For each unvisited neighbor, mark visited, enqueue</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">4</div></div><div class="step-body"><strong>Repeat:</strong> Continue until queue empty</div></div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">BFS - Unweighted Shortest Path</div><div class="algo-desc">Find shortest path in unweighted graph from source to all vertices using Queue.</div><div class="algo-tags"><span class="badge b-green">Shortest Path</span><span class="badge b-blue">Queue</span><span class="badge b-orange">Unweighted</span></div></div><div class="algo-idx">4</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(V+E)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V)</div></div><div class="cx"><div class="cx-l">Visited</div><div class="cx-v">Boolean Array</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span>[] <span class="fn">BFS</span>(<span class="ty">AdjacencyListGraph</span> <span class="va">graph</span>, <span class="kw">int</span> <span class="va">source</span>, <span class="kw">int</span> <span class="va">vertices</span>) {
+    <span class="kw">int</span>[] <span class="va">distance</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">vertices</span>];
+    <span class="kw">bool</span>[] <span class="va">visited</span> = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">vertices</span>];
+    
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">vertices</span>; <span class="va">i</span>++)
+        <span class="va">distance</span>[<span class="va">i</span>] = <span class="num">-1</span>;
+
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">source</span>);
+    <span class="va">visited</span>[<span class="va">source</span>] = <span class="kw">true</span>;
+    <span class="va">distance</span>[<span class="va">source</span>] = <span class="num">0</span>;
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> <span class="va">u</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+        
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">v</span>, _) <span class="kw">in</span> <span class="va">graph</span>.<span class="fn">GetNeighbors</span>(<span class="va">u</span>)) {
+            <span class="kw">if</span> (!<span class="va">visited</span>[<span class="va">v</span>]) {
+                <span class="va">visited</span>[<span class="va">v</span>] = <span class="kw">true</span>;
+                <span class="va">distance</span>[<span class="va">v</span>] = <span class="va">distance</span>[<span class="va">u</span>] + <span class="num">1</span>;
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">v</span>);
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">distance</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Number of Islands (Medium)</h3>
+      <p><strong>Given:</strong> 2D grid with '1' (land) and '0' (water). <strong>Find:</strong> Number of connected islands (use BFS/DFS to explore each island).</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Number of Islands - BFS Solution</div><div class="algo-desc">Mark each land cell as visited while exploring islands with BFS. Time: O(m*n).</div><div class="algo-tags"><span class="badge b-blue">Grid BFS</span><span class="badge b-green">Connected Components</span></div></div><div class="algo-idx">5</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">NumIslands</span>(<span class="kw">char</span>[][] <span class="va">grid</span>) {
+    <span class="kw">int</span> <span class="va">rows</span> = <span class="va">grid</span>.<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">cols</span> = <span class="va">grid</span>[<span class="num">0</span>].<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">islands</span> = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">r</span> = <span class="num">0</span>; <span class="va">r</span> &lt; <span class="va">rows</span>; <span class="va">r</span>++) {
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">c</span> = <span class="num">0</span>; <span class="va">c</span> &lt; <span class="va">cols</span>; <span class="va">c</span>++) {
+            <span class="kw">if</span> (<span class="va">grid</span>[<span class="va">r</span>][<span class="va">c</span>] == <span class="str">'1'</span>) {
+                <span class="fn">BFS</span>(<span class="va">grid</span>, <span class="va">r</span>, <span class="va">c</span>, <span class="va">rows</span>, <span class="va">cols</span>);
+                <span class="va">islands</span>++;
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">islands</span>;
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">BFS</span>(<span class="kw">char</span>[][] <span class="va">grid</span>, <span class="kw">int</span> <span class="va">startR</span>, <span class="kw">int</span> <span class="va">startC</span>, <span class="kw">int</span> <span class="va">rows</span>, <span class="kw">int</span> <span class="va">cols</span>) {
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt;();
+    <span class="va">queue</span>.<span class="fn">Enqueue</span>((<span class="va">startR</span>, <span class="va">startC</span>));
+    <span class="va">grid</span>[<span class="va">startR</span>][<span class="va">startC</span>] = <span class="str">'0'</span>; <span class="cm">// Mark visited</span>
+
+    <span class="kw">int</span>[][] <span class="va">directions</span> = <span class="kw">new</span> <span class="kw">int</span>[][] { <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">1</span>, <span class="num">0</span> }, 
+                                           <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">-1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">-1</span>, <span class="num">0</span> } };
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">var</span> (<span class="va">r</span>, <span class="va">c</span>) = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> <span class="va">dir</span> <span class="kw">in</span> <span class="va">directions</span>) {
+            <span class="kw">int</span> <span class="va">nr</span> = <span class="va">r</span> + <span class="va">dir</span>[<span class="num">0</span>];
+            <span class="kw">int</span> <span class="va">nc</span> = <span class="va">c</span> + <span class="va">dir</span>[<span class="num">1</span>];
+
+            <span class="kw">if</span> (<span class="va">nr</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nr</span> &lt; <span class="va">rows</span> &amp;&amp; <span class="va">nc</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nc</span> &lt; <span class="va">cols</span> &amp;&amp; <span class="va">grid</span>[<span class="va">nr</span>][<span class="va">nc</span>] == <span class="str">'1'</span>) {
+                <span class="va">grid</span>[<span class="va">nr</span>][<span class="va">nc</span>] = <span class="str">'0'</span>;
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>((<span class="va">nr</span>, <span class="va">nc</span>));
+            }
+        }
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Rotting Oranges (Medium) - Multi-Source BFS</h3>
+      <p><strong>Given:</strong> Grid with fresh (1), rotten (2), empty (0). Each minute, rotten spreads to adjacent fresh. <strong>Find:</strong> Minutes until all fresh rot, or -1 if impossible.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Rotting Oranges - Multi-Source BFS</div><div class="algo-desc">Initialize queue with all rotten oranges; expand level-by-level (one minute per level).</div><div class="algo-tags"><span class="badge b-blue">Multi-Source BFS</span><span class="badge b-green">Time Simulation</span></div></div><div class="algo-idx">6</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">OrangesRotting</span>(<span class="kw">int</span>[][] <span class="va">grid</span>) {
+    <span class="kw">int</span> <span class="va">rows</span> = <span class="va">grid</span>.<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">cols</span> = <span class="va">grid</span>[<span class="num">0</span>].<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">freshCount</span> = <span class="num">0</span>;
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>)&gt;();
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">r</span> = <span class="num">0</span>; <span class="va">r</span> &lt; <span class="va">rows</span>; <span class="va">r</span>++) {
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">c</span> = <span class="num">0</span>; <span class="va">c</span> &lt; <span class="va">cols</span>; <span class="va">c</span>++) {
+            <span class="kw">if</span> (<span class="va">grid</span>[<span class="va">r</span>][<span class="va">c</span>] == <span class="num">2</span>) {
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>((<span class="va">r</span>, <span class="va">c</span>));
+            } <span class="kw">else</span> <span class="kw">if</span> (<span class="va">grid</span>[<span class="va">r</span>][<span class="va">c</span>] == <span class="num">1</span>) {
+                <span class="va">freshCount</span>++;
+            }
+        }
+    }
+
+    <span class="kw">if</span> (<span class="va">freshCount</span> == <span class="num">0</span>) <span class="kw">return</span> <span class="num">0</span>;
+
+    <span class="kw">int</span> <span class="va">time</span> = -<span class="num">1</span>;
+    <span class="kw">int</span>[][] <span class="va">directions</span> = <span class="kw">new</span> <span class="kw">int</span>[][] { <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">1</span>, <span class="num">0</span> }, 
+                                           <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">-1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">-1</span>, <span class="num">0</span> } };
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> <span class="va">levelSize</span> = <span class="va">queue</span>.<span class="fn">Count</span>;
+        <span class="va">time</span>++;
+
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">levelSize</span>; <span class="va">i</span>++) {
+            <span class="kw">var</span> (<span class="va">r</span>, <span class="va">c</span>) = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+
+            <span class="kw">foreach</span> (<span class="kw">var</span> <span class="va">dir</span> <span class="kw">in</span> <span class="va">directions</span>) {
+                <span class="kw">int</span> <span class="va">nr</span> = <span class="va">r</span> + <span class="va">dir</span>[<span class="num">0</span>];
+                <span class="kw">int</span> <span class="va">nc</span> = <span class="va">c</span> + <span class="va">dir</span>[<span class="num">1</span>];
+
+                <span class="kw">if</span> (<span class="va">nr</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nr</span> &lt; <span class="va">rows</span> &amp;&amp; <span class="va">nc</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nc</span> &lt; <span class="va">cols</span> &amp;&amp; <span class="va">grid</span>[<span class="va">nr</span>][<span class="va">nc</span>] == <span class="num">1</span>) {
+                    <span class="va">grid</span>[<span class="va">nr</span>][<span class="va">nc</span>] = <span class="num">2</span>;
+                    <span class="va">queue</span>.<span class="fn">Enqueue</span>((<span class="va">nr</span>, <span class="va">nc</span>));
+                    <span class="va">freshCount</span>--;
+                }
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">freshCount</span> == <span class="num">0</span> ? <span class="va">time</span> : -<span class="num">1</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Word Ladder (Hard)</h3>
+      <p><strong>Given:</strong> start word, end word, list of valid words. <strong>Find:</strong> Shortest sequence of words where each differs by one letter.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Word Ladder - BFS Solution</div><div class="algo-desc">Model words as nodes; connect if one letter apart. BFS finds shortest path.</div><div class="algo-tags"><span class="badge b-blue">Word Transformation</span><span class="badge b-green">Shortest Path</span></div></div><div class="algo-idx">7</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">LadderLength</span>(<span class="kw">string</span> <span class="va">beginWord</span>, <span class="kw">string</span> <span class="va">endWord</span>, 
+                              <span class="ty">IList</span>&lt;<span class="kw">string</span>&gt; <span class="va">wordList</span>) {
+    <span class="kw">var</span> <span class="va">wordSet</span> = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="kw">string</span>&gt;(<span class="va">wordList</span>);
+    <span class="kw">if</span> (!<span class="va">wordSet</span>.<span class="fn">Contains</span>(<span class="va">endWord</span>)) <span class="kw">return</span> <span class="num">0</span>;
+
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="kw">string</span>&gt;();
+    <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">beginWord</span>);
+    <span class="kw">var</span> <span class="va">visited</span> = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="kw">string</span>&gt; { <span class="va">beginWord</span> };
+    <span class="kw">int</span> <span class="va">level</span> = <span class="num">1</span>;
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> <span class="va">levelSize</span> = <span class="va">queue</span>.<span class="fn">Count</span>;
+        
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">levelSize</span>; <span class="va">i</span>++) {
+            <span class="kw">string</span> <span class="va">word</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+            
+            <span class="kw">if</span> (<span class="va">word</span> == <span class="va">endWord</span>) <span class="kw">return</span> <span class="va">level</span>;
+
+            <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">word</span>.<span class="va">Length</span>; <span class="va">j</span>++) {
+                <span class="kw">char</span>[] <span class="va">chars</span> = <span class="va">word</span>.<span class="fn">ToCharArray</span>();
+                <span class="kw">for</span> (<span class="kw">char</span> <span class="va">c</span> = <span class="str">'a'</span>; <span class="va">c</span> &lt;= <span class="str">'z'</span>; <span class="va">c</span>++) {
+                    <span class="va">chars</span>[<span class="va">j</span>] = <span class="va">c</span>;
+                    <span class="kw">string</span> <span class="va">newWord</span> = <span class="kw">new</span> <span class="kw">string</span>(<span class="va">chars</span>);
+                    
+                    <span class="kw">if</span> (<span class="va">wordSet</span>.<span class="fn">Contains</span>(<span class="va">newWord</span>) &amp;&amp; !<span class="va">visited</span>.<span class="fn">Contains</span>(<span class="va">newWord</span>)) {
+                        <span class="va">visited</span>.<span class="fn">Add</span>(<span class="va">newWord</span>);
+                        <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">newWord</span>);
+                    }
+                }
+            }
+        }
+        <span class="va">level</span>++;
+    }
+
+    <span class="kw">return</span> <span class="num">0</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>BFS Guarantees:</strong> BFS finds shortest path in <strong>unweighted</strong> graphs only. For weighted graphs, use Dijkstra. Always use a visited set to avoid revisiting nodes.</div></div>
+    </section>
+
+    <section class="section" id="sec-4">
+      <div class="sec-tag"><span class="sec-num">8.4</span><div class="sec-line"></div></div>
+      <h2>DFS - Depth-First Search</h2>
+      <p class="lead">Explores graph deeply using recursion or stack. Essential for cycle detection, topological sorting, connected components, and graph analysis.</p>
+      <h3>Algorithm Theory</h3>
+      <p><strong>DFS explores deeply:</strong> goes as far as possible along branch before backtracking. Uses recursion (call stack) or explicit stack. Better for detecting cycles and analyzing graph structure.</p>
+
+      <h3>1. Recursive DFS</h3>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Recursive DFS</div><div class="algo-desc">Clean, intuitive implementation using call stack. Perfect for understanding DFS logic.</div><div class="algo-tags"><span class="badge b-blue">Recursion</span><span class="badge b-green">Exploration</span></div></div><div class="algo-idx">8</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(V+E)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V) recursion</div></div><div class="cx"><div class="cx-l">Visited</div><div class="cx-v">Boolean Array</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">DFSRecursive</span>(<span class="ty">AdjacencyListGraph</span> <span class="va">graph</span>, <span class="kw">int</span> <span class="va">vertex</span>, 
+                              <span class="kw">bool</span>[] <span class="va">visited</span>) {
+    <span class="va">visited</span>[<span class="va">vertex</span>] = <span class="kw">true</span>;
+    <span class="fn">Console</span>.<span class="fn">Write</span>(<span class="va">vertex</span> + <span class="str">" "</span>);
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">neighbor</span>, _) <span class="kw">in</span> <span class="va">graph</span>.<span class="fn">GetNeighbors</span>(<span class="va">vertex</span>)) {
+        <span class="kw">if</span> (!<span class="va">visited</span>[<span class="va">neighbor</span>]) {
+            <span class="fn">DFSRecursive</span>(<span class="va">graph</span>, <span class="va">neighbor</span>, <span class="va">visited</span>);
+        }
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>2. Iterative DFS (using Stack)</h3>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Iterative DFS with Explicit Stack</div><div class="algo-desc">Avoid recursion depth limits with explicit stack. More control over traversal.</div><div class="algo-tags"><span class="badge b-blue">Stack</span><span class="badge b-orange">Iterative</span></div></div><div class="algo-idx">9</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; <span class="fn">DFSIterative</span>(<span class="ty">AdjacencyListGraph</span> <span class="va">graph</span>, <span class="kw">int</span> <span class="va">start</span>, <span class="kw">int</span> <span class="va">vertices</span>) {
+    <span class="kw">var</span> <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="kw">bool</span>[] <span class="va">visited</span> = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">vertices</span>];
+    <span class="kw">var</span> <span class="va">stack</span> = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="kw">int</span>&gt;();
+
+    <span class="va">stack</span>.<span class="fn">Push</span>(<span class="va">start</span>);
+    <span class="va">visited</span>[<span class="va">start</span>] = <span class="kw">true</span>;
+
+    <span class="kw">while</span> (<span class="va">stack</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> <span class="va">u</span> = <span class="va">stack</span>.<span class="fn">Pop</span>();
+        <span class="va">result</span>.<span class="fn">Add</span>(<span class="va">u</span>);
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">v</span>, _) <span class="kw">in</span> <span class="va">graph</span>.<span class="fn">GetNeighbors</span>(<span class="va">u</span>)) {
+            <span class="kw">if</span> (!<span class="va">visited</span>[<span class="va">v</span>]) {
+                <span class="va">visited</span>[<span class="va">v</span>] = <span class="kw">true</span>;
+                <span class="va">stack</span>.<span class="fn">Push</span>(<span class="va">v</span>);
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">result</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Cycle Detection in Directed Graphs (3-Color DFS)</h3>
+      <p>Track vertex states: WHITE (unvisited), GRAY (visiting), BLACK (done). If we reach a GRAY vertex, cycle detected.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Cycle Detection - 3-Color DFS</div><div class="algo-desc">WHITE=unvisited, GRAY=in-progress, BLACK=finished. Reach GRAY → cycle.</div><div class="algo-tags"><span class="badge b-red">Cycle Detection</span><span class="badge b-blue">Directed Graphs</span></div></div><div class="algo-idx">10</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">HasCycleDirect</span>(<span class="ty">AdjacencyListGraph</span> <span class="va">graph</span>, <span class="kw">int</span> <span class="va">vertices</span>) {
+    <span class="kw">int</span>[] <span class="va">color</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">vertices</span>]; <span class="cm">// 0=white, 1=gray, 2=black</span>
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">vertices</span>; <span class="va">i</span>++) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">i</span>] == <span class="num">0</span> &amp;&amp; <span class="fn">DFSCycle</span>(<span class="va">graph</span>, <span class="va">i</span>, <span class="va">color</span>)) {
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+    }
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="kw">private</span> <span class="kw">bool</span> <span class="fn">DFSCycle</span>(<span class="ty">AdjacencyListGraph</span> <span class="va">graph</span>, <span class="kw">int</span> <span class="va">u</span>, <span class="kw">int</span>[] <span class="va">color</span>) {
+    <span class="va">color</span>[<span class="va">u</span>] = <span class="num">1</span>; <span class="cm">// Mark as GRAY (visiting)</span>
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">v</span>, _) <span class="kw">in</span> <span class="va">graph</span>.<span class="fn">GetNeighbors</span>(<span class="va">u</span>)) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="num">1</span>) {
+            <span class="kw">return</span> <span class="kw">true</span>; <span class="cm">// Back edge found (GRAY vertex)</span>
+        }
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="num">0</span> &amp;&amp; <span class="fn">DFSCycle</span>(<span class="va">graph</span>, <span class="va">v</span>, <span class="va">color</span>)) {
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+    }
+
+    <span class="va">color</span>[<span class="va">u</span>] = <span class="num">2</span>; <span class="cm">// Mark as BLACK (done)</span>
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Cycle Detection in Undirected Graphs</h3>
+      <p>If we reach a visited neighbor that's not our parent, cycle exists.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Cycle Detection - Undirected Graphs</div><div class="algo-desc">If visited neighbor ≠ parent, cycle detected.</div><div class="algo-tags"><span class="badge b-red">Cycle Detection</span><span class="badge b-blue">Undirected</span></div></div><div class="algo-idx">11</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">HasCycleUndirected</span>(<span class="kw">int</span>[][] <span class="va">adj</span>, <span class="kw">int</span> <span class="va">n</span>) {
+    <span class="kw">bool</span>[] <span class="va">visited</span> = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">n</span>];
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++) {
+        <span class="kw">if</span> (!<span class="va">visited</span>[<span class="va">i</span>] &amp;&amp; <span class="fn">DFS</span>(<span class="va">adj</span>, <span class="va">i</span>, <span class="num">-1</span>, <span class="va">visited</span>)) {
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+    }
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="kw">private</span> <span class="kw">bool</span> <span class="fn">DFS</span>(<span class="kw">int</span>[][] <span class="va">adj</span>, <span class="kw">int</span> <span class="va">u</span>, <span class="kw">int</span> <span class="va">parent</span>, <span class="kw">bool</span>[] <span class="va">visited</span>) {
+    <span class="va">visited</span>[<span class="va">u</span>] = <span class="kw">true</span>;
+
+    <span class="kw">foreach</span> (<span class="kw">int</span> <span class="va">v</span> <span class="kw">in</span> <span class="va">adj</span>[<span class="va">u</span>]) {
+        <span class="kw">if</span> (<span class="va">v</span> == <span class="va">parent</span>) <span class="kw">continue</span>; <span class="cm">// Skip parent edge</span>
+        <span class="kw">if</span> (<span class="va">visited</span>[<span class="va">v</span>]) <span class="kw">return</span> <span class="kw">true</span>; <span class="cm">// Found cycle</span>
+        <span class="kw">if</span> (<span class="fn">DFS</span>(<span class="va">adj</span>, <span class="va">v</span>, <span class="va">u</span>, <span class="va">visited</span>)) <span class="kw">return</span> <span class="kw">true</span>;
+    }
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Clone Graph (Medium)</h3>
+      <p><strong>Given:</strong> Node reference in connected undirected graph. <strong>Find:</strong> Deep copy of entire graph.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Clone Graph - DFS Solution</div><div class="algo-desc">DFS traversal creating new nodes and mapping old→new with HashMap.</div><div class="algo-tags"><span class="badge b-blue">Graph Cloning</span><span class="badge b-green">HashMap</span></div></div><div class="algo-idx">12</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Node</span> {
+    <span class="kw">public</span> <span class="kw">int</span> <span class="va">val</span>;
+    <span class="kw">public</span> <span class="ty">List</span>&lt;<span class="ty">Node</span>&gt; <span class="va">neighbors</span>;
+
+    <span class="kw">public</span> <span class="fn">Node</span>(<span class="kw">int</span> <span class="va">_val</span> = <span class="num">0</span>) {
+        <span class="va">val</span> = <span class="va">_val</span>;
+        <span class="va">neighbors</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Node</span>&gt;();
+    }
+}
+
+<span class="kw">public</span> <span class="ty">Node</span> <span class="fn">CloneGraph</span>(<span class="ty">Node</span> <span class="va">node</span>) {
+    <span class="kw">if</span> (<span class="va">node</span> == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">null</span>;
+
+    <span class="kw">var</span> <span class="va">map</span> = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">Node</span>, <span class="ty">Node</span>&gt;();
+    <span class="fn">DFS</span>(<span class="va">node</span>, <span class="va">map</span>);
+    <span class="kw">return</span> <span class="va">map</span>[<span class="va">node</span>];
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">DFS</span>(<span class="ty">Node</span> <span class="va">node</span>, <span class="ty">Dictionary</span>&lt;<span class="ty">Node</span>, <span class="ty">Node</span>&gt; <span class="va">map</span>) {
+    <span class="kw">if</span> (<span class="va">map</span>.<span class="fn">ContainsKey</span>(<span class="va">node</span>)) <span class="kw">return</span>;
+
+    <span class="va">map</span>[<span class="va">node</span>] = <span class="kw">new</span> <span class="ty">Node</span>(<span class="va">node</span>.<span class="va">val</span>);
+
+    <span class="kw">foreach</span> (<span class="ty">Node</span> <span class="va">neighbor</span> <span class="kw">in</span> <span class="va">node</span>.<span class="va">neighbors</span>) {
+        <span class="fn">DFS</span>(<span class="va">neighbor</span>, <span class="va">map</span>);
+        <span class="va">map</span>[<span class="va">node</span>].<span class="va">neighbors</span>.<span class="fn">Add</span>(<span class="va">map</span>[<span class="va">neighbor</span>]);
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Course Schedule I (Medium)</h3>
+      <p><strong>Given:</strong> Courses and prerequisites. <strong>Find:</strong> Can all courses be completed? (detect cycle in directed graph)</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Course Schedule - Cycle Detection</div><div class="algo-desc">If cycle exists in course prerequisites, impossible to complete all courses.</div><div class="algo-tags"><span class="badge b-red">Cycle Detection</span><span class="badge b-blue">Prerequisites</span></div></div><div class="algo-idx">13</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">CanFinish</span>(<span class="kw">int</span> <span class="va">numCourses</span>, <span class="kw">int</span>[][] <span class="va">prerequisites</span>) {
+    <span class="kw">var</span> <span class="va">adj</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">numCourses</span>; <span class="va">i</span>++)
+        <span class="va">adj</span>.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;());
+
+    <span class="kw">foreach</span> (<span class="var">var</span> <span class="va">pre</span> <span class="kw">in</span> <span class="va">prerequisites</span>)
+        <span class="va">adj</span>[<span class="va">pre</span>[<span class="num">1</span>]].<span class="fn">Add</span>(<span class="va">pre</span>[<span class="num">0</span>]);
+
+    <span class="kw">int</span>[] <span class="va">color</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">numCourses</span>];
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">numCourses</span>; <span class="va">i</span>++) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">i</span>] == <span class="num">0</span> &amp;&amp; <span class="fn">HasCycle</span>(<span class="va">i</span>, <span class="va">adj</span>, <span class="va">color</span>))
+            <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="kw">private</span> <span class="kw">bool</span> <span class="fn">HasCycle</span>(<span class="kw">int</span> <span class="va">u</span>, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="va">adj</span>, <span class="kw">int</span>[] <span class="va">color</span>) {
+    <span class="va">color</span>[<span class="va">u</span>] = <span class="num">1</span>;
+    <span class="kw">foreach</span> (<span class="kw">int</span> <span class="va">v</span> <span class="kw">in</span> <span class="va">adj</span>[<span class="va">u</span>]) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="num">1</span>) <span class="kw">return</span> <span class="kw">true</span>;
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="num">0</span> &amp;&amp; <span class="fn">HasCycle</span>(<span class="va">v</span>, <span class="va">adj</span>, <span class="va">color</span>)) <span class="kw">return</span> <span class="kw">true</span>;
+    }
+    <span class="va">color</span>[<span class="va">u</span>] = <span class="num">2</span>;
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Pacific Atlantic Water Flow (Hard)</h3>
+      <p><strong>Given:</strong> 2D elevation grid. <strong>Find:</strong> Cells where water flows to both Pacific (left/top) and Atlantic (right/bottom) oceans.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Pacific Atlantic Water Flow - DFS</div><div class="algo-desc">Reverse logic: start from borders, DFS backwards on increasing elevations.</div><div class="algo-tags"><span class="badge b-blue">Grid DFS</span><span class="badge b-green">Reverse Logic</span></div></div><div class="algo-idx">14</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="fn">PacificAtlantic</span>(<span class="kw">int</span>[][] <span class="va">heights</span>) {
+    <span class="kw">int</span> <span class="va">rows</span> = <span class="va">heights</span>.<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">cols</span> = <span class="va">heights</span>[<span class="num">0</span>].<span class="va">Length</span>;
+    <span class="kw">bool</span>[][] <span class="va">pacific</span> = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">rows</span>][];
+    <span class="kw">bool</span>[][] <span class="va">atlantic</span> = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">rows</span>][];
+    
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">rows</span>; <span class="va">i</span>++) {
+        <span class="va">pacific</span>[<span class="va">i</span>] = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">cols</span>];
+        <span class="va">atlantic</span>[<span class="va">i</span>] = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">cols</span>];
+    }
+
+    <span class="kw">int</span>[][] <span class="va">directions</span> = <span class="kw">new</span> <span class="kw">int</span>[][] { <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">1</span>, <span class="num">0</span> },
+                                           <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">-1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">-1</span>, <span class="num">0</span> } };
+
+    <span class="cm">// Pacific borders: top and left</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">rows</span>; <span class="va">i</span>++)
+        <span class="fn">DFS</span>(<span class="va">heights</span>, <span class="va">i</span>, <span class="num">0</span>, <span class="va">pacific</span>, <span class="va">directions</span>);
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">cols</span>; <span class="va">j</span>++)
+        <span class="fn">DFS</span>(<span class="va">heights</span>, <span class="num">0</span>, <span class="va">j</span>, <span class="va">pacific</span>, <span class="va">directions</span>);
+
+    <span class="cm">// Atlantic borders: bottom and right</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">rows</span>; <span class="va">i</span>++)
+        <span class="fn">DFS</span>(<span class="va">heights</span>, <span class="va">i</span>, <span class="va">cols</span> - <span class="num">1</span>, <span class="va">atlantic</span>, <span class="va">directions</span>);
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">cols</span>; <span class="va">j</span>++)
+        <span class="fn">DFS</span>(<span class="va">heights</span>, <span class="va">rows</span> - <span class="num">1</span>, <span class="va">j</span>, <span class="va">atlantic</span>, <span class="va">directions</span>);
+
+    <span class="kw">var</span> <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">rows</span>; <span class="va">i</span>++) {
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">cols</span>; <span class="va">j</span>++) {
+            <span class="kw">if</span> (<span class="va">pacific</span>[<span class="va">i</span>][<span class="va">j</span>] &amp;&amp; <span class="va">atlantic</span>[<span class="va">i</span>][<span class="va">j</span>])
+                <span class="va">result</span>.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; { <span class="va">i</span>, <span class="va">j</span> });
+        }
+    }
+    <span class="kw">return</span> <span class="va">result</span>;
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">DFS</span>(<span class="kw">int</span>[][] <span class="va">heights</span>, <span class="kw">int</span> <span class="va">r</span>, <span class="kw">int</span> <span class="va">c</span>, <span class="kw">bool</span>[][] <span class="va">visited</span>, 
+                  <span class="kw">int</span>[][] <span class="va">directions</span>) {
+    <span class="va">visited</span>[<span class="va">r</span>][<span class="va">c</span>] = <span class="kw">true</span>;
+
+    <span class="kw">foreach</span> (<span class="var">var</span> <span class="va">dir</span> <span class="kw">in</span> <span class="va">directions</span>) {
+        <span class="kw">int</span> <span class="va">nr</span> = <span class="va">r</span> + <span class="va">dir</span>[<span class="num">0</span>];
+        <span class="kw">int</span> <span class="va">nc</span> = <span class="va">c</span> + <span class="va">dir</span>[<span class="num">1</span>];
+
+        <span class="kw">if</span> (<span class="va">nr</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nr</span> &lt; <span class="va">heights</span>.<span class="va">Length</span> &amp;&amp; <span class="va">nc</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nc</span> &lt; <span class="va">heights</span>[<span class="num">0</span>].<span class="va">Length</span> &amp;&amp;
+            !<span class="va">visited</span>[<span class="va">nr</span>][<span class="va">nc</span>] &amp;&amp; <span class="va">heights</span>[<span class="va">nr</span>][<span class="va">nc</span>] &gt;= <span class="va">heights</span>[<span class="va">r</span>][<span class="va">c</span>]) {
+            <span class="fn">DFS</span>(<span class="va">heights</span>, <span class="va">nr</span>, <span class="va">nc</span>, <span class="va">visited</span>, <span class="va">directions</span>);
+        }
+    }
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>Stack Overflow Risk:</strong> Deep recursion in large graphs can overflow the call stack. For graphs >1000 nodes, use iterative DFS with explicit stack or BFS instead.</div></div>
+    </section>
+    <section class="section" id="sec-5">
+      <div class="sec-tag"><span class="sec-num">8.5</span><div class="sec-line"></div></div>
+      <h2>Topological Sort</h2>
+      <p class="lead">Orders vertices in a DAG such that for every directed edge u→v, u comes before v. Critical for dependency resolution, task scheduling, and build systems.</p>
+      <h3>Theory: When & Why</h3>
+      <p><strong>Prerequisites:</strong> Only works on DAGs (no cycles). If cycle exists, impossible to topologically sort. Common applications: package dependencies, course prerequisites, build systems, compilation order.</p>
+
+      <h3>1. Kahn's Algorithm (BFS-based)</h3>
+      <p>Process vertices with in-degree 0 (no dependencies). Remove vertex, decrease in-degree of neighbors.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Kahn's Algorithm - Topological Sort</div><div class="algo-desc">BFS-based approach using in-degrees. Process nodes with in-degree 0 first.</div><div class="algo-tags"><span class="badge b-orange">BFS-based</span><span class="badge b-green">In-degree</span></div></div><div class="algo-idx">15</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(V+E)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V)</div></div><div class="cx"><div class="cx-l">Detects</div><div class="cx-v">Cycles</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TopologicalSortKahn</span>(<span class="kw">int</span> <span class="va">numCourses</span>, 
+                                    <span class="kw">int</span>[][] <span class="va">prerequisites</span>) {
+    <span class="kw">int</span>[] <span class="va">inDegree</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">numCourses</span>];
+    <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="va">adj</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">numCourses</span>; <span class="va">i</span>++)
+        <span class="va">adj</span>.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;());
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> <span class="va">pre</span> <span class="kw">in</span> <span class="va">prerequisites</span>) {
+        <span class="va">adj</span>[<span class="va">pre</span>[<span class="num">1</span>]].<span class="fn">Add</span>(<span class="va">pre</span>[<span class="num">0</span>]);
+        <span class="va">inDegree</span>[<span class="va">pre</span>[<span class="num">0</span>]]++;
+    }
+
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">numCourses</span>; <span class="va">i</span>++)
+        <span class="kw">if</span> (<span class="va">inDegree</span>[<span class="va">i</span>] == <span class="num">0</span>)
+            <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">i</span>);
+
+    <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; <span class="va">result</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> <span class="va">u</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+        <span class="va">result</span>.<span class="fn">Add</span>(<span class="va">u</span>);
+
+        <span class="kw">foreach</span> (<span class="kw">int</span> <span class="va">v</span> <span class="kw">in</span> <span class="va">adj</span>[<span class="va">u</span>]) {
+            <span class="va">inDegree</span>[<span class="va">v</span>]--;
+            <span class="kw">if</span> (<span class="va">inDegree</span>[<span class="va">v</span>] == <span class="num">0</span>)
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">v</span>);
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">result</span>.<span class="fn">Count</span> == <span class="va">numCourses</span> ? <span class="va">result</span>.<span class="fn">ToArray</span>() : <span class="kw">new</span> <span class="kw">int</span>[<span class="num">0</span>];
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>2. DFS-based Topological Sort</h3>
+      <p>Use post-order DFS (add to result after visiting all descendants). Reverse result for topological order.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">DFS-based Topological Sort</div><div class="algo-desc">Post-order DFS: add vertex after recursion completes. Reverse final result.</div><div class="algo-tags"><span class="badge b-blue">DFS</span><span class="badge b-orange">Post-order</span></div></div><div class="algo-idx">16</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TopologicalSortDFS</span>(<span class="kw">int</span> <span class="va">numCourses</span>, 
+                                  <span class="kw">int</span>[][] <span class="va">prerequisites</span>) {
+    <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="va">adj</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">numCourses</span>; <span class="va">i</span>++)
+        <span class="va">adj</span>.<span class="fn">Add</span>(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;());
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> <span class="va">pre</span> <span class="kw">in</span> <span class="va">prerequisites</span>)
+        <span class="va">adj</span>[<span class="va">pre</span>[<span class="num">1</span>]].<span class="fn">Add</span>(<span class="va">pre</span>[<span class="num">0</span>]);
+
+    <span class="kw">int</span>[] <span class="va">color</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">numCourses</span>];
+    <span class="ty">Stack</span>&lt;<span class="kw">int</span>&gt; <span class="va">stack</span> = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="kw">int</span>&gt;();
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">numCourses</span>; <span class="va">i</span>++) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">i</span>] == <span class="num">0</span>) {
+            <span class="kw">if</span> (!<span class="fn">DFSTopoSort</span>(<span class="va">i</span>, <span class="va">adj</span>, <span class="va">color</span>, <span class="va">stack</span>))
+                <span class="kw">return</span> <span class="kw">new</span> <span class="kw">int</span>[<span class="num">0</span>]; <span class="cm">// Cycle detected</span>
+        }
+    }
+
+    <span class="kw">int</span>[] <span class="va">result</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">numCourses</span>];
+    <span class="kw">int</span> <span class="va">idx</span> = <span class="num">0</span>;
+    <span class="kw">while</span> (<span class="va">stack</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>)
+        <span class="va">result</span>[<span class="va">idx</span>++] = <span class="va">stack</span>.<span class="fn">Pop</span>();
+
+    <span class="kw">return</span> <span class="va">result</span>;
+}
+
+<span class="kw">private</span> <span class="kw">bool</span> <span class="fn">DFSTopoSort</span>(<span class="kw">int</span> <span class="va">u</span>, <span class="ty">List</span>&lt;<span class="ty">List</span>&lt;<span class="kw">int</span>&gt;&gt; <span class="va">adj</span>, 
+                           <span class="kw">int</span>[] <span class="va">color</span>, <span class="ty">Stack</span>&lt;<span class="kw">int</span>&gt; <span class="va">stack</span>) {
+    <span class="va">color</span>[<span class="va">u</span>] = <span class="num">1</span>; <span class="cm">// GRAY</span>
+
+    <span class="kw">foreach</span> (<span class="kw">int</span> <span class="va">v</span> <span class="kw">in</span> <span class="va">adj</span>[<span class="va">u</span>]) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="num">1</span>) <span class="kw">return</span> <span class="kw">false</span>; <span class="cm">// Cycle</span>
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="num">0</span>) {
+            <span class="kw">if</span> (!<span class="fn">DFSTopoSort</span>(<span class="va">v</span>, <span class="va">adj</span>, <span class="va">color</span>, <span class="va">stack</span>))
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+
+    <span class="va">color</span>[<span class="va">u</span>] = <span class="num">2</span>; <span class="cm">// BLACK</span>
+    <span class="va">stack</span>.<span class="fn">Push</span>(<span class="va">u</span>);
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Course Schedule II (Medium)</h3>
+      <p><strong>Given:</strong> Number of courses and prerequisites. <strong>Find:</strong> Valid order to complete all courses, or [] if impossible.</p>
+      <p><code class="il">Solution:</code> Use Kahn's algorithm or DFS topological sort. Return courses in dependency order.</p>
+
+      <h3>Problem: Alien Dictionary (Hard)</h3>
+      <p><strong>Given:</strong> List of words in alien language. <strong>Find:</strong> Character ordering (topological order of characters).</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Alien Dictionary - Topological Sort</div><div class="algo-desc">Compare adjacent words to find character order, then topologically sort characters.</div><div class="algo-tags"><span class="badge b-blue">Character Ordering</span><span class="badge b-green">Kahn's Algorithm</span></div></div><div class="algo-idx">17</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">string</span> <span class="fn">AlienOrder</span>(<span class="ty">IList</span>&lt;<span class="kw">string</span>&gt; <span class="va">words</span>) {
+    <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="ty">HashSet</span>&lt;<span class="kw">char</span>&gt;&gt; <span class="va">graph</span> = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="ty">HashSet</span>&lt;<span class="kw">char</span>&gt;&gt;();
+    <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt; <span class="va">inDegree</span> = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+
+    <span class="cm">// Initialize all characters</span>
+    <span class="kw">foreach</span> (<span class="kw">string</span> <span class="va">word</span> <span class="kw">in</span> <span class="va">words</span>) {
+        <span class="kw">foreach</span> (<span class="kw">char</span> <span class="va">c</span> <span class="kw">in</span> <span class="va">word</span>) {
+            <span class="kw">if</span> (!<span class="va">graph</span>.<span class="fn">ContainsKey</span>(<span class="va">c</span>)) {
+                <span class="va">graph</span>[<span class="va">c</span>] = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="kw">char</span>&gt;();
+                <span class="va">inDegree</span>[<span class="va">c</span>] = <span class="num">0</span>;
+            }
+        }
+    }
+
+    <span class="cm">// Build graph</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">words</span>.<span class="fn">Count</span> - <span class="num">1</span>; <span class="va">i</span>++) {
+        <span class="kw">string</span> <span class="va">w1</span> = <span class="va">words</span>[<span class="va">i</span>];
+        <span class="kw">string</span> <span class="va">w2</span> = <span class="va">words</span>[<span class="va">i</span> + <span class="num">1</span>];
+        <span class="kw">int</span> <span class="va">minLen</span> = <span class="fn">Math</span>.<span class="fn">Min</span>(<span class="va">w1</span>.<span class="va">Length</span>, <span class="va">w2</span>.<span class="va">Length</span>);
+
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">minLen</span>; <span class="va">j</span>++) {
+            <span class="kw">if</span> (<span class="va">w1</span>[<span class="va">j</span>] != <span class="va">w2</span>[<span class="va">j</span>]) {
+                <span class="kw">if</span> (!<span class="va">graph</span>[<span class="va">w1</span>[<span class="va">j</span>]].<span class="fn">Contains</span>(<span class="va">w2</span>[<span class="va">j</span>])) {
+                    <span class="va">graph</span>[<span class="va">w1</span>[<span class="va">j</span>]].<span class="fn">Add</span>(<span class="va">w2</span>[<span class="va">j</span>]);
+                    <span class="va">inDegree</span>[<span class="va">w2</span>[<span class="va">j</span>]]++;
+                }
+                <span class="kw">break</span>;
+            }
+        }
+    }
+
+    <span class="cm">// Kahn's algorithm</span>
+    <span class="ty">Queue</span>&lt;<span class="kw">char</span>&gt; <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="kw">char</span>&gt;();
+    <span class="kw">foreach</span> (<span class="kw">var</span> <span class="va">kvp</span> <span class="kw">in</span> <span class="va">inDegree</span>) {
+        <span class="kw">if</span> (<span class="va">kvp</span>.<span class="fn">Value</span> == <span class="num">0</span>)
+            <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">kvp</span>.<span class="fn">Key</span>);
+    }
+
+    <span class="kw">string</span> <span class="va">result</span> = <span class="str">""</span>;
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">char</span> <span class="va">c</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+        <span class="va">result</span> += <span class="va">c</span>;
+
+        <span class="kw">foreach</span> (<span class="kw">char</span> <span class="va">neighbor</span> <span class="kw">in</span> <span class="va">graph</span>[<span class="va">c</span>]) {
+            <span class="va">inDegree</span>[<span class="va">neighbor</span>]--;
+            <span class="kw">if</span> (<span class="va">inDegree</span>[<span class="va">neighbor</span>] == <span class="num">0</span>)
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">neighbor</span>);
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">result</span>.<span class="va">Length</span> == <span class="va">graph</span>.<span class="fn">Count</span> ? <span class="va">result</span> : <span class="str">""</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Choose Between Kahn's & DFS:</strong> Kahn's detects cycles naturally (incomplete result). DFS requires explicit cycle detection. For interviews, Kahn's is typically simpler.</div></div>
+    </section>
+
+    <section class="section" id="sec-6">
+      <div class="sec-tag"><span class="sec-num">8.6</span><div class="sec-line"></div></div>
+      <h2>Shortest Path Algorithms</h2>
+      <p class="lead">Find minimum distance/cost from source to all vertices. Dijkstra for non-negative weights, Bellman-Ford for negative weights.</p>
+
+      <h3>1. Dijkstra's Algorithm (Non-negative Weights)</h3>
+      <p><strong>Greedy approach:</strong> Always process unvisited vertex with smallest distance. Works only with non-negative edge weights.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Dijkstra's Algorithm with PriorityQueue</div><div class="algo-desc">Greedy: always pick minimum-distance unvisited vertex. Time: O((V+E)logV).</div><div class="algo-tags"><span class="badge b-orange">Shortest Path</span><span class="badge b-blue">Greedy</span><span class="badge b-green">PriorityQueue</span></div></div><div class="algo-idx">18</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O((V+E)logV)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V)</div></div><div class="cx"><div class="cx-l">Weights</div><div class="cx-v">Non-negative</div></div><div class="cx"><div class="cx-l">Negative Cycles</div><div class="cx-v">Not handled</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span>[] <span class="fn">Dijkstra</span>(<span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>)&gt;[] <span class="va">graph</span>, <span class="kw">int</span> <span class="va">source</span>, <span class="kw">int</span> <span class="va">n</span>) {
+    <span class="kw">int</span>[] <span class="va">distance</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">n</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">distance</span>[<span class="va">i</span>] = <span class="kw">int</span>.<span class="fn">MaxValue</span>;
+    <span class="va">distance</span>[<span class="va">source</span>] = <span class="num">0</span>;
+
+    <span class="kw">var</span> <span class="va">pq</span> = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>), <span class="kw">int</span>&gt;();
+    <span class="va">pq</span>.<span class="fn">Enqueue</span>((<span class="va">source</span>, <span class="num">0</span>), <span class="num">0</span>);
+
+    <span class="kw">while</span> (<span class="va">pq</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">var</span> (<span class="va">u</span>, _) = <span class="va">pq</span>.<span class="fn">Dequeue</span>();
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">graph</span>[<span class="va">u</span>]) {
+            <span class="kw">if</span> (<span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span> &lt; <span class="va">distance</span>[<span class="va">v</span>]) {
+                <span class="va">distance</span>[<span class="va">v</span>] = <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span>;
+                <span class="va">pq</span>.<span class="fn">Enqueue</span>((<span class="va">v</span>, <span class="va">distance</span>[<span class="va">v</span>]), <span class="va">distance</span>[<span class="va">v</span>]);
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">distance</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>2. Bellman-Ford Algorithm (Handles Negative Weights)</h3>
+      <p>Relaxes all edges V-1 times. Detects negative cycles. Slower but more general than Dijkstra.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Bellman-Ford Algorithm</div><div class="algo-desc">Relax all edges V-1 times. O(VE) time. Detects negative cycles.</div><div class="algo-tags"><span class="badge b-orange">Shortest Path</span><span class="badge b-blue">Negative Weights</span><span class="badge b-red">Cycle Detection</span></div></div><div class="algo-idx">19</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(VE)</div></div><div class="cx"><div class="cx-l">Weights</div><div class="cx-v">Negative OK</div></div><div class="cx"><div class="cx-l">Cycles</div><div class="cx-v">Detected</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">long</span>[] <span class="fn">BellmanFord</span>(<span class="kw">int</span> <span class="va">n</span>, <span class="ty">List</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">long</span>)&gt; <span class="va">edges</span>, <span class="kw">int</span> <span class="va">source</span>) {
+    <span class="kw">long</span>[] <span class="va">distance</span> = <span class="kw">new</span> <span class="kw">long</span>[<span class="va">n</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">distance</span>[<span class="va">i</span>] = <span class="kw">long</span>.<span class="fn">MaxValue</span>;
+    <span class="va">distance</span>[<span class="va">source</span>] = <span class="num">0</span>;
+
+    <span class="cm">// Relax edges V-1 times</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span> - <span class="num">1</span>; <span class="va">i</span>++) {
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">u</span>, <span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">edges</span>) {
+            <span class="kw">if</span> (<span class="va">distance</span>[<span class="va">u</span>] != <span class="kw">long</span>.<span class="fn">MaxValue</span> &amp;&amp; <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span> &lt; <span class="va">distance</span>[<span class="va">v</span>]) {
+                <span class="va">distance</span>[<span class="va">v</span>] = <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span>;
+            }
+        }
+    }
+
+    <span class="cm">// Check for negative cycle</span>
+    <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">u</span>, <span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">edges</span>) {
+        <span class="kw">if</span> (<span class="va">distance</span>[<span class="va">u</span>] != <span class="kw">long</span>.<span class="fn">MaxValue</span> &amp;&amp; <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span> &lt; <span class="va">distance</span>[<span class="va">v</span>]) {
+            <span class="cm">// Negative cycle detected</span>
+            <span class="kw">return</span> <span class="kw">null</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">distance</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Network Delay Time (Medium)</h3>
+      <p><strong>Given:</strong> Network with delays, find time for signal to reach all nodes from source. Return -1 if unreachable.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Network Delay Time - Dijkstra</div><div class="algo-desc">Find shortest path to all nodes, return maximum distance.</div><div class="algo-tags"><span class="badge b-blue">Dijkstra</span><span class="badge b-green">Network</span></div></div><div class="algo-idx">20</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">NetworkDelayTime</span>(<span class="kw">int</span>[][] <span class="va">times</span>, <span class="kw">int</span> <span class="va">n</span>, <span class="kw">int</span> <span class="va">k</span>) {
+    <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>)&gt;[] <span class="va">graph</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>)&gt;[<span class="va">n</span> + <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt;= <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">graph</span>[<span class="va">i</span>] = <span class="kw">new</span> <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>)&gt;();
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> <span class="va">time</span> <span class="kw">in</span> <span class="va">times</span>)
+        <span class="va">graph</span>[<span class="va">time</span>[<span class="num">0</span>]].<span class="fn">Add</span>((<span class="va">time</span>[<span class="num">1</span>], <span class="va">time</span>[<span class="num">2</span>]));
+
+    <span class="kw">int</span>[] <span class="va">distance</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">n</span> + <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt;= <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">distance</span>[<span class="va">i</span>] = <span class="kw">int</span>.<span class="fn">MaxValue</span>;
+    <span class="va">distance</span>[<span class="va">k</span>] = <span class="num">0</span>;
+
+    <span class="kw">var</span> <span class="va">pq</span> = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;(<span class="kw">int</span>, <span class="kw">int</span>), <span class="kw">int</span>&gt;();
+    <span class="va">pq</span>.<span class="fn">Enqueue</span>((<span class="va">k</span>, <span class="num">0</span>), <span class="num">0</span>);
+
+    <span class="kw">while</span> (<span class="va">pq</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">var</span> (<span class="va">u</span>, _) = <span class="va">pq</span>.<span class="fn">Dequeue</span>();
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">graph</span>[<span class="va">u</span>]) {
+            <span class="kw">if</span> (<span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span> &lt; <span class="va">distance</span>[<span class="va">v</span>]) {
+                <span class="va">distance</span>[<span class="va">v</span>] = <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">weight</span>;
+                <span class="va">pq</span>.<span class="fn">Enqueue</span>((<span class="va">v</span>, <span class="va">distance</span>[<span class="va">v</span>]), <span class="va">distance</span>[<span class="va">v</span>]);
+            }
+        }
+    }
+
+    <span class="kw">int</span> <span class="va">maxTime</span> = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">1</span>; <span class="va">i</span> &lt;= <span class="va">n</span>; <span class="va">i</span>++) {
+        <span class="kw">if</span> (<span class="va">distance</span>[<span class="va">i</span>] == <span class="kw">int</span>.<span class="fn">MaxValue</span>) <span class="kw">return</span> -<span class="num">1</span>;
+        <span class="va">maxTime</span> = <span class="fn">Math</span>.<span class="fn">Max</span>(<span class="va">maxTime</span>, <span class="va">distance</span>[<span class="va">i</span>]);
+    }
+
+    <span class="kw">return</span> <span class="va">maxTime</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Cheapest Flights Within K Stops (Medium)</h3>
+      <p><strong>Given:</strong> Flights with cost, max K stops. <strong>Find:</strong> Minimum cost from source to destination.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Cheapest Flights - Bellman-Ford Variant</div><div class="algo-desc">Relax edges K times (K stops constraint). Track distances over iterations.</div><div class="algo-tags"><span class="badge b-blue">Bellman-Ford</span><span class="badge b-orange">K-constraints</span></div></div><div class="algo-idx">21</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">FindCheapestPrice</span>(<span class="kw">int</span> <span class="va">n</span>, <span class="kw">int</span>[][] <span class="va">flights</span>, 
+                                  <span class="kw">int</span> <span class="va">src</span>, <span class="kw">int</span> <span class="va">dst</span>, <span class="kw">int</span> <span class="va">k</span>) {
+    <span class="kw">int</span>[] <span class="va">distance</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">n</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">distance</span>[<span class="va">i</span>] = <span class="kw">int</span>.<span class="fn">MaxValue</span>;
+    <span class="va">distance</span>[<span class="va">src</span>] = <span class="num">0</span>;
+
+    <span class="cm">// Relax edges k+1 times (at most k stops = k+1 edges)</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt;= <span class="va">k</span>; <span class="va">i</span>++) {
+        <span class="kw">int</span>[] <span class="va">tmpDistance</span> = (<span class="kw">int</span>[])<span class="va">distance</span>.<span class="fn">Clone</span>();
+
+        <span class="kw">foreach</span> (<span class="var">var</span> <span class="va">flight</span> <span class="kw">in</span> <span class="va">flights</span>) {
+            <span class="kw">int</span> <span class="va">u</span> = <span class="va">flight</span>[<span class="num">0</span>];
+            <span class="kw">int</span> <span class="va">v</span> = <span class="va">flight</span>[<span class="num">1</span>];
+            <span class="kw">int</span> <span class="va">price</span> = <span class="va">flight</span>[<span class="num">2</span>];
+
+            <span class="kw">if</span> (<span class="va">distance</span>[<span class="va">u</span>] != <span class="kw">int</span>.<span class="fn">MaxValue</span> &amp;&amp; <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">price</span> &lt; <span class="va">tmpDistance</span>[<span class="va">v</span>]) {
+                <span class="va">tmpDistance</span>[<span class="va">v</span>] = <span class="va">distance</span>[<span class="va">u</span>] + <span class="va">price</span>;
+            }
+        }
+
+        <span class="va">distance</span> = <span class="va">tmpDistance</span>;
+    }
+
+    <span class="kw">return</span> <span class="va">distance</span>[<span class="va">dst</span>] == <span class="kw">int</span>.<span class="fn">MaxValue</span> ? -<span class="num">1</span> : <span class="va">distance</span>[<span class="va">dst</span>];
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>Dijkstra vs Bellman-Ford:</strong> Use Dijkstra for non-negative weights (faster O(V log V)). Use Bellman-Ford only if graph has negative weights. Never use Dijkstra with negative edges!</div></div>
+    </section>
+
+    <section class="section" id="sec-7">
+      <div class="sec-tag"><span class="sec-num">8.7</span><div class="sec-line"></div></div>
+      <h2>Minimum Spanning Tree</h2>
+      <p class="lead">Connect all vertices with minimum total edge weight. Two approaches: Kruskal's (edge-based) and Prim's (vertex-based).</p>
+
+      <h3>1. Kruskal's Algorithm (with Union-Find)</h3>
+      <p>Sort edges by weight, greedily add edge if it doesn't create cycle (check with Union-Find).</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Kruskal's Algorithm - MST</div><div class="algo-desc">Sort edges, greedily add non-cycle edges using Union-Find. O(E log E).</div><div class="algo-tags"><span class="badge b-orange">Kruskal's</span><span class="badge b-blue">Union-Find</span><span class="badge b-green">Edge-based</span></div></div><div class="algo-idx">22</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(E log E)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V)</div></div><div class="cx"><div class="cx-l">Approach</div><div class="cx-v">Edge-based</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">KruskalMST</span>(<span class="kw">int</span> <span class="va">n</span>, <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>)&gt; <span class="va">edges</span>) {
+    <span class="va">edges</span>.<span class="fn">Sort</span>((\<span class="va">a</span>, <span class="va">b</span>) =&gt; <span class="va">a</span>.<span class="fn">Item3</span>.<span class="fn">CompareTo</span>(<span class="va">b</span>.<span class="fn">Item3</span>));
+
+    <span class="kw">var</span> <span class="va">uf</span> = <span class="kw">new</span> <span class="ty">UnionFind</span>(<span class="va">n</span>);
+    <span class="kw">int</span> <span class="va">mstCost</span> = <span class="num">0</span>;
+    <span class="kw">int</span> <span class="va">edgesAdded</span> = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">u</span>, <span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">edges</span>) {
+        <span class="kw">if</span> (<span class="va">uf</span>.<span class="fn">Find</span>(<span class="va">u</span>) != <span class="va">uf</span>.<span class="fn">Find</span>(<span class="va">v</span>)) {
+            <span class="va">uf</span>.<span class="fn">Union</span>(<span class="va">u</span>, <span class="va">v</span>);
+            <span class="va">mstCost</span> += <span class="va">weight</span>;
+            <span class="va">edgesAdded</span>++;
+            <span class="kw">if</span> (<span class="va">edgesAdded</span> == <span class="va">n</span> - <span class="num">1</span>) <span class="kw">break</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">edgesAdded</span> == <span class="va">n</span> - <span class="num">1</span> ? <span class="va">mstCost</span> : -<span class="num">1</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>2. Prim's Algorithm (Vertex-based)</h3>
+      <p>Start from vertex, greedily add minimum-weight edge connecting tree to new vertex.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Prim's Algorithm - MST</div><div class="algo-desc">Start vertex, greedily add minimum edge to new vertex. O(V² ) or O((V+E)logV) with PQ.</div><div class="algo-tags"><span class="badge b-blue">Prim's</span><span class="badge b-orange">Vertex-based</span><span class="badge b-green">Greedy</span></div></div><div class="algo-idx">23</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">PrimMST</span>(<span class="kw">int</span> <span class="va">n</span>, <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">int</span>)&gt;[] <span class="va">graph</span>) {
+    <span class="kw">bool</span>[] <span class="va">inMST</span> = <span class="kw">new</span> <span class="kw">bool</span>[<span class="va">n</span>];
+    <span class="kw">int</span>[] <span class="va">minCost</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">n</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">minCost</span>[<span class="va">i</span>] = <span class="kw">int</span>.<span class="fn">MaxValue</span>;
+
+    <span class="va">minCost</span>[<span class="num">0</span>] = <span class="num">0</span>;
+    <span class="kw">int</span> <span class="va">mstCost</span> = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++) {
+        <span class="cm">// Find min cost vertex not in MST</span>
+        <span class="kw">int</span> <span class="va">u</span> = -<span class="num">1</span>;
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="num">0</span>; <span class="va">j</span> &lt; <span class="va">n</span>; <span class="va">j</span>++) {
+            <span class="kw">if</span> (!<span class="va">inMST</span>[<span class="va">j</span>] &amp;&amp; (u == -<span class="num">1</span> || <span class="va">minCost</span>[<span class="va">j</span>] &lt; <span class="va">minCost</span>[<span class="va">u</span>]))
+                <span class="va">u</span> = <span class="va">j</span>;
+        }
+
+        <span class="va">inMST</span>[<span class="va">u</span>] = <span class="kw">true</span>;
+        <span class="va">mstCost</span> += <span class="va">minCost</span>[<span class="va">u</span>];
+
+        <span class="cm">// Update min costs of neighbors</span>
+        <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">graph</span>[<span class="va">u</span>]) {
+            <span class="kw">if</span> (!<span class="va">inMST</span>[<span class="va">v</span>] &amp;&amp; <span class="va">weight</span> &lt; <span class="va">minCost</span>[<span class="va">v</span>])
+                <span class="va">minCost</span>[<span class="va">v</span>] = <span class="va">weight</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">mstCost</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Min Cost to Connect Points (Medium)</h3>
+      <p><strong>Given:</strong> 2D points, cost = Manhattan distance. <strong>Find:</strong> Minimum cost to connect all points.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Min Cost Connect Points - Kruskal's</div><div class="algo-desc">Build complete graph with Manhattan distances, find MST.</div><div class="algo-tags"><span class="badge b-blue">MST</span><span class="badge b-green">Kruskal's</span></div></div><div class="algo-idx">24</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">long</span> <span class="fn">MinCostConnectPoints</span>(<span class="kw">int</span>[][] <span class="va">points</span>) {
+    <span class="kw">int</span> <span class="va">n</span> = <span class="va">points</span>.<span class="va">Length</span>;
+    <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">long</span>)&gt; <span class="va">edges</span> = <span class="kw">new</span> <span class="ty">List</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>, <span class="kw">long</span>)&gt;();
+
+    <span class="cm">// Build complete graph</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++) {
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">j</span> = <span class="va">i</span> + <span class="num">1</span>; <span class="va">j</span> &lt; <span class="va">n</span>; <span class="va">j</span>++) {
+            <span class="kw">long</span> <span class="va">dist</span> = <span class="fn">Math</span>.<span class="fn">Abs</span>(<span class="va">points</span>[<span class="va">i</span>][<span class="num">0</span>] - <span class="va">points</span>[<span class="va">j</span>][<span class="num">0</span>]) +
+                        <span class="fn">Math</span>.<span class="fn">Abs</span>(<span class="va">points</span>[<span class="va">i</span>][<span class="num">1</span>] - <span class="va">points</span>[<span class="va">j</span>][<span class="num">1</span>]);
+            <span class="va">edges</span>.<span class="fn">Add</span>((<span class="va">i</span>, <span class="va">j</span>, <span class="va">dist</span>));
+        }
+    }
+
+    <span class="va">edges</span>.<span class="fn">Sort</span>((\<span class="va">a</span>, <span class="va">b</span>) =&gt; <span class="va">a</span>.<span class="fn">Item3</span>.<span class="fn">CompareTo</span>(<span class="va">b</span>.<span class="fn">Item3</span>));
+
+    <span class="kw">var</span> <span class="va">uf</span> = <span class="kw">new</span> <span class="ty">UnionFind</span>(<span class="va">n</span>);
+    <span class="kw">long</span> <span class="va">cost</span> = <span class="num">0</span>;
+    <span class="kw">int</span> <span class="va">edgesAdded</span> = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="kw">var</span> (<span class="va">u</span>, <span class="va">v</span>, <span class="va">weight</span>) <span class="kw">in</span> <span class="va">edges</span>) {
+        <span class="kw">if</span> (<span class="va">uf</span>.<span class="fn">Find</span>(<span class="va">u</span>) != <span class="va">uf</span>.<span class="fn">Find</span>(<span class="va">v</span>)) {
+            <span class="va">uf</span>.<span class="fn">Union</span>(<span class="va">u</span>, <span class="va">v</span>);
+            <span class="va">cost</span> += <span class="va">weight</span>;
+            <span class="va">edgesAdded</span>++;
+            <span class="kw">if</span> (<span class="va">edgesAdded</span> == <span class="va">n</span> - <span class="num">1</span>) <span class="kw">break</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">cost</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Kruskal vs Prim:</strong> Use Kruskal for sparse graphs (fewer edges) and when edges are given as list. Use Prim for dense graphs and when adjacency list is available. Both find same MST cost.</div></div>
+    </section>
+
+    <section class="section" id="sec-8">
+      <div class="sec-tag"><span class="sec-num">8.8</span><div class="sec-line"></div></div>
+      <h2>Union-Find (Disjoint Set Union)</h2>
+      <p class="lead">Efficiently track connected components and detect cycles. Critical for Kruskal's MST and many connectivity problems.</p>
+
+      <h3>Core Operations</h3>
+      <p><strong>Find:</strong> Determine which set element belongs to (with path compression). <strong>Union:</strong> Merge two sets (with rank optimization).</p>
+
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Union-Find with Path Compression & Union by Rank</div><div class="algo-desc">Optimized DSU: O(α(n)) amortized, nearly O(1) per operation.</div><div class="algo-tags"><span class="badge b-green">Path Compression</span><span class="badge b-orange">Union by Rank</span><span class="badge b-blue">Optimized</span></div></div><div class="algo-idx">25</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Find</div><div class="cx-v">O(α(n))</div></div><div class="cx"><div class="cx-l">Union</div><div class="cx-v">O(α(n))</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(n)</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">UnionFind</span> {
+    <span class="kw">private</span> <span class="kw">int</span>[] <span class="va">parent</span>;
+    <span class="kw">private</span> <span class="kw">int</span>[] <span class="va">rank</span>;
+
+    <span class="kw">public</span> <span class="fn">UnionFind</span>(<span class="kw">int</span> <span class="va">n</span>) {
+        <span class="va">parent</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">n</span>];
+        <span class="va">rank</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">n</span>];
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++) {
+            <span class="va">parent</span>[<span class="va">i</span>] = <span class="va">i</span>;
+            <span class="va">rank</span>[<span class="va">i</span>] = <span class="num">0</span>;
+        }
+    }
+
+    <span class="cm">// Find with path compression</span>
+    <span class="kw">public</span> <span class="kw">int</span> <span class="fn">Find</span>(<span class="kw">int</span> <span class="va">x</span>) {
+        <span class="kw">if</span> (<span class="va">parent</span>[<span class="va">x</span>] != <span class="va">x</span>) {
+            <span class="va">parent</span>[<span class="va">x</span>] = <span class="fn">Find</span>(<span class="va">parent</span>[<span class="va">x</span>]); <span class="cm">// Path compression</span>
+        }
+        <span class="kw">return</span> <span class="va">parent</span>[<span class="va">x</span>];
+    }
+
+    <span class="cm">// Union by rank</span>
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Union</span>(<span class="kw">int</span> <span class="va">x</span>, <span class="kw">int</span> <span class="va">y</span>) {
+        <span class="kw">int</span> <span class="va">rootX</span> = <span class="fn">Find</span>(<span class="va">x</span>);
+        <span class="kw">int</span> <span class="va">rootY</span> = <span class="fn">Find</span>(<span class="va">y</span>);
+
+        <span class="kw">if</span> (<span class="va">rootX</span> == <span class="va">rootY</span>) <span class="kw">return</span> <span class="kw">false</span>; <span class="cm">// Already connected</span>
+
+        <span class="cm">// Union by rank</span>
+        <span class="kw">if</span> (<span class="va">rank</span>[<span class="va">rootX</span>] &lt; <span class="va">rank</span>[<span class="va">rootY</span>]) {
+            <span class="va">parent</span>[<span class="va">rootX</span>] = <span class="va">rootY</span>;
+        } <span class="kw">else</span> <span class="kw">if</span> (<span class="va">rank</span>[<span class="va">rootX</span>] &gt; <span class="va">rank</span>[<span class="va">rootY</span>]) {
+            <span class="va">parent</span>[<span class="va">rootY</span>] = <span class="va">rootX</span>;
+        } <span class="kw">else</span> {
+            <span class="va">parent</span>[<span class="va">rootY</span>] = <span class="va">rootX</span>;
+            <span class="va">rank</span>[<span class="va">rootX</span>]++;
+        }
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+    <span class="kw">public</span> <span class="kw">bool</span> <span class="fn">Connected</span>(<span class="kw">int</span> <span class="va">x</span>, <span class="kw">int</span> <span class="va">y</span>) =&gt; <span class="fn">Find</span>(<span class="va">x</span>) == <span class="fn">Find</span>(<span class="va">y</span>);
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Number of Connected Components (Easy)</h3>
+      <p><strong>Given:</strong> N nodes, list of edges. <strong>Find:</strong> Number of connected components.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Connected Components - Union-Find</div><div class="algo-desc">Union all edges, count remaining distinct roots.</div><div class="algo-tags"><span class="badge b-blue">Union-Find</span><span class="badge b-green">Connected Components</span></div></div><div class="algo-idx">26</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span> <span class="fn">CountComponents</span>(<span class="kw">int</span> <span class="va">n</span>, <span class="kw">int</span>[][] <span class="va">edges</span>) {
+    <span class="kw">var</span> <span class="va">uf</span> = <span class="kw">new</span> <span class="ty">UnionFind</span>(<span class="va">n</span>);
+
+    <span class="kw">foreach</span> (<span class="var">var</span> <span class="va">edge</span> <span class="kw">in</span> <span class="va">edges</span>) {
+        <span class="va">uf</span>.<span class="fn">Union</span>(<span class="va">edge</span>[<span class="num">0</span>], <span class="va">edge</span>[<span class="num">1</span>]);
+    }
+
+    <span class="kw">var</span> <span class="va">roots</span> = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">n</span>; <span class="va">i</span>++) {
+        <span class="va">roots</span>.<span class="fn">Add</span>(<span class="va">uf</span>.<span class="fn">Find</span>(<span class="va">i</span>));
+    }
+
+    <span class="kw">return</span> <span class="va">roots</span>.<span class="fn">Count</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: Redundant Connection (Medium)</h3>
+      <p><strong>Given:</strong> Tree with one extra edge causing a cycle. <strong>Find:</strong> The redundant edge.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Redundant Connection - Union-Find</div><div class="algo-desc">When union fails (nodes already connected), that's the redundant edge.</div><div class="algo-tags"><span class="badge b-blue">Union-Find</span><span class="badge b-red">Cycle Detection</span></div></div><div class="algo-idx">27</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span>[] <span class="fn">FindRedundantConnection</span>(<span class="kw">int</span>[][] <span class="va">edges</span>) {
+    <span class="kw">var</span> <span class="va">uf</span> = <span class="kw">new</span> <span class="ty">UnionFind</span>(<span class="va">edges</span>.<span class="va">Length</span> + <span class="num">1</span>);
+
+    <span class="kw">foreach</span> (<span class="var">var</span> <span class="va">edge</span> <span class="kw">in</span> <span class="va">edges</span>) {
+        <span class="kw">if</span> (!<span class="va">uf</span>.<span class="fn">Union</span>(<span class="va">edge</span>[<span class="num">0</span>], <span class="va">edge</span>[<span class="num">1</span>])) {
+            <span class="kw">return</span> <span class="va">edge</span>; <span class="cm">// Union failed = cycle detected</span>
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">new</span> <span class="kw">int</span>[<span class="num">0</span>];
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout warn"><div class="callout-icon">⚠️</div><div><strong>Path Compression Critical:</strong> Always implement path compression in Find(). Without it, worst-case is O(n) per operation. With both optimizations (path compression + union by rank), average is nearly O(1).</div></div>
+    </section>
+    <section class="section" id="sec-9">
+      <div class="sec-tag"><span class="sec-num">8.9</span><div class="sec-line"></div></div>
+      <h2>Grid as Graph</h2>
+      <p class="lead">2D grids are graphs where cells are vertices and adjacent cells are edges. Apply BFS/DFS directly to explore connected regions.</p>
+
+      <h3>Grid Traversal Template</h3>
+      <p>Grids have implicit edges (4-directional or 8-directional). Define directions array, check bounds, avoid revisiting.</p>
+
+      <h3>Problem: Surrounded Regions (Medium)</h3>
+      <p><strong>Given:</strong> 2D board with 'X' and 'O'. <strong>Find:</strong> Replace 'O' surrounded by 'X' with 'X' (border 'O' not surrounded).</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Surrounded Regions - Reverse DFS</div><div class="algo-desc">Mark border-connected 'O' as safe, then replace remaining 'O' with 'X'.</div><div class="algo-tags"><span class="badge b-blue">Grid DFS</span><span class="badge b-green">Reverse Logic</span></div></div><div class="algo-idx">28</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">void</span> <span class="fn">Solve</span>(<span class="kw">char</span>[][] <span class="va">board</span>) {
+    <span class="kw">int</span> <span class="va">rows</span> = <span class="va">board</span>.<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">cols</span> = <span class="va">board</span>[<span class="num">0</span>].<span class="va">Length</span>;
+
+    <span class="cm">// Mark border-connected 'O' as '#'</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">r</span> = <span class="num">0</span>; <span class="va">r</span> &lt; <span class="va">rows</span>; <span class="va">r</span>++) {
+        <span class="kw">if</span> (<span class="va">board</span>[<span class="va">r</span>][<span class="num">0</span>] == <span class="str">'O'</span>) <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">r</span>, <span class="num">0</span>);
+        <span class="kw">if</span> (<span class="va">board</span>[<span class="va">r</span>][<span class="va">cols</span> - <span class="num">1</span>] == <span class="str">'O'</span>) <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">r</span>, <span class="va">cols</span> - <span class="num">1</span>);
+    }
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">c</span> = <span class="num">0</span>; <span class="va">c</span> &lt; <span class="va">cols</span>; <span class="va">c</span>++) {
+        <span class="kw">if</span> (<span class="va">board</span>[<span class="num">0</span>][<span class="va">c</span>] == <span class="str">'O'</span>) <span class="fn">DFS</span>(<span class="va">board</span>, <span class="num">0</span>, <span class="va">c</span>);
+        <span class="kw">if</span> (<span class="va">board</span>[<span class="va">rows</span> - <span class="num">1</span>][<span class="va">c</span>] == <span class="str">'O'</span>) <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">rows</span> - <span class="num">1</span>, <span class="va">c</span>);
+    }
+
+    <span class="cm">// Replace remaining 'O' with 'X', restore '#' to 'O'</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">r</span> = <span class="num">0</span>; <span class="va">r</span> &lt; <span class="va">rows</span>; <span class="va">r</span>++) {
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">c</span> = <span class="num">0</span>; <span class="va">c</span> &lt; <span class="va">cols</span>; <span class="va">c</span>++) {
+            <span class="kw">if</span> (<span class="va">board</span>[<span class="va">r</span>][<span class="va">c</span>] == <span class="str">'O'</span>) <span class="va">board</span>[<span class="va">r</span>][<span class="va">c</span>] = <span class="str">'X'</span>;
+            <span class="kw">else</span> <span class="kw">if</span> (<span class="va">board</span>[<span class="va">r</span>][<span class="va">c</span>] == <span class="str">'#'</span>) <span class="va">board</span>[<span class="va">r</span>][<span class="va">c</span>] = <span class="str">'O'</span>;
+        }
+    }
+}
+
+<span class="kw">private</span> <span class="kw">void</span> <span class="fn">DFS</span>(<span class="kw">char</span>[][] <span class="va">board</span>, <span class="kw">int</span> <span class="va">r</span>, <span class="kw">int</span> <span class="va">c</span>) {
+    <span class="kw">if</span> (<span class="va">r</span> &lt; <span class="num">0</span> || <span class="va">r</span> &gt;= <span class="va">board</span>.<span class="va">Length</span> || <span class="va">c</span> &lt; <span class="num">0</span> || <span class="va">c</span> &gt;= <span class="va">board</span>[<span class="num">0</span>].<span class="va">Length</span> || 
+        <span class="va">board</span>[<span class="va">r</span>][<span class="va">c</span>] != <span class="str">'O'</span>) <span class="kw">return</span>;
+
+    <span class="va">board</span>[<span class="va">r</span>][<span class="va">c</span>] = <span class="str">'#'</span>;
+    <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">r</span> + <span class="num">1</span>, <span class="va">c</span>);
+    <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">r</span> - <span class="num">1</span>, <span class="va">c</span>);
+    <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">r</span>, <span class="va">c</span> + <span class="num">1</span>);
+    <span class="fn">DFS</span>(<span class="va">board</span>, <span class="va">r</span>, <span class="va">c</span> - <span class="num">1</span>);
+}</pre></div>
+        </div>
+      </div>
+
+      <h3>Problem: 01 Matrix (Medium)</h3>
+      <p><strong>Given:</strong> Binary matrix. <strong>Find:</strong> Distance from each cell to nearest 0 (multi-source BFS).</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">01 Matrix - Multi-Source BFS</div><div class="algo-desc">Initialize queue with all 0s, expand level-by-level to compute distances.</div><div class="algo-tags"><span class="badge b-blue">Multi-Source BFS</span><span class="badge b-green">Distance</span></div></div><div class="algo-idx">29</div></div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">int</span>[][] <span class="fn">UpdateMatrix</span>(<span class="kw">int</span>[][] <span class="va">mat</span>) {
+    <span class="kw">int</span> <span class="va">rows</span> = <span class="va">mat</span>.<span class="va">Length</span>;
+    <span class="kw">int</span> <span class="va">cols</span> = <span class="va">mat</span>[<span class="num">0</span>].<span class="va">Length</span>;
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;(\<span class="kw">int</span>, <span class="kw">int</span>)&gt;();
+
+    <span class="cm">// Add all 0s to queue</span>
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">r</span> = <span class="num">0</span>; <span class="va">r</span> &lt; <span class="va">rows</span>; <span class="va">r</span>++) {
+        <span class="kw">for</span> (<span class="kw">int</span> <span class="va">c</span> = <span class="num">0</span>; <span class="va">c</span> &lt; <span class="va">cols</span>; <span class="va">c</span>++) {
+            <span class="kw">if</span> (<span class="va">mat</span>[<span class="va">r</span>][<span class="va">c</span>] == <span class="num">0</span>)
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>((<span class="va">r</span>, <span class="va">c</span>));
+            <span class="kw">else</span>
+                <span class="va">mat</span>[<span class="va">r</span>][<span class="va">c</span>] = <span class="kw">int</span>.<span class="fn">MaxValue</span>;
+        }
+    }
+
+    <span class="kw">int</span>[][] <span class="va">directions</span> = <span class="kw">new</span> <span class="kw">int</span>[][] { <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">1</span>, <span class="num">0</span> },
+                                           <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">0</span>, <span class="num">-1</span> }, <span class="kw">new</span> <span class="kw">int</span>[] { <span class="num">-1</span>, <span class="num">0</span> } };
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">var</span> (<span class="va">r</span>, <span class="va">c</span>) = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+
+        <span class="kw">foreach</span> (<span class="var">var</span> <span class="va">dir</span> <span class="kw">in</span> <span class="va">directions</span>) {
+            <span class="kw">int</span> <span class="va">nr</span> = <span class="va">r</span> + <span class="va">dir</span>[<span class="num">0</span>];
+            <span class="kw">int</span> <span class="va">nc</span> = <span class="va">c</span> + <span class="va">dir</span>[<span class="num">1</span>];
+
+            <span class="kw">if</span> (<span class="va">nr</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nr</span> &lt; <span class="va">rows</span> &amp;&amp; <span class="va">nc</span> &gt;= <span class="num">0</span> &amp;&amp; <span class="va">nc</span> &lt; <span class="va">cols</span> &amp;&amp; 
+                <span class="va">mat</span>[<span class="va">nr</span>][<span class="va">nc</span>] &gt; <span class="va">mat</span>[<span class="va">r</span>][<span class="va">c</span>] + <span class="num">1</span>) {
+                <span class="va">mat</span>[<span class="va">nr</span>][<span class="va">nc</span>] = <span class="va">mat</span>[<span class="va">r</span>][<span class="va">c</span>] + <span class="num">1</span>;
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>((<span class="va">nr</span>, <span class="va">nc</span>));
+            }
+        }
+    }
+
+    <span class="kw">return</span> <span class="va">mat</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Grid BFS Template:</strong> Always check bounds before recursing/enqueueing. Use direction arrays to avoid code repetition. Mark cells as visited in-place or with separate array.</div></div>
+    </section>
+
+    <section class="section" id="sec-10">
+      <div class="sec-tag"><span class="sec-num">8.10</span><div class="sec-line"></div></div>
+      <h2>Bipartite Graphs</h2>
+      <p class="lead">A graph is bipartite if vertices can be colored with 2 colors such that no adjacent vertices share a color. Equivalently: no odd-length cycles.</p>
+
+      <h3>Bipartite Check with BFS (2-Coloring)</h3>
+      <p>Try to color graph with 2 colors (0 and 1). If any edge connects same-color vertices, not bipartite.</p>
+      <div class="algo">
+        <div class="algo-head"><div><div class="algo-name">Bipartite Check - BFS 2-Coloring</div><div class="algo-desc">Color vertices alternately, check if any edge connects same color.</div><div class="algo-tags"><span class="badge b-blue">BFS</span><span class="badge b-green">2-Coloring</span></div></div><div class="algo-idx">30</div></div>
+        <div class="algo-body">
+          <div class="cx-row"><div class="cx"><div class="cx-l">Time</div><div class="cx-v">O(V+E)</div></div><div class="cx"><div class="cx-l">Space</div><div class="cx-v">O(V)</div></div></div>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">IsBipartite</span>(<span class="kw">int</span>[][] <span class="va">graph</span>) {
+    <span class="kw">int</span>[] <span class="va">color</span> = <span class="kw">new</span> <span class="kw">int</span>[<span class="va">graph</span>.<span class="va">Length</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">graph</span>.<span class="va">Length</span>; <span class="va">i</span>++)
+        <span class="va">color</span>[<span class="va">i</span>] = -<span class="num">1</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">graph</span>.<span class="va">Length</span>; <span class="va">i</span>++) {
+        <span class="kw">if</span> (<span class="va">color</span>[<span class="va">i</span>] == -<span class="num">1</span>) {
+            <span class="kw">if</span> (!<span class="fn">BFS</span>(<span class="va">graph</span>, <span class="va">i</span>, <span class="va">color</span>))
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="kw">private</span> <span class="kw">bool</span> <span class="fn">BFS</span>(<span class="kw">int</span>[][] <span class="va">graph</span>, <span class="kw">int</span> <span class="va">start</span>, <span class="kw">int</span>[] <span class="va">color</span>) {
+    <span class="kw">var</span> <span class="va">queue</span> = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">start</span>);
+    <span class="va">color</span>[<span class="va">start</span>] = <span class="num">0</span>;
+
+    <span class="kw">while</span> (<span class="va">queue</span>.<span class="fn">Count</span> &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> <span class="va">u</span> = <span class="va">queue</span>.<span class="fn">Dequeue</span>();
+
+        <span class="kw">foreach</span> (<span class="kw">int</span> <span class="va">v</span> <span class="kw">in</span> <span class="va">graph</span>[<span class="va">u</span>]) {
+            <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == -<span class="num">1</span>) {
+                <span class="va">color</span>[<span class="va">v</span>] = <span class="num">1</span> - <span class="va">color</span>[<span class="va">u</span>]; <span class="cm">// Opposite color</span>
+                <span class="va">queue</span>.<span class="fn">Enqueue</span>(<span class="va">v</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> (<span class="va">color</span>[<span class="va">v</span>] == <span class="va">color</span>[<span class="va">u</span>]) {
+                <span class="kw">return</span> <span class="kw">false</span>; <span class="cm">// Same color = not bipartite</span>
+            }
+        }
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre></div>
+        </div>
+      </div>
+
+      <div class="callout tip"><div class="callout-icon">💡</div><div><strong>Bipartite Property:</strong> A connected graph is bipartite if and only if it contains no odd-length cycles. Disconnected graphs: check all components.</div></div>
+    </section>
+
+    <section class="section" id="sec-11">
+      <div class="sec-tag"><span class="sec-num">8.11</span><div class="sec-line"></div></div>
+      <h2>Interview Tips & Common Patterns</h2>
+
+      <h3>Problem Classification</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Problem Type</th><th>Algorithm</th><th>Complexity</th><th>When to Use</th></tr></thead>
+          <tbody>
+            <tr><td>Shortest path (unweighted)</td><td>BFS</td><td>O(V+E)</td><td>Unweighted graphs, level-order traversal</td></tr>
+            <tr><td>Shortest path (weighted)</td><td>Dijkstra or Bellman-Ford</td><td>O((V+E)logV) or O(VE)</td><td>Non-negative or negative weights</td></tr>
+            <tr><td>All pairs shortest path</td><td>Floyd-Warshall</td><td>O(V³)</td><td>Small dense graphs, negative weights OK</td></tr>
+            <tr><td>Connectivity/Components</td><td>DFS, BFS, or Union-Find</td><td>O(V+E)</td><td>Find connected components, check connectivity</td></tr>
+            <tr><td>Cycle detection</td><td>DFS (3-color) or Union-Find</td><td>O(V+E)</td><td>Directed: use 3-color DFS; Undirected: Union-Find</td></tr>
+            <tr><td>Topological sort</td><td>Kahn's or DFS</td><td>O(V+E)</td><td>DAG only, dependencies, build order</td></tr>
+            <tr><td>Minimum spanning tree</td><td>Kruskal's or Prim's</td><td>O(E log E) or O(V²)</td><td>Connect all vertices, minimize total weight</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Graph Problem Checklist</h3>
+      <div class="steps">
+        <div class="step"><div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div><div class="step-body"><strong>Identify Graph Type:</strong> Directed/undirected? Weighted/unweighted? Cyclic/acyclic?</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div><div class="step-body"><strong>Choose Representation:</strong> Adjacency list (most common), matrix (dense), or edge list (sorting needed)</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div><div class="step-body"><strong>Select Algorithm:</strong> BFS (unweighted shortest path), DFS (connectivity), Dijkstra (weighted), Kruskal/Prim (MST)</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">4</div><div class="step-vline"></div></div><div class="step-body"><strong>Handle Edge Cases:</strong> Disconnected graphs, self-loops, cycles, isolated vertices</div></div>
+        <div class="step"><div class="step-left"><div class="step-num">5</div></div><div class="step-body"><strong>Implement Visited Tracking:</strong> Avoid infinite loops; use boolean array, set, or coloring</div></div>
+      </div>
+
+      <h3>Common Pitfalls</h3>
+      <div class="vs">
+        <div class="vs-box bad">
+          <div class="vs-title">Mistakes to Avoid</div>
+          <div class="vs-item">Using Dijkstra with negative weights (fails)</div>
+          <div class="vs-item">Forgetting to mark vertices as visited (infinite loops)</div>
+          <div class="vs-item">Assuming BFS finds shortest path in weighted graphs (wrong)</div>
+          <div class="vs-item">Applying topological sort to cyclic graphs (invalid)</div>
+          <div class="vs-item">Not handling disconnected components</div>
+          <div class="vs-item">Integer overflow in distance/cost calculations</div>
+        </div>
+        <div class="vs-box good">
+          <div class="vs-title">Best Practices</div>
+          <div class="vs-item">Check graph type before selecting algorithm</div>
+          <div class="vs-item">Use visited array/set consistently</div>
+          <div class="vs-item">Validate input constraints (1 ≤ n ≤ 10⁵)</div>
+          <div class="vs-item">Test with disconnected/empty graphs</div>
+          <div class="vs-item">Use long for large distances/weights</div>
+          <div class="vs-item">Implement Union-Find with both optimizations</div>
+        </div>
+      </div>
+
+      <h3>Time Complexity Reference</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Algorithm</th><th>Time</th><th>Space</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>BFS</td><td>O(V+E)</td><td>O(V)</td><td>Queue-based, level-order</td></tr>
+            <tr><td>DFS</td><td>O(V+E)</td><td>O(V)</td><td>Stack or recursion-based</td></tr>
+            <tr><td>Dijkstra</td><td>O((V+E)logV)</td><td>O(V)</td><td>With binary heap/PriorityQueue</td></tr>
+            <tr><td>Bellman-Ford</td><td>O(VE)</td><td>O(V)</td><td>Handles negative weights</td></tr>
+            <tr><td>Floyd-Warshall</td><td>O(V³)</td><td>O(V²)</td><td>All-pairs shortest paths</td></tr>
+            <tr><td>Kruskal's (MST)</td><td>O(E log E)</td><td>O(V)</td><td>Sorting edges dominates</td></tr>
+            <tr><td>Prim's (MST)</td><td>O(V²) or O((V+E)logV)</td><td>O(V)</td><td>Depends on implementation</td></tr>
+            <tr><td>Union-Find (α(n))</td><td>O(α(n))</td><td>O(n)</td><td>Nearly O(1) per operation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Interview Tips</h3>
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Tip 1</div>
+          <div class="tip-title">Clarify the Problem</div>
+          <div class="tip-body">Ask about graph type, constraints, whether result should be ordered, and if you need to find one solution or all solutions.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Tip 2</div>
+          <div class="tip-title">Start Simple</div>
+          <div class="tip-body">Implement BFS or DFS first. Many problems are variations of these traversals. Optimize only after basic solution works.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Tip 3</div>
+          <div class="tip-title">Test Thoroughly</div>
+          <div class="tip-body">Test with disconnected graphs, single node, empty graph, self-loops, and duplicate edges. Edge cases expose most implementation bugs.</div>
+        </div>
+      </div>
+
+      <h3>Quick Reference: When to Use Each Algorithm</h3>
+      <ul style="margin-left:20px; margin-bottom:16px;">
+        <li><strong>BFS:</strong> Shortest path in unweighted graphs, level-order traversal, finding connected components</li>
+        <li><strong>DFS:</strong> Connectivity, topological sort (DFS version), cycle detection, path existence</li>
+        <li><strong>Dijkstra:</strong> Single-source shortest path with non-negative weights</li>
+        <li><strong>Bellman-Ford:</strong> Single-source shortest path with negative weights, detect negative cycles</li>
+        <li><strong>Kruskal's:</strong> MST when edges are naturally available as a list, sparse graphs</li>
+        <li><strong>Prim's:</strong> MST when adjacency list is given, dense graphs</li>
+        <li><strong>Union-Find:</strong> Connected components, cycle detection in undirected graphs, checking connectivity</li>
+        <li><strong>Topological Sort:</strong> DAG ordering, dependency resolution, compilation order</li>
+      </ul>
+
+      <div class="callout info"><div class="callout-icon">ℹ️</div><div><strong>Final Thought:</strong> Graph problems are often variations of BFS/DFS. Master these two fundamentals, understand their properties, and you can solve 80% of graph problems. The remaining 20% add Dijkstra, topological sort, or Union-Find on top.</div></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 8: Graphs - Theory, Algorithms & Applications</p>
+      <p>Master graph theory with production-ready C# implementations. From fundamentals to advanced algorithms covering 30+ problems across 11 core topics.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.fade').forEach(el => {
+        el.classList.add('in');
+      });
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const code = this.closest('.code-block').querySelector('pre').innerText;
+          navigator.clipboard.writeText(code);
+          this.innerText = 'Copied!';
+          setTimeout(() => { this.innerText = 'Copy'; }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

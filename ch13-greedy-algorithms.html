@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Greedy algorithms guide — activity selection, Huffman coding, interval scheduling, with proofs of correctness and C# implementations.">
+  <meta name="keywords" content="greedy algorithm, activity selection, Huffman coding, interval scheduling, C#, optimization">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch13-greedy-algorithms.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch13-greedy-algorithms.html">
+  <meta property="og:title" content="Chapter 13: Greedy Algorithms - DSA Complete Book">
+  <meta property="og:description" content="Greedy algorithms guide — activity selection, Huffman coding, interval scheduling, with proofs of correctness and C# implementations.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch13-greedy-algorithms.html">
+  <meta name="twitter:title" content="Chapter 13: Greedy Algorithms - DSA Complete Book">
+  <meta name="twitter:description" content="Greedy algorithms guide — activity selection, Huffman coding, interval scheduling, with proofs of correctness and C# implementations.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 13: Greedy Algorithms - DSA Complete Book",
+  "description": "Greedy algorithms guide \u2014 activity selection, Huffman coding, interval scheduling, with proofs of correctness and C# implementations.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch13-greedy-algorithms.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 13: Greedy Algorithms - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 13</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 13</div>
+      </div>
+      <h1>Greedy <em>Algorithms</em></h1>
+      <p class="hero-sub">Master the greedy paradigm: making locally optimal choices that lead to globally optimal solutions. Learn when greedy works, how to prove correctness with exchange arguments, and solve classic problems like Activity Selection, Huffman Coding, and Job Sequencing with complete C# implementations.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">11</div>
+          <div class="stat-l">Core Algorithms</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">14+</div>
+          <div class="stat-l">Practice Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">60+</div>
+          <div class="stat-l">Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">5</div>
+          <div class="stat-l">Proof Techniques</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">13.1</span> Greedy Paradigm Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">13.2</span> Proving Greedy Correctness</a>
+        <a href="#sec-3"><span class="toc-n">13.3</span> Activity Selection & Interval Scheduling</a>
+        <a href="#sec-4"><span class="toc-n">13.4</span> Fractional Knapsack Problem</a>
+        <a href="#sec-5"><span class="toc-n">13.5</span> Huffman Coding</a>
+        <a href="#sec-6"><span class="toc-n">13.6</span> Job Sequencing with Deadlines</a>
+        <a href="#sec-7"><span class="toc-n">13.7</span> Minimum Platforms Required</a>
+        <a href="#sec-8"><span class="toc-n">13.8</span> Coin Change: Greedy vs DP</a>
+        <a href="#sec-9"><span class="toc-n">13.9</span> Practice Problems (14+)</a>
+        <a href="#sec-10"><span class="toc-n">13.10</span> Greedy vs Dynamic Programming</a>
+        <a href="#sec-11"><span class="toc-n">13.11</span> Interview Tips & Patterns</a>
+      </div>
+    </section>
+
+    <!-- Section 13.1: Greedy Paradigm Fundamentals -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">13.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Greedy Paradigm Fundamentals</h2>
+      <p class="lead">A greedy algorithm makes locally optimal choices at each step with the hope of finding a global optimum. Unlike dynamic programming, greedy never reconsiders past decisions.</p>
+
+      <p>The greedy paradigm works by:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Greedy Choice Property:</strong> A globally optimal solution contains a greedy choice made at the first step.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Optimal Substructure:</strong> An optimal solution to a problem contains optimal solutions to its subproblems.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>No Backtracking:</strong> Once a choice is made, it's never reconsidered, making greedy more efficient than DP.</div>
+        </div>
+      </div>
+
+      <h3>Characteristics of Greedy Problems</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Greedy Choice</td>
+              <td>Current choice doesn't depend on future choices</td>
+              <td>Pick earliest-ending activity</td>
+            </tr>
+            <tr>
+              <td>Optimal Substructure</td>
+              <td>Solution = greedy choice + solution to subproblem</td>
+              <td>Remaining activities after picking one</td>
+            </tr>
+            <tr>
+              <td>No Dependencies</td>
+              <td>Decisions are independent of previous mistakes</td>
+              <td>Activity selection is order-independent</td>
+            </tr>
+            <tr>
+              <td>Efficiency</td>
+              <td>Usually O(n log n) or better</td>
+              <td>After sorting, selection is O(n)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Not all problems are solved greedily!</strong> The greedy approach may fail if the problem lacks the optimal substructure property. Always verify with test cases and formal proof.</div>
+      </div>
+    </section>
+
+    <!-- Section 13.2: Proving Greedy Correctness -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">13.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Proving Greedy Correctness</h2>
+      <p class="lead">Greedy algorithms require proof that the greedy choice leads to an optimal solution. Two main proof techniques are exchange argument and greedy stays ahead.</p>
+
+      <h3>Exchange Argument</h3>
+      <p>Assume an optimal solution exists that differs from the greedy solution. Show how to exchange elements to transform the optimal solution into the greedy solution without making it worse.</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Exchange Argument Steps</div>
+          <div class="proof-body">
+            1. Assume optimal solution OPT differs from greedy solution G<br><br>
+            2. Find first position where they differ<br><br>
+            3. Swap the differing element in OPT with greedy choice<br><br>
+            4. Show cost doesn't increase (OPT' ≥ OPT)<br><br>
+            5. Repeat until OPT becomes G
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Greedy Stays Ahead</div>
+          <div class="proof-body">
+            1. Define "ahead" metric (e.g., earliest end time)<br><br>
+            2. Prove greedy is always ahead after each step<br><br>
+            3. Show "ahead" implies optimality<br><br>
+            4. Conclude greedy produces optimal solution
+          </div>
+        </div>
+      </div>
+
+      <h3>Example: Activity Selection Proof</h3>
+      <p><strong>Theorem:</strong> Greedy selection (earliest-ending activity first) produces optimal solution.</p>
+
+      <p><strong>Proof (Exchange Argument):</strong> Suppose OPT is an optimal solution differing from greedy solution G. Let a₁ be the greedy choice (earliest ending). If OPT's first activity b₁ ≠ a₁, then since a₁ ends before b₁, we can replace b₁ with a₁ in OPT. The remaining activities are still compatible. Repeat this process until OPT = G, proving greedy is optimal.</p>
+    </section>
+
+    <!-- Section 13.3: Activity Selection -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">13.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Activity Selection & Interval Scheduling</h2>
+      <p class="lead">Select maximum number of non-overlapping activities. Classic greedy problem solved by selecting earliest-ending activity repeatedly.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Activity Selection Algorithm</div>
+            <div class="algo-desc">Sort activities by end time, then greedily select activities that don't overlap with previously selected ones.</div>
+          </div>
+          <div class="algo-idx">13.1</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Best Case</div>
+              <div class="cx-v">O(n log n)</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">public class</span> <span class="ty">ActivitySelection</span>
+{
+    <span class="kw">public class</span> <span class="ty">Activity</span>
+    {
+        <span class="kw">public</span> <span class="ty">string</span> <span class="prop">Name</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">int</span> <span class="prop">Start</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">int</span> <span class="prop">End</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+    }
+
+    <span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">Activity</span>&gt; <span class="fn">SelectActivities</span>(<span class="ty">List</span>&lt;<span class="ty">Activity</span>&gt; activities)
+    {
+        <span class="cm">// Sort by end time</span>
+        <span class="kw">var</span> sorted = activities
+            .<span class="fn">OrderBy</span>(a =&gt; a.<span class="prop">End</span>)
+            .<span class="fn">ToList</span>();
+
+        <span class="kw">var</span> selected = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Activity</span>&gt;();
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> activity <span class="kw">in</span> sorted)
+        {
+            <span class="cm">// Check if no overlap with last selected</span>
+            <span class="kw">if</span> (selected.<span class="fn">Count</span> == <span class="num">0</span> ||
+                selected[selected.<span class="fn">Count</span> - <span class="num">1</span>].<span class="prop">End</span> &lt;= activity.<span class="prop">Start</span>)
+            {
+                selected.<span class="fn">Add</span>(activity);
+            }
+        }
+
+        <span class="kw">return</span> selected;
+    }
+
+    <span class="kw">public static</span> <span class="kw">void</span> <span class="fn">Main</span>()
+    {
+        <span class="kw">var</span> activities = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Activity</span>&gt;
+        {
+            <span class="kw">new</span> <span class="ty">Activity</span> { <span class="prop">Name</span> = <span class="str">"A"</span>, <span class="prop">Start</span> = <span class="num">1</span>, <span class="prop">End</span> = <span class="num">3</span> },
+            <span class="kw">new</span> <span class="ty">Activity</span> { <span class="prop">Name</span> = <span class="str">"B"</span>, <span class="prop">Start</span> = <span class="num">2</span>, <span class="prop">End</span> = <span class="num">5</span> },
+            <span class="kw">new</span> <span class="ty">Activity</span> { <span class="prop">Name</span> = <span class="str">"C"</span>, <span class="prop">Start</span> = <span class="num">4</span>, <span class="prop">End</span> = <span class="num">6</span> },
+            <span class="kw">new</span> <span class="ty">Activity</span> { <span class="prop">Name</span> = <span class="str">"D"</span>, <span class="prop">Start</span> = <span class="num">6</span>, <span class="prop">End</span> = <span class="num">9</span> },
+        };
+
+        <span class="kw">var</span> result = <span class="fn">SelectActivities</span>(activities);
+
+        <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">"Selected Activities:"</span>);
+        <span class="kw">foreach</span> (<span class="kw">var</span> a <span class="kw">in</span> result)
+            <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"{a.Name}: {a.Start}-{a.End}"</span>);
+    }
+}</pre>
+          </div>
+
+          <p><strong>Output:</strong></p>
+          <pre>Selected Activities:
+A: 1-3
+C: 4-6
+D: 6-9</pre>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Key Insight:</strong> Selecting earliest-ending activity leaves maximum room for future activities. This greedy choice is always part of an optimal solution.</div>
+      </div>
+    </section>
+
+    <!-- Section 13.4: Fractional Knapsack -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">13.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Fractional Knapsack Problem</h2>
+      <p class="lead">Maximize value in knapsack of capacity W. Unlike 0/1 knapsack, we can take fractional items. Greedy by value-to-weight ratio is optimal.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Fractional Knapsack</div>
+            <div class="algo-desc">Sort items by value-to-weight ratio, greedily take items starting with highest ratio.</div>
+          </div>
+          <div class="algo-idx">13.2</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">public class</span> <span class="ty">FractionalKnapsack</span>
+{
+    <span class="kw">public class</span> <span class="ty">Item</span>
+    {
+        <span class="kw">public</span> <span class="ty">string</span> <span class="prop">Name</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">double</span> <span class="prop">Value</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">double</span> <span class="prop">Weight</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+    }
+
+    <span class="kw">public static</span> <span class="ty">double</span> <span class="fn">MaxValue</span>(<span class="ty">List</span>&lt;<span class="ty">Item</span>&gt; items, <span class="ty">double</span> capacity)
+    {
+        <span class="cm">// Sort by value-to-weight ratio (descending)</span>
+        <span class="kw">var</span> sorted = items
+            .<span class="fn">OrderByDescending</span>(x =&gt; x.<span class="prop">Value</span> / x.<span class="prop">Weight</span>)
+            .<span class="fn">ToList</span>();
+
+        <span class="ty">double</span> totalValue = <span class="num">0</span>;
+        <span class="ty">double</span> remainingCapacity = capacity;
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> item <span class="kw">in</span> sorted)
+        {
+            <span class="kw">if</span> (remainingCapacity &lt;= <span class="num">0</span>) <span class="kw">break</span>;
+
+            <span class="kw">if</span> (item.<span class="prop">Weight</span> &lt;= remainingCapacity)
+            {
+                <span class="cm">// Take whole item</span>
+                totalValue += item.<span class="prop">Value</span>;
+                remainingCapacity -= item.<span class="prop">Weight</span>;
+            }
+            <span class="kw">else</span>
+            {
+                <span class="cm">// Take fraction of item</span>
+                <span class="ty">double</span> fraction = remainingCapacity / item.<span class="prop">Weight</span>;
+                totalValue += fraction * item.<span class="prop">Value</span>;
+                remainingCapacity = <span class="num">0</span>;
+            }
+        }
+
+        <span class="kw">return</span> totalValue;
+    }
+
+    <span class="kw">public static</span> <span class="kw">void</span> <span class="fn">Main</span>()
+    {
+        <span class="kw">var</span> items = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Item</span>&gt;
+        {
+            <span class="kw">new</span> <span class="ty">Item</span> { <span class="prop">Name</span> = <span class="str">"Gold"</span>, <span class="prop">Value</span> = <span class="num">100</span>, <span class="prop">Weight</span> = <span class="num">10</span> },
+            <span class="kw">new</span> <span class="ty">Item</span> { <span class="prop">Name</span> = <span class="str">"Silver"</span>, <span class="prop">Value</span> = <span class="num">60</span>, <span class="prop">Weight</span> = <span class="num">20</span> },
+            <span class="kw">new</span> <span class="ty">Item</span> { <span class="prop">Name</span> = <span class="str">"Bronze"</span>, <span class="prop">Value</span> = <span class="num">40</span>, <span class="prop">Weight</span> = <span class="num">30</span> },
+        };
+
+        <span class="ty">double</span> maxVal = <span class="fn">MaxValue</span>(items, <span class="num">50</span>);
+        <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"Maximum value: {maxVal}"</span>);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">!</div>
+        <div><strong>Greedy fails for 0/1 Knapsack!</strong> If you cannot take fractional items, greedy by value-to-weight ratio fails. Use dynamic programming instead.</div>
+      </div>
+    </section>
+
+    <!-- Section 13.5: Huffman Coding -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">13.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Huffman Coding</h2>
+      <p class="lead">Build optimal prefix-free binary code minimizing average code length. Greedy merges two least-frequent nodes repeatedly, creating minimum-cost tree.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Huffman Coding Algorithm</div>
+            <div class="algo-desc">Use priority queue to repeatedly merge two minimum-frequency nodes until single tree remains.</div>
+          </div>
+          <div class="algo-idx">13.3</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">public class</span> <span class="ty">HuffmanCoding</span>
+{
+    <span class="kw">public class</span> <span class="ty">Node</span> : <span class="ty">IComparable</span>&lt;<span class="ty">Node</span>&gt;
+    {
+        <span class="kw">public</span> <span class="ty">char</span>? <span class="prop">Character</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">int</span> <span class="prop">Frequency</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">Node</span> <span class="prop">Left</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">Node</span> <span class="prop">Right</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+
+        <span class="kw">public</span> <span class="ty">int</span> <span class="fn">CompareTo</span>(<span class="ty">Node</span> other)
+        {
+            <span class="kw">return</span> <span class="kw">this</span>.<span class="prop">Frequency</span>.<span class="fn">CompareTo</span>(other.<span class="prop">Frequency</span>);
+        }
+    }
+
+    <span class="kw">public static</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">string</span>&gt; <span class="fn">BuildHuffmanCodes</span>(<span class="ty">string</span> text)
+    {
+        <span class="cm">// Count frequencies</span>
+        <span class="kw">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+        <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> text)
+        {
+            <span class="kw">if</span> (freq.<span class="fn">ContainsKey</span>(c)) freq[c]++;
+            <span class="kw">else</span> freq[c] = <span class="num">1</span>;
+        }
+
+        <span class="cm">// Build priority queue with leaf nodes</span>
+        <span class="kw">var</span> pq = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">Node</span>, <span class="ty">int</span>&gt;();
+        <span class="kw">foreach</span> (<span class="kw">var</span> kvp <span class="kw">in</span> freq)
+        {
+            <span class="kw">var</span> node = <span class="kw">new</span> <span class="ty">Node</span>
+            {
+                <span class="prop">Character</span> = kvp.<span class="prop">Key</span>,
+                <span class="prop">Frequency</span> = kvp.<span class="prop">Value</span>
+            };
+            pq.<span class="fn">Enqueue</span>(node, node.<span class="prop">Frequency</span>);
+        }
+
+        <span class="cm">// Build tree by merging</span>
+        <span class="kw">while</span> (pq.<span class="fn">Count</span> > <span class="num">1</span>)
+        {
+            <span class="kw">var</span> left = pq.<span class="fn">Dequeue</span>();
+            <span class="kw">var</span> right = pq.<span class="fn">Dequeue</span>();
+
+            <span class="kw">var</span> parent = <span class="kw">new</span> <span class="ty">Node</span>
+            {
+                <span class="prop">Frequency</span> = left.<span class="prop">Frequency</span> + right.<span class="prop">Frequency</span>,
+                <span class="prop">Left</span> = left,
+                <span class="prop">Right</span> = right
+            };
+
+            pq.<span class="fn">Enqueue</span>(parent, parent.<span class="prop">Frequency</span>);
+        }
+
+        <span class="kw">var</span> root = pq.<span class="fn">Dequeue</span>();
+
+        <span class="cm">// Generate codes</span>
+        <span class="kw">var</span> codes = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">string</span>&gt;();
+        <span class="fn">GenerateCodes</span>(root, <span class="str">""</span>, codes);
+
+        <span class="kw">return</span> codes;
+    }
+
+    <span class="kw">private static</span> <span class="kw">void</span> <span class="fn">GenerateCodes</span>(<span class="ty">Node</span> node, <span class="ty">string</span> code,
+        <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">string</span>&gt; codes)
+    {
+        <span class="kw">if</span> (node == <span class="kw">null</span>) <span class="kw">return</span>;
+
+        <span class="kw">if</span> (node.<span class="prop">Character</span> != <span class="kw">null</span>)
+            codes[node.<span class="prop">Character</span>.Value] = code;
+
+        <span class="fn">GenerateCodes</span>(node.<span class="prop">Left</span>, code + <span class="str">"0"</span>, codes);
+        <span class="fn">GenerateCodes</span>(node.<span class="prop">Right</span>, code + <span class="str">"1"</span>, codes);
+    }
+
+    <span class="kw">public static</span> <span class="kw">void</span> <span class="fn">Main</span>()
+    {
+        <span class="ty">string</span> text = <span class="str">"hello world"</span>;
+        <span class="kw">var</span> codes = <span class="fn">BuildHuffmanCodes</span>(text);
+
+        <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">"Huffman Codes:"</span>);
+        <span class="kw">foreach</span> (<span class="kw">var</span> kvp <span class="kw">in</span> codes.<span class="fn">OrderBy</span>(x =&gt; x.<span class="prop">Value</span>.<span class="fn">Length</span>))
+            <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"{kvp.Key}: {kvp.Value}"</span>);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Why it works:</strong> Merging lowest-frequency nodes minimizes total cost. Characters appearing more frequently get shorter codes, minimizing expected code length.</div>
+      </div>
+    </section>
+
+    <!-- Section 13.6: Job Sequencing -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">13.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Job Sequencing with Deadlines</h2>
+      <p class="lead">Schedule jobs with deadlines and profits to maximize total profit. Jobs must complete by deadline. Greedy: sort by profit (descending) and place in latest available slot.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Job Sequencing Algorithm</div>
+            <div class="algo-desc">Sort jobs by profit, greedily place each in latest available time slot before deadline.</div>
+          </div>
+          <div class="algo-idx">13.4</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n log n + n*d)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(d)</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">public class</span> <span class="ty">JobSequencing</span>
+{
+    <span class="kw">public class</span> <span class="ty">Job</span>
+    {
+        <span class="kw">public</span> <span class="ty">string</span> <span class="prop">Id</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">int</span> <span class="prop">Deadline</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">int</span> <span class="prop">Profit</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+    }
+
+    <span class="kw">public static</span> <span class="ty">int</span> <span class="fn">MaxProfit</span>(<span class="ty">List</span>&lt;<span class="ty">Job</span>&gt; jobs)
+    {
+        <span class="cm">// Sort by profit (descending)</span>
+        <span class="kw">var</span> sorted = jobs
+            .<span class="fn">OrderByDescending</span>(j =&gt; j.<span class="prop">Profit</span>)
+            .<span class="fn">ToList</span>();
+
+        <span class="ty">int</span> maxDeadline = sorted.<span class="fn">Max</span>(j =&gt; j.<span class="prop">Deadline</span>);
+        <span class="ty">var</span> slots = <span class="kw">new</span> <span class="ty">bool</span>[maxDeadline + <span class="num">1</span>];
+        <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">string</span>[maxDeadline + <span class="num">1</span>];
+
+        <span class="ty">int</span> totalProfit = <span class="num">0</span>;
+
+        <span class="kw">foreach</span> (<span class="kw">var</span> job <span class="kw">in</span> sorted)
+        {
+            <span class="cm">// Place job in latest available slot before deadline</span>
+            <span class="kw">for</span> (<span class="ty">int</span> i = job.<span class="prop">Deadline</span>; i >= <span class="num">1</span>; i--)
+            {
+                <span class="kw">if</span> (!slots[i])
+                {
+                    slots[i] = <span class="kw">true</span>;
+                    result[i] = job.<span class="prop">Id</span>;
+                    totalProfit += job.<span class="prop">Profit</span>;
+                    <span class="kw">break</span>;
+                }
+            }
+        }
+
+        <span class="kw">return</span> totalProfit;
+    }
+
+    <span class="kw">public static</span> <span class="kw">void</span> <span class="fn">Main</span>()
+    {
+        <span class="kw">var</span> jobs = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">Job</span>&gt;
+        {
+            <span class="kw">new</span> <span class="ty">Job</span> { <span class="prop">Id</span> = <span class="str">"A"</span>, <span class="prop">Deadline</span> = <span class="num">4</span>, <span class="prop">Profit</span> = <span class="num">20</span> },
+            <span class="kw">new</span> <span class="ty">Job</span> { <span class="prop">Id</span> = <span class="str">"B"</span>, <span class="prop">Deadline</span> = <span class="num">1</span>, <span class="prop">Profit</span> = <span class="num">10</span> },
+            <span class="kw">new</span> <span class="ty">Job</span> { <span class="prop">Id</span> = <span class="str">"C"</span>, <span class="prop">Deadline</span> = <span class="num">3</span>, <span class="prop">Profit</span> = <span class="num">40</span> },
+            <span class="kw">new</span> <span class="ty">Job</span> { <span class="prop">Id</span> = <span class="str">"D"</span>, <span class="prop">Deadline</span> = <span class="num">2</span>, <span class="prop">Profit</span> = <span class="num">30</span> },
+        };
+
+        <span class="ty">int</span> profit = <span class="fn">MaxProfit</span>(jobs);
+        <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"Maximum profit: {profit}"</span>);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 13.7: Minimum Platforms -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">13.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Minimum Platforms Required</h2>
+      <p class="lead">Find minimum platforms needed to accommodate all train arrivals and departures. Greedy: count overlapping intervals at peak moment.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Minimum Platforms Algorithm</div>
+            <div class="algo-desc">Sort arrivals and departures separately. Use two pointers to count platforms needed at each time point.</div>
+          </div>
+          <div class="algo-idx">13.5</div>
+        </div>
+        <div class="algo-body">
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(n log n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">public class</span> <span class="ty">MinimumPlatforms</span>
+{
+    <span class="kw">public static</span> <span class="ty">int</span> <span class="fn">FindPlatforms</span>(<span class="ty">int</span>[] arrivals, <span class="ty">int</span>[] departures)
+    {
+        <span class="cm">// Sort both arrays</span>
+        <span class="ty">Array</span>.<span class="fn">Sort</span>(arrivals);
+        <span class="ty">Array</span>.<span class="fn">Sort</span>(departures);
+
+        <span class="ty">int</span> platforms = <span class="num">0</span>, maxPlatforms = <span class="num">0</span>;
+        <span class="ty">int</span> i = <span class="num">0</span>, j = <span class="num">0</span>;
+
+        <span class="kw">while</span> (i &lt; arrivals.<span class="prop">Length</span> &amp;&amp; j &lt; departures.<span class="prop">Length</span>)
+        {
+            <span class="kw">if</span> (arrivals[i] &lt;= departures[j])
+            {
+                <span class="cm">// Train arrives, need platform</span>
+                platforms++;
+                maxPlatforms = <span class="ty">Math</span>.<span class="fn">Max</span>(maxPlatforms, platforms);
+                i++;
+            }
+            <span class="kw">else</span>
+            {
+                <span class="cm">// Train departs, free platform</span>
+                platforms--;
+                j++;
+            }
+        }
+
+        <span class="kw">return</span> maxPlatforms;
+    }
+
+    <span class="kw">public static</span> <span class="kw">void</span> <span class="fn">Main</span>()
+    {
+        <span class="ty">int</span>[] arrivals = { <span class="num">900</span>, <span class="num">940</span>, <span class="num">950</span>, <span class="num">1100</span>, <span class="num">1500</span>, <span class="num">1800</span> };
+        <span class="ty">int</span>[] departures = { <span class="num">910</span>, <span class="num">1200</span>, <span class="num">1120</span>, <span class="num">1130</span>, <span class="num">1900</span>, <span class="num">2000</span> };
+
+        <span class="ty">int</span> platforms = <span class="fn">FindPlatforms</span>(arrivals, departures);
+        <span class="fn">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"Minimum platforms needed: {platforms}"</span>);
+    }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Key Insight:</strong> Process events (arrivals/departures) in chronological order. At any time, platforms needed = trains at station = arrivals - departures so far.</div>
+      </div>
+    </section>
+
+    <!-- Section 13.8: Coin Change -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">13.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Coin Change: Greedy vs Dynamic Programming</h2>
+      <p class="lead">Make change with minimum coins. Greedy works for canonical coin systems (most real currency). DP required for arbitrary denominations.</p>
+
+      <h3>Greedy Approach (US Coins)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">CoinChangeGreedy</span>(<span class="ty">int</span> amount)
+{
+    <span class="ty">int</span>[] coins = { <span class="num">25</span>, <span class="num">10</span>, <span class="num">5</span>, <span class="num">1</span> }; <span class="cm">// Canonical: works greedy</span>
+    <span class="ty">int</span> count = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> coin <span class="kw">in</span> coins)
+    {
+        count += amount / coin;
+        amount %= coin;
+    }
+
+    <span class="kw">return</span> count;
+}</pre>
+      </div>
+
+      <h3>DP Approach (Arbitrary Denominations)</h3>
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">CoinChangeDP</span>(<span class="ty">int</span> amount, <span class="ty">int</span>[] coins)
+{
+    <span class="ty">var</span> dp = <span class="kw">new</span> <span class="ty">int</span>[amount + <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt;= amount; i++)
+    {
+        dp[i] = <span class="ty">int</span>.<span class="prop">MaxValue</span>;
+        <span class="kw">foreach</span> (<span class="ty">int</span> coin <span class="kw">in</span> coins)
+        {
+            <span class="kw">if</span> (coin &lt;= i &amp;&amp; dp[i - coin] != <span class="ty">int</span>.<span class="prop">MaxValue</span>)
+                dp[i] = <span class="ty">Math</span>.<span class="fn">Min</span>(dp[i], <span class="num">1</span> + dp[i - coin]);
+        }
+    }
+    <span class="kw">return</span> dp[amount];
+}</pre>
+      </div>
+
+      <h3>Counterexample: Greedy Fails</h3>
+      <p><code class="il">coins = {1, 3, 4}, amount = 6</code></p>
+      <p><strong>Greedy:</strong> 4 + 1 + 1 = 3 coins</p>
+      <p><strong>Optimal (DP):</strong> 3 + 3 = 2 coins</p>
+
+      <div class="callout danger">
+        <div class="callout-icon">!</div>
+        <div><strong>Greedy Assumption:</strong> Only use greedy for canonical coin systems where larger coins are multiples of smaller ones. For arbitrary denominations, always use DP.</div>
+      </div>
+    </section>
+
+    <!-- Section 13.9: Practice Problems -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">13.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Practice Problems (14+ with Full C# Solutions)</h2>
+
+      <h3>Problem 1: Jump Game I</h3>
+      <p><strong>Description:</strong> Array of positive integers where each element is max jump length from position. Can reach last index? Greedy: always check if we can reach further.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">bool</span> <span class="fn">CanJump</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> maxReach = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (i > maxReach) <span class="kw">return</span> <span class="kw">false</span>;
+        maxReach = <span class="ty">Math</span>.<span class="fn">Max</span>(maxReach, i + nums[i]);
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+<span class="cm">// Example: [2,3,1,1,4] → true, [3,2,1,0,4] → false</span></pre>
+      </div>
+
+      <h3>Problem 2: Jump Game II</h3>
+      <p><strong>Description:</strong> Minimum jumps to reach last index. Greedy: jump as far as possible while tracking farthest within current range.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">JumpII</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> jumps = <span class="num">0</span>, currentEnd = <span class="num">0</span>, farthest = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="prop">Length</span> - <span class="num">1</span>; i++)
+    {
+        farthest = <span class="ty">Math</span>.<span class="fn">Max</span>(farthest, i + nums[i]);
+        <span class="kw">if</span> (i == currentEnd)
+        {
+            jumps++;
+            currentEnd = farthest;
+        }
+    }
+    <span class="kw">return</span> jumps;
+}
+<span class="cm">// Example: [2,3,1,1,4] → 2 jumps</span></pre>
+      </div>
+
+      <h3>Problem 3: Gas Station</h3>
+      <p><strong>Description:</strong> Start gas station where gas[i] is gas gained, cost[i] is gas cost to reach next. Complete circuit? Greedy: if total gas ≥ total cost, start from first position where tank doesn't go negative.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">CanCompleteCircuit</span>(<span class="ty">int</span>[] gas, <span class="ty">int</span>[] cost)
+{
+    <span class="ty">int</span> totalGas = <span class="num">0</span>, currentGas = <span class="num">0</span>, start = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> g <span class="kw">in</span> gas) totalGas += g;
+    <span class="kw">foreach</span> (<span class="ty">int</span> c <span class="kw">in</span> cost) totalGas -= c;
+
+    <span class="kw">if</span> (totalGas &lt; <span class="num">0</span>) <span class="kw">return</span> -<span class="num">1</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; gas.<span class="prop">Length</span>; i++)
+    {
+        currentGas += gas[i] - cost[i];
+        <span class="kw">if</span> (currentGas &lt; <span class="num">0</span>)
+        {
+            start = i + <span class="num">1</span>;
+            currentGas = <span class="num">0</span>;
+        }
+    }
+    <span class="kw">return</span> start;
+}</pre>
+      </div>
+
+      <h3>Problem 4: Assign Cookies</h3>
+      <p><strong>Description:</strong> Maximize happy children. Each child has min cookie size requirement g[i], cookies have sizes s[j]. Greedy: sort both, assign smallest cookie to greediest child.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">FindContentChildren</span>(<span class="ty">int</span>[] g, <span class="ty">int</span>[] s)
+{
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(g);
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(s);
+
+    <span class="ty">int</span> child = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> cookie = <span class="num">0</span>; cookie &lt; s.<span class="prop">Length</span> &amp;&amp; child &lt; g.<span class="prop">Length</span>; cookie++)
+    {
+        <span class="kw">if</span> (s[cookie] >= g[child]) child++;
+    }
+    <span class="kw">return</span> child;
+}
+<span class="cm">// Example: g=[1,2,3], s=[1,1] → 1 happy child</span></pre>
+      </div>
+
+      <h3>Problem 5: Best Time to Buy and Sell Stock II</h3>
+      <p><strong>Description:</strong> Unlimited transactions. Buy low, sell high. Greedy: add every positive price difference.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">MaxProfit</span>(<span class="ty">int</span>[] prices)
+{
+    <span class="ty">int</span> profit = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; prices.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (prices[i] > prices[i - <span class="num">1</span>])
+            profit += prices[i] - prices[i - <span class="num">1</span>];
+    }
+    <span class="kw">return</span> profit;
+}
+<span class="cm">// Example: [7,1,5,3,6,4] → 7</span></pre>
+      </div>
+
+      <h3>Problem 6: Non-overlapping Intervals</h3>
+      <p><strong>Description:</strong> Remove minimum intervals to make remaining non-overlapping. Greedy: sort by end time, remove later-ending interval when overlap.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">EraseOverlapIntervals</span>(<span class="ty">int</span>[][] intervals)
+{
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(intervals, (a, b) =&gt; a[<span class="num">1</span>].<span class="fn">CompareTo</span>(b[<span class="num">1</span>]));
+
+    <span class="ty">int</span> end = intervals[<span class="num">0</span>][<span class="num">1</span>], removed = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; intervals.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (intervals[i][<span class="num">0</span>] &lt; end)
+            removed++;
+        <span class="kw">else</span>
+            end = intervals[i][<span class="num">1</span>];
+    }
+    <span class="kw">return</span> removed;
+}</pre>
+      </div>
+
+      <h3>Problem 7: Minimum Number of Arrows to Burst Balloons</h3>
+      <p><strong>Description:</strong> Balloons at positions [x_start, x_end]. One arrow bursts all overlapping balloons. Minimum arrows? Greedy: sort by end, shoot at rightmost point.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">FindMinArrowShots</span>(<span class="ty">int</span>[][] balloons)
+{
+    <span class="ty">Array</span>.<span class="fn">Sort</span>(balloons, (a, b) =&gt;
+    {
+        <span class="kw">if</span> (a[<span class="num">1</span>] < b[<span class="num">1</span>]) <span class="kw">return</span> -<span class="num">1</span>;
+        <span class="kw">return</span> a[<span class="num">1</span>] > b[<span class="num">1</span>] ? <span class="num">1</span> : <span class="num">0</span>;
+    });
+
+    <span class="ty">int</span> arrows = <span class="num">1</span>;
+    <span class="ty">long</span> lastPos = balloons[<span class="num">0</span>][<span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i &lt; balloons.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (balloons[i][<span class="num">0</span>] > lastPos)
+        {
+            arrows++;
+            lastPos = balloons[i][<span class="num">1</span>];
+        }
+    }
+    <span class="kw">return</span> arrows;
+}</pre>
+      </div>
+
+      <h3>Problem 8: Task Scheduler</h3>
+      <p><strong>Description:</strong> Execute n tasks with cooldown between same tasks. Minimum time? Greedy: execute most frequent first to spread them out.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">LeastInterval</span>(<span class="ty">char</span>[] tasks, <span class="ty">int</span> n)
+{
+    <span class="ty">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">char</span> task <span class="kw">in</span> tasks)
+        freq[task] = freq.<span class="fn">ContainsKey</span>(task) ? freq[task] + <span class="num">1</span> : <span class="num">1</span>;
+
+    <span class="ty">int</span> maxFreq = freq.<span class="fn">Values</span>.<span class="fn">Max</span>();
+    <span class="ty">int</span> maxCount = freq.<span class="fn">Values</span>.<span class="fn">Count</span>(v =&gt; v == maxFreq);
+
+    <span class="kw">return</span> <span class="ty">Math</span>.<span class="fn">Max</span>(tasks.<span class="prop">Length</span>, (maxFreq - <span class="num">1</span>) * (n + <span class="num">1</span>) + maxCount);
+}</pre>
+      </div>
+
+      <h3>Problem 9: Queue Reconstruction by Height</h3>
+      <p><strong>Description:</strong> Each person [h, k] where k is count of people taller. Reconstruct queue. Greedy: sort by height descending, then by k ascending. Insert by position.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span>[][] <span class="fn">ReconstructQueue</span>(<span class="ty">int</span>[][] people)
+{
+    <span class="ty">var</span> sorted = people
+        .<span class="fn">OrderByDescending</span>(p =&gt; p[<span class="num">0</span>])
+        .<span class="fn">ThenBy</span>(p =&gt; p[<span class="num">1</span>])
+        .<span class="fn">ToList</span>();
+
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>[]&gt;();
+    <span class="kw">foreach</span> (<span class="kw">var</span> person <span class="kw">in</span> sorted)
+        result.<span class="fn">Insert</span>(person[<span class="num">1</span>], person);
+
+    <span class="kw">return</span> result.<span class="fn">ToArray</span>();
+}</pre>
+      </div>
+
+      <h3>Problem 10: Partition Labels</h3>
+      <p><strong>Description:</strong> Partition string so each letter in single partition. Maximum partitions? Greedy: extend partition until last occurrence of all chars seen.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; <span class="fn">PartitionLabels</span>(<span class="ty">string</span> s)
+{
+    <span class="ty">var</span> lastPos = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; s.<span class="prop">Length</span>; i++)
+        lastPos[s[i]] = i;
+
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">int</span> start = <span class="num">0</span>, end = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; s.<span class="prop">Length</span>; i++)
+    {
+        end = <span class="ty">Math</span>.<span class="fn">Max</span>(end, lastPos[s[i]]);
+        <span class="kw">if</span> (i == end)
+        {
+            result.<span class="fn">Add</span>(end - start + <span class="num">1</span>);
+            start = i + <span class="num">1</span>;
+        }
+    }
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Example: "ababcbacaddefegdehijhij" → [9,7,8]</span></pre>
+      </div>
+
+      <h3>Problem 11: Reorganize String</h3>
+      <p><strong>Description:</strong> Rearrange string so no adjacent characters are same. Greedy: use max heap, always place most frequent char, alternate.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">string</span> <span class="fn">ReorganizeString</span>(<span class="ty">string</span> s)
+{
+    <span class="ty">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> s)
+        freq[c] = freq.<span class="fn">ContainsKey</span>(c) ? freq[c] + <span class="num">1</span> : <span class="num">1</span>;
+
+    <span class="kw">var</span> pq = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;(<span class="ty">char</span>, <span class="ty">int</span>), <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="kw">var</span> kvp <span class="kw">in</span> freq)
+        pq.<span class="fn">Enqueue</span>((kvp.<span class="prop">Key</span>, kvp.<span class="prop">Value</span>), -kvp.<span class="prop">Value</span>);
+
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">StringBuilder</span>();
+    (<span class="ty">char</span>, <span class="ty">int</span>) prev = (<span class="str">' '</span>, <span class="num">0</span>);
+
+    <span class="kw">while</span> (pq.<span class="fn">Count</span> > <span class="num">0</span>)
+    {
+        <span class="kw">var</span> (ch, cnt) = pq.<span class="fn">Dequeue</span>();
+        <span class="kw">if</span> (prev.<span class="ty">Item2</span> > <span class="num">0</span>)
+            pq.<span class="fn">Enqueue</span>(prev, -prev.<span class="ty">Item2</span>);
+
+        result.<span class="fn">Append</span>(ch);
+        prev = (ch, cnt - <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> result.<span class="prop">Length</span> == s.<span class="prop">Length</span> ? result.<span class="fn">ToString</span>() : <span class="str">""</span>;
+}</pre>
+      </div>
+
+      <h3>Problem 12: Meeting Rooms II</h3>
+      <p><strong>Description:</strong> Minimum meeting rooms. Greedy: similar to minimum platforms - track overlapping intervals.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="kw">public static</span> <span class="ty">int</span> <span class="fn">MinMeetingRooms</span>(<span class="ty">int</span>[][] intervals)
+{
+    <span class="ty">var</span> starts = intervals.<span class="fn">Select</span>(x =&gt; x[<span class="num">0</span>]).<span class="fn">OrderBy</span>(x =&gt; x).<span class="fn">ToArray</span>();
+    <span class="ty">var</span> ends = intervals.<span class="fn">Select</span>(x =&gt; x[<span class="num">1</span>]).<span class="fn">OrderBy</span>(x =&gt; x).<span class="fn">ToArray</span>();
+
+    <span class="ty">int</span> rooms = <span class="num">0</span>, maxRooms = <span class="num">0</span>;
+    <span class="ty">int</span> i = <span class="num">0</span>, j = <span class="num">0</span>;
+
+    <span class="kw">while</span> (i &lt; starts.<span class="prop">Length</span>)
+    {
+        <span class="kw">if</span> (starts[i] < ends[j])
+        {
+            rooms++;
+            i++;
+        }
+        <span class="kw">else</span>
+        {
+            rooms--;
+            j++;
+        }
+        maxRooms = <span class="ty">Math</span>.<span class="fn">Max</span>(maxRooms, rooms);
+    }
+    <span class="kw">return</span> maxRooms;
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 13.10: Greedy vs DP -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag">
+        <span class="sec-num">13.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Greedy vs Dynamic Programming: Decision Guide</h2>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Greedy</th>
+              <th>Dynamic Programming</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Decision Making</td>
+              <td>Make locally optimal choice once</td>
+              <td>Reconsider choices via overlapping subproblems</td>
+            </tr>
+            <tr>
+              <td>Backtracking</td>
+              <td>Never reconsidered</td>
+              <td>Can change based on subproblem results</td>
+            </tr>
+            <tr>
+              <td>Proof Required</td>
+              <td>Exchange argument or greedy-stays-ahead</td>
+              <td>Optimal substructure + memoization</td>
+            </tr>
+            <tr>
+              <td>Time Complexity</td>
+              <td>Usually O(n log n) or O(n)</td>
+              <td>Usually O(n²) or O(n³)</td>
+            </tr>
+            <tr>
+              <td>Space Complexity</td>
+              <td>O(1) or O(n)</td>
+              <td>O(n) or O(n²) for memoization</td>
+            </tr>
+            <tr>
+              <td>When to Use</td>
+              <td>Activity selection, huffman, job sequencing</td>
+              <td>0/1 knapsack, coin change, LCS</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Decision Tree</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Try Greedy If:</div>
+          <div class="proof-body">
+            • Problem has optimal substructure<br>
+            • Greedy choice property holds<br>
+            • Sorting/priority helps<br>
+            • No future choices affect current<br>
+            • Problem is about selection/scheduling
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Use DP If:</div>
+          <div class="proof-body">
+            • Overlapping subproblems exist<br>
+            • Greedy counterexample found<br>
+            • Need optimal of all possibilities<br>
+            • Order of choices matters<br>
+            • Problem has "count/min/max" goal
+          </div>
+        </div>
+      </div>
+
+      <h3>Case Study: Coin Change</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">✓ Canonical Systems (US coins)</div>
+          <div class="vs-item">Greedy works: [25,10,5,1]</div>
+          <div class="vs-item">O(n log n) sorting + O(n) greedy</div>
+          <div class="vs-item">Proof: larger coins cover multiple smaller</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">✗ Arbitrary Systems</div>
+          <div class="vs-item">Greedy fails: [1,3,4], amount=6</div>
+          <div class="vs-item">Optimal: 3+3=2, Greedy: 4+1+1=3</div>
+          <div class="vs-item">Use DP: O(n²) or O(n·m)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 13.11: Interview Tips -->
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag">
+        <span class="sec-num">13.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips & Patterns</h2>
+
+      <div class="tips">
+        <div class="tip-card">
+          <div class="tip-n">Pattern 1</div>
+          <div class="tip-title">Sorting First</div>
+          <div class="tip-body">Most greedy problems require sorting. Identify the sort key: end time (activity), profit (job), height (queue), frequency (huffman).</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Pattern 2</div>
+          <div class="tip-title">Verify with Examples</div>
+          <div class="tip-body">Always test greedy against small examples. Try to find a counterexample. If it fails on any case, greedy is wrong.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern 3</div>
+          <div class="tip-title">State Greedy Choice</div>
+          <div class="tip-body">Clearly articulate why this greedy choice is optimal. "We pick earliest-ending activity because it leaves maximum room for future selections."</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Pattern 4</div>
+          <div class="tip-title">Consider Edge Cases</div>
+          <div class="tip-body">Empty input, single element, all same, conflicts, ties. Handle gracefully.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-n">Pattern 5</div>
+          <div class="tip-title">Greedy Stays Ahead</div>
+          <div class="tip-body">Use this proof technique: show greedy solution is always ahead by some metric. Proves optimality.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Pattern 6</div>
+          <div class="tip-title">Exchange Argument</div>
+          <div class="tip-body">Assume optimal differs from greedy. Swap elements to transform optimal into greedy. If cost doesn't increase, greedy is optimal.</div>
+        </div>
+      </div>
+
+      <h3>Common Interview Questions</h3>
+      <div class="callout info">
+        <div class="callout-icon">Q</div>
+        <div><strong>Q: How do you know when to use greedy vs DP?</strong> A: Try greedy first—it's faster if it works. If you find a counterexample or can't prove optimality, switch to DP. Greedy requires proof; DP is more brute-force but guaranteed if optimal substructure exists.</div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">Q</div>
+        <div><strong>Q: Can you prove your greedy solution is optimal?</strong> A: Yes—use exchange argument (show any optimal solution can be transformed into greedy without increasing cost) or greedy-stays-ahead (track a metric where greedy is always ahead).</div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">Q</div>
+        <div><strong>Q: What if my greedy fails on a test case?</strong> A: Immediately pivot to DP or brute force. The interviewer is testing if you can adapt. Explain why greedy failed and why DP is necessary.</div>
+      </div>
+
+      <h3>Implementation Checklist</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Understand problem:</strong> What are we optimizing? What constraints exist?</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Identify greedy choice:</strong> What's the locally optimal choice at each step?</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Determine sort order:</strong> By what property should we sort? (time, profit, frequency, etc.)</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Test with examples:</strong> Run on 2-3 small examples, try to break it.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">5</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Write proof sketch:</strong> Why does this greedy choice lead to optimal solution?</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">6</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Code implementation:</strong> Sort, iterate, apply greedy choice, track state.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">7</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Analyze complexity:</strong> Time (usually O(n log n) due to sort) and space.</div>
+        </div>
+      </div>
+
+      <h3>Red Flags</h3>
+      <ul style="margin-left: 20px; color: var(--ink2);">
+        <li>Greedy works for all test cases but you can't prove why → Likely wrong, deeper analysis needed</li>
+        <li>Problem involves "minimize/maximize with constraints" → Often needs DP</li>
+        <li>Greedy fails on larger inputs → Exponential behavior suggests DP required</li>
+        <li>Multiple valid answers → Greedy can find one, DP needed for all or specific type</li>
+        <li>Backtracking is required → Greedy cannot backtrack, switch to DP or brute force</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 13: Greedy Algorithms | DSA Complete Book</p>
+      <p>© 2024 DSA Educational Material. Practice, prove, and master algorithmic thinking.</p>
+    </div>
+  </footer>
+
+  <script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.innerText;
+    btn.innerText = 'Copied!';
+    setTimeout(() => btn.innerText = originalText, 1500);
+  });
+}
+
+document.querySelectorAll('.fade').forEach(el => {
+  el.classList.add('in');
+});
+  </script>
+</body>
+</html>

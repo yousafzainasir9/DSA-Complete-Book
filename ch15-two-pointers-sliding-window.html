@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Two pointers and sliding window techniques — fixed/variable window, fast/slow pointers, with C# solutions to top interview problems.">
+  <meta name="keywords" content="two pointers, sliding window, fast slow pointer, subarray problems, C#, window technique">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch15-two-pointers-sliding-window.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch15-two-pointers-sliding-window.html">
+  <meta property="og:title" content="Chapter 15: Two Pointers & Sliding Window - DSA Complete Book">
+  <meta property="og:description" content="Two pointers and sliding window techniques — fixed/variable window, fast/slow pointers, with C# solutions to top interview problems.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch15-two-pointers-sliding-window.html">
+  <meta name="twitter:title" content="Chapter 15: Two Pointers & Sliding Window - DSA Complete Book">
+  <meta name="twitter:description" content="Two pointers and sliding window techniques — fixed/variable window, fast/slow pointers, with C# solutions to top interview problems.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 15: Two Pointers & Sliding Window - DSA Complete Book",
+  "description": "Two pointers and sliding window techniques \u2014 fixed/variable window, fast/slow pointers, with C# solutions to top interview problems.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch15-two-pointers-sliding-window.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 15: Two Pointers & Sliding Window - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}:root{--bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;--ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;--acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;--green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;--blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;--red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;--amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;--sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace}body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}.nav-links a:hover{color:var(--ink);border-color:var(--acc)}.wrap{max-width:960px;margin:0 auto;padding:0 2rem}.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}.eyebrow-line{width:28px;height:2px;background:var(--acc)}.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}.stat{padding:14px 26px;border-right:1px solid var(--rule)}.stat:last-child{border-right:none}.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}.toc-grid a:hover{color:var(--acc)}.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}.section{padding-top:72px}.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}.sec-line{flex:1;height:1px;background:var(--rule)}.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.algo-body{padding:28px 32px}.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}.copy-btn:hover{color:#d4d0c8}pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}.callout strong{color:inherit;font-weight:600}.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}thead tr{background:var(--bg2)}th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg)}.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}.vs-box.good{background:var(--green-l);border-color:var(--green-b)}.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden;margin-bottom:14px}.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}footer p{font-size:13px;color:var(--ink3)}footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}@media(max-width:700px){.algo-head{grid-template-columns:1fr}.algo-idx{display:none}.toc-grid{grid-template-columns:1fr}.stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}.vs{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book<span class="pill">v1</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 15</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Chapter 15</div></div>
+      <h1>Two Pointers & <em>Sliding Window</em></h1>
+      <p class="hero-sub">Master efficient traversal patterns that eliminate nested loops and reduce O(n²) brute force into O(n) solutions. Learn converging pointers, fast/slow patterns, fixed and variable windows, and specialized techniques for interviews.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">10</div><div class="stat-l">Core Patterns</div></div>
+        <div class="stat"><div class="stat-n">20+</div><div class="stat-l">Problems</div></div>
+        <div class="stat"><div class="stat-n">70+</div><div class="stat-l">Code Examples</div></div>
+        <div class="stat"><div class="stat-n">6</div><div class="stat-l">Specialized Techniques</div></div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">15.1</span> Two Pointers Overview</a>
+        <a href="#sec-2"><span class="toc-n">15.2</span> Opposite Direction Pointers</a>
+        <a href="#sec-3"><span class="toc-n">15.3</span> Same-Direction Pointers</a>
+        <a href="#sec-4"><span class="toc-n">15.4</span> Fixed Sliding Window</a>
+        <a href="#sec-5"><span class="toc-n">15.5</span> Variable Sliding Window</a>
+        <a href="#sec-6"><span class="toc-n">15.6</span> Prefix Sum Pattern</a>
+        <a href="#sec-7"><span class="toc-n">15.7</span> Dutch National Flag</a>
+        <a href="#sec-8"><span class="toc-n">15.8</span> Merge Intervals</a>
+        <a href="#sec-9"><span class="toc-n">15.9</span> Pattern Recognition</a>
+        <a href="#sec-10"><span class="toc-n">15.10</span> Interview Tips</a>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><div class="sec-num">15.1</div><div class="sec-line"></div></div>
+      <h2>Two Pointers Overview</h2>
+      <p class="lead">Two pointers is a fundamental technique that uses multiple index variables to traverse data structures efficiently, reducing time complexity from O(n²) to O(n) by eliminating nested loops through intelligent pointer movement.</p>
+
+      <h3>Why Two Pointers?</h3>
+      <p>Naive brute force approaches often use nested loops. For example, finding a pair that sums to a target in a sorted array is O(n²) with nested loops. Two pointers reduce this to O(n) with a single pass using converging indices.</p>
+
+      <p><strong>Key Insight:</strong> When moving a pointer, we can make smart decisions about what to check next based on problem constraints, eliminating the need to check all combinations.</p>
+
+      <h3>Three Core Categories</h3>
+
+      <div class="tip-card g">
+        <div class="tip-n">PATTERN 1</div>
+        <div class="tip-title">Opposite Direction (Converging)</div>
+        <div class="tip-body">Pointers start at opposite ends and move toward the center. Used when array is sorted or order doesn't matter. Examples: Two Sum, Palindrome, Container Water.</div>
+      </div>
+
+      <div class="tip-card b">
+        <div class="tip-n">PATTERN 2</div>
+        <div class="tip-title">Same Direction (Fast/Slow)</div>
+        <div class="tip-body">Both pointers move in the same direction at different speeds. Used for removing duplicates, cycle detection, finding middle. Slower pointer writes/processes, faster pointer reads ahead.</div>
+      </div>
+
+      <div class="tip-card a">
+        <div class="tip-n">PATTERN 3</div>
+        <div class="tip-title">Sliding Window</div>
+        <div class="tip-body">Two pointers define a window that expands and contracts. Fixed size for average problems, variable size for min/max subarray problems. HashMap often combined for character/element tracking.</div>
+      </div>
+
+      <div class="cx-row">
+        <div class="cx">
+          <div class="cx-l">Time Complexity</div>
+          <div class="cx-v">O(n) single pass</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Space Complexity</div>
+          <div class="cx-v">O(1) to O(n)</div>
+        </div>
+        <div class="cx">
+          <div class="cx-l">Precondition</div>
+          <div class="cx-v">Usually sorted or constrained</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><div class="sec-num">15.2</div><div class="sec-line"></div></div>
+      <h2>Opposite Direction Pointers</h2>
+      <p class="lead">Converging pointers start at opposite ends of an array and move inward. This pattern is ideal for sorted arrays and problems where we need to find pairs or validate properties.</p>
+
+      <h3>Two Sum II (Sorted Array)</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Two Sum II</div>
+            <div class="algo-desc">Given sorted array, return indices of two numbers summing to target.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <p>Start with pointers at both ends. If sum equals target, return. If sum is too small, move left pointer right (increase sum). If sum is too large, move right pointer left (decrease sum).</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span>[] TwoSumII(<span class="kw">int</span>[] nums, <span class="kw">int</span> target) {
+    <span class="kw">int</span> left = <span class="num">0</span>, right = nums.Length - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt; right) {
+        <span class="kw">int</span> sum = nums[left] + nums[right];
+
+        <span class="kw">if</span> (sum == target) {
+            <span class="kw">return</span> <span class="kw">new</span>[] { left + <span class="num">1</span>, right + <span class="num">1</span> };
+        } <span class="kw">else if</span> (sum &lt; target) {
+            left++;
+        } <span class="kw">else</span> {
+            right--;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">new</span>[] { <span class="num">-1</span>, <span class="num">-1</span> };
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [2,7,11,15], target = 9. Start: left=0 (2), right=3 (15), sum=17 > 9, move right left. left=0 (2), right=2 (11), sum=13 > 9, move right left. left=0 (2), right=1 (7), sum=9, return [1,2].</p>
+        </div>
+      </div>
+
+      <h3>3Sum (with Deduplication)</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">3Sum</div>
+            <div class="algo-desc">Find all unique triplets in array that sum to zero. No duplicates in result.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n²)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <p>Sort array first. For each element, use two-pointer technique to find pairs that sum to negative of current element. Skip duplicates to avoid duplicate triplets.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">IList</span>&lt;<span class="kw">IList</span>&lt;<span class="kw">int</span>&gt;&gt; ThreeSum(<span class="kw">int</span>[] nums) {
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="kw">List</span>&lt;<span class="kw">IList</span>&lt;<span class="kw">int</span>&gt;&gt;();
+    <span class="kw">if</span> (nums == <span class="kw">null</span> || nums.Length &lt; <span class="num">3</span>) <span class="kw">return</span> result;
+
+    Array.Sort(nums);
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; nums.Length - <span class="num">2</span>; i++) {
+        <span class="cm">// Skip duplicates for outer loop</span>
+        <span class="kw">if</span> (i &gt; <span class="num">0</span> &amp;&amp; nums[i] == nums[i - <span class="num">1</span>]) <span class="kw">continue</span>;
+
+        <span class="cm">// If smallest possible sum is positive, break</span>
+        <span class="kw">if</span> (nums[i] &gt; <span class="num">0</span>) <span class="kw">break</span>;
+
+        <span class="kw">int</span> left = i + <span class="num">1</span>, right = nums.Length - <span class="num">1</span>;
+        <span class="kw">int</span> target = -nums[i];
+
+        <span class="kw">while</span> (left &lt; right) {
+            <span class="kw">int</span> sum = nums[left] + nums[right];
+
+            <span class="kw">if</span> (sum == target) {
+                result.Add(<span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt; { nums[i], nums[left], nums[right] });
+
+                <span class="cm">// Skip duplicates for left pointer</span>
+                <span class="kw">while</span> (left &lt; right &amp;&amp; nums[left] == nums[left + <span class="num">1</span>]) left++;
+                <span class="cm">// Skip duplicates for right pointer</span>
+                <span class="kw">while</span> (left &lt; right &amp;&amp; nums[right] == nums[right - <span class="num">1</span>]) right--;
+
+                left++;
+                right--;
+            } <span class="kw">else if</span> (sum &lt; target) {
+                left++;
+            } <span class="kw">else</span> {
+                right--;
+            }
+        }
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [-1, 0, 1, 2, -1, -4]. After sort: [-4, -1, -1, 0, 1, 2]. For i=0 (nums[i]=-4), target=4, no valid pairs. For i=1 (nums[i]=-1), target=1, find -1+2=1. Result includes [-1,-1,2] and [-1,0,1].</p>
+        </div>
+      </div>
+
+      <h3>Container With Most Water</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Container With Most Water</div>
+            <div class="algo-desc">Given array of heights, find two lines forming container with maximum area. Area = min(height[left], height[right]) × (right - left).</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <p>Start with widest container. Area is limited by shorter line. Move the shorter line inward, hoping to find a taller line that increases area. Moving the taller line can only decrease area (width decreases, height limited by shorter line).</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> MaxArea(<span class="kw">int</span>[] height) {
+    <span class="kw">int</span> left = <span class="num">0</span>, right = height.Length - <span class="num">1</span>;
+    <span class="kw">int</span> maxArea = <span class="num">0</span>;
+
+    <span class="kw">while</span> (left &lt; right) {
+        <span class="cm">// Calculate current area</span>
+        <span class="kw">int</span> width = right - left;
+        <span class="kw">int</span> h = Math.Min(height[left], height[right]);
+        <span class="kw">int</span> area = width * h;
+        maxArea = Math.Max(maxArea, area);
+
+        <span class="cm">// Move shorter line inward</span>
+        <span class="kw">if</span> (height[left] &lt; height[right]) {
+            left++;
+        } <span class="kw">else</span> {
+            right--;
+        }
+    }
+
+    <span class="kw">return</span> maxArea;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> height = [1,8,6,2,5,4,8,3,7]. Start: left=0 (1), right=8 (7), area = min(1,7)×8 = 8. Move left (1 &lt; 7). Continue moving until finding optimal pairing. Maximum area is 49 (8 and 7 at indices 1 and 8 gives 7×7=49).</p>
+        </div>
+      </div>
+
+      <h3>Valid Palindrome</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Valid Palindrome</div>
+            <div class="algo-desc">Check if string is palindrome considering only alphanumeric characters (case-insensitive). Ignore spaces and special characters.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <p>Use two pointers from start and end. Skip non-alphanumeric characters. Compare characters at both pointers (case-insensitive). If mismatch, not palindrome. If reach center, is palindrome.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">bool</span> IsPalindrome(<span class="kw">string</span> s) {
+    <span class="kw">int</span> left = <span class="num">0</span>, right = s.Length - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt; right) {
+        <span class="cm">// Skip non-alphanumeric from left</span>
+        <span class="kw">while</span> (left &lt; right &amp;&amp; !<span class="kw">char</span>.<span class="fn">IsLetterOrDigit</span>(s[left])) {
+            left++;
+        }
+
+        <span class="cm">// Skip non-alphanumeric from right</span>
+        <span class="kw">while</span> (left &lt; right &amp;&amp; !<span class="kw">char</span>.<span class="fn">IsLetterOrDigit</span>(s[right])) {
+            right--;
+        }
+
+        <span class="cm">// Compare characters (case-insensitive)</span>
+        <span class="kw">if</span> (<span class="kw">char</span>.<span class="fn">ToLower</span>(s[left]) != <span class="kw">char</span>.<span class="fn">ToLower</span>(s[right])) {
+            <span class="kw">return</span> <span class="kw">false</span>;
+        }
+
+        left++;
+        right--;
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> s = "A man, a plan, a canal: Panama". After filtering alphanumeric: "AmanaplanacanalPanama". Compare: A==a, m==m, a==a, etc. Returns true.</p>
+        </div>
+      </div>
+
+      <h3>Trapping Rain Water</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Trapping Rain Water</div>
+            <div class="algo-desc">Given array of heights, calculate how much water can be trapped after raining. Water trapped at position i = min(maxLeft, maxRight) - height[i].</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">5</div>
+        </div>
+        <div class="algo-body">
+          <p>Water at any position is determined by the maximum height to its left and maximum height to its right. Use two pointers and track max heights. Move pointer with smaller max height toward center, as that determines water level at that position.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> Trap(<span class="kw">int</span>[] height) {
+    <span class="kw">if</span> (height == <span class="kw">null</span> || height.Length == <span class="num">0</span>) <span class="kw">return</span> <span class="num">0</span>;
+
+    <span class="kw">int</span> left = <span class="num">0</span>, right = height.Length - <span class="num">1</span>;
+    <span class="kw">int</span> leftMax = <span class="num">0</span>, rightMax = <span class="num">0</span>;
+    <span class="kw">int</span> water = <span class="num">0</span>;
+
+    <span class="kw">while</span> (left &lt; right) {
+        <span class="cm">// Update maxes</span>
+        leftMax = Math.Max(leftMax, height[left]);
+        rightMax = Math.Max(rightMax, height[right]);
+
+        <span class="cm">// Water level determined by smaller max height</span>
+        <span class="kw">if</span> (leftMax &lt; rightMax) {
+            <span class="cm">// Left side determines water level</span>
+            water += leftMax - height[left];
+            left++;
+        } <span class="kw">else</span> {
+            <span class="cm">// Right side determines water level</span>
+            water += rightMax - height[right];
+            right--;
+        }
+    }
+
+    <span class="kw">return</span> water;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> height = [0,1,0,2,1,0,1,3,2,1,2,1]. Visualize as bars. At index 2 (height 0), leftMax=1, rightMax=3, water=min(1,3)-0=1. Total trapped water = 6 units.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><div class="sec-num">15.3</div><div class="sec-line"></div></div>
+      <h2>Same-Direction Pointers (Fast/Slow)</h2>
+      <p class="lead">Both pointers move in the same direction but at different speeds. The slow pointer processes/writes, while the fast pointer scans ahead. Commonly used for in-place modifications and cycle detection.</p>
+
+      <h3>Remove Duplicates from Sorted Array</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Remove Duplicates</div>
+            <div class="algo-desc">Remove duplicates in-place from sorted array. Return length of array with unique elements. Modify array so first k elements are unique.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">6</div>
+        </div>
+        <div class="algo-body">
+          <p>Slow pointer marks position to write next unique element. Fast pointer scans for different elements. When found, write to slow pointer position and advance both.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> RemoveDuplicates(<span class="kw">int</span>[] nums) {
+    <span class="kw">if</span> (nums.Length == <span class="num">0</span>) <span class="kw">return</span> <span class="num">0</span>;
+
+    <span class="kw">int</span> slow = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> fast = <span class="num">1</span>; fast &lt; nums.Length; fast++) {
+        <span class="cm">// Found new unique element</span>
+        <span class="kw">if</span> (nums[fast] != nums[slow]) {
+            slow++;
+            nums[slow] = nums[fast];
+        }
+    }
+
+    <span class="kw">return</span> slow + <span class="num">1</span>;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [1,1,2,2,2,3]. slow=0 (1), fast moves: 1 (dup skip), 2 (new, slow=1, nums[1]=2), 2 (dup), 2 (dup), 3 (new, slow=2, nums[2]=3). Return 3. Array becomes [1,2,3,...].</p>
+        </div>
+      </div>
+
+      <h3>Move Zeroes</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Move Zeroes</div>
+            <div class="algo-desc">Move all zeros to end of array while maintaining relative order of non-zero elements. Modify in-place.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">7</div>
+        </div>
+        <div class="algo-body">
+          <p>Slow pointer tracks position for next non-zero element. Fast pointer scans entire array. When non-zero found, swap with slow pointer position.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">void</span> MoveZeroes(<span class="kw">int</span>[] nums) {
+    <span class="kw">int</span> slow = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> fast = <span class="num">0</span>; fast &lt; nums.Length; fast++) {
+        <span class="cm">// Found non-zero element</span>
+        <span class="kw">if</span> (nums[fast] != <span class="num">0</span>) {
+            <span class="cm">// Swap</span>
+            <span class="kw">int</span> temp = nums[slow];
+            nums[slow] = nums[fast];
+            nums[fast] = temp;
+
+            slow++;
+        }
+    }
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [0,1,0,3,12]. slow=0, fast scans: 0 (skip), 1 (swap with slow[0], slow=1), 0 (skip), 3 (swap with slow[1], slow=2), 12 (swap with slow[2]). Result: [1,3,12,0,0].</p>
+        </div>
+      </div>
+
+      <h3>Linked List Cycle Detection (Floyd's Algorithm)</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Linked List Cycle</div>
+            <div class="algo-desc">Detect if linked list has a cycle. Floyd's tortoise and hare algorithm uses O(1) space by moving pointers at different speeds.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">8</div>
+        </div>
+        <div class="algo-body">
+          <p>Slow pointer moves 1 step, fast pointer moves 2 steps. If they meet, cycle exists. If fast reaches null, no cycle. Mathematically proven: they will meet in cycle if exists.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">public class</span> <span class="ty">ListNode</span> {
+    <span class="kw">public int</span> val;
+    <span class="kw">public</span> <span class="ty">ListNode</span> next;
+}
+
+<span class="kw">bool</span> HasCycle(<span class="ty">ListNode</span> head) {
+    <span class="kw">if</span> (head == <span class="kw">null</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="ty">ListNode</span> slow = head, fast = head;
+
+    <span class="kw">while</span> (fast != <span class="kw">null</span> &amp;&amp; fast.next != <span class="kw">null</span>) {
+        slow = slow.next;
+        fast = fast.next.next;
+
+        <span class="kw">if</span> (slow == fast) {
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre>
+          </div>
+          <p><strong>Why it works:</strong> If cycle exists with length C, and fast is 1 step ahead in cycle, gap closes by 1 each iteration. When fast enters cycle, slow is still outside. Fast laps slow, guaranteeing meeting point.</p>
+        </div>
+      </div>
+
+      <h3>Find Middle of Linked List</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Middle of Linked List</div>
+            <div class="algo-desc">Find middle node of linked list. For even length, return second middle. Time O(n), space O(1).</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">9</div>
+        </div>
+        <div class="algo-body">
+          <p>Slow and fast pointers start at head. Slow moves 1 step, fast moves 2. When fast reaches end, slow is at middle.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="ty">ListNode</span> MiddleNode(<span class="ty">ListNode</span> head) {
+    <span class="ty">ListNode</span> slow = head, fast = head;
+
+    <span class="kw">while</span> (fast != <span class="kw">null</span> &amp;&amp; fast.next != <span class="kw">null</span>) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    <span class="kw">return</span> slow;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> List 1→2→3→4→5. Slow and fast start at 1. After iterations: fast reaches 5 (or null after), slow at 3. Return node 3.</p>
+        </div>
+      </div>
+
+      <h3>Happy Number</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Happy Number</div>
+            <div class="algo-desc">Determine if number is happy. Happy: repeatedly replace by sum of squares of digits, eventually reach 1. Unhappy: enters endless cycle.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(log n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">10</div>
+        </div>
+        <div class="algo-body">
+          <p>Use slow and fast pointers on the sequence of transformations. If they meet, cycle detected (unhappy). If slow reaches 1, happy number.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">bool</span> IsHappy(<span class="kw">int</span> n) {
+    <span class="kw">int</span> slow = n, fast = n;
+
+    <span class="kw">do</span> {
+        slow = SumOfSquares(slow);
+        fast = SumOfSquares(SumOfSquares(fast));
+
+        <span class="kw">if</span> (fast == <span class="num">1</span>) <span class="kw">return</span> <span class="kw">true</span>;
+    } <span class="kw">while</span> (slow != fast);
+
+    <span class="kw">return</span> slow == <span class="num">1</span>;
+}
+
+<span class="kw">int</span> SumOfSquares(<span class="kw">int</span> n) {
+    <span class="kw">int</span> sum = <span class="num">0</span>;
+    <span class="kw">while</span> (n &gt; <span class="num">0</span>) {
+        <span class="kw">int</span> digit = n % <span class="num">10</span>;
+        sum += digit * digit;
+        n /= <span class="num">10</span>;
+    }
+    <span class="kw">return</span> sum;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> n = 7. Sequence: 7→49→97→130→10→1. Slow reaches 1 before meeting fast, returns true.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><div class="sec-num">15.4</div><div class="sec-line"></div></div>
+      <h2>Fixed Sliding Window</h2>
+      <p class="lead">Fixed sliding window maintains a window of constant size and slides it across the array. Ideal for problems asking for max/min/average over subarrays of specific length.</p>
+
+      <h3>Template Pattern</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="kw">int</span> FixedWindowTemplate(<span class="kw">int</span>[] nums, <span class="kw">int</span> k) {
+    <span class="cm">// Initialize window with first k elements</span>
+    <span class="kw">int</span> windowSum = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; k; i++) {
+        windowSum += nums[i];
+    }
+
+    <span class="kw">int</span> maxSum = windowSum;
+
+    <span class="cm">// Slide window: remove left element, add right element</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = k; i &lt; nums.Length; i++) {
+        windowSum = windowSum - nums[i - k] + nums[i];
+        maxSum = Math.Max(maxSum, windowSum);
+    }
+
+    <span class="kw">return</span> maxSum;
+}</pre>
+      </div>
+
+      <h3>Maximum Sum of Subarray of Size K</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Max Sum Subarray of Size K</div>
+            <div class="algo-desc">Find maximum sum of contiguous subarray of exactly k elements.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">11</div>
+        </div>
+        <div class="algo-body">
+          <p>Build window sum with first k elements. Slide window by removing leftmost, adding rightmost. Track maximum sum throughout.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> MaxSumSubarray(<span class="kw">int</span>[] nums, <span class="kw">int</span> k) {
+    <span class="kw">if</span> (nums.Length &lt; k) <span class="kw">return</span> <span class="num">0</span>;
+
+    <span class="cm">// Calculate sum of first k elements</span>
+    <span class="kw">int</span> windowSum = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; k; i++) {
+        windowSum += nums[i];
+    }
+
+    <span class="kw">int</span> maxSum = windowSum;
+
+    <span class="cm">// Slide the window</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = k; i &lt; nums.Length; i++) {
+        <span class="cm">// Remove leftmost element of previous window</span>
+        windowSum -= nums[i - k];
+        <span class="cm">// Add new rightmost element</span>
+        windowSum += nums[i];
+        <span class="cm">// Update maximum</span>
+        maxSum = Math.Max(maxSum, windowSum);
+    }
+
+    <span class="kw">return</span> maxSum;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [1,3,2,6,-1,4,1,8], k = 3. Windows: [1,3,2]=6, [3,2,6]=11, [2,6,-1]=7, [6,-1,4]=9, [-1,4,1]=4, [4,1,8]=13. Maximum = 13.</p>
+        </div>
+      </div>
+
+      <h3>Permutation in String</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Permutation in String</div>
+            <div class="algo-desc">Check if s1 permutation exists as substring in s2. Window size = s1.length.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(26)</span></div>
+          </div>
+          <div class="algo-idx">12</div>
+        </div>
+        <div class="algo-body">
+          <p>Count character frequencies in s1. Slide window of same size on s2. Check if any window matches s1's frequency.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">bool</span> CheckInclusion(<span class="kw">string</span> s1, <span class="kw">string</span> s2) {
+    <span class="kw">if</span> (s1.Length &gt; s2.Length) <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="cm">// Count characters in s1</span>
+    <span class="kw">int</span>[] s1Count = <span class="kw">new int</span>[<span class="num">26</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; s1.Length; i++) {
+        s1Count[s1[i] - <span class="str">'a'</span>]++;
+    }
+
+    <span class="cm">// Check each window of size s1.length in s2</span>
+    <span class="kw">int</span>[] windowCount = <span class="kw">new int</span>[<span class="num">26</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; s2.Length; i++) {
+        <span class="cm">// Add new character to window</span>
+        windowCount[s2[i] - <span class="str">'a'</span>]++;
+
+        <span class="cm">// Remove character that exits window</span>
+        <span class="kw">if</span> (i &gt;= s1.Length) {
+            windowCount[s2[i - s1.Length] - <span class="str">'a'</span>]--;
+        }
+
+        <span class="cm">// Check if window matches s1</span>
+        <span class="kw">if</span> (ArraysEqual(s1Count, windowCount)) {
+            <span class="kw">return</span> <span class="kw">true</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="kw">bool</span> ArraysEqual(<span class="kw">int</span>[] a, <span class="kw">int</span>[] b) {
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; a.Length; i++) {
+        <span class="kw">if</span> (a[i] != b[i]) <span class="kw">return</span> <span class="kw">false</span>;
+    }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> s1 = "ab", s2 = "eidbccbacd". s1Count = {a:1, b:1}. Check windows: "ei" no, "id" no, "db" no, "bc" no, "cc" no, "cb" no, "ba" yes (contains "ab" permutation). Return true.</p>
+        </div>
+      </div>
+
+      <h3>Find All Anagrams in String</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Find All Anagrams</div>
+            <div class="algo-desc">Find all start indices where anagram of p exists in s. Return list of all matching indices.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(26)</span></div>
+          </div>
+          <div class="algo-idx">13</div>
+        </div>
+        <div class="algo-body">
+          <p>Similar to permutation check, but return all matching positions instead of boolean. Slide window and compare at every position.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">IList</span>&lt;<span class="kw">int</span>&gt; FindAnagrams(<span class="kw">string</span> s, <span class="kw">string</span> p) {
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>&gt;();
+    <span class="kw">if</span> (p.Length &gt; s.Length) <span class="kw">return</span> result;
+
+    <span class="cm">// Count characters in pattern p</span>
+    <span class="kw">int</span>[] pCount = <span class="kw">new int</span>[<span class="num">26</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; p.Length; i++) {
+        pCount[p[i] - <span class="str">'a'</span>]++;
+    }
+
+    <span class="cm">// Slide window over string s</span>
+    <span class="kw">int</span>[] windowCount = <span class="kw">new int</span>[<span class="num">26</span>];
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; s.Length; i++) {
+        <span class="cm">// Add new character</span>
+        windowCount[s[i] - <span class="str">'a'</span>]++;
+
+        <span class="cm">// Remove old character</span>
+        <span class="kw">if</span> (i &gt;= p.Length) {
+            windowCount[s[i - p.Length] - <span class="str">'a'</span>]--;
+        }
+
+        <span class="cm">// Check if match at window position</span>
+        <span class="kw">if</span> (i &gt;= p.Length - <span class="num">1</span> &amp;&amp; ArraysEqual(pCount, windowCount)) {
+            result.Add(i - p.Length + <span class="num">1</span>);
+        }
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> s = "cbaebabacd", p = "abc". Anagrams at indices: position 0 ("cba"), position 6 ("bac"). Return [0, 6].</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><div class="sec-num">15.5</div><div class="sec-line"></div></div>
+      <h2>Variable Sliding Window</h2>
+      <p class="lead">Variable window expands to include elements and contracts to satisfy constraints. Use when finding min/max subarrays matching criteria. Pattern: expand right until condition met, then contract left to minimize/maximize.</p>
+
+      <h3>Expand-Contract Template</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="kw">int</span> VariableWindowTemplate(<span class="kw">int</span>[] nums) {
+    <span class="kw">int</span> left = <span class="num">0</span>, result = <span class="num">0</span>;
+    <span class="kw">var</span> windowMap = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt;();
+
+    <span class="kw">for</span> (<span class="kw">int</span> right = <span class="num">0</span>; right &lt; nums.Length; right++) {
+        <span class="cm">// Add right element to window</span>
+        <span class="kw">if</span> (!windowMap.ContainsKey(nums[right])) {
+            windowMap[nums[right]] = <span class="num">0</span>;
+        }
+        windowMap[nums[right]]++;
+
+        <span class="cm">// Contract window while condition not met</span>
+        <span class="kw">while</span> (<span class="cm">/* condition check */</span> <span class="kw">false</span>) {
+            windowMap[nums[left]]--;
+            <span class="kw">if</span> (windowMap[nums[left]] == <span class="num">0</span>) {
+                windowMap.Remove(nums[left]);
+            }
+            left++;
+        }
+
+        <span class="cm">// Update result with valid window</span>
+        result = Math.Max(result, right - left + <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>Minimum Window Substring (Hard)</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Minimum Window Substring</div>
+            <div class="algo-desc">Find smallest window substring containing all characters of t. Characters can be in any order. Case-sensitive.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(52)</span></div>
+          </div>
+          <div class="algo-idx">14</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Step 1:</strong> Build frequency map of target string t. <strong>Step 2:</strong> Expand window by moving right pointer until all characters are included. <strong>Step 3:</strong> Contract window by moving left pointer while still valid. <strong>Step 4:</strong> Track minimum window found.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">string</span> MinWindow(<span class="kw">string</span> s, <span class="kw">string</span> t) {
+    <span class="kw">if</span> (s == <span class="kw">null</span> || t == <span class="kw">null</span> || s.Length == <span class="num">0</span> || t.Length == <span class="num">0</span>) {
+        <span class="kw">return</span> <span class="str">""</span>;
+    }
+
+    <span class="cm">// Dictionary to keep count of characters in t</span>
+    <span class="kw">var</span> dictT = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="kw">char</span> c <span class="kw">in</span> t) {
+        <span class="kw">if</span> (!dictT.ContainsKey(c)) dictT[c] = <span class="num">0</span>;
+        dictT[c]++;
+    }
+
+    <span class="cm">// required: number of unique characters in t that need to be present</span>
+    <span class="kw">int</span> required = dictT.Count;
+    <span class="cm">// formed: number of unique characters in current window with desired frequency</span>
+    <span class="kw">int</span> formed = <span class="num">0</span>;
+
+    <span class="cm">// windowCounts: current window's character frequency</span>
+    <span class="kw">var</span> windowCounts = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+
+    <span class="kw">int</span> left = <span class="num">0</span>, right = <span class="num">0</span>;
+    <span class="kw">int</span> minLen = <span class="kw">int</span>.<span class="prop">MaxValue</span>;
+    <span class="kw">int</span> minLeft = <span class="num">0</span>;
+
+    <span class="kw">while</span> (right &lt; s.Length) {
+        <span class="cm">// Add character from right to window</span>
+        <span class="kw">char</span> c = s[right];
+        <span class="kw">if</span> (!windowCounts.ContainsKey(c)) windowCounts[c] = <span class="num">0</span>;
+        windowCounts[c]++;
+
+        <span class="cm">// If character frequency matches target, increment formed</span>
+        <span class="kw">if</span> (dictT.ContainsKey(c) &amp;&amp; windowCounts[c] == dictT[c]) {
+            formed++;
+        }
+
+        <span class="cm">// Contract from left while window is valid</span>
+        <span class="kw">while</span> (left &lt;= right &amp;&amp; formed == required) {
+            c = s[left];
+
+            <span class="cm">// Save minimum window</span>
+            <span class="kw">if</span> (right - left + <span class="num">1</span> &lt; minLen) {
+                minLen = right - left + <span class="num">1</span>;
+                minLeft = left;
+            }
+
+            <span class="cm">// Remove from left</span>
+            windowCounts[c]--;
+            <span class="kw">if</span> (dictT.ContainsKey(c) &amp;&amp; windowCounts[c] &lt; dictT[c]) {
+                formed--;
+            }
+
+            left++;
+        }
+
+        right++;
+    }
+
+    <span class="kw">return</span> minLen == <span class="kw">int</span>.<span class="prop">MaxValue</span> ? <span class="str">""</span> : s.<span class="fn">Substring</span>(minLeft, minLen);
+}</pre>
+          </div>
+          <p><strong>Example:</strong> s = "ADOBECODEBANC", t = "ABC". Build dictT = {A:1, B:1, C:1}. Expand right until window "ADOBEC" is valid (contains all). Contract left: "DOBEC", "OBEC", "BEC" - contracts too far. Continue expanding/contracting. Minimum window = "BANC".</p>
+        </div>
+      </div>
+
+      <h3>Longest Substring Without Repeating Characters</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Longest Substring Without Repeating</div>
+            <div class="algo-desc">Find length of longest substring without repeating characters. Return integer length.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(min(n,26))</span></div>
+          </div>
+          <div class="algo-idx">15</div>
+        </div>
+        <div class="algo-body">
+          <p>Expand window by moving right pointer. Track character positions. If character repeats, move left pointer to after previous occurrence. Update maximum length.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> LengthOfLongestSubstring(<span class="kw">string</span> s) {
+    <span class="kw">var</span> charIndex = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">char</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">int</span> left = <span class="num">0</span>, maxLen = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> right = <span class="num">0</span>; right &lt; s.Length; right++) {
+        <span class="kw">char</span> c = s[right];
+
+        <span class="cm">// If character exists in window, move left</span>
+        <span class="kw">if</span> (charIndex.ContainsKey(c) &amp;&amp; charIndex[c] &gt;= left) {
+            left = charIndex[c] + <span class="num">1</span>;
+        }
+
+        <span class="cm">// Update character's latest position</span>
+        charIndex[c] = right;
+
+        <span class="cm">// Update maximum length</span>
+        maxLen = Math.Max(maxLen, right - left + <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> maxLen;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> s = "abcabcbb". Window: "a"(1), "ab"(2), "abc"(3), "bcab"(4, move left past "a"), "cabcbb"→"abcb"(4), "bcb"(3). Maximum = 3 ("abc").</p>
+        </div>
+      </div>
+
+      <h3>Longest Repeating Character Replacement</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Longest Repeating Char Replacement</div>
+            <div class="algo-desc">Replace at most k characters to get longest substring of same character.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(26)</span></div>
+          </div>
+          <div class="algo-idx">16</div>
+        </div>
+        <div class="algo-body">
+          <p>Expand window by right pointer. Track character frequencies. Valid window: windowLength - maxFrequency ≤ k (changes needed ≤ k). Contract window if invalid. Update maximum length.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> CharacterReplacement(<span class="kw">string</span> s, <span class="kw">int</span> k) {
+    <span class="kw">int</span>[] count = <span class="kw">new int</span>[<span class="num">26</span>];
+    <span class="kw">int</span> left = <span class="num">0</span>, maxFreq = <span class="num">0</span>, maxLen = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> right = <span class="num">0</span>; right &lt; s.Length; right++) {
+        <span class="cm">// Add right character</span>
+        count[s[right] - <span class="str">'A'</span>]++;
+        maxFreq = Math.Max(maxFreq, count[s[right] - <span class="str">'A'</span>]);
+
+        <span class="cm">// Contract window if too many changes needed</span>
+        <span class="cm">// changes needed = window size - most frequent character</span>
+        <span class="kw">while</span> ((right - left + <span class="num">1</span>) - maxFreq &gt; k) {
+            count[s[left] - <span class="str">'A'</span>]--;
+            left++;
+        }
+
+        <span class="cm">// Update maximum length</span>
+        maxLen = Math.Max(maxLen, right - left + <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> maxLen;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> s = "ABAB", k = 2. Window "A"(1, 0 changes), "AB"(2, 1 change), "ABA"(3, 1 change), "ABAB"(4, 2 changes). Result = 4 (replace 2 B's with A or vice versa).</p>
+        </div>
+      </div>
+
+      <h3>Fruit Into Baskets</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Fruit Into Baskets</div>
+            <div class="algo-desc">Pick fruits from trees in row. Can pick 2 different fruit types max. Return maximum fruits pickable from contiguous trees.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(2)</span></div>
+          </div>
+          <div class="algo-idx">17</div>
+        </div>
+        <div class="algo-body">
+          <p>This is longest subarray with at most 2 distinct elements. Expand window with right pointer. Track fruit counts. If more than 2 types, contract from left.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> TotalFruit(<span class="kw">int</span>[] fruits) {
+    <span class="kw">var</span> fruitCount = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt;();
+    <span class="kw">int</span> left = <span class="num">0</span>, maxFruits = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> right = <span class="num">0</span>; right &lt; fruits.Length; right++) {
+        <span class="cm">// Add fruit to right of window</span>
+        <span class="kw">if</span> (!fruitCount.ContainsKey(fruits[right])) {
+            fruitCount[fruits[right]] = <span class="num">0</span>;
+        }
+        fruitCount[fruits[right]]++;
+
+        <span class="cm">// Shrink window if more than 2 types</span>
+        <span class="kw">while</span> (fruitCount.Count &gt; <span class="num">2</span>) {
+            fruitCount[fruits[left]]--;
+            <span class="kw">if</span> (fruitCount[fruits[left]] == <span class="num">0</span>) {
+                fruitCount.Remove(fruits[left]);
+            }
+            left++;
+        }
+
+        <span class="cm">// Update maximum fruits</span>
+        maxFruits = Math.Max(maxFruits, right - left + <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> maxFruits;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> fruits = [1,2,1,2,3]. Window: [1]=1, [1,2]=2, [1,2,1]=3, [1,2,1,2]=4, hits 3 types, contract to [2,1,2]=3, then [1,2,3] still 3 types, contract to [2,3]=2. Maximum = 4.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><div class="sec-num">15.6</div><div class="sec-line"></div></div>
+      <h2>Prefix Sum Pattern</h2>
+      <p class="lead">Prefix sum arrays enable O(1) range sum queries after O(n) preprocessing. Used for subarray sum problems and combined with hashmap for target sum finding.</p>
+
+      <h3>Prefix Sum Array Concept</h3>
+      <p>Prefix sum at index i = sum of all elements from index 0 to i. Range sum from i to j = prefix[j+1] - prefix[i].</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="cm">// Build prefix sum array</span>
+<span class="kw">int</span>[] BuildPrefixSum(<span class="kw">int</span>[] nums) {
+    <span class="kw">int</span>[] prefix = <span class="kw">new int</span>[nums.Length + <span class="num">1</span>];
+    prefix[<span class="num">0</span>] = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= nums.Length; i++) {
+        prefix[i] = prefix[i - <span class="num">1</span>] + nums[i - <span class="num">1</span>];
+    }
+
+    <span class="kw">return</span> prefix;
+}
+
+<span class="cm">// Query range sum [left, right] O(1)</span>
+<span class="kw">int</span> RangeSum(<span class="kw">int</span>[] prefix, <span class="kw">int</span> left, <span class="kw">int</span> right) {
+    <span class="kw">return</span> prefix[right + <span class="num">1</span>] - prefix[left];
+}</pre>
+      </div>
+
+      <h3>Subarray Sum Equals K</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Subarray Sum Equals K</div>
+            <div class="algo-desc">Find number of contiguous subarrays that sum to k. Elements can be negative. HashMap tracks prefix sums.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(n)</span></div>
+          </div>
+          <div class="algo-idx">18</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Key Insight:</strong> If prefix sum at index j minus prefix sum at index i equals k, then subarray [i+1, j] sums to k. Use hashmap to count prefix sums. For each position, check if (currentSum - k) exists in map.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span> SubarraySum(<span class="kw">int</span>[] nums, <span class="kw">int</span> k) {
+    <span class="kw">var</span> sumCount = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="kw">int</span>, <span class="kw">int</span>&gt;();
+    <span class="cm">// Initialize with 0 sum appearing once (empty subarray)</span>
+    sumCount[<span class="num">0</span>] = <span class="num">1</span>;
+
+    <span class="kw">int</span> currentSum = <span class="num">0</span>, count = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="kw">int</span> num <span class="kw">in</span> nums) {
+        currentSum += num;
+
+        <span class="cm">// Check if (currentSum - k) exists in map</span>
+        <span class="kw">int</span> target = currentSum - k;
+        <span class="kw">if</span> (sumCount.ContainsKey(target)) {
+            count += sumCount[target];
+        }
+
+        <span class="cm">// Add current sum to map</span>
+        <span class="kw">if</span> (!sumCount.ContainsKey(currentSum)) {
+            sumCount[currentSum] = <span class="num">0</span>;
+        }
+        sumCount[currentSum]++;
+    }
+
+    <span class="kw">return</span> count;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [1,1,1], k = 2. Prefix sums: 0, 1, 2, 3. At index 1 (sum=2): check 2-2=0, found, count=1. At index 2 (sum=3): check 3-2=1, found, count=2. Subarrays: [1,1] at indices 0-1 and 1-2. Return 2.</p>
+        </div>
+      </div>
+
+      <h3>Range Sum Query 2D Immutable</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Range Sum Query 2D</div>
+            <div class="algo-desc">Build 2D prefix sum for range sum queries on matrix. Query O(1) after O(m×n) preprocessing.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(m×n)</span><span class="badge b-green">O(m×n)</span></div>
+          </div>
+          <div class="algo-idx">19</div>
+        </div>
+        <div class="algo-body">
+          <p>2D prefix sum: include row, column, and diagonal interactions. Formula: prefix[r][c] = matrix[r][c] + prefix[r-1][c] + prefix[r][c-1] - prefix[r-1][c-1].</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">public class</span> <span class="ty">NumMatrix</span> {
+    <span class="kw">private int</span>[][] prefix;
+
+    <span class="kw">public</span> <span class="ty">NumMatrix</span>(<span class="kw">int</span>[][] matrix) {
+        <span class="kw">int</span> rows = matrix.Length;
+        <span class="kw">int</span> cols = matrix[<span class="num">0</span>].Length;
+        prefix = <span class="kw">new int</span>[rows + <span class="num">1</span>][];
+
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= rows; i++) {
+            prefix[i] = <span class="kw">new int</span>[cols + <span class="num">1</span>];
+        }
+
+        <span class="cm">// Build 2D prefix sum</span>
+        <span class="kw">for</span> (<span class="kw">int</span> r = <span class="num">1</span>; r &lt;= rows; r++) {
+            <span class="kw">for</span> (<span class="kw">int</span> c = <span class="num">1</span>; c &lt;= cols; c++) {
+                prefix[r][c] = matrix[r - <span class="num">1</span>][c - <span class="num">1</span>]
+                    + prefix[r - <span class="num">1</span>][c]
+                    + prefix[r][c - <span class="num">1</span>]
+                    - prefix[r - <span class="num">1</span>][c - <span class="num">1</span>];
+            }
+        }
+    }
+
+    <span class="kw">public int</span> SumRegion(<span class="kw">int</span> row1, <span class="kw">int</span> col1, <span class="kw">int</span> row2, <span class="kw">int</span> col2) {
+        <span class="kw">return</span> prefix[row2 + <span class="num">1</span>][col2 + <span class="num">1</span>]
+            - prefix[row1][col2 + <span class="num">1</span>]
+            - prefix[row2 + <span class="num">1</span>][col1]
+            + prefix[row1][col1];
+    }
+}</pre>
+          </div>
+          <p><strong>Example:</strong> Matrix [[3,0,1,4,2],[5,6,3,2,1],[1,2,0,1,5]]. Query sum from (1,1) to (2,2) returns 11 (6+3+2+0=11).</p>
+        </div>
+      </div>
+
+      <h3>Product of Array Except Self</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Product of Array Except Self</div>
+            <div class="algo-desc">For each element, compute product of all other elements. Cannot use division. O(n) time, O(1) space (excluding result).</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">20</div>
+        </div>
+        <div class="algo-body">
+          <p>Use two passes: left products (prefix products) and right products (suffix products). Result[i] = left[i] × right[i].</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span>[] ProductExceptSelf(<span class="kw">int</span>[] nums) {
+    <span class="kw">int</span> n = nums.Length;
+    <span class="kw">int</span>[] result = <span class="kw">new int</span>[n];
+
+    <span class="cm">// First pass: compute left products (prefix)</span>
+    <span class="cm">// result[i] = product of all elements to left of i</span>
+    result[<span class="num">0</span>] = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; n; i++) {
+        result[i] = result[i - <span class="num">1</span>] * nums[i - <span class="num">1</span>];
+    }
+
+    <span class="cm">// Second pass: compute right products and multiply</span>
+    <span class="cm">// Traverse right to left, tracking suffix product</span>
+    <span class="kw">int</span> rightProduct = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="kw">int</span> i = n - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--) {
+        result[i] *= rightProduct;
+        rightProduct *= nums[i];
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [1,2,3,4]. Left products: [1,1,2,6]. Right products computed in reverse: [24,12,4,1]. Results: [1×24, 1×12, 2×4, 6×1] = [24,12,8,6].</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><div class="sec-num">15.7</div><div class="sec-line"></div></div>
+      <h2>Dutch National Flag Pattern</h2>
+      <p class="lead">Three-pointer technique for partitioning arrays into three sections. Classic problem: sort array with three distinct values (0, 1, 2) in single pass.</p>
+
+      <h3>Sort Colors (0, 1, 2)</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Sort Colors</div>
+            <div class="algo-desc">Given array with 0s, 1s, 2s, sort in-place. Single pass, O(n) time, O(1) space. Use three pointers: left, mid, right.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">21</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Approach:</strong> Partition array into [0..left] for 0s, [left+1..mid] for 1s, [mid+1..right] for 2s. Pointer mid scans array. If nums[mid]=0, swap with left, advance both. If nums[mid]=1, advance mid. If nums[mid]=2, swap with right, move right backward.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">void</span> SortColors(<span class="kw">int</span>[] nums) {
+    <span class="kw">int</span> left = <span class="num">0</span>, mid = <span class="num">0</span>, right = nums.Length - <span class="num">1</span>;
+
+    <span class="kw">while</span> (mid &lt;= right) {
+        <span class="kw">if</span> (nums[mid] == <span class="num">0</span>) {
+            <span class="cm">// Swap with left pointer, advance both</span>
+            <span class="kw">int</span> temp = nums[left];
+            nums[left] = nums[mid];
+            nums[mid] = temp;
+            left++;
+            mid++;
+        } <span class="kw">else if</span> (nums[mid] == <span class="num">1</span>) {
+            <span class="cm">// Just advance mid</span>
+            mid++;
+        } <span class="kw">else</span> {
+            <span class="cm">// nums[mid] == 2, swap with right, move right back</span>
+            <span class="kw">int</span> temp = nums[mid];
+            nums[mid] = nums[right];
+            nums[right] = temp;
+            right--;
+        }
+    }
+}</pre>
+          </div>
+          <p><strong>Example:</strong> nums = [2,0,2,1,1,0]. Start: left=0, mid=0, right=5. Process: nums[0]=2 → swap with right[5]=0, nums=[0,0,2,1,1,2]. Continue: left=1, mid=1, nums[1]=0 → swap with left[1], but already 0. Advance both. Eventually: [0,0,1,1,2,2].</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><div class="sec-num">15.8</div><div class="sec-line"></div></div>
+      <h2>Merge Intervals Pattern</h2>
+      <p class="lead">Handling overlapping intervals using two pointers or efficient merging. Common in scheduling, meeting room problems, and interval union queries.</p>
+
+      <h3>Merge Intervals</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Merge Intervals</div>
+            <div class="algo-desc">Merge all overlapping intervals. Return non-overlapping merged intervals sorted.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n log n)</span><span class="badge b-green">O(n)</span></div>
+          </div>
+          <div class="algo-idx">22</div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Algorithm:</strong> Sort intervals by start. Iterate through, merging if current start ≤ previous end. Track merged end across overlapping intervals.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span>[][] Merge(<span class="kw">int</span>[][] intervals) {
+    <span class="kw">if</span> (intervals.Length &lt;= <span class="num">1</span>) {
+        <span class="kw">return</span> intervals;
+    }
+
+    <span class="cm">// Sort by start time</span>
+    System.Array.Sort(intervals, (a, b) =&gt; a[<span class="num">0</span>].CompareTo(b[<span class="num">0</span>]));
+
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>[]&gt;();
+    <span class="kw">int</span>[] current = intervals[<span class="num">0</span>];
+
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; intervals.Length; i++) {
+        <span class="kw">if</span> (intervals[i][<span class="num">0</span>] &lt;= current[<span class="num">1</span>]) {
+            <span class="cm">// Merge: extend end of current</span>
+            current[<span class="num">1</span>] = Math.Max(current[<span class="num">1</span>], intervals[i][<span class="num">1</span>]);
+        } <span class="kw">else</span> {
+            <span class="cm">// No overlap: add current to result, move to next</span>
+            result.Add(current);
+            current = intervals[i];
+        }
+    }
+
+    <span class="cm">// Add the last interval</span>
+    result.Add(current);
+
+    <span class="kw">return</span> result.ToArray();
+}</pre>
+          </div>
+          <p><strong>Example:</strong> intervals = [[1,3],[2,6],[8,10],[15,18]]. After sort (already sorted). Merge [1,3] and [2,6] to [1,6]. [8,10] doesn't overlap. [15,18] doesn't overlap. Result: [[1,6],[8,10],[15,18]].</p>
+        </div>
+      </div>
+
+      <h3>Interval List Intersections</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Interval List Intersections</div>
+            <div class="algo-desc">Find intersection of two lists of intervals. Both lists are pre-sorted and non-overlapping within each list.</div>
+            <div class="algo-tags"><span class="badge b-blue">O(n+m)</span><span class="badge b-green">O(1)</span></div>
+          </div>
+          <div class="algo-idx">23</div>
+        </div>
+        <div class="algo-body">
+          <p>Two pointers, one for each list. At each step, find intersection of current intervals. If current intervals overlap, intersection is [max(starts), min(ends)]. Move pointer of interval that ends first.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">csharp</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">int</span>[][] IntervalIntersection(<span class="kw">int</span>[][] list1, <span class="kw">int</span>[][] list2) {
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="kw">int</span>[]&gt;();
+    <span class="kw">int</span> i = <span class="num">0</span>, j = <span class="num">0</span>;
+
+    <span class="kw">while</span> (i &lt; list1.Length &amp;&amp; j &lt; list2.Length) {
+        <span class="kw">int</span> start = Math.Max(list1[i][<span class="num">0</span>], list2[j][<span class="num">0</span>]);
+        <span class="kw">int</span> end = Math.Min(list1[i][<span class="num">1</span>], list2[j][<span class="num">1</span>]);
+
+        <span class="cm">// If overlapping, add intersection</span>
+        <span class="kw">if</span> (start &lt;= end) {
+            result.Add(<span class="kw">new int</span>[] { start, end });
+        }
+
+        <span class="cm">// Move pointer of interval that ends first</span>
+        <span class="kw">if</span> (list1[i][<span class="num">1</span>] &lt; list2[j][<span class="num">1</span>]) {
+            i++;
+        } <span class="kw">else</span> {
+            j++;
+        }
+    }
+
+    <span class="kw">return</span> result.ToArray();
+}</pre>
+          </div>
+          <p><strong>Example:</strong> list1 = [[0,2],[5,10]], list2 = [[1,3],[5,7]]. Compare [0,2] and [1,3]: intersection [1,2]. [0,2] ends first, move i. Compare [5,10] and [1,3]: no overlap. Compare [5,10] and [5,7]: intersection [5,7]. Result: [[1,2],[5,7]].</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><div class="sec-num">15.9</div><div class="sec-line"></div></div>
+      <h2>Pattern Recognition & Decision Flowchart</h2>
+
+      <h3>Decision Flowchart</h3>
+      <p>Use this flowchart to identify which technique applies to your problem:</p>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Is array sorted or values constrained?</strong><br>
+          YES → Two pointers (opposite direction). NO → Continue.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Need to find pairs/triplets?</strong><br>
+          YES → Opposite pointers (converging). NO → Continue.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Linked list problem (cycle, middle, removal)?</strong><br>
+          YES → Fast/slow pointers (same direction). NO → Continue.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Fixed window size problem (avg, max, permutation)?</strong><br>
+          YES → Fixed sliding window. NO → Continue.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Need min/max substring with constraints?</strong><br>
+          YES → Variable sliding window. NO → Continue.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Subarray sum or range queries?</strong><br>
+          YES → Prefix sum. NO → Continue.
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">❓</div>
+        <div>
+          <strong>Three distinct values or partition problem?</strong><br>
+          YES → Dutch National Flag (three pointers). NO → Other technique.
+        </div>
+      </div>
+
+      <h3>Quick Comparison Table</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>Use Case</th>
+              <th>Time</th>
+              <th>Space</th>
+              <th>Key Constraint</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Opposite Pointers</td>
+              <td>Pairs, palindromes, container</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+              <td>Usually sorted</td>
+            </tr>
+            <tr>
+              <td>Fast/Slow Pointers</td>
+              <td>Cycle detection, middle, duplicates</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+              <td>Linked list or array traversal</td>
+            </tr>
+            <tr>
+              <td>Fixed Window</td>
+              <td>Max/min over k-size windows</td>
+              <td>O(n)</td>
+              <td>O(k) or O(26)</td>
+              <td>Fixed window size</td>
+            </tr>
+            <tr>
+              <td>Variable Window</td>
+              <td>Min/max substring with conditions</td>
+              <td>O(n)</td>
+              <td>O(n) hashmap</td>
+              <td>Expand/contract dynamically</td>
+            </tr>
+            <tr>
+              <td>Prefix Sum</td>
+              <td>Range sum, subarray sums</td>
+              <td>O(n) build, O(1) query</td>
+              <td>O(n)</td>
+              <td>Multiple queries needed</td>
+            </tr>
+            <tr>
+              <td>Dutch Flag</td>
+              <td>Partition, sort 3 values</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+              <td>Three distinct values</td>
+            </tr>
+            <tr>
+              <td>Merge Intervals</td>
+              <td>Overlapping intervals</td>
+              <td>O(n log n)</td>
+              <td>O(n)</td>
+              <td>Sort first</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Pattern Combinations</h3>
+      <p>Many hard problems combine patterns:</p>
+      <ul style="margin-bottom:16px;margin-left:20px;color:var(--ink2);font-size:15px;line-height:1.78;">
+        <li><strong>Sliding Window + HashMap:</strong> Minimum window substring, longest substring without repeating (variable window)</li>
+        <li><strong>Prefix Sum + HashMap:</strong> Subarray sum equals k (find cumulative sum differences)</li>
+        <li><strong>Two Pointers + Sort:</strong> 3Sum, 4Sum (sort first, then opposite pointers)</li>
+        <li><strong>Fast/Slow + HashMap:</strong> Cycle detection with node tracking</li>
+        <li><strong>Merge + Two Pointers:</strong> Merge sorted arrays, intersection of intervals</li>
+      </ul>
+    </section>
+
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag"><div class="sec-num">15.10</div><div class="sec-line"></div></div>
+      <h2>Interview Tips & Best Practices</h2>
+
+      <div class="tip-card g">
+        <div class="tip-n">TIP 1</div>
+        <div class="tip-title">Recognize the Pattern Early</div>
+        <div class="tip-body">Two-pointer problems often appear disguised. Listen for "sorted array", "two values", "in-place modification", or "subarray". These signal pointer techniques. Ask clarifying questions about input order and modification requirements.</div>
+      </div>
+
+      <div class="tip-card g">
+        <div class="tip-n">TIP 2</div>
+        <div class="tip-title">Always Clarify Constraints</div>
+        <div class="tip-body">Ask: Is array sorted? Can I modify in-place? Do I need to handle negative numbers? Can elements be duplicated? These change the approach. For example, unsorted arrays need hashing, sorted enable pointers.</div>
+      </div>
+
+      <div class="tip-card g">
+        <div class="tip-n">TIP 3</div>
+        <div class="tip-title">Start with Brute Force, Optimize</div>
+        <div class="tip-body">Begin with nested loops (O(n²)), then identify why two pointers works. Explain the logic: "Since array is sorted, if sum is too small, moving left pointer increases sum guarantees checking new pairs." This shows problem-solving process.</div>
+      </div>
+
+      <div class="tip-card b">
+        <div class="tip-n">TIP 4</div>
+        <div class="tip-title">Handle Edge Cases</div>
+        <div class="tip-body">Empty arrays, single elements, duplicates, negative numbers. For two pointers: verify loop condition (left &lt; right vs. left ≤ right). For sliding window: ensure window size never exceeds array. Test with small examples.</div>
+      </div>
+
+      <div class="tip-card b">
+        <div class="tip-n">TIP 5</div>
+        <div class="tip-title">Sliding Window Key Points</div>
+        <div class="tip-body">Fixed window: initialize first k elements, then slide. Variable window: expand until condition met, contract until minimal. Always track what window represents (sum, character count, etc.). Use HashMap for character/element tracking when needed.</div>
+      </div>
+
+      <div class="tip-card b">
+        <div class="tip-n">TIP 6</div>
+        <div class="tip-title">Deduplication Strategy</div>
+        <div class="tip-body">For problems like 3Sum: sort first, then use two pointers. Skip duplicates by checking if nums[i] == nums[i-1]. Skip after finding a solution: while (left &lt; right &amp;&amp; nums[left] == nums[left+1]) left++. This prevents duplicate triplets.</div>
+      </div>
+
+      <div class="tip-card a">
+        <div class="tip-n">TIP 7</div>
+        <div class="tip-title">Prefix Sum Trade-offs</div>
+        <div class="tip-body">Use prefix sum when: multiple queries on same array (preprocess once). Don't use if: single query or memory-constrained. For subarray sum problems with HashMap, iterate once with cumulative sum—more efficient than building full prefix array.</div>
+      </div>
+
+      <div class="tip-card a">
+        <div class="tip-n">TIP 8</div>
+        <div class="tip-title">Fast/Slow Pointers (Linked Lists)</div>
+        <div class="tip-body">Slow moves 1 step, fast moves 2. This works because: in a cycle, fast catches slow since fast moves faster. For middle: fast reaches end when slow at middle. Test cycle detection on lists with/without cycles, and odd/even lengths.</div>
+      </div>
+
+      <h3>Common Mistakes to Avoid</h3>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Mistake 1:</strong> Forgetting to handle duplicates in converging pointer problems. After finding a solution, skip duplicates on both sides: while (left &lt; right &amp;&amp; nums[left] == nums[left+1]) left++.
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Mistake 2:</strong> Using wrong loop condition. For converging pointers: left &lt; right (both pointers are moving). For sliding window: right moves through array (i &lt; length). Mixing these causes infinite loops or missed elements.
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Mistake 3:</strong> Forgetting to check fast.next != null in fast/slow loops. This causes NullReferenceException. Always check: while (fast != null &amp;&amp; fast.next != null).
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Mistake 4:</strong> In sliding window, not properly maintaining HashMap size. Remove elements when leaving window: if (windowCount[char] == 0) remove from map. This prevents false condition checks.
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Mistake 5:</strong> Using two pointers on unsorted arrays without justification. Unsorted arrays require hashing. Two pointers work only if: array is sorted, or problem allows any valid solution (not unique).
+        </div>
+      </div>
+
+      <h3>Practice Progression</h3>
+      <p><strong>Easy:</strong> Two Sum II (sorted), Valid Palindrome, Remove Duplicates, Move Zeroes. Build fundamentals with simple pointer movement.</p>
+      <p><strong>Medium:</strong> 3Sum, Container with Most Water, Longest Substring Without Repeating, Merge Intervals. Combine patterns and handle edge cases.</p>
+      <p><strong>Hard:</strong> Trapping Rain Water, Minimum Window Substring, Subarray Sum Equals K, 4Sum II. Mix multiple techniques, optimize space/time.</p>
+
+      <h3>Interview Checklists</h3>
+      <div class="tip-card">
+        <div class="tip-title">Before Writing Code</div>
+        <div class="tip-body">
+          ✓ Ask about sorting, modification, duplicates<br>
+          ✓ Discuss brute force and why optimization helps<br>
+          ✓ Identify which pattern fits<br>
+          ✓ Sketch approach with pointer movements<br>
+          ✓ Mention time/space complexity
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">While Coding</div>
+        <div class="tip-body">
+          ✓ Initialize pointers clearly<br>
+          ✓ Write loop condition explicitly<br>
+          ✓ Handle edge cases (empty, single element)<br>
+          ✓ Trace through an example<br>
+          ✓ Check off-by-one errors
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">After Coding</div>
+        <div class="tip-body">
+          ✓ Test with provided examples<br>
+          ✓ Test edge cases<br>
+          ✓ Verify time and space complexity<br>
+          ✓ Discuss optimizations or variants<br>
+          ✓ Explain why algorithm is correct
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>DSA Complete Book — Chapter 15: Two Pointers & Sliding Window</p>
+      <p>Master pointer-based algorithms for efficient array and string traversal</p>
+    </div>
+  </footer>
+
+  <script>
+function copyCode(button) {
+  const codeBlock = button.closest('.code-bar').nextElementSibling;
+  const code = codeBlock.textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const originalText = button.textContent;
+    button.textContent = 'Copied!';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 2000);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const fades = document.querySelectorAll('.fade');
+  fades.forEach((el, index) => {
+    setTimeout(() => {
+      el.classList.add('in');
+    }, index * 50);
+  });
+});
+  </script>
+</body>
+</html>

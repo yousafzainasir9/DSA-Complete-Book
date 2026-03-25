@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Hash tables and hash maps complete guide — collision handling, hash functions, C# Dictionary usage, and top interview patterns.">
+  <meta name="keywords" content="hash table, hash map, dictionary, collision handling, hash function, C#, two sum">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch05-hash-tables.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch05-hash-tables.html">
+  <meta property="og:title" content="Chapter 5: Hash Tables & Dictionaries - DSA Complete Book">
+  <meta property="og:description" content="Hash tables and hash maps complete guide — collision handling, hash functions, C# Dictionary usage, and top interview patterns.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch05-hash-tables.html">
+  <meta name="twitter:title" content="Chapter 5: Hash Tables & Dictionaries - DSA Complete Book">
+  <meta name="twitter:description" content="Hash tables and hash maps complete guide — collision handling, hash functions, C# Dictionary usage, and top interview patterns.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 5: Hash Tables & Dictionaries - DSA Complete Book",
+  "description": "Hash tables and hash maps complete guide \u2014 collision handling, hash functions, C# Dictionary usage, and top interview patterns.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch05-hash-tables.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 5: Hash Tables & Dictionaries - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}:root{--bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;--ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;--acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;--green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;--blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;--red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;--amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;--sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace}body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}.nav-links a:hover{color:var(--ink);border-color:var(--acc)}.wrap{max-width:960px;margin:0 auto;padding:0 2rem}.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}.eyebrow-line{width:28px;height:2px;background:var(--acc)}.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}.stat{padding:14px 26px;border-right:1px solid var(--rule)}.stat:last-child{border-right:none}.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}.toc-grid a:hover{color:var(--acc)}.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}.section{padding-top:72px}.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}.sec-line{flex:1;height:1px;background:var(--rule)}.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.algo-body{padding:28px 32px}.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}.steps{margin-bottom:26px}.step{display:flex}.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}.step:last-child .step-vline{display:none}.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}.step-body strong{color:var(--ink);font-weight:600}code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}.copy-btn:hover{color:#d4d0c8}pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}.callout strong{color:inherit;font-weight:600}.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}.vs-box.good{background:var(--green-l);border-color:var(--green-b)}.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}thead tr{background:var(--bg2)}th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg)}.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}footer p{font-size:13px;color:var(--ink3)}footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}@media(max-width:700px){.algo-head{grid-template-columns:1fr}.algo-idx{display:none}.vs,.tips{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book<span class="pill">v1</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 5</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Chapter 5</div></div>
+      <h1>Hash Tables & <em>Dictionaries</em></h1>
+      <p class="hero-sub">Master the most practical data structure for real-world problems. Learn hash functions, collision resolution strategies, custom implementation, C# Dictionary and HashSet APIs, sorted variants, common patterns, and solve 14 comprehensive interview problems with complete solutions.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">10</div><div class="stat-l">Core Topics</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">Resolutions</div></div>
+        <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Code Examples</div></div>
+        <div class="stat"><div class="stat-n">14</div><div class="stat-l">Problems</div></div>
+      </div>
+    </section>
+
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">5.1</span> Hash Table Fundamentals</a>
+        <a href="#sec-2"><span class="toc-n">5.2</span> Hash Functions & Distribution</a>
+        <a href="#sec-3"><span class="toc-n">5.3</span> Collision Resolution: Chaining</a>
+        <a href="#sec-4"><span class="toc-n">5.4</span> Collision Resolution: Open Addressing</a>
+        <a href="#sec-5"><span class="toc-n">5.5</span> Custom Hash Table Implementation</a>
+        <a href="#sec-6"><span class="toc-n">5.6</span> C# Dictionary & HashSet API</a>
+        <a href="#sec-7"><span class="toc-n">5.7</span> SortedDictionary & SortedSet</a>
+        <a href="#sec-8"><span class="toc-n">5.8</span> Common Hash Table Patterns</a>
+        <a href="#sec-9"><span class="toc-n">5.9</span> Practice Problems</a>
+        <a href="#sec-10"><span class="toc-n">5.10</span> Comparison & Interview Tips</a>
+      </div>
+    </section>
+
+    <!-- Section 5.1: Hash Table Fundamentals -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><div class="sec-num">5.1</div><div class="sec-line"></div></div>
+      <h2>Hash Table Fundamentals</h2>
+      <p class="lead">A hash table is an unordered data structure that stores key-value pairs. It uses a hash function to map keys to array indices, enabling average O(1) lookup, insertion, and deletion. When multiple keys hash to the same index, a collision occurs and must be resolved.</p>
+
+      <h3>What is a Hash Table?</h3>
+      <p>A hash table consists of three components: (1) a hash function that converts keys into array indices, (2) an underlying array (buckets), and (3) a collision resolution strategy. The hash function is deterministic—the same key always produces the same index.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Hash Table Concept</span>
+<span class="kw">var</span> phoneBook = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">string</span>&gt;();
+
+<span class="cm">// O(1) average insertion</span>
+phoneBook[<span class="str">"Alice"</span>] = <span class="str">"555-1234"</span>;
+phoneBook[<span class="str">"Bob"</span>] = <span class="str">"555-5678"</span>;
+phoneBook[<span class="str">"Charlie"</span>] = <span class="str">"555-9999"</span>;
+
+<span class="cm">// O(1) average lookup</span>
+<span class="ty">string</span> alicePhone = phoneBook[<span class="str">"Alice"</span>]; <span class="cm">// "555-1234"</span>
+
+<span class="cm">// O(1) average deletion</span>
+phoneBook.Remove(<span class="str">"Bob"</span>);
+
+<span class="cm">// O(1) average containment check</span>
+<span class="ty">bool</span> hasCharlie = phoneBook.ContainsKey(<span class="str">"Charlie"</span>); <span class="cm">// true</span></pre>
+      </div>
+
+      <h3>Hash Table vs Array vs Linked List</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>Hash Table</th>
+              <th>Array</th>
+              <th>Linked List</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lookup by key</td>
+              <td>O(1) avg</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Insert</td>
+              <td>O(1) avg</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>Delete</td>
+              <td>O(1) avg</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Space</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+            </tr>
+            <tr>
+              <td>Ordered?</td>
+              <td>No</td>
+              <td>Yes</td>
+              <td>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>When to Use Hash Tables:</strong> Looking up values by key, counting frequencies, checking existence, avoiding duplicates, grouping data by attribute.</div>
+      </div>
+    </section>
+
+    <!-- Section 5.2: Hash Functions & Distribution -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><div class="sec-num">5.2</div><div class="sec-line"></div></div>
+      <h2>Hash Functions & Distribution</h2>
+      <p class="lead">A good hash function distributes keys uniformly across buckets, minimizing collisions. In C#, all objects implement GetHashCode() which must be overridden for custom types to ensure correct behavior in hash tables.</p>
+
+      <h3>Properties of a Good Hash Function</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Deterministic:</strong> Same input always produces same hash code</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Uniform Distribution:</strong> Hash codes distributed evenly across range</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Efficient:</strong> Computed in O(1) or O(k) time (k = key length)</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Avalanche Effect:</strong> Small input change produces completely different hash</div>
+        </div>
+      </div>
+
+      <h3>Custom GetHashCode Implementation</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Person</span>
+{
+    <span class="kw">public</span> <span class="ty">string</span> Name { <span class="kw">get</span>; <span class="kw">set</span>; }
+    <span class="kw">public</span> <span class="ty">int</span> Age { <span class="kw">get</span>; <span class="kw">set</span>; }
+
+    <span class="cm">// Override GetHashCode for use in hash tables</span>
+    <span class="kw">public</span> <span class="kw">override</span> <span class="ty">int</span> <span class="fn">GetHashCode</span>()
+    {
+        <span class="cm">// Combine hash codes of fields that define equality</span>
+        <span class="ty">unchecked</span>
+        {
+            <span class="ty">int</span> hash = <span class="num">17</span>;
+            hash = hash * <span class="num">31</span> + Name.GetHashCode();
+            hash = hash * <span class="num">31</span> + Age.GetHashCode();
+            <span class="kw">return</span> hash;
+        }
+    }
+
+    <span class="cm">// Must also override Equals for consistency</span>
+    <span class="kw">public</span> <span class="kw">override</span> <span class="ty">bool</span> <span class="fn">Equals</span>(<span class="ty">object</span> obj)
+    {
+        <span class="kw">if</span> (obj <span class="kw">is</span> <span class="kw">not</span> <span class="ty">Person</span> p) <span class="kw">return</span> <span class="kw">false</span>;
+        <span class="kw">return</span> Name == p.Name && Age == p.Age;
+    }
+}</pre>
+      </div>
+
+      <h3>Hash Function Examples</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Simple mod hash for integers</span>
+<span class="ty">int</span> <span class="fn">SimpleHash</span>(<span class="ty">int</span> key, <span class="ty">int</span> capacity)
+{
+    <span class="kw">return</span> key % capacity;
+}
+
+<span class="cm">// Division method</span>
+<span class="ty">int</span> <span class="fn">DivisionHash</span>(<span class="ty">int</span> key, <span class="ty">int</span> tableSize)
+{
+    <span class="kw">return</span> key % tableSize;
+}
+
+<span class="cm">// Multiplication method</span>
+<span class="ty">int</span> <span class="fn">MultiplicationHash</span>(<span class="ty">int</span> key, <span class="ty">int</span> tableSize)
+{
+    <span class="ty">double</span> A = <span class="num">0.6180339887</span>; <span class="cm">// Golden ratio - 1</span>
+    <span class="kw">return</span> (<span class="ty">int</span>)(tableSize * ((key * A) % <span class="num">1</span>));
+}
+
+<span class="cm">// String hash (simplified)</span>
+<span class="ty">int</span> <span class="fn">StringHash</span>(<span class="ty">string</span> key, <span class="ty">int</span> tableSize)
+{
+    <span class="ty">int</span> hash = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> key)
+    {
+        hash = (hash * <span class="num">31</span> + c) % tableSize;
+    }
+    <span class="kw">return</span> hash;
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Critical Rule:</strong> If you override GetHashCode(), you MUST also override Equals(). They must be consistent: if a.Equals(b) is true, then a.GetHashCode() == b.GetHashCode().</div>
+      </div>
+    </section>
+
+    <!-- Section 5.3: Collision Resolution - Chaining -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><div class="sec-num">5.3</div><div class="sec-line"></div></div>
+      <h2>Collision Resolution: Chaining</h2>
+      <p class="lead">Chaining stores colliding keys in a linked list at each bucket. Simple, performs well even with high load factors, and allows flexible resizing. Worst-case O(n) if all keys hash to same bucket, but average remains O(1).</p>
+
+      <h3>How Chaining Works</h3>
+      <p>When inserting a key-value pair, compute hash(key) to get bucket index. If that bucket's linked list is empty, add the pair. If occupied, traverse the list to check if key exists (update value) or append new pair (O(1) append at head).</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Chaining with Linked Lists</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">HashTableChaining</span>&lt;K, V&gt;
+{
+    <span class="kw">private</span> <span class="kw">class</span> <span class="ty">Entry</span>
+    {
+        <span class="kw">public</span> K Key { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> V Value { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">Entry</span> Next { <span class="kw">get</span>; <span class="kw">set</span>; }
+
+        <span class="kw">public</span> <span class="fn">Entry</span>(K key, V value)
+        {
+            Key = key;
+            Value = value;
+            Next = <span class="kw">null</span>;
+        }
+    }
+
+    <span class="kw">private</span> <span class="ty">Entry</span>[] buckets;
+    <span class="kw">private</span> <span class="ty">int</span> count;
+    <span class="kw">private</span> <span class="ty">int</span> capacity;
+
+    <span class="kw">public</span> <span class="fn">HashTableChaining</span>(<span class="ty">int</span> initialCapacity = <span class="num">16</span>)
+    {
+        capacity = initialCapacity;
+        buckets = <span class="kw">new</span> <span class="ty">Entry</span>[capacity];
+        count = <span class="num">0</span>;
+    }
+
+    <span class="cm">// Compute bucket index</span>
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">GetBucketIndex</span>(K key)
+    {
+        <span class="ty">int</span> hash = key.GetHashCode();
+        <span class="kw">return</span> Math.Abs(hash) % capacity;
+    }
+
+    <span class="cm">// O(1) average insertion</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Add</span>(K key, V value)
+    {
+        <span class="kw">if</span> (key == <span class="kw">null</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">ArgumentNullException</span>(<span class="kw">nameof</span>(key));
+
+        <span class="cm">// Check load factor and resize if needed</span>
+        <span class="ty">double</span> loadFactor = (<span class="ty">double</span>)count / capacity;
+        <span class="kw">if</span> (loadFactor > <span class="num">0.75</span>) <span class="fn">Resize</span>();
+
+        <span class="ty">int</span> idx = <span class="fn">GetBucketIndex</span>(key);
+        <span class="ty">Entry</span> entry = buckets[idx];
+
+        <span class="cm">// Search existing chain</span>
+        <span class="kw">while</span> (entry != <span class="kw">null</span>)
+        {
+            <span class="kw">if</span> (entry.Key.Equals(key))
+            {
+                entry.Value = value; <span class="cm">// Update existing</span>
+                <span class="kw">return</span>;
+            }
+            entry = entry.Next;
+        }
+
+        <span class="cm">// Insert at head of chain</span>
+        <span class="ty">Entry</span> newEntry = <span class="kw">new</span> <span class="ty">Entry</span>(key, value);
+        newEntry.Next = buckets[idx];
+        buckets[idx] = newEntry;
+        count++;
+    }
+
+    <span class="cm">// O(1) average retrieval</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">TryGet</span>(K key, <span class="kw">out</span> V value)
+    {
+        <span class="ty">int</span> idx = <span class="fn">GetBucketIndex</span>(key);
+        <span class="ty">Entry</span> entry = buckets[idx];
+
+        <span class="kw">while</span> (entry != <span class="kw">null</span>)
+        {
+            <span class="kw">if</span> (entry.Key.Equals(key))
+            {
+                value = entry.Value;
+                <span class="kw">return</span> <span class="kw">true</span>;
+            }
+            entry = entry.Next;
+        }
+
+        value = <span class="kw">default</span>;
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+
+    <span class="cm">// O(1) average removal</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">Remove</span>(K key)
+    {
+        <span class="ty">int</span> idx = <span class="fn">GetBucketIndex</span>(key);
+        <span class="ty">Entry</span> entry = buckets[idx];
+        <span class="ty">Entry</span> prev = <span class="kw">null</span>;
+
+        <span class="kw">while</span> (entry != <span class="kw">null</span>)
+        {
+            <span class="kw">if</span> (entry.Key.Equals(key))
+            {
+                <span class="kw">if</span> (prev == <span class="kw">null</span>)
+                    buckets[idx] = entry.Next; <span class="cm">// Remove from head</span>
+                <span class="kw">else</span>
+                    prev.Next = entry.Next;    <span class="cm">// Remove from middle</span>
+                count--;
+                <span class="kw">return</span> <span class="kw">true</span>;
+            }
+            prev = entry;
+            entry = entry.Next;
+        }
+
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+
+    <span class="cm">// Double table size when load factor > 0.75</span>
+    <span class="kw">private</span> <span class="ty">void</span> <span class="fn">Resize</span>()
+    {
+        <span class="ty">Entry</span>[] oldBuckets = buckets;
+        capacity *= <span class="num">2</span>;
+        buckets = <span class="kw">new</span> <span class="ty">Entry</span>[capacity];
+        count = <span class="num">0</span>;
+
+        <span class="cm">// Rehash all entries into new table</span>
+        <span class="kw">foreach</span> (<span class="ty">Entry</span> entry <span class="kw">in</span> oldBuckets)
+        {
+            <span class="kw">while</span> (entry != <span class="kw">null</span>)
+            {
+                <span class="fn">Add</span>(entry.Key, entry.Value);
+                entry = entry.Next;
+            }
+        }
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Count</span> => count;
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>Chaining Advantages:</strong> Simple implementation, handles high load factors well, deletion is straightforward, performance degrades gracefully. Used by Java's HashMap and C#'s Dictionary.</div>
+      </div>
+    </section>
+
+    <!-- Section 5.4: Collision Resolution - Open Addressing -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><div class="sec-num">5.4</div><div class="sec-line"></div></div>
+      <h2>Collision Resolution: Open Addressing</h2>
+      <p class="lead">Open Addressing stores colliding entries in other empty slots within the same array. Uses probing sequences: linear probing (check next slot), quadratic probing (check 1, 4, 9, ... slots away), and double hashing (use secondary hash). Requires low load factors and rehashing when full.</p>
+
+      <h3>Linear Probing</h3>
+      <p>When hash(key) maps to occupied slot, check hash(key) + 1, hash(key) + 2, etc. until finding empty slot. Simple but suffers from clustering—many collisions create chains.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Open Addressing with Linear Probing</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">HashTableLinearProbing</span>&lt;K, V&gt;
+{
+    <span class="kw">private</span> <span class="kw">class</span> <span class="ty">Slot</span>
+    {
+        <span class="kw">public</span> K Key { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> V Value { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">bool</span> IsOccupied { <span class="kw">get</span>; <span class="kw">set</span>; }
+        <span class="kw">public</span> <span class="ty">bool</span> IsDeleted { <span class="kw">get</span>; <span class="kw">set</span>; }
+    }
+
+    <span class="kw">private</span> <span class="ty">Slot</span>[] slots;
+    <span class="kw">private</span> <span class="ty">int</span> count;
+
+    <span class="kw">public</span> <span class="fn">HashTableLinearProbing</span>(<span class="ty">int</span> capacity = <span class="num">16</span>)
+    {
+        slots = <span class="kw">new</span> <span class="ty">Slot</span>[capacity];
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; capacity; i++)
+            slots[i] = <span class="kw">new</span> <span class="ty">Slot</span>();
+        count = <span class="num">0</span>;
+    }
+
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">GetBucketIndex</span>(K key)
+    {
+        <span class="ty">int</span> hash = Math.Abs(key.GetHashCode());
+        <span class="kw">return</span> hash % slots.Length;
+    }
+
+    <span class="cm">// Linear Probing: check hash, hash+1, hash+2, ...</span>
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">FindSlot</span>(K key, <span class="ty">bool</span> forInsert)
+    {
+        <span class="ty">int</span> idx = <span class="fn">GetBucketIndex</span>(key);
+        <span class="ty">int</span> deleteIdx = <span class="num">-1</span>;
+
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; slots.Length; i++)
+        {
+            <span class="ty">int</span> probeIdx = (idx + i) % slots.Length;
+            <span class="ty">Slot</span> slot = slots[probeIdx];
+
+            <span class="kw">if</span> (!slot.IsOccupied)
+            {
+                <span class="kw">if</span> (slot.IsDeleted && deleteIdx == <span class="num">-1</span>)
+                    deleteIdx = probeIdx; <span class="cm">// Remember deleted slot</span>
+                <span class="kw">if</span> (forInsert) <span class="kw">return</span> deleteIdx == <span class="num">-1</span> ? probeIdx : deleteIdx;
+                <span class="kw">return</span> <span class="num">-1</span>; <span class="cm">// Key not found</span>
+            }
+
+            <span class="kw">if</span> (slot.Key.Equals(key))
+                <span class="kw">return</span> probeIdx; <span class="cm">// Found existing key</span>
+        }
+
+        <span class="kw">return</span> <span class="num">-1</span>; <span class="cm">// Table full</span>
+    }
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Add</span>(K key, V value)
+    {
+        <span class="kw">if</span> (count > slots.Length * <span class="num">0.5</span>)
+            <span class="fn">Resize</span>(); <span class="cm">// Keep load factor <= 0.5</span>
+
+        <span class="ty">int</span> idx = <span class="fn">FindSlot</span>(key, <span class="kw">true</span>);
+        <span class="kw">if</span> (idx == <span class="num">-1</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">Exception</span>(<span class="str">"Table full"</span>);
+
+        <span class="kw">bool</span> isNew = !slots[idx].IsOccupied;
+        slots[idx].Key = key;
+        slots[idx].Value = value;
+        slots[idx].IsOccupied = <span class="kw">true</span>;
+        slots[idx].IsDeleted = <span class="kw">false</span>;
+
+        <span class="kw">if</span> (isNew) count++;
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">TryGet</span>(K key, <span class="kw">out</span> V value)
+    {
+        <span class="ty">int</span> idx = <span class="fn">FindSlot</span>(key, <span class="kw">false</span>);
+        <span class="kw">if</span> (idx == <span class="num">-1</span>)
+        {
+            value = <span class="kw">default</span>;
+            <span class="kw">return</span> <span class="kw">false</span>;
+        }
+
+        value = slots[idx].Value;
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">Remove</span>(K key)
+    {
+        <span class="ty">int</span> idx = <span class="fn">FindSlot</span>(key, <span class="kw">false</span>);
+        <span class="kw">if</span> (idx == <span class="num">-1</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+        slots[idx].IsDeleted = <span class="kw">true</span>;
+        slots[idx].IsOccupied = <span class="kw">false</span>;
+        count--;
+        <span class="kw">return</span> <span class="kw">true</span>;
+    }
+
+    <span class="kw">private</span> <span class="ty">void</span> <span class="fn">Resize</span>()
+    {
+        <span class="ty">Slot</span>[] oldSlots = slots;
+        slots = <span class="kw">new</span> <span class="ty">Slot</span>[oldSlots.Length * <span class="num">2</span>];
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; slots.Length; i++)
+            slots[i] = <span class="kw">new</span> <span class="ty">Slot</span>();
+        count = <span class="num">0</span>;
+
+        <span class="cm">// Rehash all non-deleted entries</span>
+        <span class="kw">foreach</span> (<span class="ty">Slot</span> slot <span class="kw">in</span> oldSlots)
+        {
+            <span class="kw">if</span> (slot.IsOccupied && !slot.IsDeleted)
+                <span class="fn">Add</span>(slot.Key, slot.Value);
+        }
+    }
+}</pre>
+      </div>
+
+      <h3>Quadratic Probing & Double Hashing</h3>
+      <p>Quadratic probing checks indices: hash(k), hash(k)+1, hash(k)+4, hash(k)+9, etc. (offsets = i²). Reduces clustering vs linear probing. Double hashing uses secondary hash: hash(k) + i·hash2(k). Both require load factor ≤ 0.5 for guaranteed empty slot.</p>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Quadratic Probing: offset = i²</span>
+<span class="kw">private</span> <span class="ty">int</span> <span class="fn">FindSlotQuadratic</span>(K key, <span class="ty">bool</span> forInsert)
+{
+    <span class="ty">int</span> idx = <span class="fn">GetBucketIndex</span>(key);
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; slots.Length; i++)
+    {
+        <span class="ty">int</span> probeIdx = (idx + i * i) % slots.Length; <span class="cm">// Quadratic offset</span>
+        <span class="ty">Slot</span> slot = slots[probeIdx];
+
+        <span class="kw">if</span> (!slot.IsOccupied)
+            <span class="kw">return</span> forInsert ? probeIdx : <span class="num">-1</span>;
+
+        <span class="kw">if</span> (slot.Key.Equals(key))
+            <span class="kw">return</span> probeIdx;
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}
+
+<span class="cm">// Double Hashing: offset = i * hash2(key)</span>
+<span class="kw">private</span> <span class="ty">int</span> <span class="fn">SecondaryHash</span>(K key)
+{
+    <span class="kw">return</span> <span class="num">7</span> - (Math.Abs(key.GetHashCode()) % <span class="num">7</span>);
+}
+
+<span class="kw">private</span> <span class="ty">int</span> <span class="fn">FindSlotDoubleHash</span>(K key, <span class="ty">bool</span> forInsert)
+{
+    <span class="ty">int</span> idx = <span class="fn">GetBucketIndex</span>(key);
+    <span class="ty">int</span> step = <span class="fn">SecondaryHash</span>(key);
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; slots.Length; i++)
+    {
+        <span class="ty">int</span> probeIdx = (idx + i * step) % slots.Length;
+        <span class="ty">Slot</span> slot = slots[probeIdx];
+
+        <span class="kw">if</span> (!slot.IsOccupied)
+            <span class="kw">return</span> forInsert ? probeIdx : <span class="num">-1</span>;
+
+        <span class="kw">if</span> (slot.Key.Equals(key))
+            <span class="kw">return</span> probeIdx;
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Linear Probing: Advantages</div>
+          <div class="vs-item">Simple to implement and understand</div>
+          <div class="vs-item">Good cache locality (nearby memory)</div>
+          <div class="vs-item">Few hash computations needed</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Linear Probing: Disadvantages</div>
+          <div class="vs-item">Primary clustering (long probe sequences)</div>
+          <div class="vs-item">Sensitive to poor hash functions</div>
+          <div class="vs-item">Deletion leaves gaps, complicates search</div>
+        </div>
+      </div>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Double Hashing: Advantages</div>
+          <div class="vs-item">Minimizes clustering (both primary & secondary)</div>
+          <div class="vs-item">Provides excellent average distribution</div>
+          <div class="vs-item">Theoretically sound</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Double Hashing: Disadvantages</div>
+          <div class="vs-item">More complex implementation</div>
+          <div class="vs-item">Requires good secondary hash function</div>
+          <div class="vs-item">Slower than linear probing (extra hash call)</div>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Load Factor Critical:</strong> Open addressing requires load factor ≤ 0.5 (ideally 0.3-0.5). Beyond 0.7, performance collapses. Chaining works well up to 0.75+.</div>
+      </div>
+    </section>
+
+    <!-- Section 5.5: Custom Implementation -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><div class="sec-num">5.5</div><div class="sec-line"></div></div>
+      <h2>Custom Hash Table Implementation</h2>
+      <p class="lead">Building a production-quality hash table from scratch. This implementation uses chaining, includes resizing logic, and demonstrates all core operations: Add, Get, Remove, Contains, with O(1) average complexity.</p>
+
+      <h3>Complete Chaining-Based Hash Table</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">SimpleHashTable</span>&lt;K, V&gt;
+{
+    <span class="kw">private</span> <span class="kw">class</span> <span class="ty">Node</span>
+    {
+        <span class="kw">public</span> K Key;
+        <span class="kw">public</span> V Value;
+        <span class="kw">public</span> <span class="ty">Node</span> Next;
+
+        <span class="kw">public</span> <span class="fn">Node</span>(K k, V v)
+        {
+            Key = k;
+            Value = v;
+            Next = <span class="kw">null</span>;
+        }
+    }
+
+    <span class="kw">private</span> <span class="ty">Node</span>[] buckets;
+    <span class="kw">private</span> <span class="ty">int</span> capacity;
+    <span class="kw">private</span> <span class="ty">int</span> size;
+
+    <span class="kw">public</span> <span class="fn">SimpleHashTable</span>(<span class="ty">int</span> initialCapacity = <span class="num">16</span>)
+    {
+        <span class="kw">if</span> (initialCapacity &lt; <span class="num">1</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">ArgumentException</span>();
+
+        capacity = initialCapacity;
+        buckets = <span class="kw">new</span> <span class="ty">Node</span>[capacity];
+        size = <span class="num">0</span>;
+    }
+
+    <span class="cm">// Hash function: map key to bucket index</span>
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">Hash</span>(K key)
+    {
+        <span class="kw">if</span> (key == <span class="kw">null</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">ArgumentNullException</span>(<span class="kw">nameof</span>(key));
+
+        <span class="ty">int</span> hashCode = key.GetHashCode();
+        <span class="kw">return</span> Math.Abs(hashCode) % capacity;
+    }
+
+    <span class="cm">// O(1) average: Add or update key-value pair</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Add</span>(K key, V value)
+    {
+        <span class="cm">// Check load factor (size/capacity)</span>
+        <span class="ty">double</span> loadFactor = (<span class="ty">double</span>)size / capacity;
+        <span class="kw">if</span> (loadFactor > <span class="num">0.75</span>)
+        {
+            <span class="fn">Resize</span>();
+        }
+
+        <span class="ty">int</span> idx = <span class="fn">Hash</span>(key);
+        <span class="ty">Node</span> node = buckets[idx];
+
+        <span class="cm">// Search for existing key in chain</span>
+        <span class="kw">while</span> (node != <span class="kw">null</span>)
+        {
+            <span class="kw">if</span> (node.Key.Equals(key))
+            {
+                node.Value = value; <span class="cm">// Update value</span>
+                <span class="kw">return</span>;
+            }
+            node = node.Next;
+        }
+
+        <span class="cm">// Key not found, insert at head</span>
+        <span class="ty">Node</span> newNode = <span class="kw">new</span> <span class="ty">Node</span>(key, value);
+        newNode.Next = buckets[idx];
+        buckets[idx] = newNode;
+        size++;
+    }
+
+    <span class="cm">// O(1) average: Get value by key</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">TryGetValue</span>(K key, <span class="kw">out</span> V value)
+    {
+        <span class="ty">int</span> idx = <span class="fn">Hash</span>(key);
+        <span class="ty">Node</span> node = buckets[idx];
+
+        <span class="kw">while</span> (node != <span class="kw">null</span>)
+        {
+            <span class="kw">if</span> (node.Key.Equals(key))
+            {
+                value = node.Value;
+                <span class="kw">return</span> <span class="kw">true</span>;
+            }
+            node = node.Next;
+        }
+
+        value = <span class="kw">default</span>;
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+
+    <span class="cm">// O(1) average: Check if key exists</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">ContainsKey</span>(K key)
+    {
+        <span class="kw">return</span> <span class="fn">TryGetValue</span>(key, <span class="kw">out</span> _);
+    }
+
+    <span class="cm">// O(1) average: Remove key-value pair</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">Remove</span>(K key)
+    {
+        <span class="ty">int</span> idx = <span class="fn">Hash</span>(key);
+        <span class="ty">Node</span> node = buckets[idx];
+        <span class="ty">Node</span> prev = <span class="kw">null</span>;
+
+        <span class="kw">while</span> (node != <span class="kw">null</span>)
+        {
+            <span class="kw">if</span> (node.Key.Equals(key))
+            {
+                <span class="kw">if</span> (prev == <span class="kw">null</span>)
+                    buckets[idx] = node.Next;
+                <span class="kw">else</span>
+                    prev.Next = node.Next;
+
+                size--;
+                <span class="kw">return</span> <span class="kw">true</span>;
+            }
+
+            prev = node;
+            node = node.Next;
+        }
+
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+
+    <span class="cm">// Double capacity and rehash all entries</span>
+    <span class="kw">private</span> <span class="ty">void</span> <span class="fn">Resize</span>()
+    {
+        <span class="ty">Node</span>[] oldBuckets = buckets;
+        capacity *= <span class="num">2</span>;
+        buckets = <span class="kw">new</span> <span class="ty">Node</span>[capacity];
+        size = <span class="num">0</span>;
+
+        <span class="cm">// Rehash all old entries into new buckets</span>
+        <span class="kw">foreach</span> (<span class="ty">Node</span> node <span class="kw">in</span> oldBuckets)
+        {
+            <span class="kw">while</span> (node != <span class="kw">null</span>)
+            {
+                <span class="fn">Add</span>(node.Key, node.Value);
+                node = node.Next;
+            }
+        }
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Count</span> => size;
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Capacity</span> => capacity;
+}</pre>
+      </div>
+
+      <h3>Usage Example</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Create hash table for student IDs -> names</span>
+<span class="kw">var</span> students = <span class="kw">new</span> <span class="ty">SimpleHashTable</span>&lt;<span class="ty">int</span>, <span class="ty">string</span>&gt;();
+
+<span class="cm">// O(1) additions</span>
+students.Add(<span class="num">101</span>, <span class="str">"Alice"</span>);
+students.Add(<span class="num">102</span>, <span class="str">"Bob"</span>);
+students.Add(<span class="num">103</span>, <span class="str">"Charlie"</span>);
+
+<span class="cm">// O(1) lookup</span>
+<span class="kw">if</span> (students.TryGetValue(<span class="num">102</span>, <span class="kw">out</span> <span class="ty">string</span> name))
+    Console.WriteLine(name); <span class="cm">// Bob</span>
+
+<span class="cm">// O(1) containment check</span>
+<span class="ty">bool</span> exists = students.ContainsKey(<span class="num">105</span>); <span class="cm">// false</span>
+
+<span class="cm">// O(1) removal</span>
+students.Remove(<span class="num">101</span>);
+
+Console.WriteLine($<span class="str">"Table size: {students.Count}"</span>); <span class="cm">// 2</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>Resizing Strategy:</strong> Resize when load factor exceeds 0.75. Double the capacity to amortize the O(n) rehash cost across O(n) insertions, maintaining O(1) amortized insertion time.</div>
+      </div>
+    </section>
+
+    <!-- Section 5.6: Dictionary & HashSet API -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><div class="sec-num">5.6</div><div class="sec-line"></div></div>
+      <h2>C# Dictionary & HashSet API</h2>
+      <p class="lead">The C# Dictionary&lt;K,V&gt; and HashSet&lt;T&gt; are production-quality generic hash table implementations. Dictionary maps keys to values; HashSet stores unique elements. Both provide O(1) average-case operations.</p>
+
+      <h3>Dictionary&lt;K,V&gt; Complete API</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Create dictionary</span>
+<span class="kw">var</span> dict = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt;();
+
+<span class="cm">// Add items (throws KeyNotFoundException if duplicate)</span>
+dict.Add(<span class="str">"apple"</span>, <span class="num">1</span>);
+dict.Add(<span class="str">"banana"</span>, <span class="num">2</span>);
+
+<span class="cm">// Indexer for add/update</span>
+dict[<span class="str">"cherry"</span>] = <span class="num">3</span>;
+dict[<span class="str">"apple"</span>] = <span class="num">10</span>; <span class="cm">// Update</span>
+
+<span class="cm">// Safe lookup - doesn't throw</span>
+<span class="kw">if</span> (dict.TryGetValue(<span class="str">"apple"</span>, <span class="kw">out</span> <span class="ty">int</span> value))
+    Console.WriteLine(value); <span class="cm">// 10</span>
+
+<span class="cm">// Check existence</span>
+<span class="ty">bool</span> hasKey = dict.ContainsKey(<span class="str">"banana"</span>); <span class="cm">// true</span>
+<span class="ty">bool</span> hasValue = dict.ContainsValue(<span class="num">3</span>); <span class="cm">// true</span>
+
+<span class="cm">// Remove item</span>
+<span class="ty">bool</span> removed = dict.Remove(<span class="str">"banana"</span>); <span class="cm">// true</span>
+
+<span class="cm">// TryRemove (C# 8+) - doesn't throw</span>
+<span class="ty">bool</span> wasRemoved = dict.Remove(<span class="str">"banana"</span>, <span class="kw">out</span> <span class="ty">int</span> val);
+
+<span class="cm">// Collections: Keys, Values, Count, Clear</span>
+<span class="kw">var</span> keys = dict.Keys;        <span class="cm">// ICollection of keys</span>
+<span class="kw">var</span> values = dict.Values;    <span class="cm">// ICollection of values</span>
+<span class="ty">int</span> count = dict.Count;      <span class="cm">// 2</span>
+dict.Clear();                  <span class="cm">// Remove all items</span>
+
+<span class="cm">// Iteration</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> kvp <span class="kw">in</span> dict)
+{
+    Console.WriteLine($<span class="str">"{kvp.Key}: {kvp.Value}"</span>);
+}</pre>
+      </div>
+
+      <h3>Dictionary Performance Table</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>Average</th>
+              <th>Worst Case</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Add (indexer)</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+              <td>Updates if key exists</td>
+            </tr>
+            <tr>
+              <td>Add (method)</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+              <td>Throws if key exists</td>
+            </tr>
+            <tr>
+              <td>Remove</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+              <td>Returns bool</td>
+            </tr>
+            <tr>
+              <td>TryGetValue</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+              <td>Safe lookup</td>
+            </tr>
+            <tr>
+              <td>ContainsKey</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+              <td>Existence check</td>
+            </tr>
+            <tr>
+              <td>ContainsValue</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>Full scan required</td>
+            </tr>
+            <tr>
+              <td>Clear</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>Removes all items</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>HashSet&lt;T&gt; API & Set Operations</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Create hash set</span>
+<span class="kw">var</span> numbers = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt; { <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span> };
+
+<span class="cm">// Add/Remove items (duplicates ignored)</span>
+<span class="ty">bool</span> added = numbers.Add(<span class="num">5</span>);     <span class="cm">// true</span>
+<span class="ty">bool</span> notAdded = numbers.Add(<span class="num">2</span>); <span class="cm">// false (already exists)</span>
+<span class="ty">bool</span> removed = numbers.Remove(<span class="num">1</span>); <span class="cm">// true</span>
+
+<span class="cm">// Containment check - O(1)</span>
+<span class="ty">bool</span> contains = numbers.Contains(<span class="num">3</span>); <span class="cm">// true</span>
+
+<span class="cm">// Count, Clear</span>
+<span class="ty">int</span> count = numbers.Count;  <span class="cm">// 4</span>
+numbers.Clear();              <span class="cm">// O(n)</span>
+
+<span class="cm">// Set operations</span>
+<span class="kw">var</span> set1 = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt; { <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span> };
+<span class="kw">var</span> set2 = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt; { <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span> };
+
+<span class="cm">// Union: add all elements from set2</span>
+set1.UnionWith(set2); <span class="cm">// set1 = {1, 2, 3, 4}</span>
+
+<span class="cm">// Intersection: keep only common elements</span>
+set1.IntersectWith(set2); <span class="cm">// set1 = {2, 3}</span>
+
+<span class="cm">// Difference: remove elements in set2</span>
+set1.ExceptWith(set2); <span class="cm">// set1 = {}</span>
+
+<span class="cm">// Symmetric difference: keep non-common</span>
+set1.SymmetricExceptWith(set2); <span class="cm">// XOR operation</span>
+
+<span class="cm">// Queries (don't modify)</span>
+<span class="ty">bool</span> isSubset = set1.IsSubsetOf(set2);
+<span class="ty">bool</span> isSuperset = set1.IsSupersetOf(set2);
+<span class="ty">bool</span> overlaps = set1.Overlaps(set2);
+<span class="ty">bool</span> disjoint = !set1.Overlaps(set2);</pre>
+      </div>
+
+      <h3>When to Use Set vs Dictionary</h3>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Use HashSet when:</div>
+          <div class="vs-item">Storing unique values (no duplicates)</div>
+          <div class="vs-item">Checking existence is primary operation</div>
+          <div class="vs-item">Need set operations (union, intersection)</div>
+          <div class="vs-item">Don't need associated values</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Use Dictionary when:</div>
+          <div class="vs-item">Each key has associated value</div>
+          <div class="vs-item">Need key-value pairs</div>
+          <div class="vs-item">Access data by key is primary</div>
+          <div class="vs-item">Mapping relationship important</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5.7: SortedDictionary & SortedSet -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><div class="sec-num">5.7</div><div class="sec-line"></div></div>
+      <h2>SortedDictionary & SortedSet</h2>
+      <p class="lead">SortedDictionary and SortedSet are ordered variants backed by Red-Black Trees. They maintain keys in sorted order at O(log n) cost per operation. Use when you need ordering or range queries.</p>
+
+      <h3>SortedDictionary Performance</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Dictionary</th>
+              <th>SortedDictionary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lookup by key</td>
+              <td>O(1) avg</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Insert</td>
+              <td>O(1) avg</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Delete</td>
+              <td>O(1) avg</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Enumeration order</td>
+              <td>Insertion order</td>
+              <td>Sorted by key</td>
+            </tr>
+            <tr>
+              <td>Range queries</td>
+              <td>No</td>
+              <td>No (use GetViewBetween)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>SortedDictionary Usage</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Create sorted dictionary (keys ordered)</span>
+<span class="kw">var</span> scores = <span class="kw">new</span> <span class="ty">SortedDictionary</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt;();
+
+scores.Add(<span class="str">"Charlie"</span>, <span class="num">85</span>);
+scores.Add(<span class="str">"Alice"</span>, <span class="num">95</span>);
+scores.Add(<span class="str">"Bob"</span>, <span class="num">88</span>);
+
+<span class="cm">// Enumerate in sorted key order</span>
+<span class="kw">foreach</span> (<span class="kw">var</span> kvp <span class="kw">in</span> scores)
+{
+    <span class="cm">// Alice: 95, Bob: 88, Charlie: 85</span>
+    Console.WriteLine($<span class="str">"{kvp.Key}: {kvp.Value}"</span>);
+}
+
+<span class="cm">// O(log n) operations</span>
+<span class="ty">int</span> aliceScore = scores[<span class="str">"Alice"</span>];
+<span class="ty">bool</span> removed = scores.Remove(<span class="str">"Bob"</span>);
+
+<span class="cm">// Get view between keys (C# 4.0+)</span>
+<span class="kw">var</span> view = scores.GetViewBetween(<span class="str">"Alice"</span>, <span class="str">"Charlie"</span>);
+<span class="cm">// Returns submapping with keys >= "Alice" and <= "Charlie"</span></pre>
+      </div>
+
+      <h3>SortedSet Usage</h3>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Create sorted set (unique, ordered elements)</span>
+<span class="kw">var</span> primes = <span class="kw">new</span> <span class="ty">SortedSet</span>&lt;<span class="ty">int</span>&gt; { <span class="num">2</span>, <span class="num">3</span>, <span class="num">5</span>, <span class="num">7</span>, <span class="num">11</span> };
+
+<span class="cm">// Enumerate in sorted order</span>
+<span class="kw">foreach</span> (<span class="ty">int</span> p <span class="kw">in</span> primes)
+    Console.WriteLine(p); <span class="cm">// 2, 3, 5, 7, 11</span>
+
+<span class="cm">// O(log n) operations</span>
+primes.Add(<span class="num">13</span>);
+<span class="ty">bool</span> contains = primes.Contains(<span class="num">7</span>); <span class="cm">// true</span>
+
+<span class="cm">// Range queries</span>
+<span class="ty">int</span> min = primes.Min; <span class="cm">// 2</span>
+<span class="ty">int</span> max = primes.Max; <span class="cm">// 13</span>
+
+<span class="cm">// Get element by relative position</span>
+<span class="ty">bool</span> found = primes.TryGetValue(<span class="num">5</span>, <span class="kw">out</span> <span class="ty">int</span> val); <span class="cm">// true</span>
+
+<span class="cm">// View operations (C# 5+)</span>
+<span class="kw">var</span> view = primes.GetViewBetween(<span class="num">3</span>, <span class="num">11</span>); <span class="cm">// {3, 5, 7, 11}</span>
+
+<span class="cm">// Reverse enumeration</span>
+<span class="kw">foreach</span> (<span class="ty">int</span> p <span class="kw">in</span> primes.Reverse())
+    Console.WriteLine(p); <span class="cm">// 13, 11, 7, 5, 3, 2</span></pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>When to Use Sorted Variants:</strong> You need keys in sorted order, range queries, or min/max operations. Otherwise, use regular Dictionary/HashSet for O(1) speed.</div>
+      </div>
+    </section>
+
+    <!-- Section 5.8: Common Patterns -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><div class="sec-num">5.8</div><div class="sec-line"></div></div>
+      <h2>Common Hash Table Patterns</h2>
+      <p class="lead">Real-world problems repeat patterns. Master frequency counting, complement finding, grouping by attribute, and two-pointer techniques combined with hash tables.</p>
+
+      <h3>Pattern 1: Frequency Counting</h3>
+      <p>Count occurrences of elements. Build a map, increment count for each element.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Count word frequencies</span>
+<span class="kw">public</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt; <span class="fn">CountFrequencies</span>(<span class="ty">string</span>[] words)
+{
+    <span class="kw">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">string</span> word <span class="kw">in</span> words)
+    {
+        <span class="kw">if</span> (freq.ContainsKey(word))
+            freq[word]++;
+        <span class="kw">else</span>
+            freq[word] = <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> freq;
+}
+
+<span class="cm">// With GetValueOrDefault (C# 8+)</span>
+<span class="kw">public</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt; <span class="fn">CountFrequenciesModern</span>(<span class="ty">string</span>[] words)
+{
+    <span class="kw">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">string</span> word <span class="kw">in</span> words)
+    {
+        freq[word] = freq.GetValueOrDefault(word) + <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> freq;
+}</pre>
+      </div>
+
+      <h3>Pattern 2: Complement Finding (Two Sum)</h3>
+      <p>Find if target = num1 + num2 exists. For each number, check if (target - number) exists in map.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Find two numbers that sum to target</span>
+<span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TwoSum</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+{
+    <span class="kw">var</span> seen = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;(); <span class="cm">// value -> index</span>
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        <span class="ty">int</span> complement = target - nums[i];
+
+        <span class="kw">if</span> (seen.ContainsKey(complement))
+        {
+            <span class="kw">return</span> <span class="kw">new</span>[] { seen[complement], i };
+        }
+
+        <span class="cm">// Store num and its index (handles duplicates)</span>
+        <span class="kw">if</span> (!seen.ContainsKey(nums[i]))
+            seen[nums[i]] = i;
+    }
+
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[0]; <span class="cm">// Not found</span>
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Pattern 3: Grouping by Attribute</h3>
+      <p>Group items by a key attribute. Map key -> list of items.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Group words by length</span>
+<span class="kw">public</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">List</span>&lt;<span class="ty">string</span>&gt;&gt; <span class="fn">GroupByLength</span>(<span class="ty">string</span>[] words)
+{
+    <span class="kw">var</span> groups = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">List</span>&lt;<span class="ty">string</span>&gt;&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">string</span> word <span class="kw">in</span> words)
+    {
+        <span class="ty">int</span> len = word.Length;
+
+        <span class="kw">if</span> (!groups.ContainsKey(len))
+            groups[len] = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">string</span>&gt;();
+
+        groups[len].Add(word);
+    }
+
+    <span class="kw">return</span> groups;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Pattern 4: Prefix Sum with Hash Map</h3>
+      <p>Find subarrays with specific sum. Use hash map of prefix sums: map[prefix] = count of indices with that prefix.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Count subarrays summing to target</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">SubarraySumEqualsK</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="kw">var</span> prefixCount = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    prefixCount[<span class="num">0</span>] = <span class="num">1</span>; <span class="cm">// Base case: prefix 0 before array</span>
+
+    <span class="ty">int</span> sum = <span class="num">0</span>;
+    <span class="ty">int</span> count = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+    {
+        sum += num;
+        <span class="ty">int</span> target = sum - k;
+
+        <span class="cm">// If (sum - k) exists, we found valid subarrays</span>
+        <span class="kw">if</span> (prefixCount.ContainsKey(target))
+            count += prefixCount[target];
+
+        <span class="cm">// Record current prefix sum</span>
+        <span class="kw">if</span> (!prefixCount.ContainsKey(sum))
+            prefixCount[sum] = <span class="num">0</span>;
+        prefixCount[sum]++;
+    }
+
+    <span class="kw">return</span> count;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Pattern 5: Sliding Window with Hash Map</h3>
+      <p>Track element frequencies in current window. Move window, update frequencies.</p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Longest substring without repeating characters</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">LengthOfLongestSubstring</span>(<span class="ty">string</span> s)
+{
+    <span class="kw">var</span> charIndex = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+    <span class="ty">int</span> maxLen = <span class="num">0</span>;
+    <span class="ty">int</span> left = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> right = <span class="num">0</span>; right &lt; s.Length; right++)
+    {
+        <span class="ty">char</span> c = s[right];
+
+        <span class="cm">// If duplicate, move left pointer past previous occurrence</span>
+        <span class="kw">if</span> (charIndex.ContainsKey(c))
+        {
+            left = Math.Max(left, charIndex[c] + <span class="num">1</span>);
+        }
+
+        charIndex[c] = right;
+        maxLen = Math.Max(maxLen, right - left + <span class="num">1</span>);
+    }
+
+    <span class="kw">return</span> maxLen;
+}
+
+<span class="cm">// Time: O(n), Space: O(min(n, 26))</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div><strong>Pattern Recognition:</strong> Hash map appears when: need to track seen items, check existence, count frequencies, find pairs/complements, or group by attribute.</div>
+      </div>
+    </section>
+
+    <!-- Section 5.9: Practice Problems -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><div class="sec-num">5.9</div><div class="sec-line"></div></div>
+      <h2>Practice Problems (14 Complete Solutions)</h2>
+      <p class="lead">Master hash tables through comprehensive problems. Each includes problem statement, approach explanation, complete C# code with syntax highlighting, time/space complexity analysis, and edge cases.</p>
+
+      <!-- Problem 1: Two Sum -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 1: Two Sum</div>
+            <div class="algo-desc">Given array of integers and target, return indices of two numbers that sum to target. You may assume each input has exactly one solution and cannot use same element twice.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Two Pointer</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Use one-pass hash map. As iterating, for each number check if (target - number) exists in map. If yes, return indices. If no, store current number in map for future lookups. O(n) time, O(n) space.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TwoSum</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+{
+    <span class="kw">var</span> map = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        <span class="ty">int</span> complement = target - nums[i];
+        <span class="kw">if</span> (map.ContainsKey(complement))
+        {
+            <span class="kw">return</span> <span class="kw">new</span>[] { map[complement], i };
+        }
+        <span class="kw">if</span> (!map.ContainsKey(nums[i]))
+        {
+            map[nums[i]] = i;
+        }
+    }
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[0];
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 2: Valid Anagram -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 2: Valid Anagram</div>
+            <div class="algo-desc">Given two strings, determine if one is anagram of other. Anagram: same characters with different order.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Count character frequencies in both strings. Compare frequencies. If equal, they're anagrams. Alternative: sort and compare, but hash map is more efficient conceptually.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsAnagram</span>(<span class="ty">string</span> s, <span class="ty">string</span> t)
+{
+    <span class="kw">if</span> (s.Length != t.Length) <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="kw">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> s)
+    {
+        <span class="kw">if</span> (!freq.ContainsKey(c))
+            freq[c] = <span class="num">0</span>;
+        freq[c]++;
+    }
+
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> t)
+    {
+        <span class="kw">if</span> (!freq.ContainsKey(c))
+            <span class="kw">return</span> <span class="kw">false</span>;
+        freq[c]--;
+        <span class="kw">if</span> (freq[c] &lt; <span class="num">0</span>)
+            <span class="kw">return</span> <span class="kw">false</span>;
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(1) [max 26 chars]</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 3: Group Anagrams -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 3: Group Anagrams</div>
+            <div class="algo-desc">Given array of strings, group anagrams. Return list of lists where each inner list contains all anagrams together.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Grouping</span>
+              <span class="badge b-blue">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Use sorted string as key. Anagrams have same sorted representation. Map sorted_string -> list of anagrams. O(n k log k) where n is count, k is avg length.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">string</span>&gt;&gt; <span class="fn">GroupAnagrams</span>(<span class="ty">string</span>[] strs)
+{
+    <span class="kw">var</span> groups = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">List</span>&lt;<span class="ty">string</span>&gt;&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">string</span> s <span class="kw">in</span> strs)
+    {
+        <span class="cm">// Sort characters to get canonical form</span>
+        <span class="ty">char</span>[] chars = s.ToCharArray();
+        Array.Sort(chars);
+        <span class="ty">string</span> key = <span class="kw">new</span> <span class="ty">string</span>(chars);
+
+        <span class="kw">if</span> (!groups.ContainsKey(key))
+            groups[key] = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">string</span>&gt;();
+
+        groups[key].Add(s);
+    }
+
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">string</span>&gt;&gt;(groups.Values);
+}
+
+<span class="cm">// Time: O(n k log k), Space: O(n k)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 4: Top K Frequent Elements -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 4: Top K Frequent Elements</div>
+            <div class="algo-desc">Given array and integer k, return k most frequent elements. Order doesn't matter.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Heap</span>
+              <span class="badge b-blue">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Count frequencies with hash map. Use min-heap of size k to track top k elements. When heap exceeds k, remove min. Final heap contains k most frequent. O(n log k).</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TopKFrequent</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="cm">// Count frequencies</span>
+    <span class="kw">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    <span class="kw">foreach</span> (<span class="ty">int</span> n <span class="kw">in</span> nums)
+    {
+        <span class="kw">if</span> (!freq.ContainsKey(n))
+            freq[n] = <span class="num">0</span>;
+        freq[n]++;
+    }
+
+    <span class="cm">// Min heap by frequency (order by ascending count)</span>
+    <span class="kw">var</span> heap = <span class="kw">new</span> <span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> freq.Keys)
+    {
+        heap.Enqueue(num, freq[num]);
+        <span class="kw">if</span> (heap.Count &gt; k)
+            heap.Dequeue();
+    }
+
+    <span class="kw">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="kw">while</span> (heap.Count &gt; <span class="num">0</span>)
+        result.Add(heap.Dequeue());
+
+    <span class="kw">return</span> result.ToArray();
+}
+
+<span class="cm">// Time: O(n log k), Space: O(n)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 5: Longest Consecutive Sequence -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 5: Longest Consecutive Sequence</div>
+            <div class="algo-desc">Given unsorted array, find length of longest consecutive elements sequence. Must run in O(n) time.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Hard</span>
+            </div>
+          </div>
+          <div class="algo-idx">5</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Convert array to hash set O(n). For each number, only start counting if it's sequence start (num-1 not in set). Count consecutive from there. O(n) because each element visited at most twice.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">LongestConsecutive</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="kw">var</span> numSet = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt;(nums);
+    <span class="ty">int</span> longest = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> numSet)
+    {
+        <span class="cm">// Only count from start of sequence</span>
+        <span class="kw">if</span> (!numSet.Contains(num - <span class="num">1</span>))
+        {
+            <span class="ty">int</span> length = <span class="num">1</span>;
+            <span class="ty">int</span> current = num;
+
+            <span class="kw">while</span> (numSet.Contains(current + <span class="num">1</span>))
+            {
+                length++;
+                current++;
+            }
+
+            longest = Math.Max(longest, length);
+        }
+    }
+
+    <span class="kw">return</span> longest;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 6: Subarray Sum Equals K -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 6: Subarray Sum Equals K</div>
+            <div class="algo-desc">Given array and target k, count subarrays summing exactly to k.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Prefix Sum</span>
+              <span class="badge b-blue">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">6</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Use prefix sum technique. Track cumulative sum and its frequency. For each position, check if (current_sum - k) exists. Count += frequency. This identifies valid subarrays. O(n) time.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">SubarraySum</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="kw">var</span> prefixSum = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    prefixSum[<span class="num">0</span>] = <span class="num">1</span>; <span class="cm">// Base: empty prefix</span>
+
+    <span class="ty">int</span> sum = <span class="num">0</span>;
+    <span class="ty">int</span> count = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+    {
+        sum += num;
+        <span class="ty">int</span> target = sum - k;
+
+        <span class="kw">if</span> (prefixSum.ContainsKey(target))
+            count += prefixSum[target];
+
+        <span class="kw">if</span> (!prefixSum.ContainsKey(sum))
+            prefixSum[sum] = <span class="num">0</span>;
+        prefixSum[sum]++;
+    }
+
+    <span class="kw">return</span> count;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 7: Contains Duplicate I -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 7: Contains Duplicate I</div>
+            <div class="algo-desc">Given array, return true if contains duplicate element, false otherwise.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">7</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Use hash set. Iterate array, check if element in set. If yes, return true. If no, add to set. Return false if complete. O(n) time, O(n) space.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">ContainsDuplicate</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="kw">var</span> seen = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt;();
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+    {
+        <span class="kw">if</span> (seen.Contains(num))
+            <span class="kw">return</span> <span class="kw">true</span>;
+        seen.Add(num);
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 8: Contains Duplicate II -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 8: Contains Duplicate II</div>
+            <div class="algo-desc">Given array and k, return true if contains duplicate with indices differing by at most k.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Sliding Window</span>
+              <span class="badge b-blue">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">8</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Maintain sliding window of size k. Use set to track elements in current window. As sliding right, add new element. If duplicate, return true. Remove leftmost when window exceeds k.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">ContainsNearbyDuplicate</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="kw">var</span> window = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">int</span>&gt;();
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        <span class="kw">if</span> (window.Contains(nums[i]))
+            <span class="kw">return</span> <span class="kw">true</span>;
+
+        window.Add(nums[i]);
+
+        <span class="kw">if</span> (window.Count &gt; k)
+            window.Remove(nums[i - k]);
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(min(n, k))</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 9: Contains Duplicate III -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 9: Contains Duplicate III</div>
+            <div class="algo-desc">Given array, k, t: return true if indices differ by k and values differ by at most t.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Bucket</span>
+              <span class="badge b-blue">Hard</span>
+            </div>
+          </div>
+          <div class="algo-idx">9</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Use bucketing strategy. Divide number line into buckets of size (t+1). Numbers in same bucket or adjacent buckets may satisfy condition. Check only current and adjacent buckets. O(n) amortized.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">ContainsNearbyAlmostDuplicate</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k, <span class="ty">long</span> t)
+{
+    <span class="kw">if</span> (t &lt; <span class="num">0</span> || k &lt; <span class="num">1</span>) <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="kw">var</span> buckets = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">long</span>, <span class="ty">long</span>&gt;();
+    <span class="ty">long</span> bucketSize = t + <span class="num">1</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.Length; i++)
+    {
+        <span class="ty">long</span> remappedNum = ((<span class="ty">long</span>)nums[i] &lt; <span class="num">0</span>) ? (((<span class="ty">long</span>)nums[i] + <span class="num">1</span>) / bucketSize - <span class="num">1</span>) : ((<span class="ty">long</span>)nums[i] / bucketSize);
+        <span class="ty">long</span> bucket = remappedNum;
+
+        <span class="cm">// Check current bucket</span>
+        <span class="kw">if</span> (buckets.ContainsKey(bucket))
+            <span class="kw">return</span> <span class="kw">true</span>;
+
+        <span class="cm">// Check adjacent buckets</span>
+        <span class="kw">if</span> (buckets.ContainsKey(bucket - <span class="num">1</span>) && Math.Abs((<span class="ty">long</span>)nums[i] - buckets[bucket - <span class="num">1</span>]) &lt;= t)
+            <span class="kw">return</span> <span class="kw">true</span>;
+
+        <span class="kw">if</span> (buckets.ContainsKey(bucket + <span class="num">1</span>) && Math.Abs((<span class="ty">long</span>)nums[i] - buckets[bucket + <span class="num">1</span>]) &lt;= t)
+            <span class="kw">return</span> <span class="kw">true</span>;
+
+        buckets[bucket] = (<span class="ty">long</span>)nums[i];
+
+        <span class="kw">if</span> (i &gt;= k)
+            buckets.Remove(((((<span class="ty">long</span>)nums[i - k] &lt; <span class="num">0</span>) ? (((<span class="ty">long</span>)nums[i - k] + <span class="num">1</span>) / bucketSize - <span class="num">1</span>) : ((<span class="ty">long</span>)nums[i - k] / bucketSize)));
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(min(n, k))</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 10: First Unique Character in String -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 10: First Unique Character in String</div>
+            <div class="algo-desc">Given string, find index of first non-repeating character. Return -1 if all repeat.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">10</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Two-pass approach: First pass counts all characters. Second pass finds first with count 1. O(n) time, O(1) space (max 26 letters).</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">FirstUniqChar</span>(<span class="ty">string</span> s)
+{
+    <span class="kw">var</span> freq = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">int</span>&gt;();
+
+    <span class="cm">// Count frequencies</span>
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> s)
+    {
+        <span class="kw">if</span> (!freq.ContainsKey(c))
+            freq[c] = <span class="num">0</span>;
+        freq[c]++;
+    }
+
+    <span class="cm">// Find first with count 1</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; s.Length; i++)
+    {
+        <span class="kw">if</span> (freq[s[i]] == <span class="num">1</span>)
+            <span class="kw">return</span> i;
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(1)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 11: Isomorphic Strings -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 11: Isomorphic Strings</div>
+            <div class="algo-desc">Two strings isomorphic if characters can be replaced such that s maps to t. One-to-one mapping.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">11</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Maintain two maps: s->t and t->s. For each pair, check consistency. If s[i] maps to different t chars or vice versa, return false.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsIsomorphic</span>(<span class="ty">string</span> s, <span class="ty">string</span> t)
+{
+    <span class="kw">if</span> (s.Length != t.Length) <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="kw">var</span> sToT = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">char</span>&gt;();
+    <span class="kw">var</span> tToS = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">char</span>&gt;();
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; s.Length; i++)
+    {
+        <span class="ty">char</span> sc = s[i];
+        <span class="ty">char</span> tc = t[i];
+
+        <span class="cm">// Check s -> t mapping</span>
+        <span class="kw">if</span> (sToT.ContainsKey(sc))
+        {
+            <span class="kw">if</span> (sToT[sc] != tc)
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+        <span class="kw">else</span>
+        {
+            sToT[sc] = tc;
+        }
+
+        <span class="cm">// Check t -> s mapping</span>
+        <span class="kw">if</span> (tToS.ContainsKey(tc))
+        {
+            <span class="kw">if</span> (tToS[tc] != sc)
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+        <span class="kw">else</span>
+        {
+            tToS[tc] = sc;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(1)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 12: Word Pattern -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 12: Word Pattern</div>
+            <div class="algo-desc">Given pattern and string, check if words follow pattern. Each char maps to unique word, each word to unique char.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-green">Easy</span>
+            </div>
+          </div>
+          <div class="algo-idx">12</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Similar to isomorphic strings. Two bidirectional maps: pattern char -> word, word -> pattern char. Verify one-to-one mapping consistency.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">WordPattern</span>(<span class="ty">string</span> pattern, <span class="ty">string</span> s)
+{
+    <span class="ty">string</span>[] words = s.Split(<span class="str">' '</span>);
+
+    <span class="kw">if</span> (pattern.Length != words.Length)
+        <span class="kw">return</span> <span class="kw">false</span>;
+
+    <span class="kw">var</span> charToWord = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">string</span>&gt;();
+    <span class="kw">var</span> wordToChar = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">string</span>, <span class="ty">char</span>&gt;();
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; pattern.Length; i++)
+    {
+        <span class="ty">char</span> c = pattern[i];
+        <span class="ty">string</span> w = words[i];
+
+        <span class="kw">if</span> (charToWord.ContainsKey(c))
+        {
+            <span class="kw">if</span> (charToWord[c] != w)
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+        <span class="kw">else</span>
+        {
+            charToWord[c] = w;
+        }
+
+        <span class="kw">if</span> (wordToChar.ContainsKey(w))
+        {
+            <span class="kw">if</span> (wordToChar[w] != c)
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+        <span class="kw">else</span>
+        {
+            wordToChar[w] = c;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="cm">// Time: O(n + m), Space: O(n)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 13: Valid Sudoku -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 13: Valid Sudoku</div>
+            <div class="algo-desc">Validate sudoku board. Check no duplicates in rows, columns, 3x3 boxes.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-orange">Hash Set</span>
+              <span class="badge b-blue">Medium</span>
+            </div>
+          </div>
+          <div class="algo-idx">13</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Three hash sets per iteration: row, column, 3x3 box. Check each non-empty cell against all three. If conflict, invalid. O(1) since grid fixed 9x9.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsValidSudoku</span>(<span class="ty">char</span>[][] board)
+{
+    <span class="kw">var</span> rows = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">char</span>&gt;[<span class="num">9</span>];
+    <span class="kw">var</span> cols = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">char</span>&gt;[<span class="num">9</span>];
+    <span class="kw">var</span> boxes = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">char</span>&gt;[<span class="num">9</span>];
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; <span class="num">9</span>; i++)
+    {
+        rows[i] = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">char</span>&gt;();
+        cols[i] = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">char</span>&gt;();
+        boxes[i] = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">char</span>&gt;();
+    }
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; <span class="num">9</span>; i++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> j = <span class="num">0</span>; j &lt; <span class="num">9</span>; j++)
+        {
+            <span class="ty">char</span> c = board[i][j];
+            <span class="kw">if</span> (c == <span class="str">'.'</span>) <span class="kw">continue</span>;
+
+            <span class="ty">int</span> boxIdx = (i / <span class="num">3</span>) * <span class="num">3</span> + (j / <span class="num">3</span>);
+
+            <span class="kw">if</span> (rows[i].Contains(c) || cols[j].Contains(c) || boxes[boxIdx].Contains(c))
+                <span class="kw">return</span> <span class="kw">false</span>;
+
+            rows[i].Add(c);
+            cols[j].Add(c);
+            boxes[boxIdx].Add(c);
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}
+
+<span class="cm">// Time: O(1), Space: O(1)</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Problem 14: LRU Cache -->
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Problem 14: LRU Cache</div>
+            <div class="algo-desc">Implement LRU (Least Recently Used) cache with get(key) and put(key, value). Operations must be O(1). Evict LRU item when capacity exceeded.</div>
+            <div class="algo-tags">
+              <span class="badge b-orange">Hash Map</span>
+              <span class="badge b-blue">Linked List</span>
+              <span class="badge b-blue">Hard</span>
+            </div>
+          </div>
+          <div class="algo-idx">14</div>
+        </div>
+        <div class="algo-body">
+          <h4>Approach</h4>
+          <p>Use dictionary + doubly-linked list. Dictionary maps key to node. Linked list maintains order: most recent at tail, least recent at head. On access, move node to tail. On capacity exceed, remove head.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+            <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">LRUCache</span>
+{
+    <span class="kw">private</span> <span class="kw">class</span> <span class="ty">Node</span>
+    {
+        <span class="kw">public</span> <span class="ty">int</span> Key, Val;
+        <span class="kw">public</span> <span class="ty">Node</span> Prev, Next;
+    }
+
+    <span class="kw">private</span> <span class="ty">int</span> capacity;
+    <span class="kw">private</span> <span class="kw">readonly</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">Node</span>&gt; cache;
+    <span class="kw">private</span> <span class="ty">Node</span> head, tail; <span class="cm">// Dummy nodes</span>
+
+    <span class="kw">public</span> <span class="fn">LRUCache</span>(<span class="ty">int</span> capacity)
+    {
+        <span class="kw">this</span>.capacity = capacity;
+        cache = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">Node</span>&gt;();
+
+        head = <span class="kw">new</span> <span class="ty">Node</span>();
+        tail = <span class="kw">new</span> <span class="ty">Node</span>();
+        head.Next = tail;
+        tail.Prev = head;
+    }
+
+    <span class="kw">private</span> <span class="ty">void</span> <span class="fn">AddToTail</span>(<span class="ty">Node</span> node)
+    {
+        node.Next = tail;
+        node.Prev = tail.Prev;
+        tail.Prev.Next = node;
+        tail.Prev = node;
+    }
+
+    <span class="kw">private</span> <span class="ty">void</span> <span class="fn">Remove</span>(<span class="ty">Node</span> node)
+    {
+        node.Prev.Next = node.Next;
+        node.Next.Prev = node.Prev;
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Get</span>(<span class="ty">int</span> key)
+    {
+        <span class="kw">if</span> (!cache.ContainsKey(key))
+            <span class="kw">return</span> <span class="num">-1</span>;
+
+        <span class="ty">Node</span> node = cache[key];
+        <span class="fn">Remove</span>(node);
+        <span class="fn">AddToTail</span>(node);
+        <span class="kw">return</span> node.Val;
+    }
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Put</span>(<span class="ty">int</span> key, <span class="ty">int</span> value)
+    {
+        <span class="kw">if</span> (cache.ContainsKey(key))
+        {
+            <span class="ty">Node</span> node = cache[key];
+            node.Val = value;
+            <span class="fn">Remove</span>(node);
+            <span class="fn">AddToTail</span>(node);
+        }
+        <span class="kw">else</span>
+        {
+            <span class="kw">if</span> (cache.Count == capacity)
+            {
+                <span class="ty">Node</span> lru = head.Next;
+                <span class="fn">Remove</span>(lru);
+                cache.Remove(lru.Key);
+            }
+
+            <span class="ty">Node</span> newNode = <span class="kw">new</span> <span class="ty">Node</span> { Key = key, Val = value };
+            cache[key] = newNode;
+            <span class="fn">AddToTail</span>(newNode);
+        }
+    }
+}
+
+<span class="cm">// Time: O(1) for get/put, Space: O(capacity)</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5.10: Comparison & Interview Tips -->
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag"><div class="sec-num">5.10</div><div class="sec-line"></div></div>
+      <h2>Hash Table vs Other Data Structures</h2>
+      <p class="lead">Know when to use hash tables versus arrays, linked lists, trees, or heaps. Each excels at different problems.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Structure</th>
+              <th>Lookup</th>
+              <th>Insert</th>
+              <th>Delete</th>
+              <th>Order</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hash Table</td>
+              <td>O(1) avg</td>
+              <td>O(1) avg</td>
+              <td>O(1) avg</td>
+              <td>No</td>
+              <td>Key-value, counting, grouping</td>
+            </tr>
+            <tr>
+              <td>Sorted Dict</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>Yes</td>
+              <td>Ordered keys, range queries</td>
+            </tr>
+            <tr>
+              <td>Array</td>
+              <td>O(1)</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>Yes</td>
+              <td>Index access, sequences</td>
+            </tr>
+            <tr>
+              <td>Linked List</td>
+              <td>O(n)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>Yes</td>
+              <td>Frequent insertions, LRU</td>
+            </tr>
+            <tr>
+              <td>Binary Tree</td>
+              <td>O(log n) avg</td>
+              <td>O(log n) avg</td>
+              <td>O(log n) avg</td>
+              <td>Yes</td>
+              <td>Ordered, balanced access</td>
+            </tr>
+            <tr>
+              <td>Heap</td>
+              <td>O(n)</td>
+              <td>O(log n)</td>
+              <td>O(log n)</td>
+              <td>Partial</td>
+              <td>Priority queue, top-k</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Interview Tips</h3>
+      <div class="tips">
+        <div class="tip-card">
+          <div class="tip-n">TIP 1</div>
+          <div class="tip-title">Recognize the Pattern</div>
+          <div class="tip-body">Hash map appears when: checking existence, counting frequencies, mapping relationships, avoiding duplicates, or finding pairs/complements.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">TIP 2</div>
+          <div class="tip-title">Choose Wisely</div>
+          <div class="tip-body">Dictionary for key->value. HashSet for unique values only. SortedDictionary if you need order.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">TIP 3</div>
+          <div class="tip-title">GetHashCode & Equals</div>
+          <div class="tip-body">Always override both together. Ensure consistency: equal objects must have equal hash codes.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">TIP 4</div>
+          <div class="tip-title">Load Factor Matters</div>
+          <div class="tip-body">Hash tables resize at 0.75 load factor (chaining) or 0.5 (open addressing). This keeps O(1) operations.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-n">TIP 5</div>
+          <div class="tip-title">Prefix & Window</div>
+          <div class="tip-body">Combine hash maps with prefix sums for subarray problems. Combine with sliding windows for substring problems.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">TIP 6</div>
+          <div class="tip-title">Edge Cases</div>
+          <div class="tip-body">Empty input, duplicates, null keys, single element, all same elements, negative numbers, overflow on hashing.</div>
+        </div>
+      </div>
+
+      <h3>Common Gotchas</h3>
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Gotcha 1:</strong> Iterating while modifying. Never modify dictionary while iterating directly. Use ToList() or separate loops.</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Gotcha 2:</strong> Forgetting to check key exists before accessing. Always use TryGetValue or ContainsKey first.</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Gotcha 3:</strong> Collision handling performance. Linear probing worst case O(n) with bad hash. Use chaining for safety.</div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Gotcha 4:</strong> Hash code overflow. Use unchecked when computing hash codes on large fields to avoid exceptions.</div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Pro Tip:</strong> In interviews, describe your hash function and collision strategy. Discuss load factors and resizing. Show you understand internals.</div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>DSA Complete Book — Chapter 5: Hash Tables & Dictionaries</p>
+      <p>Comprehensive guide to hash tables, collision resolution, C# Dictionary/HashSet API, and 14 practice problems with full solutions.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.fade').forEach(el => {
+      el.classList.add('in');
+    });
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pre = btn.closest('.code-block').querySelector('pre');
+        navigator.clipboard.writeText(pre.textContent).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

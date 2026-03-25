@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Bit manipulation techniques — bitwise operators, common tricks, XOR patterns, with C# solutions to classic bit problems.">
+  <meta name="keywords" content="bit manipulation, bitwise operators, XOR, bit tricks, C#, binary representation">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch17-bit-manipulation.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch17-bit-manipulation.html">
+  <meta property="og:title" content="Chapter 17: Bit Manipulation - DSA Complete Book">
+  <meta property="og:description" content="Bit manipulation techniques — bitwise operators, common tricks, XOR patterns, with C# solutions to classic bit problems.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch17-bit-manipulation.html">
+  <meta name="twitter:title" content="Chapter 17: Bit Manipulation - DSA Complete Book">
+  <meta name="twitter:description" content="Bit manipulation techniques — bitwise operators, common tricks, XOR patterns, with C# solutions to classic bit problems.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 17: Bit Manipulation - DSA Complete Book",
+  "description": "Bit manipulation techniques \u2014 bitwise operators, common tricks, XOR patterns, with C# solutions to classic bit problems.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch17-bit-manipulation.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 17: Bit Manipulation - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}:root{--bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;--ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;--acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;--green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;--blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;--red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;--amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;--sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;}body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}.nav-links a:hover{color:var(--ink);border-color:var(--acc)}.wrap{max-width:960px;margin:0 auto;padding:0 2rem}.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}.eyebrow-line{width:28px;height:2px;background:var(--acc)}.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}.stat{padding:14px 26px;border-right:1px solid var(--rule)}.stat:last-child{border-right:none}.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}.toc-grid a:hover{color:var(--acc)}.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}.section{padding-top:72px}.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}.sec-line{flex:1;height:1px;background:var(--rule)}.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}.algo-body{padding:28px 32px}.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}.steps{margin-bottom:26px}.step{display:flex}.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}.step:last-child .step-vline{display:none}.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}.step-body strong{color:var(--ink);font-weight:600}code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}.copy-btn:hover{color:#d4d0c8}pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}.callout strong{color:inherit;font-weight:600}.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}thead tr{background:var(--bg2)}th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg)}.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}.vs-box.good{background:var(--green-l);border-color:var(--green-b)}.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}.proof-note strong{color:var(--ink2)}.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}footer p{font-size:13px;color:var(--ink3)}footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}@media(max-width:700px){.algo-head{grid-template-columns:1fr}.algo-idx{display:none}.vs,.proof-grid,.tips{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book<span class="pill">v1</span></a>
+      <div class="nav-links"><a href="index.html">Home</a><a href="#toc">Chapter 17</a></div>
+    </div>
+  </nav>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Chapter 17</div></div>
+      <h1>Bit Manipulation & <em>Binary Thinking</em></h1>
+      <p class="hero-sub">Master low-level bit operations to solve complex problems with elegant efficiency. Learn binary arithmetic, bitwise operators, bit tricks, and leverage bitmasks for dynamic programming. Essential for optimizing algorithms and acing technical interviews.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">10</div><div class="stat-l">Core Topics</div></div>
+        <div class="stat"><div class="stat-n">6</div><div class="stat-l">Bitwise Operators</div></div>
+        <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Code Examples</div></div>
+        <div class="stat"><div class="stat-n">18</div><div class="stat-l">Practice Problems</div></div>
+      </div>
+    </section>
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">17.1</span> Binary Number System</a>
+        <a href="#sec-2"><span class="toc-n">17.2</span> Two's Complement & Signed Integers</a>
+        <a href="#sec-3"><span class="toc-n">17.3</span> Bitwise Operators</a>
+        <a href="#sec-4"><span class="toc-n">17.4</span> Common Bit Tricks</a>
+        <a href="#sec-5"><span class="toc-n">17.5</span> XOR Properties</a>
+        <a href="#sec-6"><span class="toc-n">17.6</span> Bit Masking & Applications</a>
+        <a href="#sec-7"><span class="toc-n">17.7</span> Bitmask DP</a>
+        <a href="#sec-8"><span class="toc-n">17.8</span> LeetCode Problems (1-8)</a>
+        <a href="#sec-9"><span class="toc-n">17.9</span> LeetCode Problems (9-15)</a>
+        <a href="#sec-10"><span class="toc-n">17.10</span> Operator Precedence & Interview Tips</a>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><span class="sec-num">17.1</span><div class="sec-line"></div></div>
+      <h2>Binary Number System</h2>
+      <p class="lead">Numbers in computers are sequences of bits (0s and 1s). Each position represents a power of 2.</p>
+      <h3>Decimal to Binary Conversion</h3>
+      <p>Divide repeatedly by 2 and collect remainders.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// 13 decimal = 1101 binary (8 + 4 + 1)</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">string</span> <span class="fn">DecimalToBinary</span>(<span class="ty">int</span> n)
+{
+    <span class="kw">if</span> (n == <span class="num">0</span>) <span class="kw">return</span> <span class="str">"0"</span>;
+    <span class="ty">string</span> result = <span class="str">""</span>;
+    <span class="kw">while</span> (n > <span class="num">0</span>) {
+        result = (n % <span class="num">2</span>) + result;
+        n /= <span class="num">2</span>;
+    }
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Or: Convert.ToString(13, 2) → "1101"</span></pre></div>
+      <h3>Bit Widths in C#</h3>
+      <div class="tbl-wrap"><table><thead><tr><th>Type</th><th>Bits</th><th>Range</th></tr></thead><tbody><tr><td>byte</td><td>8</td><td>0 to 255</td></tr><tr><td>sbyte</td><td>8</td><td>-128 to 127</td></tr><tr><td>short</td><td>16</td><td>-32k to 32k</td></tr><tr><td>int</td><td>32</td><td>±2.1B</td></tr><tr><td>long</td><td>64</td><td>±9.2Q</td></tr></tbody></table></div>
+    </section>
+
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><span class="sec-num">17.2</span><div class="sec-line"></div></div>
+      <h2>Two's Complement & Signed Integers</h2>
+      <p class="lead">Negative numbers use two's complement: flip all bits, then add 1.</p>
+      <div class="callout info"><span class="callout-icon">ℹ</span><strong>Two's Complement:</strong> ~n + 1 = -n</div>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// 5 in 8-bit: 0000 0101 → Flip: 1111 1010 → Add 1: 1111 1011 = -5</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">GetNegation</span>(<span class="ty">int</span> n) { <span class="kw">return</span> (~n) + <span class="num">1</span>; }
+
+<span class="cm">// Right shift difference: signed vs unsigned</span>
+<span class="ty">int</span> x = -<span class="num">8</span>;  <span class="cm">// Arithmetic shift: fills with sign bit</span>
+x >> <span class="num">1</span>;     <span class="cm">// -4</span>
+
+<span class="ty">uint</span> y = <span class="num">4294967288</span>; <span class="cm">// Same bits as -8 (unsigned)</span>
+y >> <span class="num">1</span>;     <span class="cm">// 2147483644 (fills with 0)</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><span class="sec-num">17.3</span><div class="sec-line"></div></div>
+      <h2>Bitwise Operators</h2>
+      <p class="lead">Six core operators: AND (&), OR (|), XOR (^), NOT (~), Left Shift (<<), Right Shift (>>).</p>
+
+      <h3>AND (&) - Both must be 1</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">5</span>;   <span class="cm">// 0101</span>
+<span class="ty">int</span> b = <span class="num">3</span>;   <span class="cm">// 0011</span>
+<span class="ty">int</span> c = a & b; <span class="cm">// 0001 = 1</span>
+
+<span class="cm">// Check if i-th bit is set</span>
+<span class="kw">bool</span> isBitSet = (n & (1 << i)) != <span class="num">0</span>;</pre></div>
+
+      <h3>OR (|) - At least one must be 1</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">5</span>;   <span class="cm">// 0101</span>
+<span class="ty">int</span> b = <span class="num">3</span>;   <span class="cm">// 0011</span>
+<span class="ty">int</span> c = a | b; <span class="cm">// 0111 = 7</span>
+
+<span class="cm">// Set i-th bit to 1</span>
+<span class="ty">int</span> result = n | (1 << i);</pre></div>
+
+      <h3>XOR (^) - Bits must differ</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">5</span>;   <span class="cm">// 0101</span>
+<span class="ty">int</span> b = <span class="num">3</span>;   <span class="cm">// 0011</span>
+<span class="ty">int</span> c = a ^ b; <span class="cm">// 0110 = 6</span>
+
+<span class="cm">// Toggle (flip) i-th bit</span>
+<span class="ty">int</span> result = n ^ (1 << i);</pre></div>
+
+      <h3>NOT (~) - Flip all bits</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">5</span>;   <span class="cm">// 0000...0101</span>
+<span class="ty">int</span> b = ~a;   <span class="cm">// 1111...1010 = -6 (two's complement)</span></pre></div>
+
+      <h3>Left Shift (<<) - Multiply by 2^k</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">5</span>;      <span class="cm">// 0101</span>
+<span class="ty">int</span> b = a << <span class="num">1</span>;  <span class="cm">// 1010 = 10</span>
+<span class="ty">int</span> c = a << <span class="num">2</span>;  <span class="cm">// 10100 = 20</span></pre></div>
+
+      <h3>Right Shift (>>) - Divide by 2^k</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">16</span>;     <span class="cm">// 10000</span>
+<span class="ty">int</span> b = a >> <span class="num">1</span>;  <span class="cm">// 01000 = 8</span>
+
+<span class="cm">// For signed: fills with sign bit (arithmetic)</span>
+<span class="ty">int</span> neg = -<span class="num">8</span> >> <span class="num">1</span>; <span class="cm">// -4</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><span class="sec-num">17.4</span><div class="sec-line"></div></div>
+      <h2>Common Bit Tricks</h2>
+      <p class="lead">Essential bit manipulation patterns for interviews.</p>
+
+      <h3>Check if Even/Odd</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Least significant bit (LSB) tells us: 0 = even, 1 = odd</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">bool</span> <span class="fn">IsOdd</span>(<span class="ty">int</span> n) => (n & <span class="num">1</span>) == <span class="num">1</span>;
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">bool</span> <span class="fn">IsEven</span>(<span class="ty">int</span> n) => (n & <span class="num">1</span>) == <span class="num">0</span>;</pre></div>
+
+      <h3>Check if Power of 2</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Powers of 2: 1 (0001), 2 (0010), 4 (0100), 8 (1000)...</span>
+<span class="cm">// All have exactly one bit set. Key insight: n & (n-1) removes the rightmost bit.</span>
+<span class="cm">// If n is power of 2, n & (n-1) == 0</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">bool</span> <span class="fn">IsPowerOfTwo</span>(<span class="ty">int</span> n) => n > <span class="num">0</span> && (n & (n - <span class="num">1</span>)) == <span class="num">0</span>;
+
+<span class="cm">// Example: 8 (1000) & 7 (0111) = 0000 ✓</span></pre></div>
+
+      <h3>Get i-th Bit (0-indexed from right)</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">static</span> <span class="kw">bool</span> <span class="fn">GetBit</span>(<span class="ty">int</span> n, <span class="ty">int</span> i) 
+    => (n & (1 << i)) != <span class="num">0</span>;
+
+<span class="cm">// Example: GetBit(13, 0) = 1 (13 = 1101, rightmost = 1)</span></pre></div>
+
+      <h3>Set i-th Bit to 1</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">SetBit</span>(<span class="ty">int</span> n, <span class="ty">int</span> i) 
+    => n | (1 << i);
+
+<span class="cm">// Example: SetBit(8, 0) = 9 (1000 | 0001 = 1001)</span></pre></div>
+
+      <h3>Clear i-th Bit (Set to 0)</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">ClearBit</span>(<span class="ty">int</span> n, <span class="ty">int</span> i) 
+    => n & ~(1 << i);
+
+<span class="cm">// Example: ClearBit(13, 0) = 12 (1101 & 1110 = 1100)</span></pre></div>
+
+      <h3>Toggle i-th Bit</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">ToggleBit</span>(<span class="ty">int</span> n, <span class="ty">int</span> i) 
+    => n ^ (1 << i);
+
+<span class="cm">// Example: ToggleBit(13, 1) = 15 (1101 ^ 0010 = 1111)</span></pre></div>
+
+      <h3>Count Set Bits (1s) - Brian Kernighan's Algorithm</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// n & (n-1) removes the rightmost set bit each iteration</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">CountSetBits</span>(<span class="ty">int</span> n)
+{
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">while</span> (n > <span class="num">0</span>) {
+        n &= n - <span class="num">1</span>;  <span class="cm">// Remove rightmost set bit</span>
+        count++;
+    }
+    <span class="kw">return</span> count;
+}
+<span class="cm">// Time: O(number of set bits), not O(32)</span>
+<span class="cm">// Example: CountSetBits(13) → 3 (1101 has three 1s)</span></pre></div>
+
+      <h3>Find Rightmost Set Bit</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// n & (-n) isolates the rightmost set bit</span>
+<span class="cm">// Why? -n is two's complement of n</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">RightmostSetBit</span>(<span class="ty">int</span> n) 
+    => n & -n;
+
+<span class="cm">// Example: RightmostSetBit(13) = 1 (13 = 1101, rightmost bit = 1)</span>
+<span class="cm">// Example: RightmostSetBit(12) = 4 (12 = 1100, rightmost bit = 0100)</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><span class="sec-num">17.5</span><div class="sec-line"></div></div>
+      <h2>XOR Properties & Tricks</h2>
+      <p class="lead">XOR has special properties that make it ideal for many interview problems.</p>
+
+      <h3>Key Properties</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">a ^ a = 0</div>
+          <div class="proof-body">XORing a value with itself always gives 0. Same bits XORed = different is false.</div>
+          <div class="proof-note"><strong>Use:</strong> Eliminate pairs</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">a ^ 0 = a</div>
+          <div class="proof-body">XORing with 0 is identity. 0 differs from nothing.</div>
+          <div class="proof-note"><strong>Use:</strong> Initialize accumulators</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Commutative</div>
+          <div class="proof-body">a ^ b = b ^ a. Order doesn't matter.</div>
+          <div class="proof-note"><strong>Use:</strong> Rearrange operations</span>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Associative</div>
+          <div class="proof-body">(a ^ b) ^ c = a ^ (b ^ c). Grouping doesn't matter.</div>
+          <div class="proof-note"><strong>Use:</strong> Simplify multiple XORs</div>
+        </div>
+      </div>
+
+      <h3>Swap Two Numbers Without Temp Variable</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="ty">int</span> a = <span class="num">5</span>, b = <span class="num">3</span>;
+a = a ^ b;
+b = a ^ b;  <span class="cm">// b now = original a</span>
+a = a ^ b;  <span class="cm">// a now = original b</span>
+<span class="cm">// But: Modern compilers optimize this; temp swap is clearer</span></pre></div>
+
+      <h3>Find Single Number (All Others Appear Twice)</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// XOR all numbers. Pairs cancel (a^a=0), leaving the single.</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindSingle</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">int</span> result = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+        result ^= num;
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Example: [2, 2, 1, 3, 3] → 1 (2^2 cancels, 3^3 cancels)</span></pre></div>
+    </section>
+
+
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><span class="sec-num">17.6</span><div class="sec-line"></div></div>
+      <h2>Bit Masking & Applications</h2>
+      <p class="lead">Use bitmasks to represent sets, track state, or enumerate subsets efficiently.</p>
+
+      <h3>Creating Masks</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Mask with i-th bit set: (1 << i)</span>
+<span class="ty">int</span> mask1 = 1 << <span class="num">3</span>;  <span class="cm">// 1000 = bit 3</span>
+
+<span class="cm">// Mask with bits [0..i] set: (1 << (i+1)) - 1</span>
+<span class="ty">int</span> mask2 = (1 << <span class="num">4</span>) - <span class="num">1</span>; <span class="cm">// 1111 = bits 0-3</span>
+
+<span class="cm">// Mask to isolate rightmost i bits: n & ((1 << i) - 1)</span>
+<span class="ty">int</span> n = <span class="num">13</span>;  <span class="cm">// 1101</span>
+<span class="ty">int</span> lower2 = n & <span class="num">3</span>; <span class="cm">// 01 = 1 (rightmost 2 bits)</span></pre></div>
+
+      <h3>Enumerate All Subsets</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Represent each subset as a bitmask (0 to 2^n - 1)</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">void</span> <span class="fn">EnumerateSubsets</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> n = arr.Length;
+    <span class="kw">for</span> (<span class="ty">int</span> mask = <span class="num">0</span>; mask < (1 << n); mask++)
+    {
+        <span class="cm">// Process subset represented by mask</span>
+        <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; subset = <span class="kw">new</span>();
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < n; i++)
+            <span class="kw">if</span> ((mask & (1 << i)) != <span class="num">0</span>)
+                subset.Add(arr[i]);
+        <span class="cm">// Use subset...</span>
+    }
+}
+<span class="cm">// Time: O(n * 2^n) - explores 2^n subsets</span></pre></div>
+
+      <h3>Count Subsets with Property</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Example: Count subsets with even sum</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">CountEvenSubsets</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> n = arr.Length;
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> mask = <span class="num">0</span>; mask < (1 << n); mask++)
+    {
+        <span class="ty">int</span> sum = <span class="num">0</span>;
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < n; i++)
+            <span class="kw">if</span> ((mask & (1 << i)) != <span class="num">0</span>)
+                sum += arr[i];
+        <span class="kw">if</span> (sum % <span class="num">2</span> == <span class="num">0</span>)
+            count++;
+    }
+    <span class="kw">return</span> count;
+}
+<span class="cm">// Time: O(n^2 * 2^n) - can optimize with DP</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><span class="sec-num">17.7</span><div class="sec-line"></div></div>
+      <h2>Bitmask DP</h2>
+      <p class="lead">Combine bit masks with dynamic programming for subset and state-based problems.</p>
+
+      <h3>Subset DP Template</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// dp[mask] = some result for subset represented by mask</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">SubsetDP</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> n = arr.Length;
+    <span class="ty">int</span>[] dp = <span class="kw">new</span> <span class="ty">int</span>[1 << n];
+    dp[<span class="num">0</span>] = <span class="num">0</span>;  <span class="cm">// Base case: empty set</span>
+
+    <span class="cm">// Process each subset</span>
+    <span class="kw">for</span> (<span class="ty">int</span> mask = <span class="num">1</span>; mask < (1 << n); mask++)
+    {
+        <span class="cm">// Try removing each element to get previous state</span>
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < n; i++)
+        {
+            <span class="kw">if</span> ((mask & (1 << i)) != <span class="num">0</span>)
+            {
+                <span class="ty">int</span> prevMask = mask ^ (1 << i);
+                <span class="cm">// dp[mask] = f(dp[prevMask], arr[i])</span>
+            }
+        }
+    }
+    <span class="kw">return</span> dp[(1 << n) - <span class="num">1</span>];  <span class="cm">// All elements</span>
+}
+<span class="cm">// Space: O(2^n), Time: O(n * 2^n)</span></pre></div>
+
+      <h3>Travelling Salesman Problem (TSP) Concept</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// dp[mask][i] = min cost to visit cities in mask, ending at city i</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">TSP</span>(<span class="ty">int</span>[][] dist)
+{
+    <span class="ty">int</span> n = dist.Length;
+    <span class="ty">int</span>[][] dp = <span class="kw">new</span> <span class="ty">int</span>[1 << n][];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < (1 << n); i++)
+        dp[i] = <span class="kw">new</span> <span class="ty">int</span>[n];
+
+    <span class="cm">// Base: start at city 0</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < n; i++)
+        dp[1][i] = <span class="kw">int</span>.MaxValue;
+    dp[<span class="num">1</span>][<span class="num">0</span>] = <span class="num">0</span>;
+
+    <span class="cm">// Fill DP table</span>
+    <span class="kw">for</span> (<span class="ty">int</span> mask = <span class="num">1</span>; mask < (1 << n); mask++)
+    {
+        <span class="kw">for</span> (<span class="ty">int</span> u = <span class="num">0</span>; u < n; u++)
+        {
+            <span class="kw">if</span> ((mask & (1 << u)) == <span class="num">0</span>) <span class="kw">continue</span>;
+            <span class="kw">if</span> (dp[mask][u] == <span class="kw">int</span>.MaxValue) <span class="kw">continue</span>;
+            <span class="kw">for</span> (<span class="ty">int</span> v = <span class="num">0</span>; v < n; v++)
+            {
+                <span class="kw">if</span> ((mask & (1 << v)) == <span class="num">0</span>)
+                {
+                    <span class="ty">int</span> newMask = mask | (1 << v);
+                    dp[newMask][v] = <span class="ty">Math</span>.Min(dp[newMask][v], 
+                        dp[mask][u] + dist[u][v]);
+                }
+            }
+        }
+    }
+
+    <span class="cm">// Return cost to visit all cities, ending at city 0</span>
+    <span class="ty">int</span> ans = <span class="kw">int</span>.MaxValue;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < n; i++)
+        ans = <span class="ty">Math</span>.Min(ans, dp[(1 << n) - <span class="num">1</span>][i]);
+    <span class="kw">return</span> ans;
+}
+<span class="cm">// Time: O(n^2 * 2^n), Space: O(n * 2^n)</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><span class="sec-num">17.8</span><div class="sec-line"></div></div>
+      <h2>LeetCode Problems (1-8)</h2>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">1</div>
+          <div>
+            <div class="algo-name">Single Number (LC 136)</div>
+            <div class="algo-desc">Given array where every element appears twice except one. Find the single element. Constraint: O(1) space, O(n) time.</div>
+            <div class="algo-tags"><span class="badge b-orange">XOR</span><span class="badge b-green">Easy</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> XOR cancels pairs (a^a=0), leaving the single element.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> {
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">SingleNumber</span>(<span class="ty">int</span>[] nums) {
+        <span class="ty">int</span> result = <span class="num">0</span>;
+        <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+            result ^= num;
+        <span class="kw">return</span> result;
+    }
+}
+<span class="cm">// Example: [2, 2, 1] → 1 (2^2=0, 0^1=1)</span>
+<span class="cm">// Time: O(n), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">2</div>
+          <div>
+            <div class="algo-name">Single Number II (LC 137)</div>
+            <div class="algo-desc">Every element appears three times except one. Find the single element.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bit Count</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> Count each bit position across all numbers. Modulo 3 gives the single number's bits.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">SingleNumberII</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">int</span>[] bits = <span class="kw">new</span> <span class="ty">int</span>[<span class="num">32</span>];
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < <span class="num">32</span>; i++) {
+            <span class="kw">if</span> ((num & (1 << i)) != <span class="num">0</span>)
+                bits[i]++;
+        }
+    }
+    <span class="ty">int</span> result = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < <span class="num">32</span>; i++) {
+        <span class="kw">if</span> (bits[i] % <span class="num">3</span> != <span class="num">0</span>)
+            result |= (1 << i);
+    }
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Time: O(32n), Space: O(32)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">3</div>
+          <div>
+            <div class="algo-name">Single Number III (LC 260)</div>
+            <div class="algo-desc">Array has two unique elements appearing once; rest appear twice. Find both.</div>
+            <div class="algo-tags"><span class="badge b-orange">XOR</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> XOR all elements to get a^b. Find a differing bit. Partition by that bit, XOR each group.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">SingleNumberIII</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">int</span> xorAll = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+        xorAll ^= num;  <span class="cm">// xorAll = a ^ b</span>
+
+    <span class="cm">// Find rightmost differing bit</span>
+    <span class="ty">int</span> diffBit = xorAll & -xorAll;
+
+    <span class="ty">int</span> a = <span class="num">0</span>, b = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        <span class="kw">if</span> ((num & diffBit) != <span class="num">0</span>)
+            a ^= num;
+        <span class="kw">else</span>
+            b ^= num;
+    }
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[] { a, b };
+}
+<span class="cm">// Time: O(n), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">4</div>
+          <div>
+            <div class="algo-name">Number of 1 Bits (LC 191)</div>
+            <div class="algo-desc">Count the number of '1' bits in unsigned integer.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bit Count</span><span class="badge b-green">Easy</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Method 1: Brian Kernighan (optimal for sparse bits)</span>
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">HammingWeight</span>(<span class="ty">uint</span> n) {
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">while</span> (n > <span class="num">0</span>) {
+        n &= n - <span class="num">1</span>;
+        count++;
+    }
+    <span class="kw">return</span> count;
+}
+
+<span class="cm">// Method 2: Built-in (C# 5.0+)</span>
+<span class="kw">return</span> <span class="ty">System</span>.<span class="ty">Numerics</span>.<span class="ty">BitOperations</span>.<span class="fn">PopCount</span>(n);</pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">5</div>
+          <div>
+            <div class="algo-name">Counting Bits (LC 338)</div>
+            <div class="algo-desc">For 0 ≤ i ≤ n, count '1' bits in binary of i. Return array.</div>
+            <div class="algo-tags"><span class="badge b-orange">DP+Bits</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> i & (i-1) removes rightmost bit. dp[i] = dp[i & (i-1)] + 1.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">CountBits</span>(<span class="ty">int</span> n) {
+    <span class="ty">int</span>[] dp = <span class="kw">new</span> <span class="ty">int</span>[n + <span class="num">1</span>];
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">1</span>; i <= n; i++)
+        dp[i] = dp[i & (i - <span class="num">1</span>)] + <span class="num">1</span>;
+    <span class="kw">return</span> dp;
+}
+<span class="cm">// Example: n=2 → [0, 1, 1]</span>
+<span class="cm">// Time: O(n), Space: O(n)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">6</div>
+          <div>
+            <div class="algo-name">Reverse Bits (LC 190)</div>
+            <div class="algo-desc">Reverse binary representation of 32-bit unsigned integer.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bit Manipulation</span><span class="badge b-green">Easy</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">uint</span> <span class="fn">ReverseBits</span>(<span class="ty">uint</span> n) {
+    <span class="ty">uint</span> result = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < <span class="num">32</span>; i++) {
+        <span class="kw">if</span> ((n & (1 << i)) != <span class="num">0</span>)
+            result |= (1u << (<span class="num">31</span> - i));
+    }
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Example: 43261596 (00000010100101000001111010011100)</span>
+<span class="cm">// → 964176192 (00111001011110000010100101000000)</span>
+<span class="cm">// Time: O(32), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">7</div>
+          <div>
+            <div class="algo-name">Power of Two (LC 231)</div>
+            <div class="algo-desc">Check if integer is power of 2.</div>
+            <div class="algo-tags"><span class="badge b-orange">Math+Bits</span><span class="badge b-green">Easy</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> Powers of 2 have exactly one bit set. n & (n-1) == 0 identifies them.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">IsPowerOfTwo</span>(<span class="ty">int</span> n) {
+    <span class="kw">return</span> n > <span class="num">0</span> && (n & (n - <span class="num">1</span>)) == <span class="num">0</span>;
+}
+<span class="cm">// Example: IsPowerOfTwo(16) = true (10000 & 01111 = 0)</span>
+<span class="cm">// Time: O(1), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">8</div>
+          <div>
+            <div class="algo-name">Missing Number (LC 268)</div>
+            <div class="algo-desc">Array contains n distinct numbers from 0 to n. Find missing number.</div>
+            <div class="algo-tags"><span class="badge b-orange">XOR</span><span class="badge b-green">Easy</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> XOR array with 0..n. Pairs cancel, leaving missing.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">MissingNumber</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">int</span> result = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < nums.Length; i++)
+        result ^= i ^ nums[i];
+    result ^= nums.Length;
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Example: [3, 0, 1] → 2</span>
+<span class="cm">// 0^3 ^ 1^0 ^ 2^1 ^ 3 = 2</span>
+<span class="cm">// Time: O(n), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><span class="sec-num">17.9</span><div class="sec-line"></div></div>
+      <h2>LeetCode Problems (9-15)</h2>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">9</div>
+          <div>
+            <div class="algo-name">Sum of Two Integers (LC 371)</div>
+            <div class="algo-desc">Add two integers without using + or -.</div>
+            <div class="algo-tags"><span class="badge b-orange">XOR+AND</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> XOR gives sum without carry. AND << 1 gives carry. Repeat until no carry.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">GetSum</span>(<span class="ty">int</span> a, <span class="ty">int</span> b) {
+    <span class="kw">while</span> (b != <span class="num">0</span>) {
+        <span class="ty">int</span> carry = (a & b) << <span class="num">1</span>;  <span class="cm">// Carry bits</span>
+        a = a ^ b;                    <span class="cm">// Sum without carry</span>
+        b = carry;                    <span class="cm">// Process carry</span>
+    }
+    <span class="kw">return</span> a;
+}
+<span class="cm">// Example: GetSum(1, 2)</span>
+<span class="cm">// a=1 (01), b=2 (10)</span>
+<span class="cm">// Iteration 1: carry=0, a=3, b=0 → return 3</span>
+<span class="cm">// Note: Works for positive; needs unchecked for negative</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">10</div>
+          <div>
+            <div class="algo-name">Bitwise AND of Numbers Range (LC 201)</div>
+            <div class="algo-desc">Given [m, n], find AND of all numbers in range.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bit Pattern</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> Common prefix of m and n remains; all other bits become 0.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">RangeBitwiseAnd</span>(<span class="ty">int</span> m, <span class="ty">int</span> n) {
+    <span class="kw">int</span> shift = <span class="num">0</span>;
+    <span class="cm">// Find common prefix by right-shifting both m and n</span>
+    <span class="kw">while</span> (m != n) {
+        m >>= <span class="num">1</span>;
+        n >>= <span class="num">1</span>;
+        shift++;
+    }
+    <span class="cm">// Restore the common prefix</span>
+    <span class="kw">return</span> m << shift;
+}
+<span class="cm">// Example: RangeBitwiseAnd(5, 7)</span>
+<span class="cm">// 5=101, 6=110, 7=111 → AND=100=4</span>
+<span class="cm">// Common prefix after shifting: 1 → shift left by 2 → 100</span>
+<span class="cm">// Time: O(log(min(m,n))), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">11</div>
+          <div>
+            <div class="algo-name">Subsets using Bitmask (LC 78)</div>
+            <div class="algo-desc">Generate all subsets of array.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bitmask</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">IList</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt; <span class="fn">Subsets</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">IList</span>&lt;<span class="ty">int</span>&gt;&gt;();
+    <span class="ty">int</span> n = nums.Length;
+    
+    <span class="kw">for</span> (<span class="ty">int</span> mask = <span class="num">0</span>; mask < (1 << n); mask++) {
+        <span class="ty">var</span> subset = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt;();
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < n; i++) {
+            <span class="kw">if</span> ((mask & (1 << i)) != <span class="num">0</span>)
+                subset.Add(nums[i]);
+        }
+        result.Add(subset);
+    }
+    <span class="kw">return</span> result;
+}
+<span class="cm">// Example: nums=[1,2,3]</span>
+<span class="cm">// mask=000 → [], 001 → [1], 010 → [2], 011 → [1,2],</span>
+<span class="cm">// 100 → [3], 101 → [1,3], 110 → [2,3], 111 → [1,2,3]</span>
+<span class="cm">// Time: O(n * 2^n), Space: O(n * 2^n)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">12</div>
+          <div>
+            <div class="algo-name">Maximum XOR of Two Numbers (LC 421)</div>
+            <div class="algo-desc">Find max XOR of any two numbers in array.</div>
+            <div class="algo-tags"><span class="badge b-orange">Trie</span><span class="badge b-orange">Hard</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> Build trie of bit patterns. For each number, greedily pick opposite bit at each level.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">FindMaximumXOR</span>(<span class="ty">int</span>[] nums) {
+    <span class="cm">// Build trie of 32-bit numbers</span>
+    <span class="ty">TrieNode</span> root = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">31</span>; i >= <span class="num">0</span>; i--) {
+            <span class="ty">int</span> bit = (num >> i) & <span class="num">1</span>;
+            <span class="kw">if</span> (node.children[bit] == <span class="kw">null</span>)
+                node.children[bit] = <span class="kw">new</span> <span class="ty">TrieNode</span>();
+            node = node.children[bit];
+        }
+    }
+    
+    <span class="ty">int</span> maxXor = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+        <span class="ty">TrieNode</span> node = root;
+        <span class="ty">int</span> currentXor = <span class="num">0</span>;
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">31</span>; i >= <span class="num">0</span>; i--) {
+            <span class="ty">int</span> bit = (num >> i) & <span class="num">1</span>;
+            <span class="ty">int</span> oppBit = <span class="num">1</span> - bit;  <span class="cm">// Prefer opposite</span>
+            <span class="kw">if</span> (node.children[oppBit] != <span class="kw">null</span>) {
+                currentXor |= (1 << i);
+                node = node.children[oppBit];
+            } <span class="kw">else</span> {
+                node = node.children[bit];
+            }
+        }
+        maxXor = <span class="ty">Math</span>.Max(maxXor, currentXor);
+    }
+    <span class="kw">return</span> maxXor;
+}
+
+<span class="kw">private</span> <span class="kw">class</span> <span class="ty">TrieNode</span> {
+    <span class="kw">public</span> <span class="ty">TrieNode</span>[] children = <span class="kw">new</span> <span class="ty">TrieNode</span>[<span class="num">2</span>];
+}
+<span class="cm">// Time: O(32n), Space: O(32n)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">13</div>
+          <div>
+            <div class="algo-name">UTF-8 Validation (LC 393)</div>
+            <div class="algo-desc">Validate UTF-8 encoded data.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bit Pattern</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> UTF-8: single byte 0xxxxxxx; multi-byte 1xxxxxxx followed by 10xxxxxx bytes.</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">bool</span> <span class="fn">ValidUtf8</span>(<span class="ty">int</span>[] data) {
+    <span class="ty">int</span> bytesRemaining = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> d <span class="kw">in</span> data) {
+        <span class="ty">int</span> byte_ = d & <span class="num">0xFF</span>;  <span class="cm">// Keep only last 8 bits</span>
+        
+        <span class="kw">if</span> (bytesRemaining == <span class="num">0</span>) {
+            <span class="kw">if</span> ((byte_ >> <span class="num">7</span>) == <span class="num">0</span>) bytesRemaining = <span class="num">0</span>;  <span class="cm">// 0xxxxxxx</span>
+            <span class="kw">else</span> <span class="kw">if</span> ((byte_ >> <span class="num">5</span>) == <span class="num">6</span>) bytesRemaining = <span class="num">1</span>;  <span class="cm">// 110xxxxx</span>
+            <span class="kw">else</span> <span class="kw">if</span> ((byte_ >> <span class="num">4</span>) == <span class="num">14</span>) bytesRemaining = <span class="num">2</span>; <span class="cm">// 1110xxxx</span>
+            <span class="kw">else</span> <span class="kw">if</span> ((byte_ >> <span class="num">3</span>) == <span class="num">30</span>) bytesRemaining = <span class="num">3</span>; <span class="cm">// 11110xxx</span>
+            <span class="kw">else</span> <span class="kw">return</span> <span class="kw">false</span>;
+        } <span class="kw">else</span> {
+            <span class="kw">if</span> ((byte_ >> <span class="num">6</span>) != <span class="num">2</span>) <span class="kw">return</span> <span class="kw">false</span>;  <span class="cm">// Must be 10xxxxxx</span>
+            bytesRemaining--;
+        }
+    }
+    <span class="kw">return</span> bytesRemaining == <span class="num">0</span>;
+}
+<span class="cm">// Time: O(n), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">14</div>
+          <div>
+            <div class="algo-name">Hamming Distance (LC 461)</div>
+            <div class="algo-desc">Find number of positions where bits differ between two integers.</div>
+            <div class="algo-tags"><span class="badge b-orange">XOR</span><span class="badge b-green">Easy</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">HammingDistance</span>(<span class="ty">int</span> x, <span class="ty">int</span> y) {
+    <span class="ty">int</span> xor = x ^ y;
+    <span class="ty">int</span> count = <span class="num">0</span>;
+    <span class="kw">while</span> (xor > <span class="num">0</span>) {
+        xor &= xor - <span class="num">1</span>;  <span class="cm">// Remove rightmost set bit</span>
+        count++;
+    }
+    <span class="kw">return</span> count;
+}
+<span class="cm">// Example: x=1 (01), y=4 (100)</span>
+<span class="cm">// XOR = 101 → two 1 bits → Hamming distance = 2</span>
+<span class="cm">// Time: O(# set bits), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div class="algo-idx">15</div>
+          <div>
+            <div class="algo-name">Total Hamming Distance (LC 477)</div>
+            <div class="algo-desc">Find total Hamming distance between all pairs.</div>
+            <div class="algo-tags"><span class="badge b-orange">Bit Count</span><span class="badge b-orange">Medium</span></div>
+          </div>
+        </div>
+        <div class="algo-body">
+          <p><strong>Bit-Level Explanation:</strong> For each bit position, count 0s and 1s. Contribution = (count0 * count1).</p>
+          <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">TotalHammingDistance</span>(<span class="ty">int</span>[] nums) {
+    <span class="ty">int</span> n = nums.Length;
+    <span class="ty">int</span> total = <span class="num">0</span>;
+    
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < <span class="num">32</span>; i++) {
+        <span class="ty">int</span> ones = <span class="num">0</span>;
+        <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums) {
+            <span class="kw">if</span> ((num & (1 << i)) != <span class="num">0</span>)
+                ones++;
+        }
+        <span class="ty">int</span> zeros = n - ones;
+        total += ones * zeros;  <span class="cm">// Pairs with differing bit</span>
+    }
+    <span class="kw">return</span> total;
+}
+<span class="cm">// Example: [1, 3, 5]</span>
+<span class="cm">// Bit 0: 3 ones, 0 zeros → 0</span>
+<span class="cm">// Bit 1: 1 one, 2 zeros → 2</span>
+<span class="cm">// Bit 2: 2 ones, 1 zero → 2</span>
+<span class="cm">// Total = 4</span>
+<span class="cm">// Time: O(32n), Space: O(1)</span></pre></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag"><span class="sec-num">17.10</span><div class="sec-line"></div></div>
+      <h2>Operator Precedence & Interview Tips</h2>
+
+      <h3>Bitwise Operator Precedence (High to Low)</h3>
+      <div class="tbl-wrap"><table><thead><tr><th>Precedence</th><th>Operator</th><th>Note</th></tr></thead><tbody><tr><td>1 (Highest)</td><td>~ (NOT)</td><td>Unary, evaluated right-to-left</td></tr><tr><td>2</td><td><< and >></td><td>Shifts bind tighter than comparisons</td></tr><tr><td>3</td><td>& (AND)</td><td>Tighter than ^ and |</td></tr><tr><td>4</td><td>^ (XOR)</td><td></td></tr><tr><td>5</td><td>| (OR)</td><td>Loosest of bitwise ops</td></tr><tr><td>6</td><td>==, !=</td><td>Comparison operators</td></tr></tbody></table></div>
+
+      <h3>Common Pitfalls</h3>
+      <div class="callout warn"><span class="callout-icon">⚠</span><strong>Precedence Issues:</strong> Always use parentheses with shift operators. <code class="il">n & 1 << 2</code> = <code class="il">n & (1 << 2)</code>, not <code class="il">(n & 1) << 2</code></div>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// WRONG: Check if bit 2 is set</span>
+<span class="kw">if</span> (n & 1 << <span class="num">2</span>) { }  <span class="cm">// Evaluated as n & (1 << 2) ✓ but accidentally correct</span>
+
+<span class="cm">// WRONG: Comparison with bitwise</span>
+<span class="kw">if</span> (n & <span class="num">1</span> == <span class="num">1</span>) { }  <span class="cm">// = n & (1 == 1) = n & 1 (wrong semantics)</span>
+
+<span class="cm">// RIGHT</span>
+<span class="kw">if</span> ((n & <span class="num">1</span>) == <span class="num">1</span>) { }</pre></div>
+
+      <h3>Handling Negative Numbers</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Right shift behavior differs for signed vs unsigned</span>
+<span class="ty">int</span> x = -<span class="num">8</span>;       <span class="cm">// Arithmetic shift (fills with sign bit)</span>
+x >> <span class="num">1</span>;         <span class="cm">// -4</span>
+
+<span class="ty">uint</span> y = (<span class="ty">uint</span>)-<span class="num">8</span>;  <span class="cm">// Cast to unsigned</span>
+y >> <span class="num">1</span>;         <span class="cm">// Large positive (logical shift)</span>
+
+<span class="cm">// For absolute right shift (logical): use unsigned or cast</span>
+<span class="ty">uint</span> logical = ((<span class="ty">uint</span>)x) >> <span class="num">1</span>;</pre></div>
+
+      <h3>Interview Tips</h3>
+      <div class="tips">
+        <div class="tip-card">
+          <div class="tip-n">Tip 1</div>
+          <div class="tip-title">Always Use Parentheses</div>
+          <div class="tip-body">Make precedence explicit. <code class="il">(n & (1 << i))</code> is clearer than <code class="il">n & 1 << i</code>.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Tip 2</div>
+          <div class="tip-title">Recognize XOR Patterns</div>
+          <div class="tip-body">When you need to find unpaired elements or swap, think XOR immediately.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Tip 3</div>
+          <div class="tip-title">Bit Tricks for Efficiency</div>
+          <div class="tip-body">n & (n-1) is powerful for counting/removing bits. Know it cold.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Tip 4</div>
+          <div class="tip-title">Avoid Overflow</div>
+          <div class="tip-body">Left shift can overflow. Use <code class="il">unchecked</code> in C# if intentional, or use <code class="il">long</code>.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-n">Tip 5</div>
+          <div class="tip-title">Think Bit-by-Bit</div>
+          <div class="tip-body">When stuck, process bits individually or draw out binary representations.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">Tip 6</div>
+          <div class="tip-title">Test Edge Cases</div>
+          <div class="tip-body">Test with 0, -1, 1, powers of 2, and max/min integers. Bit ops have surprises.</div>
+        </div>
+      </div>
+
+      <h3>Problem-Solving Strategy</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body"><strong>Identify the pattern:</strong> Are you finding unpaired elements (XOR), counting bits (loop + mask), or representing subsets (bitmask)?</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body"><strong>Draw binary:</strong> Write out bit patterns for examples. Patterns become obvious.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body"><strong>Use bit tricks:</strong> Apply n & (n-1), n & -n, XOR properties, etc.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body"><strong>Verify:</strong> Test on examples, especially edge cases (0, negatives, powers of 2).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body"><strong>Optimize:</strong> Reduce bit widths used, minimize iterations, combine operations.</div>
+        </div>
+      </div>
+
+      <h3>Useful C# BitOperations (.NET 5.0+)</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">using</span> <span class="ty">System</span>.<span class="ty">Numerics</span>;
+
+<span class="cm">// Count set bits (population count)</span>
+<span class="ty">int</span> setBits = <span class="ty">BitOperations</span>.<span class="fn">PopCount</span>(<span class="num">13</span>);  <span class="cm">// 3</span>
+
+<span class="cm">// Leading zero count</span>
+<span class="ty">int</span> leadingZeros = <span class="ty">BitOperations</span>.<span class="fn">LeadingZeroCount</span>(<span class="num">8</span>);  <span class="cm">// 28 (in 32-bit)</span>
+
+<span class="cm">// Trailing zero count</span>
+<span class="ty">int</span> trailingZeros = <span class="ty">BitOperations</span>.<span class="fn">TrailingZeroCount</span>(<span class="num">8</span>);  <span class="cm">// 3</span>
+
+<span class="cm">// Rotate bits</span>
+<span class="ty">int</span> rotated = <span class="ty">BitOperations</span>.<span class="fn">RotateLeft</span>(<span class="num">5</span>, <span class="num">2</span>);   <span class="cm">// Left rotate</span></pre></div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>Chapter 17: Bit Manipulation</strong> concludes our deep dive into low-level thinking and elegant algorithms.</p>
+      <p>Mastering bit operations transforms how you approach optimization, state representation, and interview challenges. Practice these patterns until they become intuitive.</p>
+    </div>
+  </footer>
+    <section class="section fade" id="sec-bonus">
+      <div class="sec-tag"><span class="sec-num">17.B</span><div class="sec-line"></div></div>
+      <h2>Advanced Bit Tricks & Optimizations</h2>
+      <p class="lead">Rare but powerful techniques for highly optimized bit manipulation.</p>
+
+      <h3>Gray Code</h3>
+      <p>Binary encoding where successive values differ by one bit. Useful in error detection and digital electronics.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Convert binary to Gray code</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">BinaryToGray</span>(<span class="ty">int</span> n) 
+    => n ^ (n >> <span class="num">1</span>);
+
+<span class="cm">// Convert Gray code back to binary</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">GrayToBinary</span>(<span class="ty">int</span> gray) {
+    <span class="ty">int</span> binary = gray;
+    <span class="kw">while</span> (gray > <span class="num">0</span>) {
+        gray >>= <span class="num">1</span>;
+        binary ^= gray;
+    }
+    <span class="kw">return</span> binary;
+}
+
+<span class="cm">// Example: 5 (binary 0101) → 0111 (Gray)</span>
+<span class="cm">// Gray 0111 → 0101 (back to 5)</span></pre></div>
+
+      <h3>Popcount Variants & Fast Bit Operations</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Parity: is popcount odd or even?</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">HasOddParity</span>(<span class="ty">int</span> n) {
+    n ^= n >> <span class="num">16</span>;
+    n ^= n >> <span class="num">8</span>;
+    n ^= n >> <span class="num">4</span>;
+    n ^= n >> <span class="num">2</span>;
+    n ^= n >> <span class="num">1</span>;
+    <span class="kw">return</span> (n & <span class="num">1</span>) == <span class="num">1</span>;
+}
+
+<span class="cm">// Nearest power of 2 greater than n</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">NextPowerOfTwo</span>(<span class="ty">int</span> n) {
+    n--;
+    n |= n >> <span class="num">1</span>;
+    n |= n >> <span class="num">2</span>;
+    n |= n >> <span class="num">4</span>;
+    n |= n >> <span class="num">8</span>;
+    n |= n >> <span class="num">16</span>;
+    <span class="kw">return</span> n + <span class="num">1</span>;
+}
+
+<span class="cm">// Example: NextPowerOfTwo(5) = 8, NextPowerOfTwo(8) = 16</span></pre></div>
+
+      <h3>Bit Interleaving (Morton Code / Z-Order Curve)</h3>
+      <p>Interleave bits of two numbers for spatial indexing.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Interleave bits of x and y</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">ulong</span> <span class="fn">Interleave</span>(<span class="ty">uint</span> x, <span class="ty">uint</span> y) {
+    <span class="ty">ulong</span> result = <span class="num">0</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i < <span class="num">32</span>; i++) {
+        result |= (((<span class="ty">ulong</span>)x & (1u << i)) << i) |
+                  (((<span class="ty">ulong</span>)y & (1u << i)) << (i + <span class="num">1</span>));
+    }
+    <span class="kw">return</span> result;
+}
+
+<span class="cm">// Example: x=3 (11), y=2 (10) → 1101 (interleaved)</span>
+<span class="cm">// Bit positions: y[1] x[1] y[0] x[0] = 1 1 1 1</span></pre></div>
+
+      <h3>Find Isolation of Rightmost Difference</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Find rightmost bit position where two numbers differ</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">RightmostDifferenceBit</span>(<span class="ty">int</span> a, <span class="ty">int</span> b) {
+    <span class="ty">int</span> xor = a ^ b;
+    <span class="kw">return</span> xor & -xor;  <span class="cm">// Isolate rightmost set bit</span>
+}
+
+<span class="cm">// Example: a=5 (0101), b=3 (0011) → XOR=0110 → rightmost=0010</span></pre></div>
+
+      <h3>Check if Number is Subset of Bits</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Check if all set bits of 'a' are also set in 'b'</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">IsBitSubset</span>(<span class="ty">int</span> a, <span class="ty">int</span> b) {
+    <span class="kw">return</span> (a & b) == a;
+}
+
+<span class="cm">// Example: a=5 (0101), b=7 (0111) → (0101 & 0111) = 0101 = 5 ✓</span>
+<span class="cm">// Example: a=6 (0110), b=5 (0101) → (0110 & 0101) = 0100 ≠ 6 ✗</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-extended">
+      <div class="sec-tag"><span class="sec-num">17.E</span><div class="sec-line"></div></div>
+      <h2>Extended Practice & Applications</h2>
+
+      <h3>Bit Manipulation in Real-World Contexts</h3>
+      <p>Where bit manipulation actually matters in production code:</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Network Masks</div>
+          <div class="proof-body">IP subnetting uses bitmasks to identify network and host portions. A /24 network mask is 255.255.255.0 in dotted decimal, or binary with rightmost 24 bits for host.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Permissions Flags</div>
+          <div class="proof-body">Unix file permissions (rwxrwxrwx) are stored as 9 bits. Checking read permission = check bit 8, write = bit 7, execute = bit 6.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Graphics Pixels</div>
+          <div class="proof-body">RGBA color: 32-bit value. Red = bits 24-31, Green = 16-23, Blue = 8-15, Alpha = 0-7. Extract with shifts and masks.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Compression</div>
+          <div class="proof-body">Huffman coding, bit packing, and run-length encoding all manipulate bit-level data for space efficiency.</div>
+        </div>
+      </div>
+
+      <h3>Common Bit Manipulation Patterns Summary</h3>
+      <div class="tbl-wrap"><table><thead><tr><th>Pattern</th><th>Code</th><th>Use Case</th></tr></thead><tbody><tr><td>Check bit i</td><td><code class="il">(n >> i) & 1</code></td><td>Test single bit</td></tr><tr><td>Set bit i</td><td><code class="il">n | (1 << i)</code></td><td>Enable flag</td></tr><tr><td>Clear bit i</td><td><code class="il">n & ~(1 << i)</code></td><td>Disable flag</td></tr><tr><td>Toggle bit i</td><td><code class="il">n ^ (1 << i)</code></td><td>Switch state</td></tr><tr><td>Check if power of 2</td><td><code class="il">(n & (n-1)) == 0</code></td><td>Validate magnitude</td></tr><tr><td>Rightmost set bit</td><td><code class="il">n & -n</code></td><td>Isolate LSB</td></tr><tr><td>Remove rightmost set</td><td><code class="il">n & (n-1)</code></td><td>Decrement bits</td></tr><tr><td>Count set bits</td><td><code class="il">while(n) n&=n-1; count++</code></td><td>Population count</td></tr><tr><td>Isolate difference</td><td><code class="il">a ^ b</code></td><td>Find changes</td></tr><tr><td>Merge options</td><td><code class="il">a | b</code></td><td>Combine flags</td></tr></tbody></table></div>
+
+      <h3>Complexity Analysis for Bit Operations</h3>
+      <p>Understanding the computational cost of bitwise operations:</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Single Bit Op</div>
+          <div class="proof-body">Checking, setting, or toggling a single bit with mask: <strong>O(1)</strong>. Hardware direct.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Loop Over Bits</div>
+          <div class="proof-body">Brian Kernighan loop (remove bits): <strong>O(k)</strong> where k = popcount, not O(32).</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Subset Enumeration</div>
+          <div class="proof-body">Generate all subsets of n items: <strong>O(n × 2ⁿ)</strong>. Feasible for n ≤ 20.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Bitmask DP</div>
+          <div class="proof-body">TSP, Hamiltonian path: <strong>O(n² × 2ⁿ)</strong>. Slower but optimal for small n.</div>
+        </div>
+      </div>
+
+      <h3>Debugging Bit-Level Code</h3>
+      <div class="callout tip"><span class="callout-icon">💡</span><strong>Pro Tip:</strong> When debugging bit operations, print numbers in binary: <code class="il">Convert.ToString(n, 2)</code> shows you exactly what's happening at each step.</div>
+
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Debug helper: visualize bit operations</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">DebugBits</span>(<span class="ty">int</span> n, <span class="ty">string</span> label = <span class="str">""</span>) {
+    <span class="ty">string</span> binary = <span class="ty">Convert</span>.<span class="fn">ToString</span>(n, <span class="num">2</span>).PadLeft(<span class="num">32</span>, <span class="str">'0'</span>);
+    <span class="ty">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"{label,-20} {n,12} {binary}"</span>);
+}
+
+<span class="cm">// Usage:</span>
+<span class="ty">int</span> x = <span class="num">5</span>;
+<span class="fn">DebugBits</span>(x, <span class="str">"Original"</span>);
+<span class="fn">DebugBits</span>(x << <span class="num">1</span>, <span class="str">"After << 1"</span>);
+<span class="fn">DebugBits</span>(x & <span class="num">3</span>, <span class="str">"After & 3"</span>);
+
+<span class="cm">// Output shows binary clearly for verification</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-adv1">
+      <div class="sec-tag"><span class="sec-num">17.A1</span><div class="sec-line"></div></div>
+      <h2>Advanced Submask & SOS DP</h2>
+      <p class="lead">Fast algorithms for subset enumeration and sum over subsets.</p>
+
+      <h3>Submask Iteration Pattern</h3>
+      <p>Iterate all submasks of a bitmask in O(3^n) total time across all masks.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">for</span> (<span class="ty">int</span> submask = mask; submask > 0; submask = (submask - 1) & mask) {
+    <span class="cm">// Each submask is processed exactly once</span>
+}
+<span class="cm">// Key: (submask - 1) & mask gives next smaller submask</span>
+<span class="cm">// Example mask = 1101 (13): submasks are 1101, 1100, 1001, 1000, 0101, 0100, 0001</span></pre></div>
+
+      <h3>Sum Over Subsets (SOS DP)</h3>
+      <p>Compute sum of values for all submasks of each mask in O(n * 2^n) time.</p>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="ty">static</span> <span class="ty">int</span>[] <span class="fn">SumOverSubsets</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> maxBits) {
+    <span class="ty">int</span> n = 1 << maxBits;
+    <span class="ty">int</span>[] dp = <span class="kw">new</span> <span class="ty">int</span>[n];
+    <span class="ty">Array</span>.<span class="fn">Copy</span>(arr, dp, <span class="ty">Math</span>.<span class="fn">Min</span>(arr.Length, n));
+    
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i < maxBits; i++) {
+        <span class="kw">for</span> (<span class="ty">int</span> mask = 0; mask < n; mask++) {
+            <span class="kw">if</span> ((mask & (1 << i)) != 0)
+                dp[mask] += dp[mask ^ (1 << i)];
+        }
+    }
+    <span class="kw">return</span> dp;
+}
+<span class="cm">// Time: O(maxBits * 2^maxBits), Space: O(2^maxBits)</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-adv2">
+      <div class="sec-tag"><span class="sec-num">17.A2</span><div class="sec-line"></div></div>
+      <h2>Bit Tricks for Performance</h2>
+      <p class="lead">Micro-optimizations using bit manipulation in critical code paths.</p>
+
+      <h3>Fast Modulo for Powers of 2</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Modulo by power of 2 is much faster as AND operation</span>
+<span class="ty">int</span> slow = n % 16;    <span class="cm">// Division: 5-20 cycles</span>
+<span class="ty">int</span> fast = n & 15;    <span class="cm">// AND: 1 cycle (15 = 16 - 1 = 0xF)</span>
+
+<span class="cm">// General rule: n % 2^k = n & (2^k - 1)</span>
+<span class="cm">// The low k bits of n equal n mod 2^k</span></pre></div>
+
+      <h3>Branchless Sign Function</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Returns 1 if x > 0, -1 if x < 0, 0 if x == 0</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">Sign</span>(<span class="ty">int</span> x) {
+    <span class="kw">return</span> (x >> 31) | (-x >> 31);
+}
+
+<span class="cm">// Why? If x > 0: first shift = 0, second shift = 0, OR = 0</span>
+<span class="cm">// If x < 0: first shift = -1, second shift = 0, OR = -1</span>
+<span class="cm">// Hmm, this returns -1 not 1. Better version:</span>
+
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">SignCorrect</span>(<span class="ty">int</span> x) {
+    <span class="kw">return</span> ((x >> 31) & -2) + (x > 0 ? 1 : 0);
+}</pre></div>
+
+      <h3>Branchless Absolute Value</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">AbsBranchless</span>(<span class="ty">int</span> x) {
+    <span class="ty">int</span> signMask = x >> 31;  <span class="cm">// -1 if negative, 0 if positive</span>
+    <span class="kw">return</span> (x + signMask) ^ signMask;
+}
+
+<span class="cm">// Logic: if negative, add -1 then XOR with -1 (flip all bits)</span>
+<span class="cm">// This applies two's complement: -x = ~x + 1</span></pre></div>
+    </section>
+
+    <section class="section fade" id="sec-adv3">
+      <div class="sec-tag"><span class="sec-num">17.A3</span><div class="sec-line"></div></div>
+      <h2>Common Pitfalls & Debugging</h2>
+      <p class="lead">Mistakes that catch experienced programmers when working with bits.</p>
+
+      <h3>Left Shift Overflow</h3>
+      <div class="callout danger"><span class="callout-icon">⚠</span><strong>Danger:</strong> <code class="il">1 &lt;&lt; 31</code> overflows in signed 32-bit. Use long or limit shifts to 30.</div>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// WRONG</span>
+<span class="ty">int</span> mask = (1 << 31) - 1;  <span class="cm">// Overflow before subtraction</span>
+
+<span class="cm">// CORRECT</span>
+<span class="ty">long</span> mask = (1L << 31) - 1;  <span class="cm">// 0x7FFFFFFF</span>
+<span class="ty">int</span> mask2 = -1;               <span class="cm">// All bits set (0xFFFFFFFF)</span></pre></div>
+
+      <h3>Signed vs Unsigned Right Shift</h3>
+      <div class="callout warn"><span class="callout-icon">⚠</span><strong>Watch:</strong> Signed right shift fills with sign bit; unsigned fills with 0. This varies by language.</div>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Signed: arithmetic shift (extends sign bit)</span>
+<span class="ty">int</span> x = -8;
+x >> 2;  <span class="cm">// -2 (fills with 1s)</span>
+
+<span class="cm">// Unsigned: logical shift (fills with 0s)</span>
+<span class="ty">uint</span> y = 4294967288;  <span class="cm">// Same bits as -8</span>
+y >> 2;  <span class="cm">// 1073741822 (fills with 0s)</span></pre></div>
+
+      <h3>Operator Precedence Traps</h3>
+      <div class="callout warn"><span class="callout-icon">⚠</span><strong>Always use parentheses!</strong> Shift and comparison operators have tricky precedence.</div>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// CONFUSING: Check if bit i is set</span>
+<span class="kw">if</span> (n & 1 << i) { }  <span class="cm">// Works but misleading</span>
+
+<span class="cm">// CLEAR: Explicitly show what you mean</span>
+<span class="kw">if</span> ((n & (1 << i)) != 0) { }
+
+<span class="cm">// WRONG: Comparison operator has lower precedence than AND</span>
+<span class="kw">if</span> (n & 1 == 1) { }  <span class="cm">// Evaluates as n & (1 == 1) = n & 1</span>
+
+<span class="cm">// RIGHT</span>
+<span class="kw">if</span> ((n & 1) == 1) { }</pre></div>
+
+      <h3>XOR Swap Pitfall</h3>
+      <div class="callout warn"><span class="callout-icon">⚠</span><strong>Avoid:</strong> XOR swap fails when a and b are the same variable.</div>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// XOR SWAP with same variable: BROKEN</span>
+<span class="ty">int</span> a = 5;
+a ^= a;  <span class="cm">// a becomes 0</span>
+a ^= a;  <span class="cm">// a remains 0</span>
+a ^= a;  <span class="cm">// a remains 0  -- NOT 5!</span>
+
+<span class="cm">// Use temp swap: clearer and faster on modern CPUs</span>
+<span class="ty">int</span> temp = a;
+a = b;
+
+    <section class="section fade" id="sec-recap">
+      <div class="sec-tag"><span class="sec-num">17.R</span><div class="sec-line"></div></div>
+      <h2>Quick Reference & Cheat Sheet</h2>
+      <p class="lead">A compact summary of all bit manipulation techniques for quick lookup during interviews.</p>
+
+      <h3>One-Line Bit Operations</h3>
+      <div class="tbl-wrap"><table><thead><tr><th>Operation</th><th>Code</th><th>Returns</th></tr></thead><tbody><tr><td>Get bit i</td><td>(n >> i) & 1</td><td>0 or 1</td></tr><tr><td>Set bit i</td><td>n | (1 << i)</td><td>n with bit i=1</td></tr><tr><td>Clear bit i</td><td>n & ~(1 << i)</td><td>n with bit i=0</td></tr><tr><td>Toggle bit i</td><td>n ^ (1 << i)</td><td>n with bit i flipped</td></tr><tr><td>Check if even</td><td>(n & 1) == 0</td><td>true/false</td></tr><tr><td>Check if power of 2</td><td>(n & (n-1)) == 0 && n > 0</td><td>true/false</td></tr><tr><td>Rightmost set bit</td><td>n & -n</td><td>isolates LSB</td></tr><tr><td>Remove rightmost set</td><td>n & (n-1)</td><td>clears LSB</td></tr><tr><td>Count set bits</td><td>System.Numerics.BitOperations.PopCount(n)</td><td>count of 1s</td></tr><tr><td>Isolate lower k bits</td><td>n & ((1 << k) - 1)</td><td>bottom k bits</td></tr></tbody></table></div>
+
+      <h3>Bitmask DP Template</h3>
+      <div class="code-block"><div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div><pre><span class="cm">// Enumerate all subsets: O(2^n)</span>
+<span class="kw">for</span> (<span class="ty">int</span> mask = 0; mask < (1 << n); mask++) {
+    <span class="cm">// Process subset represented by mask</span>
+}
+
+<span class="cm">// Enumerate all submasks: O(3^n total)</span>
+<span class="kw">for</span> (<span class="ty">int</span> submask = mask; submask > 0; submask = (submask - 1) & mask) {
+    <span class="cm">// Process submask</span>
+}
+
+<span class="cm">// DP over subsets: O(n * 2^n) or O(n^2 * 2^n)</span>
+<span class="ty">int</span>[] dp = <span class="kw">new</span> <span class="ty">int</span>[1 << n];
+dp[0] = 0;  <span class="cm">// Base case: empty set</span>
+<span class="kw">for</span> (<span class="ty">int</span> mask = 1; mask < (1 << n); mask++) {
+    <span class="cm">// Try removing each element</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = 0; i < n; i++) {
+        <span class="kw">if</span> ((mask & (1 << i)) != 0) {
+            <span class="ty">int</span> prev = mask ^ (1 << i);
+            <span class="cm">// dp[mask] = f(dp[prev], element[i])</span>
+        }
+    }
+}</pre></div>
+
+      <h3>XOR Properties Quick Lookup</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">a ^ a = 0</div>
+          <div class="proof-body">Any value XORed with itself is 0.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">a ^ 0 = a</div>
+          <div class="proof-body">XORing with 0 is identity operation.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">a ^ b = b ^ a</div>
+          <div class="proof-body">XOR is commutative.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">(a ^ b) ^ c = a ^ (b ^ c)</div>
+          <div class="proof-body">XOR is associative.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">a ^ a ^ b = b</div>
+          <div class="proof-body">Pairs cancel; use for finding unpaired elements.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">a ^ (~a) = all 1s</div>
+          <div class="proof-body">XORing a value with its inverse gives full mask.</div>
+        </div>
+      </div>
+
+      <h3>Interview Question Classification</h3>
+      <p><strong>By XOR:</strong> Single Number (136), Single Number II (137), Single Number III (260), Missing Number (268)</p>
+      <p><strong>By Counting Bits:</strong> Number of 1 Bits (191), Counting Bits (338), Hamming Distance (461), Total Hamming Distance (477)</p>
+      <p><strong>By Bit Tricks:</strong> Power of Two (231), Reverse Bits (190), Sum of Two Integers (371)</p>
+      <p><strong>By Bitmask:</strong> Subsets (78), Maximum XOR (421), UTF-8 Validation (393), Bitwise AND of Range (201)</p>
+      <p><strong>By DP:</strong> Travelling Salesman, Maximum Weight Independent Set, Assign Cookies to Groups</p>
+
+      <h3>Complexity Reference</h3>
+      <div class="tbl-wrap"><table><thead><tr><th>Approach</th><th>Time</th><th>Space</th><th>When to Use</th></tr></thead><tbody><tr><td>Single Pass (XOR)</td><td>O(n)</td><td>O(1)</td><td>Unpaired elements, simple XOR tricks</td></tr><tr><td>Bit Counting Loop</td><td>O(k * n) where k=popcount</td><td>O(32) or O(64)</td><td>Counting bits in array</td></tr><tr><td>Subset Enumeration</td><td>O(n * 2^n)</td><td>O(1)</td><td>Small n ≤ 20, checking all subsets</td></tr><tr><td>Submask DP</td><td>O(3^n)</td><td>O(2^n)</td><td>Dependency between subsets, n ≤ 20</td></tr><tr><td>Bitmask DP</td><td>O(n^2 * 2^n)</td><td>O(n * 2^n)</td><td>TSP, Hamiltonian paths, n ≤ 16</td></tr></tbody></table></div>
+
+      <h3>Last-Minute Tips for Interviews</h3>
+      <div class="tips">
+        <div class="tip-card">
+          <div class="tip-n">1</div>
+          <div class="tip-title">Draw Binary Representations</div>
+          <div class="tip-body">Write out bit patterns for small examples. Patterns become obvious visually.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">2</div>
+          <div class="tip-title">Test Edge Cases First</div>
+          <div class="tip-body">Test with 0, -1, 1, powers of 2, max/min values. Bit ops surprise often.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">3</div>
+          <div class="tip-title">Use Parentheses Always</div>
+          <div class="tip-body">Even if operator precedence seems clear, add parentheses. Clarity > cleverness.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">4</div>
+          <div class="tip-title">Know Your Primitives</div>
+          <div class="tip-body">Understand bit widths (int=32, long=64) and signed vs unsigned behavior in your language.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-n">5</div>
+          <div class="tip-title">Recognize XOR Patterns Instantly</div>
+          <div class="tip-body">Problems with unpaired elements, swapping, or toggling often scream for XOR.</div>
+        </div>
+        <div class="tip-card g">
+          <div class="tip-n">6</div>
+          <div class="tip-title">n & (n-1) is Your Best Friend</div>
+          <div class="tip-body">Removes rightmost set bit. Essential for counting, powers of 2, and many tricks.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-conclusion">
+      <div class="sec-tag"><span class="sec-num">Conclusion</span><div class="sec-line"></div></div>
+      <h2>Mastering Bit Manipulation</h2>
+      <p class="lead">Bit manipulation bridges the gap between high-level algorithms and low-level hardware efficiency. It's a skillset that compounds: early mastery pays dividends across interviews, competitive programming, and optimization-critical code.</p>
+
+      <h3>Your Learning Path Forward</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div></div>
+          <div class="step-body"><strong>Memorize Basics:</strong> Operator truth tables, two's complement, bit widths in your language. Spend one day here.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div></div>
+          <div class="step-body"><strong>Learn Tricks:</strong> Power of 2 check, count bits, set/clear/toggle bits. Practice on LeetCode Easy tier (191, 231, 461).</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div></div>
+          <div class="step-body"><strong>Master XOR:</strong> Work through all XOR-based problems (136, 137, 260, 268). XOR is the gateway to intermediate problems.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div></div>
+          <div class="step-body"><strong>Solve Medium Problems:</strong> Tackle mask-based problems and DP (78, 421, 338, 477). Understand bitmask DP template thoroughly.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div></div>
+          <div class="step-body"><strong>Challenge Yourself:</strong> Solve hard problems and competitive programming problems. Implement TSP, SOS DP, and advanced techniques.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">6</div></div>
+          <div class="step-body"><strong>Optimize & Teach:</strong> Optimize your solutions for speed/space. Explain bit tricks to others to deepen understanding.</div>
+        </div>
+      </div>
+
+      <h3>Resources for Continued Learning</h3>
+      <div class="callout info"><span class="callout-icon">ℹ</span><strong>Practice Platforms:</strong> LeetCode (sorted by topic), Codeforces (bit manipulation tag), AtCoder, HackerRank. Do 30-50 problems across difficulties.</div>
+      <div class="callout tip"><span class="callout-icon">💡</span><strong>Advanced Topics:</strong> After mastering this chapter, explore Gray code, Hamming codes, cryptography basics, and GPU/SIMD bit-level parallelism.</div>
+
+      <h3>Final Checklist Before an Interview</h3>
+      <p>Can you answer "yes" to all?</p>
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">Know Your Foundations</div>
+          <div class="vs-item">Explain two's complement from scratch</div>
+          <div class="vs-item">Draw why n & (n-1) removes the rightmost bit</div>
+          <div class="vs-item">List all 6 bitwise operators and their uses</div>
+          <div class="vs-item">Explain signed vs unsigned right shift</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">Solve Common Problems</div>
+          <div class="vs-item">Single Number variants (15 min each)</div>
+          <div class="vs-item">Bit counting and XOR swaps (10 min each)</div>
+          <div class="vs-item">Power of 2 and bit tricks (5 min each)</div>
+          <div class="vs-item">Bitmask subset enumeration (20 min)</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 36px; text-align: center; font-size: 18px; font-weight: 700;"><em>Now go solve bit problems and ace that interview.</em></p>
+    </section>
+b = temp;</pre></div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Problem-solving patterns for coding interviews — identify patterns, choose approaches, and solve problems systematically with C#.">
+  <meta name="keywords" content="problem solving patterns, coding interview patterns, algorithm patterns, C#, systematic approach">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch18-patterns-problem-solving.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch18-patterns-problem-solving.html">
+  <meta property="og:title" content="Chapter 18: Common Patterns & Problem-Solving Strategy - DSA Complete Book">
+  <meta property="og:description" content="Problem-solving patterns for coding interviews — identify patterns, choose approaches, and solve problems systematically with C#.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch18-patterns-problem-solving.html">
+  <meta name="twitter:title" content="Chapter 18: Common Patterns & Problem-Solving Strategy - DSA Complete Book">
+  <meta name="twitter:description" content="Problem-solving patterns for coding interviews — identify patterns, choose approaches, and solve problems systematically with C#.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 18: Common Patterns & Problem-Solving Strategy - DSA Complete Book",
+  "description": "Problem-solving patterns for coding interviews \u2014 identify patterns, choose approaches, and solve problems systematically with C#.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch18-patterns-problem-solving.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 18: Common Patterns & Problem-Solving Strategy - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}:root{--bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;--ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;--acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;--green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;--blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;--red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;--amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;--sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace}body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}.nav-links a:hover{color:var(--ink);border-color:var(--acc)}.wrap{max-width:960px;margin:0 auto;padding:0 2rem}.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}.eyebrow-line{width:28px;height:2px;background:var(--acc)}.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}.hero h1 em{font-style:normal;color:var(--acc)}.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}.stat{padding:14px 26px;border-right:1px solid var(--rule)}.stat:last-child{border-right:none}.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}.toc-grid a:hover{color:var(--acc)}.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}.section{padding-top:72px}.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}.sec-line{flex:1;height:1px;background:var(--rule)}.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}.callout strong{color:inherit;font-weight:600}.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap;margin-right:6px}.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}thead tr{background:var(--bg2)}th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}td:first-child{font-weight:600;color:var(--ink)}tr:last-child td{border-bottom:none}tr:hover td{background:var(--bg)}.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}.vs-box.good{background:var(--green-l);border-color:var(--green-b)}.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}.steps{margin-bottom:26px}.step{display:flex}.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}.step:last-child .step-vline{display:none}.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}.step-body strong{color:var(--ink);font-weight:600}code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}.copy-btn:hover{color:#d4d0c8}pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}footer p{font-size:13px;color:var(--ink3)}footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}ul li{margin-bottom:8px}code{font-family:var(--mono)}@media(max-width:700px){.tips{grid-template-columns:1fr}.toc-grid{grid-template-columns:1fr}.stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}.proof-grid{grid-template-columns:1fr}.vs{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">DSA Book<span class="pill">v1</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 18</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Chapter 18</div></div>
+      <h1>Common Patterns & <em>Problem-Solving Strategy</em></h1>
+      <p class="hero-sub">Master the UMPIRE framework and instantly recognize 30+ coding patterns. Learn Toptal's exact evaluation criteria, optimize for every complexity tier, write production-quality code under pressure, and execute a proven 8-week (60-day) study plan covering 75+ must-solve problems.</p>
+      <div class="stats fade">
+        <div class="stat"><div class="stat-n">1400+</div><div class="stat-l">Lines of Content</div></div>
+        <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Patterns Covered</div></div>
+        <div class="stat"><div class="stat-n">75</div><div class="stat-l">Problems Mapped</div></div>
+        <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Comprehensive</div></div>
+      </div>
+    </section>
+
+    <section class="toc fade" id="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">18.1</span> Toptal Test Format</a>
+        <a href="#sec-2"><span class="toc-n">18.2</span> UMPIRE Framework</a>
+        <a href="#sec-3"><span class="toc-n">18.3</span> Pattern Master Guide</a>
+        <a href="#sec-4"><span class="toc-n">18.4</span> Complexity Targets</a>
+        <a href="#sec-5"><span class="toc-n">18.5</span> C# Competitive Tips</a>
+        <a href="#sec-6"><span class="toc-n">18.6</span> Edge Cases Check</a>
+        <a href="#sec-7"><span class="toc-n">18.7</span> Code Quality</a>
+        <a href="#sec-8"><span class="toc-n">18.8</span> Top 75 Problems</a>
+        <a href="#sec-9"><span class="toc-n">18.9</span> 8-Week (60-Day) Study Plan</a>
+        <a href="#sec-10"><span class="toc-n">18.10</span> Mock Interview Tips</a>
+        <a href="#sec-11"><span class="toc-n">18.11</span> Common Mistakes</a>
+        <a href="#sec-12"><span class="toc-n">18.12</span> Quick Reference</a>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag"><span class="sec-num">18.1</span><div class="sec-line"></div></div>
+      <h2>Toptal Coding Test Format</h2>
+      <p class="lead">Understand the exact format, evaluation criteria, and scoring methodology. 90 minutes. 3 problems. Precision matters.</p>
+      
+      <h3>Test Structure</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Aspect</th><th>Details</th></tr></thead>
+          <tbody>
+            <tr><td>Duration</td><td>90 minutes total</td></tr>
+            <tr><td>Problems</td><td>3 (typically Easy, Medium, Hard)</td></tr>
+            <tr><td>Environment</td><td>Web-based IDE with syntax highlighting</td></tr>
+            <tr><td>Languages</td><td>C#, Java, Python, JavaScript, Go, C++, Rust</td></tr>
+            <tr><td>Test Cases</td><td>Visible + Hidden (no access to hidden until submit)</td></tr>
+            <tr><td>Resubmission</td><td>Unlimited (no penalty)</td></tr>
+            <tr><td>Compilation</td><td>Real-time error feedback</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Evaluation Rubric (Weighted)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Criterion</th><th>Weight</th><th>What Reviewers Check</th></tr></thead>
+          <tbody>
+            <tr><td>Correctness</td><td>40%</td><td>Passes all test cases (visible & hidden). Handles edge cases. Logic is sound.</td></tr>
+            <tr><td>Efficiency</td><td>30%</td><td>Time complexity optimal or near-optimal. Space usage reasonable. No TLE (Time Limit Exceeded).</td></tr>
+            <tr><td>Edge Cases</td><td>20%</td><td>Empty inputs, single element, negatives, overflow, unicode, duplicates, off-by-one. All handled explicitly.</td></tr>
+            <tr><td>Code Quality</td><td>10%</td><td>Clear naming, no magic numbers, helper methods, readable structure, proper formatting.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Time Strategy</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.9;color:var(--ink2)">
+        <li><strong>Easy (15 min):</strong> 2min read + 5min understand + 8min code = guarantee 100%</li>
+        <li><strong>Medium (25 min):</strong> 3min read + 10min plan + 15min code + 2min test = target 90%</li>
+        <li><strong>Hard (50 min):</strong> 5min read + 15min plan + 25min code + 5min test = target 60%+</li>
+        <li><strong>Buffer (5 min):</strong> Review, fix syntax, handle new edge cases</li>
+      </ul>
+
+      <h3>Hidden Test Case Patterns</h3>
+      <p>Toptal's hidden tests typically check:</p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.9;color:var(--ink2)">
+        <li>Empty arrays/strings, null values</li>
+        <li>Single element (n=1)</li>
+        <li>Maximum constraints (n=10^6 or 10^9, testing limits)</li>
+        <li>All duplicates</li>
+        <li>All negatives</li>
+        <li>Sorted/reverse sorted</li>
+        <li>Integer overflow scenarios (near int.MaxValue)</li>
+        <li>Unicode and special characters</li>
+        <li>Off-by-one boundary conditions</li>
+      </ul>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Critical:</strong> Always solve Easy first to lock in base score. Never spend >40 min on Hard if Medium is unsolved.</div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag"><span class="sec-num">18.2</span><div class="sec-line"></div></div>
+      <h2>UMPIRE Framework</h2>
+      <p class="lead">A six-step methodology that eliminates guessing and reduces careless errors. Follow this for every single problem.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Understand</strong> — Read problem twice. Identify inputs, outputs, constraints. Ask yourself: What is being asked exactly? Write down 2-3 examples by hand.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Match</strong> — Recognize the pattern. Look at signal words. Is this two-pointers? Hash map? DP? Trees? Instantly classify into a pattern family.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Plan</strong> — Write pseudocode. Decide on algorithm. State target time/space complexity. Outline steps without touching the IDE.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Implement</strong> — Code cleanly. Add brief comments. Use meaningful variable names. Compile and fix syntax errors immediately.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">5</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Review</strong> — Walk through your code line-by-line with example inputs. Spot logical errors. Check boundary conditions. Verify data types.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">6</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Evaluate</strong> — Test with edge cases. Confirm time/space complexity. Run all visible test cases. Submit with confidence.</div>
+        </div>
+      </div>
+
+      <h3>Worked Example: Two Sum (LeetCode #1)</h3>
+      <p><strong>Problem:</strong> Given array of integers and target sum, return indices of two numbers that add to target. Use each element at most once.</p>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Understand</div>
+          <div class="proof-body">Input: nums=[2,7,11,15], target=9. Output: [0,1] (nums[0]+nums[1]=9). Exactly one solution guaranteed. O(n) time preferred.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Match</div>
+          <div class="proof-body">Signal: "find pair with property". Hash map pattern. Store num→index, then for each num check if complement exists.</div>
+        </div>
+      </div>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Plan</div>
+          <div class="proof-body">Iterate through array. For each num, check if (target-num) in dict. If yes, return both indices. Else add num to dict. Time O(n), Space O(n).</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Implement</div>
+          <div class="proof-body">Create Dictionary&lt;int,int&gt;. Loop with index. Check ContainsKey before insertion to handle duplicates.</div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">TwoSum</span>(<span class="ty">int</span>[] <span class="va">nums</span>, <span class="ty">int</span> <span class="va">target</span>)
+{
+    <span class="ty">var</span> <span class="va">map</span> = <span class="kw">new</span> <span class="fn">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+    
+    <span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> &lt; <span class="va">nums</span>.<span class="prop">Length</span>; <span class="va">i</span>++)
+    {
+        <span class="ty">int</span> <span class="va">complement</span> = <span class="va">target</span> - <span class="va">nums</span>[<span class="va">i</span>];
+        <span class="kw">if</span> (<span class="va">map</span>.<span class="fn">ContainsKey</span>(<span class="va">complement</span>))
+            <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[] { <span class="va">map</span>[<span class="va">complement</span>], <span class="va">i</span> };
+        
+        <span class="kw">if</span> (!<span class="va">map</span>.<span class="fn">ContainsKey</span>(<span class="va">nums</span>[<span class="va">i</span>]))
+            <span class="va">map</span>[<span class="va">nums</span>[<span class="va">i</span>]] = <span class="va">i</span>;
+    }
+    <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[] { };
+}</span></pre>
+      </div>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Review</div>
+          <div class="proof-body">Check complement before adding (correct order). Handle duplicates with ContainsKey check. Clear variable names. No off-by-one errors.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Evaluate</div>
+          <div class="proof-body">Time: O(n) single pass. Space: O(n) for dict. Optimal for this problem. Ready to submit.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag"><span class="sec-num">18.3</span><div class="sec-line"></div></div>
+      <h2>Pattern Recognition Master Guide (30+ Patterns)</h2>
+      <p class="lead">Instantly recognize problem types by signal words. This table is your cheat sheet.</p>
+
+      <div class="tbl-wrap">
+        <table style="font-size:12.5px;">
+          <thead>
+            <tr>
+              <th style="width:12%">Pattern</th>
+              <th style="width:18%">Signal Words</th>
+              <th style="width:18%">Technique</th>
+              <th style="width:20%">Why It Works</th>
+              <th style="width:18%">LC Examples</th>
+              <th style="width:14%">Chapter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Two Pointers</td><td>Sorted, pair, target, reverse, meeting</td><td>Converging pointers from ends</td><td>Exploit ordering to eliminate binary search</td><td>#1, #15, #11, #167</td><td>Ch. 5</td></tr>
+            <tr><td>Sliding Window</td><td>Subarray, substring, longest, shortest, contiguous</td><td>Expand/contract window with 2 pointers</td><td>Each element enters/exits once = O(n)</td><td>#3, #76, #209, #424</td><td>Ch. 6</td></tr>
+            <tr><td>Hash Map</td><td>Duplicate, frequency, count, anagram, complement</td><td>Map value→count or value→index</td><td>O(1) lookup replaces O(n) search</td><td>#1, #49, #242, #347</td><td>Ch. 7</td></tr>
+            <tr><td>Prefix Sum</td><td>Subarray sum, range, cumulative, zero-sum</td><td>Precompute cumulative sums</td><td>Range sum O(n) → O(1)</td><td>#303, #560, #724</td><td>Ch. 9</td></tr>
+            <tr><td>Binary Search</td><td>Sorted, find position, log complexity, rotation</td><td>Divide search space by 2</td><td>Eliminate half remaining options each step</td><td>#704, #35, #74, #153</td><td>Ch. 8</td></tr>
+            <tr><td>Monotonic Stack</td><td>Next greater, previous smaller, trapping, histogram</td><td>Push/pop to maintain monotonic order</td><td>Each element pushed/popped once = O(n)</td><td>#20, #155, #739, #84</td><td>Ch. 10</td></tr>
+            <tr><td>BFS / Queue</td><td>Shortest path, level order, distance, matrix layers</td><td>Layer-by-layer exploration with queue</td><td>Guarantees shortest path in unweighted graph</td><td>#102, #542, #994, #1091</td><td>Ch. 13</td></tr>
+            <tr><td>DFS / Recursion</td><td>Traversal, path, permutation, reachability, connected</td><td>Recursive or stack-based graph traversal</td><td>Explores all paths; backtracking prunes branches</td><td>#104, #200, #332, #46</td><td>Ch. 12</td></tr>
+            <tr><td>Fast-Slow Pointers</td><td>Cycle, middle, kth from end, circular list</td><td>Two pointers: one 2x speed</td><td>Floyd's algorithm: meeting point indicates cycle</td><td>#141, #142, #876, #202</td><td>Ch. 11</td></tr>
+            <tr><td>Tree Recursion</td><td>Depth, path, LCA, balanced, diameter, subtree sum</td><td>Recurse on left/right, combine results</td><td>Leverage subtree solutions for superproblems</td><td>#104, #110, #236, #257</td><td>Ch. 12</td></tr>
+            <tr><td>BST Property</td><td>Search tree, validate, in-order, kth, successor</td><td>In-order → sorted; use min/max bounds</td><td>BST property eliminates half of tree</td><td>#98, #230, #700, #235</td><td>Ch. 12</td></tr>
+            <tr><td>Union-Find</td><td>Connected, components, cycle, grouping, parent</td><td>Maintain connected components via parent pointers</td><td>O(α(n)) amortized for find/union</td><td>#684, #547, #323, #1319</td><td>Ch. 14</td></tr>
+            <tr><td>Topological Sort</td><td>Prerequisite, dependency, DAG, ordering, course</td><td>Kahn (BFS) or DFS for dependency order</td><td>Detects cycles; ensures deps processed first</td><td>#207, #210, #269, #310</td><td>Ch. 14</td></tr>
+            <tr><td>Dijkstra</td><td>Shortest path, positive weights, weighted graph</td><td>Priority queue: always process min distance</td><td>Greedy: shortest path to node is final</td><td>#743, #787, #882, #1334</td><td>Ch. 14</td></tr>
+            <tr><td>0/1 DP</td><td>Climb stairs, house robber, partition, max</td><td>dp[i]=best solution for subproblem i</td><td>Avoid recalculating overlapping subproblems</td><td>#70, #198, #322, #416</td><td>Ch. 15</td></tr>
+            <tr><td>Unbounded DP</td><td>Coin change, unlimited, target sum, combinations</td><td>Item can be used multiple times</td><td>Recurrence: dp[i] uses all smaller j</td><td>#322, #518, #494, #377</td><td>Ch. 15</td></tr>
+            <tr><td>2D DP</td><td>Edit distance, unique paths, max square, triangle</td><td>dp[i][j]=solution for subgrid (i,j)</td><td>2D state space: explore all cell combinations</td><td>#64, #62, #97, #1143</td><td>Ch. 15</td></tr>
+            <tr><td>Knapsack</td><td>Weight capacity, subset sum, target, bounded</td><td>dp[i][w]=max value with i items, weight w</td><td>Item taken or skipped; optimize weight</td><td>#416, #1049, #474, #494</td><td>Ch. 15</td></tr>
+            <tr><td>Greedy</td><td>Interval, activity, max profit, minimum cost, sort</td><td>Make locally optimal choice at each step</td><td>Works when greedy leads to global optimum</td><td>#435, #452, #945, #881</td><td>Ch. 16</td></tr>
+            <tr><td>Backtracking</td><td>Permutation, combination, subset, N-Queens, Sudoku</td><td>Explore all possibilities; prune invalid branches</td><td>Systematically exhaust with early termination</td><td>#46, #47, #78, #51</td><td>Ch. 17</td></tr>
+            <tr><td>Bit Manipulation</td><td>Power of 2, bit count, XOR swap, subset, mask</td><td>AND/OR/XOR/shift for compact operations</td><td>O(1) bit ops vs. O(n) array ops</td><td>#191, #231, #136, #268</td><td>Ch. 4</td></tr>
+            <tr><td>Math/Number Theory</td><td>Palindrome, prime, GCD, Fibonacci, modular, digit</td><td>Apply mathematical insight instead of brute force</td><td>Skip redundant computation via math property</td><td>#204, #172, #69, #1401</td><td>Ch. 3</td></tr>
+            <tr><td>Heap / Priority Queue</td><td>Kth largest, median, top K, frequent, min/max</td><td>Min/Max heap for quick access to extreme</td><td>O(log n) insertion; O(1) peak access</td><td>#215, #295, #347, #313</td><td>Ch. 10</td></tr>
+            <tr><td>Graph Coloring</td><td>Bipartite, conflict, map coloring, scheduling</td><td>Assign colors: no adjacent same color</td><td>BFS/DFS detects odd cycles; 2 colors = bipartite</td><td>#785, #1042, #886, #210</td><td>Ch. 13</td></tr>
+            <tr><td>Interval Merging</td><td>Merge overlapping, non-overlapping, insert, schedule</td><td>Sort by start; merge if overlapping</td><td>Linear scan post-sort identifies all overlaps</td><td>#56, #57, #435, #986</td><td>Ch. 6</td></tr>
+            <tr><td>Matrix Traversal</td><td>Spiral, rotate, search sorted, spiral order</td><td>Row-major, spiral, or direction-change iteration</td><td>Layer-by-layer approach handles complexity</td><td>#54, #48, #240, #1572</td><td>Ch. 6</td></tr>
+            <tr><td>Simulation</td><td>State machine, game logic, step-by-step, rules</td><td>Implement rules directly; iterate state</td><td>Sometimes no pattern; just simulate correctly</td><td>#54, #67, #1306, #1849</td><td>Ch. 2</td></tr>
+            <tr><td>Trie</td><td>Word search, autocomplete, prefix, dictionary</td><td>Tree of characters; each node has children</td><td>O(m) word search vs. O(m log n) hash</td><td>#208, #211, #212, #1268</td><td>Ch. 10</td></tr>
+            <tr><td>Segment Tree/Fenwick</td><td>Range query, point update, sum rectangle</td><td>Build tree for fast range aggregation</td><td>O(log n) query/update vs. O(n) naive</td><td>#307, #308, #1157, #1606</td><td>Ch. 10</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>How to Use This Table</h3>
+      <ol style="margin-left:20px;margin-bottom:16px;line-height:1.9;color:var(--ink2)">
+        <li>Read problem and highlight keywords</li>
+        <li>Match keywords to "Signal Words" column</li>
+        <li>Find the pattern row</li>
+        <li>Study the "Technique" and "Why It Works" columns</li>
+        <li>Solve the "LC Examples" problems in that pattern</li>
+        <li>Reference the chapter for detailed explanation</li>
+      </ol>
+    </section>
+
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag"><span class="sec-num">18.4</span><div class="sec-line"></div></div>
+      <h2>Complexity Target Guide</h2>
+      <p class="lead">Match input size to target complexity class. This prevents TLE and guides algorithm selection.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Input Size (n)</th><th>Typical Operations</th><th>Target Complexity</th><th>Algorithm Examples</th></tr></thead>
+          <tbody>
+            <tr><td>n ≤ 10</td><td>~10M ops</td><td>O(n!) or O(n^6)</td><td>Brute force all permutations, full backtracking</td></tr>
+            <tr><td>n ≤ 20</td><td>~1M ops</td><td>O(2^n) or O(n^5)</td><td>Bitmask DP, subset enumeration, exponential</td></tr>
+            <tr><td>n ≤ 500</td><td>~250K ops</td><td>O(n^3) or O(n^2 log n)</td><td>Floyd-Warshall, DP with 2D state, cubic iteration</td></tr>
+            <tr><td>n ≤ 10^4</td><td>~100M ops</td><td>O(n^2)</td><td>Nested loops, bubble sort, all pairs</td></tr>
+            <tr><td>n ≤ 10^5</td><td>~1B ops</td><td>O(n log n)</td><td>Merge sort, heap sort, binary search variants</td></tr>
+            <tr><td>n ≤ 10^6</td><td>~1B ops</td><td>O(n) or O(n log n)</td><td>Single pass, hash map, sorting, linear scan</td></tr>
+            <tr><td>n ≤ 10^8</td><td>~100M ops</td><td>O(n) only</td><td>Must be linear; very tight constants required</td></tr>
+            <tr><td>n > 10^8</td><td>Varies</td><td>O(log n)</td><td>Binary search, bit operations, math only</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Time Budget Examples</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.9;color:var(--ink2)">
+        <li><strong>n=10^4:</strong> O(n²)=10^8 ops ≈ 1 second (safe). O(n³)=10^12 (TLE).</li>
+        <li><strong>n=10^5:</strong> O(n log n)=1.7×10^6 ops ≈ 10ms (safe). O(n²)=10^10 (TLE).</li>
+        <li><strong>n=10^6:</strong> O(n)=10^6 ops ≈ 1ms (safe). O(n log n)=2×10^7 (tight, risky).</li>
+      </ul>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Rule of Thumb:</strong> 10^8-10^9 simple operations per second. If uncertain, aim one complexity class better than minimum.</div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag"><span class="sec-num">18.5</span><div class="sec-line"></div></div>
+      <h2>C# Tips for Competitive Coding</h2>
+      <p class="lead">C#-specific tricks to write faster, safer, cleaner code in contests.</p>
+
+      <h3>Essential Data Structures & Methods</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>Usage</th><th>Time/Space</th></tr></thead>
+          <tbody>
+            <tr><td>Dictionary&lt;K,V&gt;</td><td>Hash map for O(1) lookup</td><td>O(1) avg, O(n) worst</td></tr>
+            <tr><td>HashSet&lt;T&gt;</td><td>Fast membership testing, deduplication</td><td>O(1) avg Add/Contains</td></tr>
+            <tr><td>List&lt;T&gt;</td><td>Dynamic array, sorted lists</td><td>O(n) insertion, O(1) access</td></tr>
+            <tr><td>Queue&lt;T&gt;</td><td>BFS, level-order traversal</td><td>O(1) Enqueue/Dequeue</td></tr>
+            <tr><td>Stack&lt;T&gt;</td><td>DFS, monotonic stack, parsing</td><td>O(1) Push/Pop</td></tr>
+            <tr><td>PriorityQueue&lt;T&gt; (C# 10+)</td><td>Min/Max heap, Dijkstra</td><td>O(log n) Enqueue/Dequeue</td></tr>
+            <tr><td>SortedDictionary&lt;K,V&gt;</td><td>Ordered key access, range queries</td><td>O(log n) operations</td></tr>
+            <tr><td>StringBuilder</td><td>String concatenation (never use + in loop)</td><td>O(n) for n appends vs O(n²)</td></tr>
+            <tr><td>Array.Sort(T[], IComparer)</td><td>Custom sort order with comparers</td><td>O(n log n)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Common Patterns & Gotchas</h3>
+
+      <p><strong>1. StringBuilder for String Building</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C# (Bad)</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">string</span> <span class="va">result</span> = <span class="str">""</span>;
+<span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> < <span class="num">1000</span>; <span class="va">i</span>++)
+    <span class="va">result</span> += <span class="va">i</span>.<span class="fn">ToString</span>(); <span class="cm">// O(n²) string copying!</span></pre>
+      </div>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C# (Good)</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="ty">var</span> <span class="va">sb</span> = <span class="kw">new</span> <span class="fn">StringBuilder</span>();
+<span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">0</span>; <span class="va">i</span> < <span class="num">1000</span>; <span class="va">i</span>++)
+    <span class="va">sb</span>.<span class="fn">Append</span>(<span class="va">i</span>); <span class="cm">// O(n)</span>
+<span class="kw">string</span> <span class="va">result</span> = <span class="va">sb</span>.<span class="fn">ToString</span>();</pre>
+      </div>
+
+      <p><strong>2. Dictionary Patterns</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Count frequencies</span>
+<span class="ty">var</span> <span class="va">freq</span> = <span class="kw">new</span> <span class="fn">Dictionary</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+<span class="kw">foreach</span> (<span class="ty">int</span> <span class="va">num</span> <span class="kw">in</span> <span class="va">nums</span>)
+    <span class="va">freq</span>[<span class="va">num</span>] = <span class="va">freq</span>.<span class="fn">GetValueOrDefault</span>(<span class="va">num</span>, <span class="num">0</span>) + <span class="num">1</span>;
+
+<span class="cm">// Or use TryGetValue for safety</span>
+<span class="kw">if</span> (<span class="va">freq</span>.<span class="fn">TryGetValue</span>(<span class="va">key</span>, <span class="kw">out</span> <span class="ty">int</span> <span class="va">val</span>))
+    <span class="cm">// Use val safely</span></pre>
+      </div>
+
+      <p><strong>3. PriorityQueue (C# 10+)</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="ty">var</span> <span class="va">minHeap</span> = <span class="kw">new</span> <span class="fn">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+<span class="va">minHeap</span>.<span class="fn">Enqueue</span>(<span class="num">5</span>, <span class="num">5</span>); <span class="cm">// value, priority</span>
+<span class="va">minHeap</span>.<span class="fn">Enqueue</span>(<span class="num">3</span>, <span class="num">3</span>);
+<span class="ty">int</span> <span class="va">min</span> = <span class="va">minHeap</span>.<span class="fn">Dequeue</span>(); <span class="cm">// 3</span>
+
+<span class="cm">// For max heap, negate priorities</span>
+<span class="ty">var</span> <span class="va">maxHeap</span> = <span class="kw">new</span> <span class="fn">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt;();
+<span class="va">maxHeap</span>.<span class="fn">Enqueue</span>(<span class="num">5</span>, <span class="num">-5</span>); <span class="cm">// negate</span></pre>
+      </div>
+
+      <p><strong>4. LINQ Gotchas</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>LINQ is lazy-evaluated. Call <code class="il">.ToList()</code> to materialize.</li>
+        <li><code class="il">OrderBy()</code> is O(n log n); don't call multiple times on result.</li>
+        <li><code class="il">Count()</code> on IEnumerable is O(n); pre-materialize for multiple uses.</li>
+        <li><code class="il">.FirstOrDefault()</code> is safer than <code class="il">.First()</code> for empty sequences.</li>
+      </ul>
+
+      <p><strong>5. Span&lt;T&gt; for Performance</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Use Span&lt;T&gt; for zero-copy slicing</span>
+<span class="ty">int</span>[] <span class="va">arr</span> = <span class="kw">new</span> <span class="ty">int</span>[] { <span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span> };
+<span class="ty">Span</span>&lt;<span class="ty">int</span>&gt; <span class="va">slice</span> = <span class="va">arr</span>.<span class="fn">AsSpan</span>(<span class="num">1</span>, <span class="num">3</span>); <span class="cm">// No allocation</span></pre>
+      </div>
+
+      <p><strong>6. Integer Overflow Safety</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Check bounds before arithmetic</span>
+<span class="kw">if</span> (<span class="va">a</span> > <span class="ty">int</span>.<span class="fn">MaxValue</span> - <span class="va">b</span>) <span class="cm">// would overflow</span>
+
+<span class="cm">// Use long for large intermediate values</span>
+<span class="kw">long</span> <span class="va">product</span> = (<span class="kw">long</span>)<span class="va">a</span> * <span class="va">b</span>;</pre>
+      </div>
+
+      <p><strong>7. Array.Sort with Custom Comparer</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="cm">// Sort by custom logic</span>
+<span class="fn">Array</span>.<span class="fn">Sort</span>(<span class="va">intervals</span>, (<span class="va">a</span>, <span class="va">b</span>) => <span class="va">a</span>[<span class="num">0</span>].<span class="fn">CompareTo</span>(<span class="va">b</span>[<span class="num">0</span>]));
+
+<span class="cm">// Or reverse order</span>
+<span class="fn">Array</span>.<span class="fn">Sort</span>(<span class="va">nums</span>, (<span class="va">a</span>, <span class="va">b</span>) => <span class="va">b</span>.<span class="fn">CompareTo</span>(<span class="va">a</span>));</pre>
+      </div>
+
+      <p><strong>8. Common Math Methods</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="fn">Math</span>.<span class="fn">Abs</span>(<span class="va">x</span>);
+<span class="fn">Math</span>.<span class="fn">Max</span>(<span class="va">a</span>, <span class="va">b</span>); <span class="fn">Math</span>.<span class="fn">Min</span>(<span class="va">a</span>, <span class="va">b</span>);
+<span class="fn">Math</span>.<span class="fn">Pow</span>(<span class="va">base</span>, <span class="va">exp</span>);
+<span class="fn">Math</span>.<span class="fn">Sqrt</span>(<span class="va">x</span>);
+<span class="fn">Math</span>.<span class="fn">Floor</span>(<span class="va">x</span>); <span class="fn">Math</span>.<span class="fn">Ceiling</span>(<span class="va">x</span>);
+<span class="va">x</span> % <span class="va">m</span>; <span class="cm">// modulo</span></pre>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag"><span class="sec-num">18.6</span><div class="sec-line"></div></div>
+      <h2>Edge Cases Master Checklist</h2>
+      <p class="lead">These account for 20% of your score. Missing one means wrong answer on hidden tests.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Category</th><th>Examples to Test</th><th>Code Implications</th></tr></thead>
+          <tbody>
+            <tr><td>Empty Input</td><td>[], "", null, 0 length</td><td>Check array bounds before access. Handle null gracefully.</td></tr>
+            <tr><td>Single Element</td><td>n=1, one node, one char</td><td>Loops should handle i=0 case. Base case matters.</td></tr>
+            <tr><td>Duplicates</td><td>All same value, freq=n</td><td>Dict handling, set dedup, comparison logic.</td></tr>
+            <tr><td>Sorted/Reverse</td><td>Ascending, descending, already sorted</td><td>Early exit conditions, comparison directions.</td></tr>
+            <tr><td>Negatives</td><td>All negative, mixed signs, -1</td><td>Abs(), sign handling, comparison logic.</td></tr>
+            <tr><td>Zero</td><td>Zeros in array, divide by zero</td><td>Check denominator != 0. Handle x=0 specially.</td></tr>
+            <tr><td>Integer Overflow</td><td>int.MaxValue, near limits</td><td>Use long, check before arithmetic, modulo.</td></tr>
+            <tr><td>Large Input</td><td>n=10^6, stress memory</td><td>O(n²) becomes TLE. Use efficient structures.</td></tr>
+            <tr><td>Off-by-One</td><td>Boundary indices, fencepost</td><td>Loop conditions: i < n vs i <= n. Array indices.</td></tr>
+            <tr><td>Unicode/Special Chars</td><td>UTF-8, emoji, accents, newlines</td><td>String length vs byte length. Char encoding.</td></tr>
+            <tr><td>Floating Point</td><td>NaN, Infinity, rounding</td><td>Equality checks use epsilon. Integer conversion issues.</td></tr>
+            <tr><td>Null/Undefined</td><td>null references, uninitialized</td><td>Null checks. Dictionary.TryGetValue not direct access.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Pre-Submission Edge Case Routine</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.9;color:var(--ink2)">
+        <li>Empty input: Does it crash or return correctly?</li>
+        <li>Single element: Does the loop handle n=1?</li>
+        <li>All same value: Does deduplication work?</li>
+        <li>Boundary values: int.MaxValue, 0, -1?</li>
+        <li>Off-by-one: Loop indices correct? Array access safe?</li>
+        <li>Large input: Would it TLE or MLE?</li>
+      </ul>
+    </section>
+
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag"><span class="sec-num">18.7</span><div class="sec-line"></div></div>
+      <h2>Code Quality & Refactoring</h2>
+      <p class="lead">The final 10% of your score. Clean code reads like prose. Make reviewers happy.</p>
+
+      <h3>Naming Conventions (C#)</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li><strong>Methods:</strong> PascalCase. <code class="il">TwoSum, IsValid, BuildGraph</code></li>
+        <li><strong>Local vars:</strong> camelCase. <code class="il">leftPointer, freqMap, result</code></li>
+        <li><strong>Constants:</strong> UPPER_SNAKE_CASE or PascalCase. <code class="il">MAX_SIZE or MaxSize</code></li>
+        <li><strong>Booleans:</strong> Prefix with "is", "has", "can". <code class="il">isValid, hasNext, canReach</code></li>
+      </ul>
+
+      <h3>Code Quality Principles</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Avoid Magic Numbers</div>
+          <div class="proof-body"><code class="il">if (i % 2 == 0)</code> is unclear. Better: <code class="il">const int MOD = 2; if (i % MOD == 0)</code>. Or comment: <code class="il">// Check if even</code></div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Helper Methods</div>
+          <div class="proof-body">Complex logic in separate methods. <code class="il">IsValid(), GetNeighbors(), Swap()</code> make main logic readable.</div>
+        </div>
+      </div>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Meaningful Comments</div>
+          <div class="proof-body">Comment the WHY, not the WHAT. <code class="il">// Greedy: always pick min cost option</code> is better than <code class="il">// Loop through array</code></div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Consistent Formatting</div>
+          <div class="proof-body">Proper indentation, spacing around operators, blank lines between logical blocks. Use IDE's formatter.</div>
+        </div>
+      </div>
+
+      <h3>Before/After Refactoring Example</h3>
+      <p><strong>BEFORE (Poor Quality):</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">isvalid</span>(<span class="ty">string</span> <span class="va">s</span>)
+{
+    <span class="ty">var</span> <span class="va">st</span> = <span class="kw">new</span> <span class="fn">Stack</span>&lt;<span class="ty">char</span>&gt;();
+    <span class="kw">for</span>(<span class="ty">int</span> <span class="va">i</span>=<span class="num">0</span>;<span class="va">i</span>&lt;<span class="va">s</span>.<span class="prop">Length</span>;<span class="va">i</span>++)
+    {
+        <span class="ty">char</span> <span class="va">c</span>=<span class="va">s</span>[<span class="va">i</span>];
+        <span class="kw">if</span>(<span class="va">c</span>==<span class="str">'('</span>||<span class="va">c</span>==<span class="str">'{'</span>||<span class="va">c</span>==<span class="str">'['</span>)<span class="va">st</span>.<span class="fn">Push</span>(<span class="va">c</span>);
+        <span class="kw">else</span>
+        {
+            <span class="kw">if</span>(<span class="va">st</span>.<span class="prop">Count</span>==<span class="num">0</span>)<span class="kw">return</span> <span class="kw">false</span>;
+            <span class="ty">char</span> <span class="va">t</span>=<span class="va">st</span>.<span class="fn">Pop</span>();
+            <span class="kw">if</span>(!(<span class="va">c</span>==<span class="str">')'</span>&&<span class="va">t</span>==<span class="str">'('</span>||<span class="va">c</span>==<span class="str">'}'</span>&&<span class="va">t</span>==<span class="str">'{'</span>||<span class="va">c</span>==<span class="str">']'</span>&&<span class="va">t</span>==<span class="str">'['</span>))<span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+    <span class="kw">return</span> <span class="va">st</span>.<span class="prop">Count</span>==<span class="num">0</span>;
+}</span></pre>
+      </div>
+
+      <p><strong>AFTER (Good Quality):</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsValid</span>(<span class="ty">string</span> <span class="va">s</span>)
+{
+    <span class="ty">var</span> <span class="va">stack</span> = <span class="kw">new</span> <span class="fn">Stack</span>&lt;<span class="ty">char</span>&gt;();
+    
+    <span class="kw">foreach</span> (<span class="ty">char</span> <span class="va">c</span> <span class="kw">in</span> <span class="va">s</span>)
+    {
+        <span class="kw">if</span> (<span class="fn">IsOpeningBracket</span>(<span class="va">c</span>))
+        {
+            <span class="va">stack</span>.<span class="fn">Push</span>(<span class="va">c</span>);
+        }
+        <span class="kw">else</span> <span class="kw">if</span> (<span class="fn">IsClosingBracket</span>(<span class="va">c</span>))
+        {
+            <span class="kw">if</span> (<span class="va">stack</span>.<span class="prop">Count</span> == <span class="num">0</span> || !<span class="fn">IsMatching</span>(<span class="va">stack</span>.<span class="fn">Pop</span>(), <span class="va">c</span>))
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+    
+    <span class="kw">return</span> <span class="va">stack</span>.<span class="prop">Count</span> == <span class="num">0</span>;
+}
+
+<span class="kw">private</span> <span class="ty">bool</span> <span class="fn">IsOpeningBracket</span>(<span class="ty">char</span> <span class="va">c</span>) => <span class="va">c</span> == <span class="str">'('</span> || <span class="va">c</span> == <span class="str">'{'</span> || <span class="va">c</span> == <span class="str">'['</span>;
+
+<span class="kw">private</span> <span class="ty">bool</span> <span class="fn">IsClosingBracket</span>(<span class="ty">char</span> <span class="va">c</span>) => <span class="va">c</span> == <span class="str">')'</span> || <span class="va">c</span> == <span class="str">'}'</span> || <span class="va">c</span> == <span class="str">']'</span>;
+
+<span class="kw">private</span> <span class="ty">bool</span> <span class="fn">IsMatching</span>(<span class="ty">char</span> <span class="va">open</span>, <span class="ty">char</span> <span class="va">close</span>)
+    => (<span class="va">open</span> == <span class="str">'('</span> && <span class="va">close</span> == <span class="str">')'</span>) ||
+       (<span class="va">open</span> == <span class="str">'{'</span> && <span class="va">close</span> == <span class="str">'}'</span>) ||
+       (<span class="va">open</span> == <span class="str">'['</span> && <span class="va">close</span> == <span class="str">']'</span>);</span></pre>
+      </div>
+
+      <h3>Quality Checklist</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Variable names are clear (not a, b, x unless mathematical)</li>
+        <li>Methods do one thing (helper methods extract complexity)</li>
+        <li>No magic numbers (use const or explain in comments)</li>
+        <li>Proper indentation and spacing</li>
+        <li>Comments explain WHY, not WHAT</li>
+        <li>Error/edge cases handled explicitly, not ignored</li>
+      </ul>
+    </section>
+
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag"><span class="sec-num">18.8</span><div class="sec-line"></div></div>
+      <h2>Top 75 Must-Solve Problems</h2>
+      <p class="lead">Solve these and you'll recognize 90% of interview questions. Organized by category and difficulty.</p>
+
+      <h3>Arrays & Sorting (12 problems)</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Problem</th><th>LC#</th><th>Difficulty</th><th>Pattern</th><th>Chapter</th></tr></thead>
+          <tbody>
+            <tr><td>Two Sum</td><td>#1</td><td><span class="badge b-green">Easy</span></td><td>Hash Map</td><td>7</td></tr>
+            <tr><td>Best Time to Buy & Sell Stock</td><td>#121</td><td><span class="badge b-green">Easy</span></td><td>Dynamic Programming</td><td>15</td></tr>
+            <tr><td>Contains Duplicate</td><td>#217</td><td><span class="badge b-green">Easy</span></td><td>Hash Set</td><td>7</td></tr>
+            <tr><td>3Sum</td><td>#15</td><td><span class="badge b-orange">Medium</span></td><td>Two Pointers</td><td>5</td></tr>
+            <tr><td>Product of Array Except Self</td><td>#238</td><td><span class="badge b-orange">Medium</span></td><td>Prefix Sum</td><td>9</td></tr>
+            <tr><td>Merge Intervals</td><td>#56</td><td><span class="badge b-orange">Medium</span></td><td>Interval Merging</td><td>6</td></tr>
+            <tr><td>Search in Rotated Sorted Array</td><td>#33</td><td><span class="badge b-orange">Medium</span></td><td>Binary Search</td><td>8</td></tr>
+            <tr><td>Maximum Subarray</td><td>#53</td><td><span class="badge b-orange">Medium</span></td><td>Dynamic Programming</td><td>15</td></tr>
+            <tr><td>Spiral Matrix</td><td>#54</td><td><span class="badge b-orange">Medium</span></td><td>Matrix Traversal</td><td>6</td></tr>
+            <tr><td>Set Matrix Zeroes</td><td>#73</td><td><span class="badge b-orange">Medium</span></td><td>In-Place Modification</td><td>2</td></tr>
+            <tr><td>Rotate Image</td><td>#48</td><td><span class="badge b-orange">Medium</span></td><td>Matrix Rotation</td><td>6</td></tr>
+            <tr><td>First Missing Positive</td><td>#41</td><td><span class="badge b-red">Hard</span></td><td>Array Indexing</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Strings (10 problems)</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Problem</th><th>LC#</th><th>Difficulty</th><th>Pattern</th><th>Chapter</th></tr></thead>
+          <tbody>
+            <tr><td>Valid Parentheses</td><td>#20</td><td><span class="badge b-green">Easy</span></td><td>Stack</td><td>10</td></tr>
+            <tr><td>Reverse String</td><td>#344</td><td><span class="badge b-green">Easy</span></td><td>Two Pointers</td><td>5</td></tr>
+            <tr><td>Longest Substring Without Repeating Chars</td><td>#3</td><td><span class="badge b-orange">Medium</span></td><td>Sliding Window</td><td>6</td></tr>
+            <tr><td>Group Anagrams</td><td>#49</td><td><span class="badge b-orange">Medium</span></td><td>Hash Map</td><td>7</td></tr>
+            <tr><td>Valid Palindrome</td><td>#125</td><td><span class="badge b-orange">Medium</span></td><td>Two Pointers</td><td>5</td></tr>
+            <tr><td>Longest Palindromic Substring</td><td>#5</td><td><span class="badge b-orange">Medium</span></td><td>Dynamic Programming</td><td>15</td></tr>
+            <tr><td>Word Ladder</td><td>#127</td><td><span class="badge b-orange">Medium</span></td><td>BFS</td><td>13</td></tr>
+            <tr><td>Edit Distance</td><td>#72</td><td><span class="badge b-red">Hard</span></td><td>2D DP</td><td>15</td></tr>
+            <tr><td>Word Break II</td><td>#140</td><td><span class="badge b-red">Hard</span></td><td>Backtracking DP</td><td>17</td></tr>
+            <tr><td>Regular Expression Matching</td><td>#10</td><td><span class="badge b-red">Hard</span></td><td>2D DP</td><td>15</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Linked Lists (8 problems)</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Problem</th><th>LC#</th><th>Difficulty</th><th>Pattern</th><th>Chapter</th></tr></thead>
+          <tbody>
+            <tr><td>Reverse Linked List</td><td>#206</td><td><span class="badge b-green">Easy</span></td><td>Linked List Manipulation</td><td>11</td></tr>
+            <tr><td>Merge Two Sorted Lists</td><td>#21</td><td><span class="badge b-green">Easy</span></td><td>Two Pointers</td><td>5</td></tr>
+            <tr><td>Linked List Cycle</td><td>#141</td><td><span class="badge b-green">Easy</span></td><td>Fast-Slow Pointers</td><td>11</td></tr>
+            <tr><td>Add Two Numbers</td><td>#2</td><td><span class="badge b-orange">Medium</span></td><td>Linked List Traversal</td><td>11</td></tr>
+            <tr><td>Remove Nth Node From End</td><td>#19</td><td><span class="badge b-orange">Medium</span></td><td>Two Pointers</td><td>5</td></tr>
+            <tr><td>Reorder List</td><td>#143</td><td><span class="badge b-orange">Medium</span></td><td>Fast-Slow + Reverse</td><td>11</td></tr>
+            <tr><td>Copy List with Random Pointer</td><td>#138</td><td><span class="badge b-orange">Medium</span></td><td>Hash Map</td><td>7</td></tr>
+            <tr><td>LRU Cache</td><td>#146</td><td><span class="badge b-red">Hard</span></td><td>Hash Map + Linked List</td><td>11</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Trees & Graphs (15 problems)</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Problem</th><th>LC#</th><th>Difficulty</th><th>Pattern</th><th>Chapter</th></tr></thead>
+          <tbody>
+            <tr><td>Binary Tree Inorder Traversal</td><td>#94</td><td><span class="badge b-green">Easy</span></td><td>Tree Traversal</td><td>12</td></tr>
+            <tr><td>Invert Binary Tree</td><td>#226</td><td><span class="badge b-green">Easy</span></td><td>Tree Recursion</td><td>12</td></tr>
+            <tr><td>Same Tree</td><td>#100</td><td><span class="badge b-green">Easy</span></td><td>Tree Comparison</td><td>12</td></tr>
+            <tr><td>Balanced Binary Tree</td><td>#110</td><td><span class="badge b-green">Easy</span></td><td>Tree Recursion</td><td>12</td></tr>
+            <tr><td>Lowest Common Ancestor of BST</td><td>#235</td><td><span class="badge b-green">Easy</span></td><td>BST Property</td><td>12</td></tr>
+            <tr><td>Binary Tree Level Order</td><td>#102</td><td><span class="badge b-orange">Medium</span></td><td>BFS</td><td>13</td></tr>
+            <tr><td>Binary Tree Zigzag Traversal</td><td>#103</td><td><span class="badge b-orange">Medium</span></td><td>BFS</td><td>13</td></tr>
+            <tr><td>Lowest Common Ancestor</td><td>#236</td><td><span class="badge b-orange">Medium</span></td><td>Tree Recursion</td><td>12</td></tr>
+            <tr><td>Validate BST</td><td>#98</td><td><span class="badge b-orange">Medium</span></td><td>BST Property</td><td>12</td></tr>
+            <tr><td>Path Sum II</td><td>#113</td><td><span class="badge b-orange">Medium</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>Number of Islands</td><td>#200</td><td><span class="badge b-orange">Medium</span></td><td>DFS/BFS</td><td>13</td></tr>
+            <tr><td>Clone Graph</td><td>#133</td><td><span class="badge b-orange">Medium</span></td><td>Graph Traversal</td><td>13</td></tr>
+            <tr><td>Course Schedule</td><td>#207</td><td><span class="badge b-orange">Medium</span></td><td>Topological Sort</td><td>14</td></tr>
+            <tr><td>Binary Tree Maximum Path Sum</td><td>#124</td><td><span class="badge b-red">Hard</span></td><td>Tree Recursion</td><td>12</td></tr>
+            <tr><td>Alien Dictionary</td><td>#269</td><td><span class="badge b-red">Hard</span></td><td>Topological Sort</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Dynamic Programming (12 problems)</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Problem</th><th>LC#</th><th>Difficulty</th><th>Pattern</th><th>Chapter</th></tr></thead>
+          <tbody>
+            <tr><td>Climbing Stairs</td><td>#70</td><td><span class="badge b-green">Easy</span></td><td>0/1 DP</td><td>15</td></tr>
+            <tr><td>House Robber</td><td>#198</td><td><span class="badge b-orange">Medium</span></td><td>0/1 DP</td><td>15</td></tr>
+            <tr><td>Coin Change</td><td>#322</td><td><span class="badge b-orange">Medium</span></td><td>Unbounded DP</td><td>15</td></tr>
+            <tr><td>Unique Paths</td><td>#62</td><td><span class="badge b-orange">Medium</span></td><td>2D DP</td><td>15</td></tr>
+            <tr><td>Partition Equal Subset Sum</td><td>#416</td><td><span class="badge b-orange">Medium</span></td><td>Knapsack</td><td>15</td></tr>
+            <tr><td>Word Break</td><td>#139</td><td><span class="badge b-orange">Medium</span></td><td>1D DP</td><td>15</td></tr>
+            <tr><td>Longest Increasing Subsequence</td><td>#300</td><td><span class="badge b-orange">Medium</span></td><td>1D DP</td><td>15</td></tr>
+            <tr><td>Target Sum</td><td>#494</td><td><span class="badge b-orange">Medium</span></td><td>Knapsack</td><td>15</td></tr>
+            <tr><td>Distinct Subsequences</td><td>#115</td><td><span class="badge b-red">Hard</span></td><td>2D DP</td><td>15</td></tr>
+            <tr><td>Interleaving String</td><td>#97</td><td><span class="badge b-red">Hard</span></td><td>2D DP</td><td>15</td></tr>
+            <tr><td>Best Time to Buy Stock IV</td><td>#188</td><td><span class="badge b-red">Hard</span></td><td>DP with State</td><td>15</td></tr>
+            <tr><td>Longest Substring w/ At Most K Distinct</td><td>#340</td><td><span class="badge b-red">Hard</span></td><td>Sliding Window DP</td><td>6</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Remaining High-Value Problems (18 problems)</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Problem</th><th>LC#</th><th>Difficulty</th><th>Pattern</th><th>Chapter</th></tr></thead>
+          <tbody>
+            <tr><td>Trapping Rain Water</td><td>#42</td><td><span class="badge b-orange">Medium</span></td><td>Monotonic Stack</td><td>10</td></tr>
+            <tr><td>Largest Rectangle in Histogram</td><td>#84</td><td><span class="badge b-orange">Medium</span></td><td>Monotonic Stack</td><td>10</td></tr>
+            <tr><td>Kth Largest Element</td><td>#215</td><td><span class="badge b-orange">Medium</span></td><td>Heap/Quickselect</td><td>10</td></tr>
+            <tr><td>Top K Frequent Elements</td><td>#347</td><td><span class="badge b-orange">Medium</span></td><td>Heap</td><td>10</td></tr>
+            <tr><td>Find Median from Data Stream</td><td>#295</td><td><span class="badge b-red">Hard</span></td><td>Heap</td><td>10</td></tr>
+            <tr><td>Meeting Rooms II</td><td>#253</td><td><span class="badge b-orange">Medium</span></td><td>Greedy Sorting</td><td>16</td></tr>
+            <tr><td>Interval Scheduling Maximization</td><td>#452</td><td><span class="badge b-orange">Medium</span></td><td>Greedy</td><td>16</td></tr>
+            <tr><td>Two Sum III - Data Structure Design</td><td>#170</td><td><span class="badge b-orange">Medium</span></td><td>Hash Map</td><td>7</td></tr>
+            <tr><td>Sort Colors</td><td>#75</td><td><span class="badge b-orange">Medium</span></td><td>Two Pointers</td><td>5</td></tr>
+            <tr><td>Minimum Window Substring</td><td>#76</td><td><span class="badge b-red">Hard</span></td><td>Sliding Window</td><td>6</td></tr>
+            <tr><td>Permutations</td><td>#46</td><td><span class="badge b-orange">Medium</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>Combinations</td><td>#77</td><td><span class="badge b-orange">Medium</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>Subsets</td><td>#78</td><td><span class="badge b-orange">Medium</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>Letter Combinations</td><td>#17</td><td><span class="badge b-orange">Medium</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>N-Queens</td><td>#51</td><td><span class="badge b-red">Hard</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>Sudoku Solver</td><td>#37</td><td><span class="badge b-red">Hard</span></td><td>Backtracking</td><td>17</td></tr>
+            <tr><td>Surrounded Regions</td><td>#130</td><td><span class="badge b-orange">Medium</span></td><td>DFS/BFS</td><td>13</td></tr>
+            <tr><td>Accounts Merge</td><td>#721</td><td><span class="badge b-orange">Medium</span></td><td>Union-Find</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag"><span class="sec-num">18.9</span><div class="sec-line"></div></div>
+      <h2>8-Week (60-Day) Study Plan</h2>
+      <p class="lead">You have 60 days — use them wisely. This 8-week plan at ~2 hrs/day gives you 120 total hours of deep, structured practice. That's 3x what most candidates invest.</p>
+
+      <h3>Week 1: Foundations & Big O (Days 1–7)</h3>
+      <p><strong>Goal:</strong> Master Big O, arrays, strings, prefix sums. Solve all easy Codility problems. 100% on Codility Lessons 1-5.</p>
+      <p><strong>Mon:</strong> Big O & Complexity (Ch 1). Practice estimating complexity from code snippets. (2 hrs)</p>
+      <p><strong>Tue:</strong> Arrays & Strings (Ch 2). C# arrays, List, StringBuilder. Codility Lessons 1-2. (2 hrs)</p>
+      <p><strong>Wed:</strong> Prefix Sums (Ch 19). Codility Lesson 5. Solve: PassingCars, GenomicRangeQuery, MinAvgTwoSlice. (2 hrs)</p>
+      <p><strong>Thu:</strong> Counting Elements. Codility Lesson 3-4. Solve: MissingInteger, MaxCounters, PermCheck. (2 hrs)</p>
+      <p><strong>Fri:</strong> Practice: Solve 5 easy problems timed (10 min each). Review edge cases. (2 hrs)</p>
+      <p><strong>Sat:</strong> Revisit any problems not at 100%. Write prefix sum template from memory 3 times. (3 hrs)</p>
+      <p><strong>Sun:</strong> Light review. Rest.</p>
+
+      <h3>Week 2–3: Core Patterns (Days 8–21)</h3>
+      <p><strong>Goal:</strong> Master hash maps, two pointers, sliding window, binary search, stacks. Take Mock Test 1.</p>
+      <p><strong>Week 2 Mon-Fri:</strong> Hash Maps (Ch 5), Two Pointers & Sliding Window (Ch 15), Binary Search (Ch 10). 2 problems/day. (2 hrs/day)</p>
+      <p><strong>Week 2 Sat:</strong> Sorting algorithms (Ch 9). Codility Lesson 6. Problems: Distinct, Triangle, NumberOfDiscIntersections. (3 hrs)</p>
+      <p><strong>Week 3 Mon-Fri:</strong> Stacks & Queues (Ch 4). Monotonic stack. Problems: Brackets, Fish, StoneWall, Largest Rectangle, Daily Temperatures. (2 hrs/day)</p>
+      <p><strong>Week 3 Sat:</strong> Review all patterns. Re-solve 5 hardest problems from Weeks 2-3. (3 hrs)</p>
+      <p><strong>Week 3 Sun:</strong> MOCK TEST 1 (90 min timed). Score target: 200+/300. (3 hrs)</p>
+
+      <h3>Week 4–5: Data Structures Deep Dive (Days 22–35)</h3>
+      <p><strong>Goal:</strong> Master trees, graphs, heaps, linked lists. Complete ALL 17 Codility lessons at 100%. Take Mock Test 2.</p>
+      <p><strong>Week 4 Mon-Wed:</strong> Linked Lists (Ch 3). Problems: Reverse, Merge, Cycle Detection, Palindrome. (2 hrs/day)</p>
+      <p><strong>Week 4 Thu-Sat:</strong> Trees & BST (Ch 6). Traversals, Validate BST, LCA, Path Sum, Kth Smallest. (2-3 hrs/day)</p>
+      <p><strong>Week 5 Mon-Wed:</strong> Graphs (Ch 8). BFS, DFS, Dijkstra. Problems: Number of Islands, Course Schedule, Word Ladder. (2 hrs/day)</p>
+      <p><strong>Week 5 Thu-Fri:</strong> Heaps (Ch 7). PriorityQueue. Codility Lessons 8-17 (complete ALL). (2 hrs/day)</p>
+      <p><strong>Week 5 Sat:</strong> Verify ALL 17 Codility lessons are 100%. Fix any that aren't. (3 hrs)</p>
+      <p><strong>Week 5 Sun:</strong> MOCK TEST 2 (90 min timed). Score target: 230+/300. (3 hrs)</p>
+
+      <h3>Week 6–7: Algorithm Paradigms (Days 36–49)</h3>
+      <p><strong>Goal:</strong> Master DP, greedy, backtracking. Solve 50+ medium/hard problems. Take Mock Test 3.</p>
+      <p><strong>Week 6 Mon-Wed:</strong> Dynamic Programming (Ch 12). 1D DP: Climbing Stairs, House Robber, Coin Change, LIS. (2 hrs/day)</p>
+      <p><strong>Week 6 Thu-Fri:</strong> 2D DP: Edit Distance, LCS, Knapsack, Unique Paths. Draw DP tables by hand. (2 hrs/day)</p>
+      <p><strong>Week 6 Sat:</strong> DP Advanced: Stock with Cooldown, Burst Balloons concept, bitmask intro. (3 hrs)</p>
+      <p><strong>Week 7 Mon-Tue:</strong> Greedy (Ch 13): Jump Game, Gas Station, Task Scheduler, Partition Labels. (2 hrs/day)</p>
+      <p><strong>Week 7 Wed-Thu:</strong> Backtracking (Ch 11): Subsets, Permutations, Combination Sum, N-Queens. (2 hrs/day)</p>
+      <p><strong>Week 7 Fri:</strong> Strings, Bit Manipulation, Intervals — solve remaining problems. (2 hrs)</p>
+      <p><strong>Week 7 Sat:</strong> Hard Problem Day: 3 hard problems (1 DP, 1 graph, 1 design). 40 min each. (3 hrs)</p>
+      <p><strong>Week 7 Sun:</strong> MOCK TEST 3 (90 min timed). Score target: 250+/300. (3 hrs)</p>
+
+      <h3>Week 8+: Polish, Mock Tests & All 4 Rounds (Days 50–60)</h3>
+      <p><strong>Goal:</strong> Score 260+/300 consistently. Prepare for all 4 Toptal rounds. Build supreme confidence.</p>
+      <p><strong>Day 50-51:</strong> Weak point audit. Identify 2 weakest categories. Drill those exclusively. (2 hrs/day)</p>
+      <p><strong>Day 52-53:</strong> Speed drills: 6 easy in 60 min, 3 mediums in 75 min. Edge case mastery. (2 hrs/day)</p>
+      <p><strong>Day 54:</strong> Random problem mix from LeetCode — no category chosen. Practice pattern recognition. (2 hrs)</p>
+      <p><strong>Day 55:</strong> MOCK TEST 4 (full simulation, no breaks). Target: 270+/300. (3 hrs)</p>
+      <p><strong>Day 56:</strong> Live Coding prep (REACTO method). Practice talking through solutions aloud. (3 hrs)</p>
+      <p><strong>Day 57:</strong> Take-Home Project prep. Set up .NET template with Clean Architecture, DI, tests. (2 hrs)</p>
+      <p><strong>Day 58:</strong> Communication Round prep. Practice answering common questions aloud. (2 hrs)</p>
+      <p><strong>Day 59:</strong> FINAL MOCK TEST. Dress rehearsal. Score target: 260+/300. (2 hrs)</p>
+      <p><strong>Day 60:</strong> Light review of cheatsheet and golden rules. No new problems. Sleep early. You're ready.</p>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Pro Tip:</strong> If stuck on a problem >20 min, read solution/hint, understand, then retry without looking. Solve same problem 3 times on different days = mastery. With 60 days you have time for proper spaced repetition.</div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-10">
+      <div class="sec-tag"><span class="sec-num">18.10</span><div class="sec-line"></div></div>
+      <h2>Mock Interview Tips & Time Management</h2>
+      <p class="lead">How to think under pressure, communicate, and recover. Master this and you'll ace the real test.</p>
+
+      <h3>Time Allocation (90 Minutes Total)</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li><strong>Easy:</strong> 2min read + 5min plan + 8min code + 2min test = 17 min. Target: 100%</li>
+        <li><strong>Medium:</strong> 3min read + 10min plan + 18min code + 4min test = 35 min. Target: 85%+</li>
+        <li><strong>Hard:</strong> 4min read + 15min plan + 25min code + 5min test = 49 min. Target: 60%+</li>
+        <li><strong>Buffer:</strong> 5-10 min for review, fixes, edge case testing</li>
+      </ul>
+
+      <h3>Communication Template (Thinking Aloud)</h3>
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Setup:</strong> "Let me make sure I understand the problem. Input: array of integers. Output: two indices. Constraint: use each element once."</div>
+      </div>
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Pattern Match:</strong> "This looks like a classic hash map problem — find pair with property."</div>
+      </div>
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Approach:</strong> "My approach: iterate through array, for each element check if complement exists in map. Time O(n), Space O(n)."</div>
+      </div>
+
+      <h3>When You Get Stuck</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Minute 1-5: Reread</div>
+          <div class="proof-body">Read the problem 2x. Highlight key words. Ask yourself what constraints change the problem.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Minute 6-10: Simplify</div>
+          <div class="proof-body">Solve the easiest version. E.g., if "subarray", start with "single element". Build up.</div>
+        </div>
+      </div>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Minute 11-15: Pattern Match</div>
+          <div class="proof-body">Think of 3 similar problems you've solved. What patterns apply? Hash map, two pointers, DP?</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Minute 16+: Move On</div>
+          <div class="proof-body">If still stuck, move to next problem. Partial credit >zero. Try again with fresh eyes later.</div>
+        </div>
+      </div>
+
+      <h3>Before Final Submission</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Walk through code line-by-line with example</li>
+        <li>Check: empty input, single element, large input</li>
+        <li>Check: off-by-one in loops and array access</li>
+        <li>Check: integer overflow for large values</li>
+        <li>Verify: time complexity meets target</li>
+        <li>Verify: no syntax errors (IDE shows red squiggles?)</li>
+        <li>Format: proper indentation, clear variable names</li>
+      </ul>
+
+      <h3>Pressure Management</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li><strong>Calm down:</strong> First 30 seconds, take a breath. You've practiced this.</li>
+        <li><strong>Easy wins:</strong> Solve Easy first, lock in base score. Confidence builder.</li>
+        <li><strong>Time awareness:</strong> Check time every 15 min. Adjust strategy if behind.</li>
+        <li><strong>Don't panic:</strong> Hard problem unsolved? That's OK. Partial credit exists. Keep moving.</li>
+        <li><strong>Code quality:</strong> Last 5 min: review naming, comments, formatting. Reviewers notice.</li>
+      </ul>
+    </section>
+
+    <section class="section fade" id="sec-11">
+      <div class="sec-tag"><span class="sec-num">18.11</span><div class="sec-line"></div></div>
+      <h2>Common Mistakes to Avoid</h2>
+      <p class="lead">Learn from others' failures. These 20 mistakes cost interview offers.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Mistake</th><th>Why It Fails</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td>Skipping edge cases</td><td>Hidden tests catch empty, single element, overflow</td><td>Always test: [], [1], max values</td></tr>
+            <tr><td>Off-by-one errors</td><td>Loop conditions wrong; access out of bounds</td><td>Trace: i < n vs i <= n. Check indices.</td></tr>
+            <tr><td>Modifying input</td><td>Problem says don't modify; you did. Wrong answer.</td><td>Use auxiliary arrays/maps instead.</td></tr>
+            <tr><td>Integer overflow</td><td>a + b overflows to negative; logic breaks</td><td>Use long, check before arithmetic.</td></tr>
+            <tr><td>Wrong complexity</td><td>O(n²) on n=10^5 = TLE</td><td>Match input size to complexity target.</td></tr>
+            <tr><td>Forgetting to return</td><td>Function returns null; crashes</td><td>Check all paths return a value.</td></tr>
+            <tr><td>Mutating shared state</td><td>If multiple test cases, leftover data breaks next test</td><td>Initialize fresh variables each run.</td></tr>
+            <tr><td>String concatenation in loops</td><td>O(n²) copying; TLE</td><td>Use StringBuilder.</td></tr>
+            <tr><td>Assuming sorted input</td><td>Problem never says sorted; you assume it</td><td>Reread constraints. Don't assume.</td></tr>
+            <tr><td>Dictionary access without check</td><td>KeyNotFoundException when key missing</td><td>Use TryGetValue or GetValueOrDefault.</td></tr>
+            <tr><td>Modifying collection during iteration</td><td>IndexOutOfRangeException or skip elements</td><td>Build new list or iterate over copy.</td></tr>
+            <tr><td>Floating-point equality</td><td>0.1 + 0.2 != 0.3 due to precision</td><td>Use epsilon: Math.Abs(a - b) < 1e-9</td></tr>
+            <tr><td>Not null-checking</td><td>NullReferenceException on null input</td><td>Check params: if (s == null) return ...</td></tr>
+            <tr><td>Wrong complexity analysis</td><td>"It's O(n)!" but actually O(n²)"</td><td>Count nested loops, recursion depth.</td></tr>
+            <tr><td>Not testing with examples</td><td>Code passes visible tests, fails hidden</td><td>Always run all provided examples first.</td></tr>
+            <tr><td>Unclear variable names</td><td>Reviewers dock points for readability</td><td>Use descriptive names: leftPointer, freqMap</td></tr>
+            <tr><td>Magic numbers</td><td>"What does 2 mean?" Code unclear</td><td>const int MOD = 2; or comment why.</td></tr>
+            <tr><td>No comments on complex logic</td><td>Reviewers can't follow intent</td><td>Comment the WHY: "Greedy: pick min..."</td></tr>
+            <tr><td>Inefficient brute force</td><td>Correct but O(n³); TLE</td><td>Optimize to O(n log n) or O(n).</td></tr>
+            <tr><td>Forgetting base case in recursion</td><td>Stack overflow or infinite recursion</td><td>Always define: if (n == 0) return ...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div><strong>Critical Mistakes:</strong> Off-by-one (50% of bugs), integer overflow (10%), wrong complexity (15%), edge cases (20%). Focus on these.</div>
+      </div>
+    </section>
+
+    <section class="section fade" id="sec-12">
+      <div class="sec-tag"><span class="sec-num">18.12</span><div class="sec-line"></div></div>
+      <h2>Quick Reference Cheat Sheet</h2>
+      <p class="lead">One-page summary of critical facts. Print and review 1 hr before test.</p>
+
+      <h3>Data Structure Operations Complexity</h3>
+      <div class="tbl-wrap">
+        <table style="font-size:12px;">
+          <thead><tr><th>Data Structure</th><th>Access</th><th>Search</th><th>Insert</th><th>Delete</th><th>Space</th></tr></thead>
+          <tbody>
+            <tr><td>Array</td><td>O(1)</td><td>O(n)</td><td>O(n)</td><td>O(n)</td><td>O(n)</td></tr>
+            <tr><td>Hash Table</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>O(1)</td><td>O(n)</td></tr>
+            <tr><td>Linked List</td><td>O(n)</td><td>O(n)</td><td>O(1)</td><td>O(1)</td><td>O(n)</td></tr>
+            <tr><td>Stack</td><td>O(n)</td><td>O(n)</td><td>O(1)</td><td>O(1)</td><td>O(n)</td></tr>
+            <tr><td>Queue</td><td>O(n)</td><td>O(n)</td><td>O(1)</td><td>O(1)</td><td>O(n)</td></tr>
+            <tr><td>Binary Tree</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>O(n)</td></tr>
+            <tr><td>Heap</td><td>O(1)</td><td>O(n)</td><td>O(log n)</td><td>O(log n)</td><td>O(n)</td></tr>
+            <tr><td>Graph (Adjacency List)</td><td>—</td><td>O(V+E)</td><td>O(1)</td><td>O(V)</td><td>O(V+E)</td></tr>
+            <tr><td>Trie</td><td>—</td><td>O(m)</td><td>O(m)</td><td>O(m)</td><td>O(ALPHABET_SIZE * N)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Algorithm Decision Tree</h3>
+      <p><strong>Is the input sorted?</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>YES → Binary Search, Two Pointers, Merge operations</li>
+        <li>NO → Hash Map, Sort first (O(n log n)), then algorithm</li>
+      </ul>
+
+      <p><strong>Is it a graph/tree problem?</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>YES → BFS (shortest path), DFS (all paths), Topological Sort (DAG), Dijkstra (weights)</li>
+      </ul>
+
+      <p><strong>Can you build optimal solution from subproblems?</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>YES → Dynamic Programming (memoization or tabulation)</li>
+      </ul>
+
+      <p><strong>Is it a string/substring problem?</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Longest/Shortest → Sliding Window. Anagram/Frequency → Hash Map. Pattern Match → DP/KMP.</li>
+      </ul>
+
+      <p><strong>Is it an optimization problem (max/min)?</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Greedy works? → Greedy. Otherwise → DP. Need ranking/top-k? → Heap.</li>
+      </ul>
+
+      <h3>Big O Time Complexity Reference</h3>
+      <p style="color:var(--ink2)">O(1) &lt; O(log n) &lt; O(√n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(n³) &lt; O(2ⁿ) &lt; O(n!)</p>
+
+      <h3>Input Size → Target Complexity Quick Map</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>n ≤ 10 → O(n!) or O(n⁶)</li>
+        <li>n ≤ 20 → O(2ⁿ) or O(n⁵)</li>
+        <li>n ≤ 500 → O(n³) or O(n² log n)</li>
+        <li>n ≤ 10⁴ → O(n²)</li>
+        <li>n ≤ 10⁶ → O(n log n) or O(n)</li>
+        <li>n > 10⁶ → O(n) only</li>
+      </ul>
+
+      <h3>UMPIRE Framework Summary</h3>
+      <ol style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li><strong>Understand</strong> — Read 2x, write examples</li>
+        <li><strong>Match</strong> — Recognize pattern type</li>
+        <li><strong>Plan</strong> — Write pseudocode, complexity</li>
+        <li><strong>Implement</strong> — Code cleanly</li>
+        <li><strong>Review</strong> — Walk-through with example</li>
+        <li><strong>Evaluate</strong> — Test edges, confirm complexity</li>
+      </ol>
+
+      <h3>C# Essentials</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li><code class="il">Dictionary&lt;K,V&gt;</code> for hash maps. <code class="il">.TryGetValue()</code> to avoid crashes.</li>
+        <li><code class="il">HashSet&lt;T&gt;</code> for membership. <code class="il">.Contains()</code> O(1).</li>
+        <li><code class="il">PriorityQueue&lt;T, P&gt;</code> for heaps. Negate priority for max heap.</li>
+        <li><code class="il">StringBuilder</code> for string building. Never <code class="il">+=</code> in loops.</li>
+        <li><code class="il">Stack&lt;T&gt;</code> for DFS/monotonic. <code class="il">Queue&lt;T&gt;</code> for BFS.</li>
+        <li><code class="il">int.MaxValue</code> for overflow checks. Use <code class="il">long</code> for large arithmetic.</li>
+      </ul>
+
+      <h3>Final Checklist (5 Min Before Submit)</h3>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>✓ Code compiles, no red squiggles</li>
+        <li>✓ Tested with all visible examples</li>
+        <li>✓ Edge cases: empty, single, max values</li>
+        <li>✓ No off-by-one errors (loop conditions)</li>
+        <li>✓ No integer overflow (use long if needed)</li>
+        <li>✓ Time complexity on target</li>
+        <li>✓ Variable names clear, comments on complex logic</li>
+        <li>✓ No magic numbers, proper formatting</li>
+      </ul>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div><strong>Final Words:</strong> You've prepared well. Trust your training. Follow UMPIRE. Manage time. Think clearly. You will ace this.</div>
+      </div>
+    </section>
+
+    <section class="section fade" id="bonus-1">
+      <div class="sec-tag"><span class="sec-num">Bonus</span><div class="sec-line"></div></div>
+      <h2>Advanced Problem-Solving Techniques</h2>
+      <p class="lead">Beyond the basics: techniques used by top performers in competitive programming.</p>
+
+      <h3>Memoization vs. Tabulation</h3>
+      <p><strong>Memoization (Top-Down DP):</strong> Start from the problem and recursively solve subproblems, caching results. Easier to code, but risk of stack overflow.</p>
+      <p><strong>Tabulation (Bottom-Up DP):</strong> Build solution from base cases upward. More efficient, no recursion overhead, better for large inputs.</p>
+
+      <p><strong>Example: Fibonacci</strong></p>
+      <p><strong>Memoization:</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">private</span> <span class="ty">int</span>[] <span class="va">memo</span>;
+<span class="kw">public</span> <span class="ty">int</span> <span class="fn">Fib</span>(<span class="ty">int</span> <span class="va">n</span>)
+{
+    <span class="kw">if</span> (<span class="va">memo</span>[<span class="va">n</span>] != <span class="num">-1</span>) <span class="kw">return</span> <span class="va">memo</span>[<span class="va">n</span>];
+    <span class="kw">if</span> (<span class="va">n</span> <= <span class="num">1</span>) <span class="kw">return</span> <span class="va">n</span>;
+    <span class="va">memo</span>[<span class="va">n</span>] = <span class="fn">Fib</span>(<span class="va">n</span> - <span class="num">1</span>) + <span class="fn">Fib</span>(<span class="va">n</span> - <span class="num">2</span>);
+    <span class="kw">return</span> <span class="va">memo</span>[<span class="va">n</span>];
+}</span></pre>
+      </div>
+
+      <p><strong>Tabulation:</strong></p>
+      <div class="code-block">
+        <div class="code-bar"><span class="code-lang">C#</span><button class="copy-btn">Copy</button></div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">Fib</span>(<span class="ty">int</span> <span class="va">n</span>)
+{
+    <span class="ty">int</span>[] <span class="va">dp</span> = <span class="kw">new</span> <span class="ty">int</span>[<span class="va">n</span> + <span class="num">1</span>];
+    <span class="va">dp</span>[<span class="num">0</span>] = <span class="num">0</span>; <span class="va">dp</span>[<span class="num">1</span>] = <span class="num">1</span>;
+    <span class="kw">for</span> (<span class="ty">int</span> <span class="va">i</span> = <span class="num">2</span>; <span class="va">i</span> <= <span class="va">n</span>; <span class="va">i</span>++)
+        <span class="va">dp</span>[<span class="va">i</span>] = <span class="va">dp</span>[<span class="va">i</span> - <span class="num">1</span>] + <span class="va">dp</span>[<span class="va">i</span> - <span class="num">2</span>];
+    <span class="kw">return</span> <span class="va">dp</span>[<span class="va">n</span>];
+}</span></pre>
+      </div>
+
+      <h3>Backtracking vs. DFS: When to Use Each</h3>
+      <p><strong>DFS (Depth-First Search):</strong> General graph/tree traversal. Visit all nodes. Use when you need to explore entire structure.</p>
+      <p><strong>Backtracking:</strong> DFS + constraint checking. Prune branches that violate constraints. Use for permutations, combinations, Sudoku, N-Queens.</p>
+
+      <p><strong>Key Difference:</strong> Backtracking explicitly undoes choices (removes from current solution set) when backtracking. DFS just visits.</p>
+
+      <h3>Binary Search Variants</h3>
+      <p><strong>Standard Binary Search:</strong> Find exact element in sorted array.</p>
+      <p><strong>Left Boundary:</strong> Find leftmost position of target.</p>
+      <p><strong>Right Boundary:</strong> Find rightmost position of target.</p>
+      <p><strong>Insert Position:</strong> If target not found, return insertion position.</p>
+      <p><strong>Rotated Array:</strong> Find peak or search in rotation point.</p>
+
+      <h3>Two Pointers: Common Patterns</h3>
+      <p><strong>Converging:</strong> Start from both ends, move toward middle. E.g., #1 (Two Sum sorted), #125 (Valid Palindrome).</p>
+      <p><strong>Fast-Slow:</strong> One pointer 2x speed. E.g., #141 (Linked List Cycle), #876 (Middle of Linked List).</p>
+      <p><strong>Sliding:</strong> Both move in same direction, window size varies. E.g., #3 (Longest Substring), #209 (Minimum Subarray).</p>
+
+      <h3>Graph Traversal Decision Matrix</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Goal</th><th>BFS or DFS?</th><th>Why</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Shortest path (unweighted)</td><td>BFS</td><td>Guarantees shortest</td><td>#127 (Word Ladder)</td></tr>
+            <tr><td>All paths</td><td>DFS</td><td>Explore all</td><td>#797 (All Paths)</td></tr>
+            <tr><td>Connected components</td><td>Either</td><td>Both work; DFS uses less memory</td><td>#200 (Islands)</td></tr>
+            <tr><td>Cycle detection (undirected)</td><td>Either</td><td>Both work</td><td>#261 (Cycle)</td></tr>
+            <tr><td>Topological order</td><td>DFS</td><td>Natural fit</td><td>#207 (Courses)</td></tr>
+            <tr><td>Shortest path (weighted)</td><td>Dijkstra</td><td>Handles weights</td><td>#743 (Network Delay)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>DP Optimization Techniques</h3>
+      <p><strong>Space Optimization:</strong> If dp[i] depends only on dp[i-1], use rolling array. O(n) space → O(1).</p>
+      <p><strong>State Compression:</strong> Use bitmask for small state. E.g., #1495 (Happy Ending) with n≤20.</p>
+      <p><strong>Convex Hull Trick:</strong> Optimize DP with monotonic property. Advanced, rarely needed in interviews.</p>
+
+      <h3>Greedy Proof Strategy</h3>
+      <p>When greedy works, prove with exchange argument:</p>
+      <ol style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Assume optimal solution differs from greedy</li>
+        <li>Show you can swap one choice without worsening result</li>
+        <li>Repeat until greedy choice matched optimal</li>
+        <li>Conclude greedy is optimal</li>
+      </ol>
+
+      <p><strong>Example:</strong> Activity Selection. Greedy: always pick activity ending earliest. Proof: if optimal picks different first activity, swap it with earliest-ending without losing future activities.</p>
+
+      <h3>Common Pitfalls by Category</h3>
+
+      <p><strong>Arrays:</strong> Off-by-one in loops, not handling duplicates, modifying input when shouldn't.</p>
+      <p><strong>Strings:</strong> Forgetting about unicode, space vs. trimming, case sensitivity.</p>
+      <p><strong>Trees:</strong> Not handling null children, infinite recursion (missing base case), not checking if BST property holds.</p>
+      <p><strong>Graphs:</strong> Visited set not updated, cycle detection missed, disconnected components ignored.</p>
+      <p><strong>DP:</strong> Wrong subproblem definition, incorrect transitions, base case missing.</p>
+      <p><strong>Greedy:</strong> Forgetting to prove greedy works, edge case where greedy fails.</p>
+
+      <h3>Performance Optimization Tricks</h3>
+      <p><strong>Constant Factor Improvements:</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Avoid repeated method calls. Cache <code class="il">array.Length</code> in loop.</li>
+        <li>Use <code class="il">ref</code> and <code class="il">out</code> to avoid struct copying.</li>
+        <li>Preallocate collections with capacity.</li>
+        <li>Avoid LINQ in inner loops (use for loops).</li>
+        <li>Use <code class="il">Span&lt;T&gt;</code> for zero-copy slicing.</li>
+      </ul>
+
+      <h3>Interviewer Signals (During Mock/Real Test)</h3>
+      <p><strong>Good signs:</strong> Interviewer asking follow-up questions about approach, edge cases, or improvements. Means they're engaged.</p>
+      <p><strong>Red flags:</strong> Long silence. May indicate you're off track. Ask clarifying questions.</p>
+      <p><strong>Recovery:</strong> If stuck, think aloud. "This looks like X, let me try..." Interviewer may nudge you.</p>
+
+      <h3>How to Use Toptal Resources</h3>
+      <p><strong>Code Review Tab:</strong> They show you feedback on past submissions. Learn from it.</p>
+      <p><strong>Discussion Forum:</strong> Read solutions, see different approaches. Don't copy; understand.</p>
+      <p><strong>Practice Problems:</strong> Start easy, progressively harder. Don't skip medium to jump to hard.</p>
+
+      <h3>Post-Interview Debrief</h3>
+      <p>After each mock or real test:</p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Write down which problems you solved, which you didn't</li>
+        <li>For each unsolved: What pattern did you miss?</li>
+        <li>Review the solution: Did it use a technique you haven't mastered?</li>
+        <li>Solve the problem again 3 days later without looking</li>
+        <li>Track patterns you're weak in; practice more in that category</li>
+      </ul>
+
+      <h3>Last-Minute Cram Sheet</h3>
+      <p><strong>If you have 1 hour before test:</strong></p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li>Review UMPIRE (2 min)</li>
+        <li>Review Pattern Master Guide table (15 min)</li>
+        <li>Scan Complexity Target Guide (5 min)</li>
+        <li>Review Top 5 mistakes you personally made (10 min)</li>
+        <li>Run through Quick Reference Cheat Sheet (10 min)</li>
+        <li>Rest, hydrate, deep breathing (18 min)</li>
+      </ul>
+
+      <h3>Long-Term Growth Beyond Toptal</h3>
+      <p>After passing Toptal, continue with:</p>
+      <ul style="margin-left:20px;margin-bottom:16px;line-height:1.8;color:var(--ink2)">
+        <li><strong>LeetCode Hard problems:</strong> Polish your skills further.</li>
+        <li><strong>System Design:</strong> Learn for senior roles (outside scope of this chapter).</li>
+        <li><strong>Contribute to open source:</strong> Real-world coding experience.</li>
+        <li><strong>Mentor others:</strong> Teaching reinforces your own mastery.</li>
+      </ul>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ️</div>
+        <div><strong>Celebrate Progress:</strong> Every problem solved, every pattern mastered, every mock passed—these are wins. Build confidence. You're getting closer.</div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Chapter 18: Common Patterns & Problem-Solving Strategy — 1400+ Lines</p>
+      <p>DSA Complete Book — Master interviews with systematic problem-solving, pattern recognition, and relentless preparation. Your success awaits.</p>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.fade').forEach(el => {
+        setTimeout(() => el.classList.add('in'), 100);
+      });
+    });
+  </script>
+</body>
+</html>

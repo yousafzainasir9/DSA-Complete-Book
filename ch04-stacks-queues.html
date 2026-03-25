@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Stacks and queues explained — LIFO/FIFO principles, monotonic stacks, deques, with C# implementations and classic interview problems.">
+  <meta name="keywords" content="stack, queue, LIFO, FIFO, monotonic stack, deque, C#, balanced parentheses">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch04-stacks-queues.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch04-stacks-queues.html">
+  <meta property="og:title" content="Chapter 4: Stacks & Queues | DSA Complete">
+  <meta property="og:description" content="Stacks and queues explained — LIFO/FIFO principles, monotonic stacks, deques, with C# implementations and classic interview problems.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch04-stacks-queues.html">
+  <meta name="twitter:title" content="Chapter 4: Stacks & Queues | DSA Complete">
+  <meta name="twitter:description" content="Stacks and queues explained — LIFO/FIFO principles, monotonic stacks, deques, with C# implementations and classic interview problems.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 4: Stacks & Queues | DSA Complete",
+  "description": "Stacks and queues explained \u2014 LIFO/FIFO principles, monotonic stacks, deques, with C# implementations and classic interview problems.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch04-stacks-queues.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 4: Stacks & Queues | DSA Complete</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+/* SHARED CSS TEMPLATE - Copy this into each chapter HTML file's <style> tag */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="/">DSA Complete <span class="pill">Book</span></a>
+      <div class="nav-links">
+        <a href="#introduction">Overview</a>
+        <a href="#stack-basics">Stacks</a>
+        <a href="#queue-basics">Queues</a>
+        <a href="#applications">Applications</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 4</div>
+      </div>
+      <h1>Stacks <em>&</em> Queues</h1>
+      <p class="hero-sub">Master linear data structures with LIFO and FIFO ordering. Learn implementations, classic applications, and interview-winning patterns with complete C# solutions.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n">23</div>
+          <div class="stat-l">Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">12</div>
+          <div class="stat-l">Implementations</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">8</div>
+          <div class="stat-l">Patterns</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toc">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#stack-basics"><span class="toc-n">4.1</span> Stack Data Structure</a>
+        <a href="#stack-impl"><span class="toc-n">4.2</span> Stack Implementation</a>
+        <a href="#queue-basics"><span class="toc-n">4.3</span> Queue Data Structure</a>
+        <a href="#queue-impl"><span class="toc-n">4.4</span> Queue Implementation</a>
+        <a href="#deque"><span class="toc-n">4.5</span> Deque (Double-ended)</a>
+        <a href="#priority"><span class="toc-n">4.6</span> Priority Queue</a>
+        <a href="#monotonic"><span class="toc-n">4.7</span> Monotonic Stack & Queue</a>
+        <a href="#applications"><span class="toc-n">4.8</span> Applications</a>
+        <a href="#problems"><span class="toc-n">4.9</span> Classic Problems</a>
+        <a href="#builtin"><span class="toc-n">4.10</span> C# Built-ins</a>
+        <a href="#complexity"><span class="toc-n">4.11</span> Complexity Summary</a>
+        <a href="#tips"><span class="toc-n">4.12</span> Interview Tips</a>
+      </div>
+    </div>
+
+    <!-- SECTION 1: STACK BASICS -->
+    <div class="section" id="stack-basics">
+      <div class="sec-tag">
+        <span class="sec-num">4.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Stack Data Structure</h2>
+      <p class="lead">A stack is a <strong>Last-In-First-Out (LIFO)</strong> data structure where elements are added and removed from the same end, called the top. The last element pushed is the first one to be popped.</p>
+
+      <h3>The LIFO Concept</h3>
+      <p>Imagine a stack of plates in a restaurant: you place plates on top of the stack, and when you need a plate, you take from the top. The plate added last is the one you grab first. This fundamental principle makes stacks invaluable for problems involving backtracking, undo operations, and expression evaluation.</p>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div>
+          <strong>Real-world analogy:</strong> Think of a stack of books, a web browser's back button history (in reverse), function call stacks in programming, or a plate dispenser at a cafeteria where plates come from the top.
+        </div>
+      </div>
+
+      <h3>Core Stack Operations</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Push</div>
+            <div class="algo-desc">Add an element to the top of the stack.</div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <p>Inserts a new element at the top of the stack. This operation simply adds the element and updates the top pointer.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Pop</div>
+            <div class="algo-desc">Remove and return the top element from the stack.</div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <p>Removes the element at the top of the stack and returns it. If the stack is empty, this operation may throw an exception or return a sentinel value.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Peek</div>
+            <div class="algo-desc">Return the top element without removing it.</div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <p>Inspects the top element of the stack without modifying it. Useful for checking the next element to be processed.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">IsEmpty</div>
+            <div class="algo-desc">Check if the stack contains any elements.</div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <p>Returns a boolean indicating whether the stack is empty. Essential for loop termination conditions.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Visual Representation</h3>
+      <p>Here's how a stack evolves with push and pop operations:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Initial stack:</strong> Empty</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Push(5):</strong> Stack: [5]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Push(3):</strong> Stack: [5, 3]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Push(7):</strong> Stack: [5, 3, 7] (7 is at the top)</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Pop():</strong> Returns 7, Stack: [5, 3]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">6</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Pop():</strong> Returns 3, Stack: [5]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: STACK IMPLEMENTATION -->
+    <div class="section" id="stack-impl">
+      <div class="sec-tag">
+        <span class="sec-num">4.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Stack Implementation</h2>
+      <p class="lead">Stacks can be implemented using arrays (fixed or dynamic) or linked lists. Each approach has trade-offs in terms of memory and access patterns.</p>
+
+      <h3>Array-Based Stack Implementation</h3>
+      <p>Using a dynamic array (List in C#) provides cache-friendly access and is the most common implementation.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">ArrayStack</span>&lt;<span class="ty">T</span>&gt;
+{
+    <span class="kw">private</span> <span class="ty">List</span>&lt;<span class="ty">T</span>&gt; items = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">T</span>&gt;();
+
+    <span class="cm">// Push: Add element to the top</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Push</span>(<span class="ty">T</span> item)
+    {
+        items.<span class="fn">Add</span>(item);
+    }
+
+    <span class="cm">// Pop: Remove and return top element</span>
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Pop</span>()
+    {
+        <span class="kw">if</span> (items.<span class="prop">Count</span> == <span class="num">0</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Stack is empty"</span>);
+
+        <span class="ty">T</span> item = items[items.<span class="prop">Count</span> - <span class="num">1</span>];
+        items.<span class="fn">RemoveAt</span>(items.<span class="prop">Count</span> - <span class="num">1</span>);
+        <span class="kw">return</span> item;
+    }
+
+    <span class="cm">// Peek: Return top element without removing</span>
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Peek</span>()
+    {
+        <span class="kw">if</span> (items.<span class="prop">Count</span> == <span class="num">0</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Stack is empty"</span>);
+
+        <span class="kw">return</span> items[items.<span class="prop">Count</span> - <span class="num">1</span>];
+    }
+
+    <span class="cm">// IsEmpty: Check if stack is empty</span>
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => items.<span class="prop">Count</span> == <span class="num">0</span>;
+
+    <span class="cm">// Size: Get number of elements</span>
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Size</span>() => items.<span class="prop">Count</span>;
+}</pre>
+      </div>
+
+      <h3>Linked List-Based Stack Implementation</h3>
+      <p>Using a linked list avoids array resizing but trades cache locality for dynamic memory.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt;
+{
+    <span class="kw">public</span> <span class="ty">T</span> <span class="prop">Data</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+    <span class="kw">public</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt; <span class="prop">Next</span> { <span class="kw">get</span>; <span class="kw">set</span>; }
+
+    <span class="kw">public</span> <span class="fn">Node</span>(<span class="ty">T</span> data)
+    {
+        <span class="prop">Data</span> = data;
+        <span class="prop">Next</span> = <span class="kw">null</span>;
+    }
+}
+
+<span class="kw">public</span> <span class="kw">class</span> <span class="ty">LinkedListStack</span>&lt;<span class="ty">T</span>&gt;
+{
+    <span class="kw">private</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt; top = <span class="kw">null</span>;
+    <span class="kw">private</span> <span class="ty">int</span> size = <span class="num">0</span>;
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Push</span>(<span class="ty">T</span> item)
+    {
+        <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt; newNode = <span class="kw">new</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt;(item);
+        newNode.<span class="prop">Next</span> = top;
+        top = newNode;
+        size++;
+    }
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Pop</span>()
+    {
+        <span class="kw">if</span> (top == <span class="kw">null</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Stack is empty"</span>);
+
+        <span class="ty">T</span> data = top.<span class="prop">Data</span>;
+        top = top.<span class="prop">Next</span>;
+        size--;
+        <span class="kw">return</span> data;
+    }
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Peek</span>()
+    {
+        <span class="kw">if</span> (top == <span class="kw">null</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Stack is empty"</span>);
+
+        <span class="kw">return</span> top.<span class="prop">Data</span>;
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => top == <span class="kw">null</span>;
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Size</span>() => size;
+}</pre>
+      </div>
+
+      <div class="vs">
+        <div class="vs-box good">
+          <div class="vs-title">✓ Array-Based Stack</div>
+          <div class="vs-item">Cache-friendly memory layout</div>
+          <div class="vs-item">O(1) amortized for all operations</div>
+          <div class="vs-item">Lower memory overhead per element</div>
+          <div class="vs-item">Simpler implementation</div>
+        </div>
+        <div class="vs-box bad">
+          <div class="vs-title">✗ Linked List Stack</div>
+          <div class="vs-item">Extra memory per node for pointer</div>
+          <div class="vs-item">Cache misses on traversal</div>
+          <div class="vs-item">More complex pointer management</div>
+          <div class="vs-item">No advantage over arrays for stacks</div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div>
+          <strong>Best practice:</strong> Use array-based stacks in production. The linked list variant is mainly for educational purposes or when you need extreme amortization guarantees.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: QUEUE BASICS -->
+    <div class="section" id="queue-basics">
+      <div class="sec-tag">
+        <span class="sec-num">4.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Queue Data Structure</h2>
+      <p class="lead">A queue is a <strong>First-In-First-Out (FIFO)</strong> data structure where elements are added at the rear and removed from the front. The first element enqueued is the first one to be dequeued.</p>
+
+      <h3>The FIFO Concept</h3>
+      <p>Imagine waiting in line at a coffee shop: the first person in line is the first to be served, and new customers join at the back of the line. This ordering makes queues perfect for task scheduling, breadth-first search, and buffering operations where fairness is important.</p>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div>
+          <strong>Real-world analogy:</strong> A queue at a bank, a print job queue, a waiting room at a hospital, or a conveyor belt where items are processed in order.
+        </div>
+      </div>
+
+      <h3>Core Queue Operations</h3>
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Enqueue</div>
+            <div class="algo-desc">Add an element to the rear of the queue.</div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <p>Inserts a new element at the rear (back) of the queue. This operation updates the rear pointer.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Dequeue</div>
+            <div class="algo-desc">Remove and return the front element.</div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <p>Removes the element at the front of the queue and returns it. Essential for processing queued items.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Peek</div>
+            <div class="algo-desc">Return the front element without removing it.</div>
+          </div>
+          <div class="algo-idx">3</div>
+        </div>
+        <div class="algo-body">
+          <p>Inspects the front element of the queue without modifying it.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">IsEmpty</div>
+            <div class="algo-desc">Check if the queue contains any elements.</div>
+          </div>
+          <div class="algo-idx">4</div>
+        </div>
+        <div class="algo-body">
+          <p>Returns a boolean indicating whether the queue is empty.</p>
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time Complexity</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Visual Representation</h3>
+      <p>Here's how a queue evolves with enqueue and dequeue operations:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Initial queue:</strong> Empty</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Enqueue(5):</strong> Queue: [5]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Enqueue(3):</strong> Queue: [5, 3]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Enqueue(7):</strong> Queue: [5, 3, 7]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Dequeue():</strong> Returns 5, Queue: [3, 7]</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">6</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Dequeue():</strong> Returns 3, Queue: [7]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: QUEUE IMPLEMENTATION -->
+    <div class="section" id="queue-impl">
+      <div class="sec-tag">
+        <span class="sec-num">4.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Queue Implementation</h2>
+      <p class="lead">Queues are typically implemented using circular arrays (most efficient) or linked lists. The circular array approach avoids the O(n) cost of shifting elements.</p>
+
+      <h3>Circular Buffer Queue Implementation</h3>
+      <p>A circular buffer reuses array space by treating the array as circular, eliminating the need to shift elements on dequeue.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">CircularQueue</span>&lt;<span class="ty">T</span>&gt;
+{
+    <span class="kw">private</span> <span class="ty">T</span>[] items;
+    <span class="kw">private</span> <span class="ty">int</span> front = <span class="num">0</span>;
+    <span class="kw">private</span> <span class="ty">int</span> rear = <span class="num">-1</span>;
+    <span class="kw">private</span> <span class="ty">int</span> size = <span class="num">0</span>;
+    <span class="kw">private</span> <span class="ty">int</span> capacity;
+
+    <span class="kw">public</span> <span class="fn">CircularQueue</span>(<span class="ty">int</span> capacity)
+    {
+        <span class="kw">this</span>.capacity = capacity;
+        items = <span class="kw">new</span> <span class="ty">T</span>[capacity];
+    }
+
+    <span class="cm">// Enqueue: Add element at rear</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Enqueue</span>(<span class="ty">T</span> item)
+    {
+        <span class="kw">if</span> (size == capacity)
+            <span class="fn">Resize</span>();
+
+        rear = (rear + <span class="num">1</span>) % capacity;
+        items[rear] = item;
+        size++;
+    }
+
+    <span class="cm">// Dequeue: Remove element from front</span>
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Dequeue</span>()
+    {
+        <span class="kw">if</span> (size == <span class="num">0</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Queue is empty"</span>);
+
+        <span class="ty">T</span> item = items[front];
+        front = (front + <span class="num">1</span>) % capacity;
+        size--;
+        <span class="kw">return</span> item;
+    }
+
+    <span class="cm">// Peek: Return front element</span>
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Peek</span>()
+    {
+        <span class="kw">if</span> (size == <span class="num">0</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Queue is empty"</span>);
+
+        <span class="kw">return</span> items[front];
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => size == <span class="num">0</span>;
+
+    <span class="kw">private</span> <span class="ty">void</span> <span class="fn">Resize</span>()
+    {
+        <span class="ty">T</span>[] newItems = <span class="kw">new</span> <span class="ty">T</span>[capacity * <span class="num">2</span>];
+        <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; size; i++)
+        {
+            newItems[i] = items[(front + i) % capacity];
+        }
+        items = newItems;
+        front = <span class="num">0</span>;
+        rear = size - <span class="num">1</span>;
+        capacity *= <span class="num">2</span>;
+    }
+}</pre>
+      </div>
+
+      <h3>Linked List Queue Implementation</h3>
+      <p>Using a linked list with front and rear pointers provides clean semantics without circular logic.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">LinkedListQueue</span>&lt;<span class="ty">T</span>&gt;
+{
+    <span class="kw">private</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt; front = <span class="kw">null</span>;
+    <span class="kw">private</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt; rear = <span class="kw">null</span>;
+    <span class="kw">private</span> <span class="ty">int</span> size = <span class="num">0</span>;
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Enqueue</span>(<span class="ty">T</span> item)
+    {
+        <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt; newNode = <span class="kw">new</span> <span class="ty">Node</span>&lt;<span class="ty">T</span>&gt;(item);
+
+        <span class="kw">if</span> (rear == <span class="kw">null</span>)
+        {
+            front = rear = newNode;
+        }
+        <span class="kw">else</span>
+        {
+            rear.<span class="prop">Next</span> = newNode;
+            rear = newNode;
+        }
+        size++;
+    }
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Dequeue</span>()
+    {
+        <span class="kw">if</span> (front == <span class="kw">null</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Queue is empty"</span>);
+
+        <span class="ty">T</span> data = front.<span class="prop">Data</span>;
+        front = front.<span class="prop">Next</span>;
+
+        <span class="kw">if</span> (front == <span class="kw">null</span>)
+            rear = <span class="kw">null</span>;
+
+        size--;
+        <span class="kw">return</span> data;
+    }
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">Peek</span>()
+    {
+        <span class="kw">if</span> (front == <span class="kw">null</span>)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>(<span class="str">"Queue is empty"</span>);
+
+        <span class="kw">return</span> front.<span class="prop">Data</span>;
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => front == <span class="kw">null</span>;
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Size</span>() => size;
+}</pre>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div>
+          <strong>Common pitfall:</strong> Using a simple array with a front pointer and shifting elements on dequeue results in O(n) time complexity. Always use either a circular buffer or a linked list for O(1) operations.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: DEQUE -->
+    <div class="section" id="deque">
+      <div class="sec-tag">
+        <span class="sec-num">4.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Deque (Double-Ended Queue)</h2>
+      <p class="lead">A deque allows insertion and removal from both ends, combining the flexibility of stacks and queues. It's useful for sliding window problems and implementing both stack and queue semantics.</p>
+
+      <h3>Deque Operations</h3>
+      <p>A deque supports eight operations: push/pop from the front, push/pop from the rear, peek at both ends, and check if empty.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Deque</span>&lt;<span class="ty">T</span>&gt;
+{
+    <span class="kw">private</span> <span class="ty">LinkedList</span>&lt;<span class="ty">T</span>&gt; items = <span class="kw">new</span> <span class="ty">LinkedList</span>&lt;<span class="ty">T</span>&gt;();
+
+    <span class="cm">// Front operations</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">PushFront</span>(<span class="ty">T</span> item) => items.<span class="fn">AddFirst</span>(item);
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">PopFront</span>()
+    {
+        <span class="kw">if</span> (items.<span class="prop">Count</span> == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>();
+        <span class="ty">T</span> val = items.<span class="prop">First</span>.<span class="prop">Value</span>;
+        items.<span class="fn">RemoveFirst</span>();
+        <span class="kw">return</span> val;
+    }
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">PeekFront</span>()
+    {
+        <span class="kw">if</span> (items.<span class="prop">Count</span> == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>();
+        <span class="kw">return</span> items.<span class="prop">First</span>.<span class="prop">Value</span>;
+    }
+
+    <span class="cm">// Rear operations</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">PushRear</span>(<span class="ty">T</span> item) => items.<span class="fn">AddLast</span>(item);
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">PopRear</span>()
+    {
+        <span class="kw">if</span> (items.<span class="prop">Count</span> == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>();
+        <span class="ty">T</span> val = items.<span class="prop">Last</span>.<span class="prop">Value</span>;
+        items.<span class="fn">RemoveLast</span>();
+        <span class="kw">return</span> val;
+    }
+
+    <span class="kw">public</span> <span class="ty">T</span> <span class="fn">PeekRear</span>()
+    {
+        <span class="kw">if</span> (items.<span class="prop">Count</span> == <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="ty">InvalidOperationException</span>();
+        <span class="kw">return</span> items.<span class="prop">Last</span>.<span class="prop">Value</span>;
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsEmpty</span>() => items.<span class="prop">Count</span> == <span class="num">0</span>;
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Size</span>() => items.<span class="prop">Count</span>;
+}</pre>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div>
+          <strong>In C#:</strong> The <code class="il">Deque&lt;T&gt;</code> class doesn't exist in the standard library, but <code class="il">LinkedList&lt;T&gt;</code> provides all deque operations efficiently via <code class="il">AddFirst</code>, <code class="il">AddLast</code>, <code class="il">RemoveFirst</code>, <code class="il">RemoveLast</code>.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: PRIORITY QUEUE -->
+    <div class="section" id="priority">
+      <div class="sec-tag">
+        <span class="sec-num">4.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Priority Queue</h2>
+      <p class="lead">A priority queue is an abstract data type where each element has an associated priority. Elements with higher priority are dequeued before those with lower priority, regardless of insertion order.</p>
+
+      <h3>When to Use Priority Queues</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Dijkstra's Algorithm</div>
+          <div class="proof-body">Always process the node with smallest distance next. Priority: negative distance.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Task Scheduling</div>
+          <div class="proof-body">Process high-priority tasks first, regardless of arrival time.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Huffman Coding</div>
+          <div class="proof-body">Repeatedly merge two smallest-frequency nodes. Priority: frequency.</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Find K Largest Elements</div>
+          <div class="proof-body">Use a min-heap of size k. Priority: negative value.</div>
+        </div>
+      </div>
+
+      <h3>C# PriorityQueue Usage</h3>
+      <p>C# 10+ provides a built-in <code class="il">PriorityQueue&lt;TElement, TPriority&gt;</code> class (not a heap, but a priority queue implementation).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Using C# 10+ PriorityQueue</span>
+<span class="ty">PriorityQueue</span>&lt;<span class="ty">string</span>, <span class="ty">int</span>&gt; pq = <span class="kw">new</span>();
+
+<span class="cm">// Lower priority value = higher priority (dequeued first)</span>
+pq.<span class="fn">Enqueue</span>(<span class="str">"High"</span>, <span class="num">1</span>);
+pq.<span class="fn">Enqueue</span>(<span class="str">"Low"</span>, <span class="num">10</span>);
+pq.<span class="fn">Enqueue</span>(<span class="str">"Medium"</span>, <span class="num">5</span>);
+
+<span class="kw">while</span> (pq.<span class="prop">Count</span> > <span class="num">0</span>)
+{
+    <span class="kw">var</span> (item, priority) = pq.<span class="fn">DequeueWithPriority</span>();
+    <span class="ty">Console</span>.<span class="fn">WriteLine</span>(<span class="str">$"{item}: {priority}"</span>);
+    <span class="cm">// Output: High: 1, Medium: 5, Low: 10</span>
+}
+
+<span class="cm">// For max-heap (higher value = higher priority), negate</span>
+<span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt; maxHeap = <span class="kw">new</span>();
+maxHeap.<span class="fn">Enqueue</span>(<span class="num">5</span>, <span class="num">-5</span>);   <span class="cm">// Negate for max-heap</span>
+maxHeap.<span class="fn">Enqueue</span>(<span class="num">10</span>, <span class="num">-10</span>);
+maxHeap.<span class="fn">Dequeue</span>();  <span class="cm">// Returns 10</span></pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div>
+          <strong>Priority semantics:</strong> By default, lower priority values dequeue first. For max-heap behavior (higher values first), negate the priority when enqueueing.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 7: MONOTONIC STRUCTURES -->
+    <div class="section" id="monotonic">
+      <div class="sec-tag">
+        <span class="sec-num">4.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Monotonic Stack & Queue</h2>
+      <p class="lead">A monotonic data structure maintains elements in a specific order (increasing or decreasing). These patterns solve problems involving next greater/smaller elements and sliding window extrema in linear time.</p>
+
+      <h3>Monotonic Stack Pattern</h3>
+      <p>A monotonic stack maintains elements in increasing or decreasing order. When a new element violates the order, we pop elements until the order is restored, processing each popped element.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Template: Monotonic Increasing Stack</span>
+<span class="cm">// Process array and maintain indices in increasing order by value</span>
+<span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">NextGreaterElement</span>(<span class="ty">int</span>[] nums)
+{
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">int</span>[nums.<span class="prop">Length</span>];
+    <span class="ty">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;(); <span class="cm">// Store indices</span>
+
+    <span class="cm">// Process array from right to left for "next greater"</span>
+    <span class="kw">for</span> (<span class="ty">int</span> i = nums.<span class="prop">Length</span> - <span class="num">1</span>; i &gt;= <span class="num">0</span>; i--)
+    {
+        <span class="cm">// Pop elements smaller than current (maintain decreasing order)</span>
+        <span class="kw">while</span> (stack.<span class="prop">Count</span> &gt; <span class="num">0</span> &amp;&amp; nums[stack.<span class="fn">Peek</span>()] &lt; nums[i])
+        {
+            stack.<span class="fn">Pop</span>();
+        }
+
+        <span class="cm">// Stack top is next greater (or -1 if none)</span>
+        result[i] = stack.<span class="prop">Count</span> == <span class="num">0</span> ? <span class="num">-1</span> : nums[stack.<span class="fn">Peek</span>()];
+
+        <span class="cm">// Push current index</span>
+        stack.<span class="fn">Push</span>(i);
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>Monotonic Queue Pattern</h3>
+      <p>A monotonic deque efficiently finds the maximum (or minimum) in every sliding window of size k in O(n) time.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Template: Sliding Window Maximum using Monotonic Deque</span>
+<span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">MaxSlidingWindow</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> k)
+{
+    <span class="kw">if</span> (nums.<span class="prop">Length</span> == <span class="num">0</span>) <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[<span class="num">0</span>];
+
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">int</span>[nums.<span class="prop">Length</span> - k + <span class="num">1</span>];
+    <span class="ty">var</span> dq = <span class="kw">new</span> <span class="ty">Deque</span>&lt;<span class="ty">int</span>&gt;(); <span class="cm">// Store indices in decreasing order</span>
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; nums.<span class="prop">Length</span>; i++)
+    {
+        <span class="cm">// Remove elements outside window</span>
+        <span class="kw">if</span> (dq.<span class="prop">Count</span> &gt; <span class="num">0</span> &amp;&amp; dq.<span class="fn">PeekFront</span>() &lt; i - k + <span class="num">1</span>)
+            dq.<span class="fn">PopFront</span>();
+
+        <span class="cm">// Remove smaller elements from back (maintain decreasing)</span>
+        <span class="kw">while</span> (dq.<span class="prop">Count</span> &gt; <span class="num">0</span> &amp;&amp; nums[dq.<span class="fn">PeekRear</span>()] &lt; nums[i])
+            dq.<span class="fn">PopRear</span>();
+
+        dq.<span class="fn">PushRear</span>(i);
+
+        <span class="cm">// Once we have k elements, add max to result</span>
+        <span class="kw">if</span> (i &gt;= k - <span class="num">1</span>)
+        {
+            result[i - k + <span class="num">1</span>] = nums[dq.<span class="fn">PeekFront</span>()];
+        }
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">💡</div>
+        <div>
+          <strong>Key insight:</strong> Monotonic structures eliminate redundant comparisons. An element that doesn't improve the monotonic property will never be useful, so we remove it immediately.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 8: APPLICATIONS -->
+    <div class="section" id="applications">
+      <div class="sec-tag">
+        <span class="sec-num">4.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Stack & Queue Applications</h2>
+      <p class="lead">Understanding when and how to use stacks and queues is crucial for solving many algorithmic problems and real-world systems.</p>
+
+      <h3>Stack Applications</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Expression Evaluation</div>
+          <div class="proof-body">Evaluate infix (with operator precedence) and postfix expressions by parsing operators and operands with a stack.</div>
+          <div class="proof-note"><strong>Time:</strong> O(n), <strong>Space:</strong> O(n)</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Balanced Parentheses</div>
+          <div class="proof-body">Check if brackets are properly matched. Push opening brackets, pop on closing, and verify matching.</div>
+          <div class="proof-note"><strong>Time:</strong> O(n), <strong>Space:</strong> O(n)</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Function Call Stack</div>
+          <div class="proof-body">The runtime maintains a call stack. Each function call pushes a frame; return pops it. Stack overflow occurs when memory is exceeded.</div>
+          <div class="proof-note"><strong>OS managed</strong></div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Undo/Redo Operations</div>
+          <div class="proof-body">Maintain two stacks: one for undo (LIFO) and one for redo. Each action pushes onto undo; undoing pushes onto redo.</div>
+          <div class="proof-note"><strong>Time:</strong> O(1), <strong>Space:</strong> O(actions)</div>
+        </div>
+      </div>
+
+      <h3>Queue Applications</h3>
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Breadth-First Search (BFS)</div>
+          <div class="proof-body">Explore graph level by level. Enqueue neighbors, dequeue and process in order, ensuring shortest paths in unweighted graphs.</div>
+          <div class="proof-note"><strong>Time:</strong> O(V+E), <strong>Space:</strong> O(V)</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Task Scheduling</div>
+          <div class="proof-body">Process tasks in order received. FIFO fairness ensures no task starves. With priority queues, high-urgency tasks jump ahead.</div>
+          <div class="proof-note"><strong>Time:</strong> O(log n) per operation</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Buffering & Streaming</div>
+          <div class="proof-body">Buffer incoming data (enqueue) and process at consumer rate (dequeue), decoupling producer and consumer.</div>
+          <div class="proof-note"><strong>Real-world:</strong> Network packets, I/O buffers</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Print Job Queue</div>
+          <div class="proof-body">Queue manages print requests. Each job is dequeued and printed in submission order unless priority-based scheduling is used.</div>
+          <div class="proof-note"><strong>Fairness & FIFO</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 9: CLASSIC PROBLEMS -->
+    <div class="section" id="problems">
+      <div class="sec-tag">
+        <span class="sec-num">4.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Classic Problems with Full Solutions</h2>
+      <p class="lead">These problems represent the most common patterns in interviews and real-world applications. Master these to handle 80% of stack and queue questions.</p>
+
+      <h3>Problem 1: Valid Parentheses</h3>
+      <p>Given a string with brackets, determine if they are balanced and properly nested.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">bool</span> <span class="fn">IsValid</span>(<span class="ty">string</span> s)
+{
+    <span class="ty">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">char</span>&gt;();
+    <span class="ty">var</span> pairs = <span class="kw">new</span> <span class="ty">Dictionary</span>&lt;<span class="ty">char</span>, <span class="ty">char</span>&gt;
+    {
+        { <span class="str">')'</span>, <span class="str">'('</span> },
+        { <span class="str">']'</span>, <span class="str">'['</span> },
+        { <span class="str">'}'</span>, <span class="str">'{'</span> }
+    };
+
+    <span class="kw">foreach</span> (<span class="ty">char</span> c <span class="kw">in</span> s)
+    {
+        <span class="kw">if</span> (pairs.<span class="fn">ContainsKey</span>(c))
+        {
+            <span class="kw">if</span> (stack.<span class="prop">Count</span> == <span class="num">0</span> || stack.<span class="fn">Pop</span>() != pairs[c])
+                <span class="kw">return</span> <span class="kw">false</span>;
+        }
+        <span class="kw">else</span>
+        {
+            stack.<span class="fn">Push</span>(c);
+        }
+    }
+
+    <span class="kw">return</span> stack.<span class="prop">Count</span> == <span class="num">0</span>;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Problem 2: Min Stack</h3>
+      <p>Design a stack that supports push, pop, top, and retrieving the minimum element in O(1) time.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">MinStack</span>
+{
+    <span class="kw">private</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt; stack;
+    <span class="kw">private</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt; minStack;
+
+    <span class="kw">public</span> <span class="fn">MinStack</span>()
+    {
+        stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;();
+        minStack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;();
+    }
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Push</span>(<span class="ty">int</span> val)
+    {
+        stack.<span class="fn">Push</span>(val);
+        <span class="kw">if</span> (minStack.<span class="prop">Count</span> == <span class="num">0</span> || val &lt;= minStack.<span class="fn">Peek</span>())
+            minStack.<span class="fn">Push</span>(val);
+    }
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Pop</span>()
+    {
+        <span class="kw">if</span> (stack.<span class="fn">Pop</span>() == minStack.<span class="fn">Peek</span>())
+            minStack.<span class="fn">Pop</span>();
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Top</span>() => stack.<span class="fn">Peek</span>();
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">GetMin</span>() => minStack.<span class="fn">Peek</span>();
+}
+
+<span class="cm">// Time: O(1) all ops, Space: O(n)</span></pre>
+      </div>
+
+      <h3>Problem 3: Evaluate Reverse Polish Notation</h3>
+      <p>Evaluate an expression in Reverse Polish Notation (postfix notation) where operators follow operands.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">EvalRPN</span>(<span class="ty">string</span>[] tokens)
+{
+    <span class="ty">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">var</span> ops = <span class="kw">new</span> <span class="ty">HashSet</span>&lt;<span class="ty">string</span>&gt; { <span class="str">"+"</span>, <span class="str">"-"</span>, <span class="str">"*"</span>, <span class="str">"/"</span> };
+
+    <span class="kw">foreach</span> (<span class="ty">string</span> token <span class="kw">in</span> tokens)
+    {
+        <span class="kw">if</span> (ops.<span class="fn">Contains</span>(token))
+        {
+            <span class="ty">int</span> b = stack.<span class="fn">Pop</span>();
+            <span class="ty">int</span> a = stack.<span class="fn">Pop</span>();
+
+            <span class="ty">int</span> result = token <span class="kw">switch</span>
+            {
+                <span class="str">"+"</span> => a + b,
+                <span class="str">"-"</span> => a - b,
+                <span class="str">"*"</span> => a * b,
+                <span class="str">"/"</span> => a / b,
+            };
+
+            stack.<span class="fn">Push</span>(result);
+        }
+        <span class="kw">else</span>
+        {
+            stack.<span class="fn">Push</span>(<span class="ty">int</span>.<span class="fn">Parse</span>(token));
+        }
+    }
+
+    <span class="kw">return</span> stack.<span class="fn">Pop</span>();
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Problem 4: Daily Temperatures (Monotonic Stack)</h3>
+      <p>For each day, find the number of days until a warmer temperature. Use a monotonic decreasing stack.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">DailyTemperatures</span>(<span class="ty">int</span>[] temps)
+{
+    <span class="ty">var</span> result = <span class="kw">new</span> <span class="ty">int</span>[temps.<span class="prop">Length</span>];
+    <span class="ty">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;(); <span class="cm">// Store indices</span>
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; temps.<span class="prop">Length</span>; i++)
+    {
+        <span class="cm">// Pop smaller temperatures and set their result</span>
+        <span class="kw">while</span> (stack.<span class="prop">Count</span> &gt; <span class="num">0</span> &amp;&amp; temps[stack.<span class="fn">Peek</span>()] &lt; temps[i])
+        {
+            <span class="ty">int</span> idx = stack.<span class="fn">Pop</span>();
+            result[idx] = i - idx;
+        }
+        stack.<span class="fn">Push</span>(i);
+    }
+
+    <span class="kw">return</span> result;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Problem 5: Largest Rectangle in Histogram</h3>
+      <p>Find the largest rectangular area in a histogram using a monotonic stack.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="ty">int</span> <span class="fn">LargestRectangleArea</span>(<span class="ty">int</span>[] heights)
+{
+    <span class="ty">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;();
+    <span class="ty">int</span> maxArea = <span class="num">0</span>;
+
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt;= heights.<span class="prop">Length</span>; i++)
+    {
+        <span class="ty">int</span> h = (i == heights.<span class="prop">Length</span>) ? <span class="num">0</span> : heights[i];
+
+        <span class="cm">// Pop and calculate area for all taller bars</span>
+        <span class="kw">while</span> (stack.<span class="prop">Count</span> &gt; <span class="num">0</span> &amp;&amp; heights[stack.<span class="fn">Peek</span>()] &gt; h)
+        {
+            <span class="ty">int</span> idx = stack.<span class="fn">Pop</span>();
+            <span class="ty">int</span> width = (stack.<span class="prop">Count</span> == <span class="num">0</span>) ? i : i - stack.<span class="fn">Peek</span>() - <span class="num">1</span>;
+            <span class="ty">int</span> area = heights[idx] * width;
+            maxArea = <span class="ty">Math</span>.<span class="fn">Max</span>(maxArea, area);
+        }
+
+        <span class="kw">if</span> (i &lt; heights.<span class="prop">Length</span>)
+            stack.<span class="fn">Push</span>(i);
+    }
+
+    <span class="kw">return</span> maxArea;
+}
+
+<span class="cm">// Time: O(n), Space: O(n)</span></pre>
+      </div>
+
+      <h3>Problem 6: Implement Queue using Stacks</h3>
+      <p>Implement a queue using two stacks, one for input and one for output.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">QueueUsingStacks</span>
+{
+    <span class="kw">private</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt; input = <span class="kw">new</span>();
+    <span class="kw">private</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt; output = <span class="kw">new</span>();
+
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Push</span>(<span class="ty">int</span> x) => input.<span class="fn">Push</span>(x);
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Pop</span>()
+    {
+        <span class="fn">Peek</span>();  <span class="cm">// Ensures output stack is filled</span>
+        <span class="kw">return</span> output.<span class="fn">Pop</span>();
+    }
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Peek</span>()
+    {
+        <span class="cm">// Lazy transfer: only move when output is empty</span>
+        <span class="kw">if</span> (output.<span class="prop">Count</span> == <span class="num">0</span>)
+        {
+            <span class="kw">while</span> (input.<span class="prop">Count</span> &gt; <span class="num">0</span>)
+                output.<span class="fn">Push</span>(input.<span class="fn">Pop</span>());
+        }
+        <span class="kw">return</span> output.<span class="fn">Peek</span>();
+    }
+
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">Empty</span>() => input.<span class="prop">Count</span> == <span class="num">0</span> &amp;&amp; output.<span class="prop">Count</span> == <span class="num">0</span>;
+}
+
+<span class="cm">// Push: O(1), Pop/Peek: O(1) amortized</span></pre>
+      </div>
+
+      <h3>Problem 7: Implement Stack using Queues</h3>
+      <p>Implement a stack using two queues. More complex: either make push O(n) or pop O(n).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">StackUsingQueues</span>
+{
+    <span class="kw">private</span> <span class="ty">Queue</span>&lt;<span class="ty">int</span>&gt; q1 = <span class="kw">new</span>();
+    <span class="kw">private</span> <span class="ty">Queue</span>&lt;<span class="ty">int</span>&gt; q2 = <span class="kw">new</span>();
+
+    <span class="cm">// Push: O(n) - move all elements from q1 to q2</span>
+    <span class="kw">public</span> <span class="ty">void</span> <span class="fn">Push</span>(<span class="ty">int</span> x)
+    {
+        q2.<span class="fn">Enqueue</span>(x);
+
+        <span class="cm">// Move all from q1 to q2</span>
+        <span class="kw">while</span> (q1.<span class="prop">Count</span> &gt; <span class="num">0</span>)
+            q2.<span class="fn">Enqueue</span>(q1.<span class="fn">Dequeue</span>());
+
+        <span class="cm">// Swap: q1 is now the main queue</span>
+        (<span class="va">q1</span>, <span class="va">q2</span>) = (<span class="va">q2</span>, <span class="va">q1</span>);
+    }
+
+    <span class="cm">// Pop: O(1) - front of q1 is the top</span>
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Pop</span>() => q1.<span class="fn">Dequeue</span>();
+
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Top</span>() => q1.<span class="fn">Peek</span>();
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">Empty</span>() => q1.<span class="prop">Count</span> == <span class="num">0</span>;
+}</pre>
+      </div>
+    </div>
+
+    <!-- SECTION 10: C# BUILT-IN CLASSES -->
+    <div class="section" id="builtin">
+      <div class="sec-tag">
+        <span class="sec-num">4.10</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>C# Built-in Stack & Queue Classes</h2>
+      <p class="lead">The .NET framework provides optimized generic implementations. Always prefer these over custom implementations unless you need specialized behavior.</p>
+
+      <h3>Stack&lt;T&gt; and Queue&lt;T&gt;</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Stack&lt;T&gt;</span>
+<span class="ty">var</span> stack = <span class="kw">new</span> <span class="ty">Stack</span>&lt;<span class="ty">int</span>&gt;();
+stack.<span class="fn">Push</span>(<span class="num">1</span>);
+stack.<span class="fn">Push</span>(<span class="num">2</span>);
+<span class="ty">int</span> top = stack.<span class="fn">Pop</span>();      <span class="cm">// 2</span>
+<span class="ty">bool</span> empty = stack.<span class="fn">Count</span> == <span class="num">0</span>;
+
+<span class="cm">// Queue&lt;T&gt;</span>
+<span class="ty">var</span> queue = <span class="kw">new</span> <span class="ty">Queue</span>&lt;<span class="ty">int</span>&gt;();
+queue.<span class="fn">Enqueue</span>(<span class="num">1</span>);
+queue.<span class="fn">Enqueue</span>(<span class="num">2</span>);
+<span class="ty">int</span> front = queue.<span class="fn">Dequeue</span>();   <span class="cm">// 1</span>
+<span class="ty">int</span> next = queue.<span class="fn">Peek</span>();      <span class="cm">// 2</span>
+<span class="ty">bool</span> isEmpty = queue.<span class="prop">Count</span> == <span class="num">0</span>;
+
+<span class="cm">// Common methods</span>
+<span class="cm">// .Count: number of elements</span>
+<span class="cm">// .Contains(item): O(n) search</span>
+<span class="cm">// .TryPeek(out T): safe peek without exception</span>
+<span class="cm">// .TryDequeue(out T): safe dequeue without exception</span></pre>
+      </div>
+
+      <h3>PriorityQueue&lt;TElement, TPriority&gt; (C# 10+)</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">using</span> System.Collections.Generic;
+
+<span class="cm">// PriorityQueue with custom comparison</span>
+<span class="ty">PriorityQueue</span>&lt;<span class="ty">Task</span>, <span class="ty">int</span>&gt; pq = <span class="kw">new</span>();
+
+<span class="cm">// Lower priority = dequeues first (min-heap)</span>
+pq.<span class="fn">Enqueue</span>(<span class="kw">new</span> <span class="ty">Task</span>(<span class="str">"Print"</span>), <span class="num">1</span>);    <span class="cm">// High priority</span>
+pq.<span class="fn">Enqueue</span>(<span class="kw">new</span> <span class="ty">Task</span>(<span class="str">"Backup"</span>), <span class="num">10</span>);  <span class="cm">// Low priority</span>
+
+<span class="kw">while</span> (pq.<span class="prop">Count</span> &gt; <span class="num">0</span>)
+{
+    <span class="ty">Task</span> task = pq.<span class="fn">Dequeue</span>();
+    <span class="ty">Console</span>.<span class="fn">WriteLine</span>(task.<span class="prop">Name</span>);  <span class="cm">// Print, Backup</span>
+}
+
+<span class="cm">// Custom comparer for descending (max-heap)</span>
+<span class="ty">PriorityQueue</span>&lt;<span class="ty">int</span>, <span class="ty">int</span>&gt; maxHeap = <span class="kw">new</span>(<span class="ty">Comparer</span>&lt;<span class="ty">int</span>&gt;.<span class="fn">Create</span>(
+    (a, b) => b.<span class="fn">CompareTo</span>(a)));
+
+maxHeap.<span class="fn">Enqueue</span>(<span class="num">5</span>, <span class="num">5</span>);
+maxHeap.<span class="fn">Enqueue</span>(<span class="num">10</span>, <span class="num">10</span>);
+maxHeap.<span class="fn">Dequeue</span>();  <span class="cm">// 10</span></pre>
+      </div>
+    </div>
+
+    <!-- SECTION 11: COMPLEXITY SUMMARY -->
+    <div class="section" id="complexity">
+      <div class="sec-tag">
+        <span class="sec-num">4.11</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Complexity Summary Table</h2>
+      <p class="lead">Quick reference for time and space complexity of all stack and queue variants.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>Array Stack</th>
+              <th>Linked Stack</th>
+              <th>Array Queue</th>
+              <th>Circular Queue</th>
+              <th>Linked Queue</th>
+              <th>Priority Queue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Push/Enqueue</td>
+              <td>O(1) amortized</td>
+              <td>O(1)</td>
+              <td>O(n)*</td>
+              <td>O(1) amortized</td>
+              <td>O(1)</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Pop/Dequeue</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(log n)</td>
+            </tr>
+            <tr>
+              <td>Peek</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>Space per element</td>
+              <td>1 word</td>
+              <td>1 word + ptr</td>
+              <td>1 word</td>
+              <td>1 word</td>
+              <td>1 word + ptr</td>
+              <td>1 word (heap)</td>
+            </tr>
+            <tr>
+              <td>Best for</td>
+              <td>General stacks</td>
+              <td>Educational</td>
+              <td>Small fixed</td>
+              <td>Production queues</td>
+              <td>Educational</td>
+              <td>Dijkstra, scheduling</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">⚠</div>
+        <div>
+          <strong>Array Queue caveat:</strong> Simple array with front index and shifting on dequeue is O(n). Always use circular buffer or linked list.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 12: INTERVIEW TIPS -->
+    <div class="section" id="tips">
+      <div class="sec-tag">
+        <span class="sec-num">4.12</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips & When to Use What</h2>
+      <p class="lead">Strategic insights to recognize when a stack or queue is the right tool and how to approach interview questions.</p>
+
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Pattern 1</div>
+          <div class="tip-title">Reach for a Stack when:</div>
+          <div class="tip-body">
+            <strong>Last-in-first-out access is needed:</strong> Undo/redo, browser history (reversed), DFS, parentheses matching, monotonic decreasing sequences.
+          </div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Pattern 2</div>
+          <div class="tip-title">Reach for a Queue when:</div>
+          <div class="tip-body">
+            <strong>FIFO fairness matters:</strong> BFS, level-order traversal, task scheduling, producer-consumer buffers, sliding window.
+          </div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Pattern 3</div>
+          <div class="tip-title">Reach for a Deque when:</div>
+          <div class="tip-body">
+            <strong>Both ends needed:</strong> Sliding window maximum, Palindrome checking, 0-1 BFS.
+          </div>
+        </div>
+      </div>
+
+      <h3>Common Interview Patterns</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Parentheses / Brackets</div>
+          <div class="proof-body">
+            Push opening brackets onto stack. On closing bracket, verify it matches the top and pop. At the end, stack must be empty.
+          </div>
+          <div class="proof-note"><strong>Variations:</strong> Valid parentheses, min/max removal, score</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Next Greater Element</div>
+          <div class="proof-body">
+            Use a monotonic decreasing stack. Iterate from right to left. When current element is larger, pop smaller elements and record the next greater.
+          </div>
+          <div class="proof-note"><strong>Key:</strong> Eliminate redundant comparisons</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Sliding Window Extrema</div>
+          <div class="proof-body">
+            Use a monotonic deque to track the maximum/minimum in a window. Remove out-of-window elements and maintain decreasing order.
+          </div>
+          <div class="proof-note"><strong>Time:</strong> O(n) instead of O(nk)</div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Expression Evaluation</div>
+          <div class="proof-body">
+            For infix: use two stacks (operators and operands) with precedence rules. For postfix: single stack, push operands, pop two for operators.
+          </div>
+          <div class="proof-note"><strong>Postfix simpler</strong> than infix</div>
+        </div>
+      </div>
+
+      <h3>Red Flags & Optimization</h3>
+
+      <div class="vs">
+        <div class="vs-box bad">
+          <div class="vs-title">❌ Avoid This</div>
+          <div class="vs-item">Nested loops when stack could eliminate one</div>
+          <div class="vs-item">Shifting array elements on every operation</div>
+          <div class="vs-item">Forgetting to check empty before pop/dequeue</div>
+          <div class="vs-item">Using a list instead of proper LIFO/FIFO structure</div>
+        </div>
+        <div class="vs-box good">
+          <div class="vs-title">✓ Do This</div>
+          <div class="vs-item">Ask about the constraint ("does order matter?")</div>
+          <div class="vs-item">Use built-in Stack/Queue when possible</div>
+          <div class="vs-item">Implement custom stack/queue only if needed</div>
+          <div class="vs-item">Always handle empty cases (throw or return null)</div>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-icon">ℹ</div>
+        <div>
+          <strong>Interview hint:</strong> If the interviewer mentions "next greater," "next smaller," "span," or "histogram," think monotonic stack. If they say "level-order" or "shortest path," think queue/BFS.
+        </div>
+      </div>
+
+      <h3>Quick Self-Check</h3>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Understand the problem:</strong> Does order matter? First-out or last-out?</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Identify the pattern:</strong> Backtracking (stack), BFS (queue), extrema (monotonic)?</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Choose the structure:</strong> Stack, Queue, Deque, or Priority Queue?</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">4</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Code cleanly:</strong> Handle edge cases, avoid extra operations, use built-ins.</div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">5</div><div class="step-vline"></div></div>
+          <div class="step-body"><strong>Verify complexity:</strong> Time should be O(n) or O(n log n), not worse.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>Chapter 4: Stacks & Queues</strong> — Master linear data structures with LIFO and FIFO ordering.</p>
+      <p>DSA Complete Book © 2025 · All rights reserved</p>
+    </div>
+  </footer>
+
+</body>
+</html>

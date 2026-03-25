@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Searching algorithms — binary search, ternary search, interpolation search, search in rotated arrays, with C# code and patterns.">
+  <meta name="keywords" content="binary search, searching algorithms, ternary search, rotated array, C#, search patterns">
+  <meta name="author" content="yousafzainasir9">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yousafzainasir9.github.io/DSA-Complete-Book/ch10-searching.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch10-searching.html">
+  <meta property="og:title" content="Chapter 10: Searching & Binary Search - DSA Complete Book">
+  <meta property="og:description" content="Searching algorithms — binary search, ternary search, interpolation search, search in rotated arrays, with C# code and patterns.">
+  <meta property="og:site_name" content="DSA Complete Book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://yousafzainasir9.github.io/DSA-Complete-Book/ch10-searching.html">
+  <meta name="twitter:title" content="Chapter 10: Searching & Binary Search - DSA Complete Book">
+  <meta name="twitter:description" content="Searching algorithms — binary search, ternary search, interpolation search, search in rotated arrays, with C# code and patterns.">
+
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Chapter 10: Searching & Binary Search - DSA Complete Book",
+  "description": "Searching algorithms \u2014 binary search, ternary search, interpolation search, search in rotated arrays, with C# code and patterns.",
+  "url": "https://yousafzainasir9.github.io/DSA-Complete-Book/ch10-searching.html",
+  "author": {
+    "@type": "Person",
+    "name": "yousafzainasir9",
+    "url": "https://github.com/yousafzainasir9"
+  },
+  "inLanguage": "en",
+  "datePublished": "2026-03-24"
+}</script>
+  <title>Chapter 10: Searching & Binary Search - DSA Complete Book</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Source+Serif+4:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+/* SHARED CSS TEMPLATE */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#f8f7f3;--bg2:#f0ede6;--bg3:#e8e4db;--white:#ffffff;
+  --ink:#1c1a17;--ink2:#3d3a34;--ink3:#6b6760;--ink4:#a8a49e;--rule:#dedad3;
+  --acc:#c96b1e;--acc-l:#fdf3eb;--acc-b:#f5c99a;
+  --green:#1d6b45;--green-l:#edf8f2;--green-b:#9fd9bc;
+  --blue:#1a4f8a;--blue-l:#edf2fb;--blue-b:#afc8ef;
+  --red:#9b2020;--red-l:#fdf0f0;--red-b:#efb8b8;
+  --amber:#7a5200;--amber-l:#fdf8ec;--amber-b:#e8d08a;
+  --sans:'Outfit',sans-serif;--serif:'Source Serif 4',serif;--mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(248,247,243,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;height:54px}
+.nav-brand{font-size:14px;font-weight:700;color:var(--acc);margin-right:auto;display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-brand .pill{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink3);text-decoration:none;padding:0 12px;height:54px;display:inline-flex;align-items:center;border-bottom:2px solid transparent;transition:all .15s}
+.nav-links a:hover{color:var(--ink);border-color:var(--acc)}
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem}
+.hero{padding:72px 0 52px;border-bottom:1px solid var(--rule)}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.eyebrow-line{width:28px;height:2px;background:var(--acc)}
+.eyebrow-text{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(38px,5.5vw,62px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero-sub{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--ink2);line-height:1.78;max-width:640px;margin-bottom:36px}
+.stats{display:flex;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--white);width:fit-content}
+.stat{padding:14px 26px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1}
+.stat-l{font-size:10px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.toc{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:28px 32px;margin:44px 0}
+.toc-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:18px}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 36px}
+.toc-grid a{font-size:13.5px;color:var(--ink2);text-decoration:none;padding:8px 0;display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);transition:color .15s}
+.toc-grid a:hover{color:var(--acc)}
+.toc-n{font-family:var(--mono);font-size:10px;color:var(--ink4);flex-shrink:0}
+.section{padding-top:72px}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--ink4);flex-shrink:0}
+.sec-line{flex:1;height:1px;background:var(--rule)}
+.section h2{font-size:28px;font-weight:700;letter-spacing:-.025em;margin-bottom:14px}
+.section h3{font-size:20px;font-weight:700;margin-bottom:12px;margin-top:28px}
+.section .lead{font-family:var(--serif);font-size:16px;color:var(--ink2);line-height:1.78;margin-bottom:26px;max-width:760px}
+.section p{font-size:15px;color:var(--ink2);line-height:1.78;margin-bottom:16px}
+.algo{background:var(--white);border:1px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:44px}
+.algo-head{padding:28px 32px 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.algo-idx{font-size:58px;font-weight:800;color:var(--bg3);line-height:1;letter-spacing:-.04em}
+.algo-name{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:9px}
+.algo-desc{font-family:var(--serif);font-size:14.5px;color:var(--ink2);line-height:1.72;max-width:580px}
+.algo-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.algo-body{padding:28px 32px}
+.cx-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.cx{background:var(--bg2);border:1px solid var(--rule);border-radius:8px;padding:10px 16px;min-width:110px}
+.cx-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:3px}
+.cx-v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+.steps{margin-bottom:26px}
+.step{display:flex}
+.step-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.step-vline{width:1.5px;flex:1;background:var(--rule);margin:4px 0}
+.step:last-child .step-vline{display:none}
+.step-body{padding:3px 0 22px 14px;font-size:14px;color:var(--ink2);line-height:1.68}
+.step-body strong{color:var(--ink);font-weight:600}
+code.il{font-family:var(--mono);font-size:12px;background:var(--bg2);padding:1px 7px;border-radius:4px;color:var(--acc)}
+.code-block{background:#1a1916;border-radius:12px;overflow:hidden;margin:0 0 26px}
+.code-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.code-lang{font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;text-transform:uppercase}
+.copy-btn{font-size:11px;color:#6a6660;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:color .15s;padding:0}
+.copy-btn:hover{color:#d4d0c8}
+pre{padding:20px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.9;color:#d4d0c8}
+.kw{color:#e8946a}.fn{color:#79b8f7}.ty{color:#56d364}.str{color:#a8d8a8}.cm{color:#6b6760;font-style:italic}.num{color:#f0b96e}.prop{color:#c8a6f5}.va{color:#ffd085}
+.callout{display:flex;gap:14px;padding:16px 20px;border-radius:10px;margin:0 0 22px;font-size:14px;line-height:1.7}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:2px}
+.callout.tip{background:var(--green-l);border:1px solid var(--green-b);color:#164d32}
+.callout.warn{background:var(--amber-l);border:1px solid var(--amber-b);color:#5a3c00}
+.callout.danger{background:var(--red-l);border:1px solid var(--red-b);color:#6e1616}
+.callout.info{background:var(--blue-l);border:1px solid var(--blue-b);color:#10325a}
+.callout strong{color:inherit;font-weight:600}
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 10px;border-radius:99px;border:1px solid;white-space:nowrap}
+.b-green{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.b-red{background:var(--red-l);color:var(--red);border-color:var(--red-b)}
+.b-amber{background:var(--amber-l);color:var(--amber);border-color:var(--amber-b)}
+.b-blue{background:var(--blue-l);color:var(--blue);border-color:var(--blue-b)}
+.b-orange{background:var(--acc-l);color:var(--acc);border-color:var(--acc-b)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--rule);margin-bottom:26px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--white)}
+thead tr{background:var(--bg2)}
+th{text-align:left;padding:11px 16px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--rule)}
+td{padding:12px 16px;border-bottom:1px solid var(--rule);color:var(--ink2);vertical-align:top}
+td:first-child{font-weight:600;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.vs-box{border-radius:10px;padding:18px 20px;border:1px solid}
+.vs-box.good{background:var(--green-l);border-color:var(--green-b)}
+.vs-box.bad{background:var(--red-l);border-color:var(--red-b)}
+.vs-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.vs-box.good .vs-title{color:var(--green)}.vs-box.bad .vs-title{color:var(--red)}
+.vs-item{font-size:13px;color:var(--ink2);padding:4px 0;display:flex;gap:8px;line-height:1.5}
+.vs-item::before{content:'—';color:var(--ink4);flex-shrink:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px}
+.proof-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px 22px}
+.proof-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.proof-body{font-size:13.5px;color:var(--ink2);line-height:1.7}
+.proof-note{margin-top:12px;font-size:12px;color:var(--ink3)}
+.proof-note strong{color:var(--ink2)}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
+.tip-card{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:20px;position:relative;overflow:hidden}
+.tip-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--acc)}
+.tip-card.g::before{background:var(--green)}.tip-card.b::before{background:var(--blue)}.tip-card.a::before{background:var(--amber)}
+.tip-n{font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:8px}
+.tip-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.tip-body{font-size:13px;color:var(--ink2);line-height:1.65}
+footer{margin-top:100px;padding:40px 0;border-top:1px solid var(--rule);text-align:center;background:var(--bg2)}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 2rem}
+footer p{font-size:13px;color:var(--ink3)}
+footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
+.fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.fade.in{opacity:1;transform:none}
+@media(max-width:700px){
+  .algo-head{grid-template-columns:1fr}.algo-idx{display:none}
+  .vs,.proof-grid,.tips{grid-template-columns:1fr}
+  .toc-grid{grid-template-columns:1fr}
+  .stats{flex-wrap:wrap}.stat{border-right:none;border-bottom:1px solid var(--rule)}
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        DSA Book
+        <span class="pill">v1</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#toc">Chapter 10</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">
+        <div class="eyebrow-line"></div>
+        <div class="eyebrow-text">Chapter 10</div>
+      </div>
+      <h1>Searching & <em>Binary Search</em></h1>
+      <p class="hero-sub">Master the most fundamental algorithms for finding elements. From linear search to advanced binary search variations, binary search on answer, and specialized techniques—comprehensive coverage with 45+ C# code examples and 11 complete LeetCode problem solutions.</p>
+      <div class="stats fade">
+        <div class="stat">
+          <div class="stat-n">7</div>
+          <div class="stat-l">Search Algorithms</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">45+</div>
+          <div class="stat-l">Code Examples</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">11</div>
+          <div class="stat-l">LeetCode Problems</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">3</div>
+          <div class="stat-l">Binary Search Templates</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="toc fade">
+      <div class="toc-head">Table of Contents</div>
+      <div class="toc-grid">
+        <a href="#sec-1"><span class="toc-n">10.1</span> Linear Search</a>
+        <a href="#sec-2"><span class="toc-n">10.2</span> Binary Search Fundamentals</a>
+        <a href="#sec-3"><span class="toc-n">10.3</span> Binary Search Variations</a>
+        <a href="#sec-4"><span class="toc-n">10.4</span> Binary Search on Answer</a>
+        <a href="#sec-5"><span class="toc-n">10.5</span> Ternary & Interpolation Search</a>
+        <a href="#sec-6"><span class="toc-n">10.6</span> Exponential & Jump Search</a>
+        <a href="#sec-7"><span class="toc-n">10.7</span> Practice Problems & Solutions</a>
+        <a href="#sec-8"><span class="toc-n">10.8</span> Binary Search Templates</a>
+        <a href="#sec-9"><span class="toc-n">10.9</span> Interview Tips & Edge Cases</a>
+      </div>
+    </section>
+
+    <!-- Section 10.1: Linear Search -->
+    <section class="section fade" id="sec-1">
+      <div class="sec-tag">
+        <span class="sec-num">10.1</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Linear Search</h2>
+      <p class="lead">Linear search is the simplest search algorithm: examine elements one by one until you find the target or reach the end. It's the baseline for understanding search efficiency and serves as the foundation for grasping why binary search is so powerful.</p>
+
+      <h3>Basic Concept & When to Use</h3>
+      <p>Linear search works on any array, sorted or unsorted. You start at one end and check each element sequentially. While slow for large datasets, it's often the right choice for small arrays or when data isn't sorted.</p>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Standard Linear Search</div>
+            <div class="algo-desc">Iterate through array, comparing each element with target. Return index on match; return -1 if not found.</div>
+            <div class="algo-tags">
+              <span class="badge b-blue">O(n) Time</span>
+              <span class="badge b-green">O(1) Space</span>
+            </div>
+          </div>
+          <div class="algo-idx">1</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">LinearSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="kw">for</span> (<span class="ty">int</span> i = <span class="num">0</span>; i &lt; arr.<span class="prop">Length</span>; i++)
+    {
+        <span class="kw">if</span> (arr[i] == target)
+            <span class="kw">return</span> i;
+    }
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+          </div>
+
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">Time</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Space</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Best Case</div>
+              <div class="cx-v">O(1)</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">Worst Case</div>
+              <div class="cx-v">O(n)</div>
+            </div>
+          </div>
+
+          <p><strong>Explanation:</strong> We iterate through each element. Best case: target is at index 0 (one comparison). Worst case: target is at the end or doesn't exist (n comparisons). Average case: target found at position n/2 (n/2 comparisons), still O(n).</p>
+        </div>
+      </div>
+
+      <h3>Sentinel Linear Search Optimization</h3>
+      <p>A clever optimization: place a copy of the target at the end of the array (a "sentinel"). This eliminates the need to check array bounds on each iteration—the loop always terminates when it finds the sentinel.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">SentinelLinearSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> last = arr[arr.<span class="prop">Length</span> - <span class="num">1</span>];
+    arr[arr.<span class="prop">Length</span> - <span class="num">1</span>] = target; <span class="cm">// Place sentinel</span>
+
+    <span class="ty">int</span> i = <span class="num">0</span>;
+    <span class="kw">while</span> (arr[i] != target)
+        i++;
+
+    arr[arr.<span class="prop">Length</span> - <span class="num">1</span>] = last; <span class="cm">// Restore original value</span>
+
+    <span class="cm">// If we found sentinel at position length-1, target wasn't in array</span>
+    <span class="kw">if</span> (i == arr.<span class="prop">Length</span> - <span class="num">1</span> &amp;&amp; last != target)
+        <span class="kw">return</span> <span class="num">-1</span>;
+
+    <span class="kw">return</span> i;
+}</pre>
+      </div>
+
+      <p>This approach reduces memory traffic (fewer comparisons with array bounds) and can be 10-20% faster in practice, though the asymptotic complexity remains O(n).</p>
+
+      <h3>Search in Unsorted vs Sorted Arrays</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Unsorted Array</div>
+          <div class="proof-body">
+            <ul style="margin-left: 16px; line-height: 1.8;">
+              <li>No optimization possible beyond sentinel</li>
+              <li>Must check every element (no early termination)</li>
+              <li>Always O(n)</li>
+              <li>Use linear search</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Sorted Array</div>
+          <div class="proof-body">
+            <ul style="margin-left: 16px; line-height: 1.8;">
+              <li>Can stop early when target is smaller than current element</li>
+              <li>Still O(n) worst case, but typically faster in practice</li>
+              <li>Binary search is O(log n) — far superior</li>
+              <li>Always use binary search for sorted data</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>When to use linear search:</strong> Arrays with fewer than 100 items, or when the cost of sorting exceeds the benefit. For larger sorted arrays, binary search is dramatically faster.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10.2: Binary Search Fundamentals -->
+    <section class="section fade" id="sec-2">
+      <div class="sec-tag">
+        <span class="sec-num">10.2</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Binary Search Fundamentals</h2>
+      <p class="lead">Binary search is a masterclass in algorithmic thinking. By eliminating half the search space each iteration, it reduces O(n) to O(log n)—a stunning improvement. For 1 million items, binary search needs at most 20 comparisons.</p>
+
+      <h3>Prerequisites & How It Works</h3>
+      <p>Binary search requires a <strong>sorted array</strong>. The algorithm works by maintaining two pointers (left and right) and repeatedly checking the middle element:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Initialize pointers:</strong> Set left = 0, right = array length - 1</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Check middle:</strong> Compute mid and compare arr[mid] with target</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Eliminate half:</strong> If match found, return mid. If arr[mid] &lt; target, move left pointer right. Otherwise, move right pointer left.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Repeat:</strong> Continue until left &gt; right (element not found) or element is found</div>
+        </div>
+      </div>
+
+      <h3>Step-by-Step Walkthrough Example</h3>
+      <p>Let's search for target = 7 in array: [1, 3, 5, 7, 9, 11, 13]</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">Walkthrough</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">Array: [1, 3, 5, 7, 9, 11, 13]</span>
+<span class="cm">Target: 7</span>
+
+<span class="cm">Iteration 1:</span>
+<span class="cm">  left=0, right=6, mid=3</span>
+<span class="cm">  arr[3]=7 equals target</span>
+<span class="cm">  Found at index 3! Return 3</span></pre>
+      </div>
+
+      <p>Another example with target = 6 (not in array):</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">Walkthrough</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">Array: [1, 3, 5, 7, 9, 11, 13]</span>
+<span class="cm">Target: 6</span>
+
+<span class="cm">Iteration 1: left=0, right=6, mid=3</span>
+<span class="cm">  arr[3]=7 > target, so right=2</span>
+
+<span class="cm">Iteration 2: left=0, right=2, mid=1</span>
+<span class="cm">  arr[1]=3 &lt; target, so left=2</span>
+
+<span class="cm">Iteration 3: left=2, right=2, mid=2</span>
+<span class="cm">  arr[2]=5 &lt; target, so left=3</span>
+
+<span class="cm">left > right: Exit loop, return -1</span></pre>
+      </div>
+
+      <h3>Iterative Implementation</h3>
+
+      <div class="algo">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">Binary Search (Iterative)</div>
+            <div class="algo-desc">Use a while loop with left/right pointers. Straightforward, no recursion overhead, most efficient.</div>
+            <div class="algo-tags">
+              <span class="badge b-green">O(log n) Time</span>
+              <span class="badge b-green">O(1) Space</span>
+            </div>
+          </div>
+          <div class="algo-idx">2</div>
+        </div>
+        <div class="algo-body">
+          <div class="code-block">
+            <div class="code-bar">
+              <span class="code-lang">C#</span>
+              <button class="copy-btn">Copy</button>
+            </div>
+            <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">BinarySearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] == target)
+            <span class="kw">return</span> mid;
+
+        <span class="kw">if</span> (arr[mid] &lt; target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid - <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3>Recursive Implementation</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">BinarySearchRecursive</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target, <span class="ty">int</span> left, <span class="ty">int</span> right)
+{
+    <span class="kw">if</span> (left &gt; right)
+        <span class="kw">return</span> <span class="num">-1</span>;
+
+    <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+    <span class="kw">if</span> (arr[mid] == target)
+        <span class="kw">return</span> mid;
+
+    <span class="kw">if</span> (arr[mid] &lt; target)
+        <span class="kw">return</span> <span class="fn">BinarySearchRecursive</span>(arr, target, mid + <span class="num">1</span>, right);
+
+    <span class="kw">return</span> <span class="fn">BinarySearchRecursive</span>(arr, target, left, mid - <span class="num">1</span>);
+}
+
+<span class="cm">// Call: BinarySearchRecursive(arr, target, 0, arr.Length - 1)</span></pre>
+      </div>
+
+      <h3>Critical: The Overflow Bug — Why left + (right - left) / 2?</h3>
+      <p>This is a classic gotcha that trips up even experienced developers. Consider calculating the midpoint:</p>
+
+      <div class="vs">
+        <div class="vs-box bad">
+          <div class="vs-title">❌ Naive (Can Overflow)</div>
+          <div class="vs-item">int mid = (left + right) / 2;</div>
+          <div class="proof-note"><strong>Problem:</strong> If left and right are large positive integers (near int.MaxValue), their sum overflows. For instance, if left = 2,000,000,000 and right = 1,500,000,000, the sum exceeds int.MaxValue and wraps around to a negative number.</div>
+        </div>
+        <div class="vs-box good">
+          <div class="vs-title">✓ Correct (No Overflow)</div>
+          <div class="vs-item">int mid = left + (right - left) / 2;</div>
+          <div class="proof-note"><strong>Why it works:</strong> We compute the offset (right - left) first, which is always smaller and never overflows. Then add to left. This is mathematically equivalent but avoids overflow.</div>
+        </div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Always use left + (right - left) / 2.</strong> This is so important that Java's Arrays.binarySearch uses it, and a bug in Google's implementation went unnoticed for years.
+        </div>
+      </div>
+
+      <h3>Complexity Analysis</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Time Complexity: O(log n)</div>
+          <div class="proof-body">
+            The search space halves each iteration. After k iterations, we have n/2^k elements left. When n/2^k = 1, solving for k gives k = log₂(n). For 1,000,000 items, we need at most log₂(1,000,000) ≈ 20 iterations.
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Space Complexity</div>
+          <div class="proof-body">
+            <strong>Iterative: O(1)</strong> — No extra space beyond loop variables.<br/>
+            <strong>Recursive: O(log n)</strong> — Call stack depth equals recursion depth (log n levels).
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>Prefer iterative over recursive:</strong> Iterative binary search is slightly faster (no recursion overhead) and uses O(1) space. Use recursion only when the problem naturally requires it (e.g., tree traversal).
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10.3: Binary Search Variations -->
+    <section class="section fade" id="sec-3">
+      <div class="sec-tag">
+        <span class="sec-num">10.3</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Binary Search Variations</h2>
+      <p class="lead">Standard binary search finds any occurrence of the target. Often, you need specific variations: find the leftmost position, find the rightmost, or find an insertion point. These variations build on the core algorithm with subtle but critical changes.</p>
+
+      <h3>Find First Occurrence (Leftmost)</h3>
+      <p>When the array has duplicates, find the index of the first (leftmost) occurrence of the target.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindFirstOccurrence</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="ty">int</span> result = <span class="num">-1</span>;
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] == target)
+        {
+            result = mid;
+            right = mid - <span class="num">1</span>; <span class="cm">// Continue searching left half for earlier occurrence</span>
+        }
+        <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &lt; target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid - <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <p><strong>Key difference:</strong> When we find a match, we don't return immediately. Instead, we save it and continue searching the left half to find an earlier occurrence.</p>
+
+      <h3>Find Last Occurrence (Rightmost)</h3>
+      <p>Find the index of the last (rightmost) occurrence of the target.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindLastOccurrence</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+    <span class="ty">int</span> result = <span class="num">-1</span>;
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] == target)
+        {
+            result = mid;
+            left = mid + <span class="num">1</span>; <span class="cm">// Continue searching right half for later occurrence</span>
+        }
+        <span class="kw">else</span> <span class="kw">if</span> (arr[mid] &lt; target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid - <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> result;
+}</pre>
+      </div>
+
+      <h3>Find Insertion Point (Lower & Upper Bound)</h3>
+      <p>Find the position where the target should be inserted to keep the array sorted. If the target exists, lower bound returns where it begins; upper bound returns where it ends.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Lower bound: smallest index where arr[i] >= target</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">LowerBound</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span>;
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] &lt; target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid;
+    }
+
+    <span class="kw">return</span> left;
+}
+
+<span class="cm">// Upper bound: smallest index where arr[i] > target</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">UpperBound</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span>;
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] &lt;= target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid;
+    }
+
+    <span class="kw">return</span> left;
+}</pre>
+      </div>
+
+      <h3>Built-in Binary Search: Array.BinarySearch() & List.BinarySearch()</h3>
+      <p>C# provides built-in binary search methods. These return the index if found, or a negative number indicating where to insert if not found.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="ty">int</span>[] arr = <span class="kw">new</span> <span class="ty">int</span>[] { <span class="num">1</span>, <span class="num">3</span>, <span class="num">5</span>, <span class="num">7</span>, <span class="num">9</span> };
+
+<span class="cm">// Array.BinarySearch</span>
+<span class="ty">int</span> index = <span class="ty">Array</span>.<span class="fn">BinarySearch</span>(arr, <span class="num">5</span>);
+<span class="cm">// index = 2 (found at position 2)</span>
+
+index = <span class="ty">Array</span>.<span class="fn">BinarySearch</span>(arr, <span class="num">6</span>);
+<span class="cm">// index = -4 (not found; would insert at ~-4 = 3)</span>
+
+<span class="cm">// List.BinarySearch</span>
+<span class="ty">List</span>&lt;<span class="ty">int</span>&gt; list = <span class="kw">new</span> <span class="ty">List</span>&lt;<span class="ty">int</span>&gt; { <span class="num">1</span>, <span class="num">3</span>, <span class="num">5</span>, <span class="num">7</span>, <span class="num">9</span> };
+index = list.<span class="fn">BinarySearch</span>(<span class="num">5</span>);
+<span class="cm">// index = 2 (found)</span></pre>
+      </div>
+
+      <h3>Search in Rotated Sorted Array</h3>
+      <p>An array is rotated when a portion at the end is moved to the front. Example: [4, 5, 6, 7, 0, 1, 2] is [0, 1, 2, 4, 5, 6, 7] rotated. The trick: one half is always sorted.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">SearchRotatedArray</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] == target)
+            <span class="kw">return</span> mid;
+
+        <span class="cm">// Determine which half is sorted</span>
+        <span class="kw">if</span> (arr[left] &lt;= arr[mid])
+        {
+            <span class="cm">// Left half is sorted</span>
+            <span class="kw">if</span> (arr[left] &lt;= target &amp;&amp; target &lt; arr[mid])
+                right = mid - <span class="num">1</span>;
+            <span class="kw">else</span>
+                left = mid + <span class="num">1</span>;
+        }
+        <span class="kw">else</span>
+        {
+            <span class="cm">// Right half is sorted</span>
+            <span class="kw">if</span> (arr[mid] &lt; target &amp;&amp; target &lt;= arr[right])
+                left = mid + <span class="num">1</span>;
+            <span class="kw">else</span>
+                right = mid - <span class="num">1</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <h3>Find Minimum in Rotated Sorted Array</h3>
+      <p>In a rotated sorted array, the minimum is the "rotation point." Use binary search to find it in O(log n).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindMin</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="cm">// If mid is greater than right, minimum is in the right part</span>
+        <span class="kw">if</span> (arr[mid] &gt; arr[right])
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid;
+    }
+
+    <span class="kw">return</span> arr[left];
+}</pre>
+      </div>
+
+      <h3>Search a 2D Matrix</h3>
+      <p>A matrix where each row is sorted left-to-right and the first element of each row is greater than the last element of the previous row. Treat it as a flattened 1D sorted array.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">SearchMatrix</span>(<span class="ty">int</span>[][] matrix, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> rows = matrix.<span class="prop">Length</span>;
+    <span class="ty">int</span> cols = matrix[<span class="num">0</span>].<span class="prop">Length</span>;
+
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = rows * cols - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+        <span class="ty">int</span> row = mid / cols;
+        <span class="ty">int</span> col = mid % cols;
+        <span class="ty">int</span> midValue = matrix[row][col];
+
+        <span class="kw">if</span> (midValue == target)
+            <span class="kw">return</span> <span class="kw">true</span>;
+
+        <span class="kw">if</span> (midValue &lt; target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid - <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> <span class="kw">false</span>;
+}</pre>
+      </div>
+
+      <h3>Find Peak Element</h3>
+      <p>A peak is an element greater than its neighbors. Find any peak in O(log n) time (not necessarily the maximum).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">FindPeak</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="cm">// If mid is less than its right neighbor, peak is to the right</span>
+        <span class="kw">if</span> (arr[mid] &lt; arr[mid + <span class="num">1</span>])
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid;
+    }
+
+    <span class="kw">return</span> left;
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 10.4: Binary Search on Answer -->
+    <section class="section fade" id="sec-4">
+      <div class="sec-tag">
+        <span class="sec-num">10.4</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Binary Search on Answer</h2>
+      <p class="lead">This is a paradigm shift: instead of searching for an element in an array, we binary search on the solution space itself. The key insight is recognizing when a feasible answer exists, then searching for the optimal one.</p>
+
+      <h3>Concept: Binary Search on Solution Space</h3>
+      <p>Template: "Can we achieve X? If yes, try a smaller X. If no, try a larger X." This requires:</p>
+      <ul style="margin-left: 16px; margin-bottom: 16px; line-height: 1.8;">
+        <li><strong>A range of possible answers</strong> (e.g., speed 1 to max_speed)</li>
+        <li><strong>A feasibility check function</strong> that determines if a given answer is valid</li>
+        <li><strong>Monotonicity</strong> — if an answer is feasible, certain other answers must also be feasible (or vice versa)</li>
+      </ul>
+
+      <h3>Example: Koko Eating Bananas (LeetCode 875)</h3>
+      <p><strong>Problem:</strong> Koko has n piles of bananas. She wants to finish eating all bananas in h hours. She can choose an eating speed k (bananas per hour). In each hour, she eats k bananas from one pile; if a pile has fewer than k bananas, she eats them all in one hour and waits. Find the minimum speed k such that she finishes in h hours.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">MinEatingSpeed</span>(<span class="ty">int</span>[] piles, <span class="ty">int</span> h)
+{
+    <span class="ty">int</span> left = <span class="num">1</span>;
+    <span class="ty">int</span> right = piles.<span class="fn">Max</span>();
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (<span class="fn">CanFinish</span>(piles, h, mid))
+            right = mid; <span class="cm">// Try slower speeds</span>
+        <span class="kw">else</span>
+            left = mid + <span class="num">1</span>; <span class="cm">// Need faster speed</span>
+    }
+
+    <span class="kw">return</span> left;
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">CanFinish</span>(<span class="ty">int</span>[] piles, <span class="ty">int</span> h, <span class="ty">int</span> speed)
+{
+    <span class="ty">long</span> hoursNeeded = <span class="num">0</span>;
+    <span class="kw">foreach</span> (<span class="ty">int</span> pile <span class="kw">in</span> piles)
+    {
+        hoursNeeded += (pile + speed - <span class="num">1</span>) / speed; <span class="cm">// Ceiling division</span>
+    }
+    <span class="kw">return</span> hoursNeeded &lt;= h;
+}</pre>
+      </div>
+
+      <p><strong>How it works:</strong> Search space is [1, max_pile]. For any speed, we can calculate hours needed. If feasible, try a slower speed. If infeasible, try faster. Time: O(n log max_pile).</p>
+
+      <h3>Example: Split Array Largest Sum (LeetCode 410)</h3>
+      <p><strong>Problem:</strong> Split an array into m subarrays such that the maximum sum of any subarray is minimized. Find this minimized maximum sum.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">SplitArray</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> m)
+{
+    <span class="ty">int</span> left = nums.<span class="fn">Max</span>();
+    <span class="ty">int</span> right = nums.<span class="fn">Sum</span>();
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (<span class="fn">CanSplit</span>(nums, m, mid))
+            right = mid;
+        <span class="kw">else</span>
+            left = mid + <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> left;
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">CanSplit</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> m, <span class="ty">int</span> maxSum)
+{
+    <span class="ty">int</span> splits = <span class="num">1</span>;
+    <span class="ty">long</span> currentSum = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> num <span class="kw">in</span> nums)
+    {
+        <span class="kw">if</span> (currentSum + num &lt;= maxSum)
+            currentSum += num;
+        <span class="kw">else</span>
+        {
+            splits++;
+            currentSum = num;
+            <span class="kw">if</span> (splits &gt; m) <span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre>
+      </div>
+
+      <h3>Example: Capacity to Ship Packages (LeetCode 1011)</h3>
+      <p><strong>Problem:</strong> Ship packages over d days. Each day, load packages with max weight of capacity c in order (can't skip). Find minimum capacity.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">ShipWithinDays</span>(<span class="ty">int</span>[] weights, <span class="ty">int</span> days)
+{
+    <span class="ty">int</span> left = weights.<span class="fn">Max</span>();
+    <span class="ty">int</span> right = weights.<span class="fn">Sum</span>();
+
+    <span class="kw">while</span> (left &lt; right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (<span class="fn">CanShip</span>(weights, days, mid))
+            right = mid;
+        <span class="kw">else</span>
+            left = mid + <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> left;
+}
+
+<span class="kw">private</span> <span class="kw">static</span> <span class="ty">bool</span> <span class="fn">CanShip</span>(<span class="ty">int</span>[] weights, <span class="ty">int</span> days, <span class="ty">int</span> capacity)
+{
+    <span class="ty">int</span> daysUsed = <span class="num">1</span>;
+    <span class="ty">long</span> currentLoad = <span class="num">0</span>;
+
+    <span class="kw">foreach</span> (<span class="ty">int</span> w <span class="kw">in</span> weights)
+    {
+        <span class="kw">if</span> (currentLoad + w &lt;= capacity)
+            currentLoad += w;
+        <span class="kw">else</span>
+        {
+            daysUsed++;
+            currentLoad = w;
+            <span class="kw">if</span> (daysUsed &gt; days) <span class="kw">return</span> <span class="kw">false</span>;
+        }
+    }
+
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</pre>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-icon">✓</div>
+        <div>
+          <strong>Recognition pattern:</strong> Problems asking for "minimum of maximum" or "maximum of minimum" are often binary-search-on-answer. Look for feasibility checks.
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10.5: Ternary & Interpolation Search -->
+    <section class="section fade" id="sec-5">
+      <div class="sec-tag">
+        <span class="sec-num">10.5</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Ternary Search & Interpolation Search</h2>
+
+      <h3>Ternary Search</h3>
+      <p>Ternary search works on unimodal functions (functions with a single peak or valley). Instead of dividing by 2, divide by 3. Time complexity: O(log₃ n) ≈ O(log n), slightly worse than binary search theoretically, but sometimes better in practice for specific patterns.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="cm">// Find maximum in a unimodal array</span>
+<span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">TernarySearchMax</span>(<span class="ty">int</span>[] arr)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+
+    <span class="kw">while</span> (right - left &gt; <span class="num">2</span>)
+    {
+        <span class="ty">int</span> mid1 = left + (right - left) / <span class="num">3</span>;
+        <span class="ty">int</span> mid2 = right - (right - left) / <span class="num">3</span>;
+
+        <span class="kw">if</span> (arr[mid1] &gt; arr[mid2])
+            right = mid2 - <span class="num">1</span>;
+        <span class="kw">else</span>
+            left = mid1 + <span class="num">1</span>;
+    }
+
+    <span class="ty">int</span> maxVal = arr[left];
+    <span class="kw">for</span> (<span class="ty">int</span> i = left + <span class="num">1</span>; i &lt;= right; i++)
+        maxVal = <span class="ty">Math</span>.<span class="fn">Max</span>(maxVal, arr[i]);
+
+    <span class="kw">return</span> maxVal;
+}</pre>
+      </div>
+
+      <h3>Interpolation Search</h3>
+      <p>For uniformly distributed data, interpolation search can beat binary search. Instead of guessing the midpoint, estimate where the target is based on its value distribution.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">InterpolationSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> left = <span class="num">0</span>;
+    <span class="ty">int</span> right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+
+    <span class="kw">while</span> (left &lt;= right &amp;&amp; target &gt;= arr[left] &amp;&amp; target &lt;= arr[right])
+    {
+        <span class="cm">// Estimate position based on value</span>
+        <span class="ty">int</span> pos = left + (<span class="ty">int</span>)((<span class="ty">double</span>)(right - left) / (arr[right] - arr[left]) * (target - arr[left]));
+
+        <span class="kw">if</span> (arr[pos] == target)
+            <span class="kw">return</span> pos;
+
+        <span class="kw">if</span> (arr[pos] &lt; target)
+            left = pos + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = pos - <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <p><strong>Average Time:</strong> O(log log n) for uniformly distributed data. <strong>Worst Case:</strong> O(n) if data is skewed. Rarely used in practice; binary search is safer and almost always faster.</p>
+    </section>
+
+    <!-- Section 10.6: Exponential & Jump Search -->
+    <section class="section fade" id="sec-6">
+      <div class="sec-tag">
+        <span class="sec-num">10.6</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Exponential & Jump Search</h2>
+
+      <h3>Exponential Search</h3>
+      <p>Useful for unbounded or infinite arrays. First, find a range [2^k, 2^(k+1)) containing the target via exponential jumps. Then binary search within that range.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">ExponentialSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="kw">if</span> (arr[<span class="num">0</span>] == target)
+        <span class="kw">return</span> <span class="num">0</span>;
+
+    <span class="cm">// Find range [2^i, 2^(i+1))</span>
+    <span class="ty">int</span> i = <span class="num">1</span>;
+    <span class="kw">while</span> (i &lt; arr.<span class="prop">Length</span> &amp;&amp; arr[i] &lt; target)
+        i *= <span class="num">2</span>;
+
+    <span class="cm">// Binary search in range</span>
+    <span class="ty">int</span> left = i / <span class="num">2</span>;
+    <span class="ty">int</span> right = <span class="ty">Math</span>.<span class="fn">Min</span>(i, arr.<span class="prop">Length</span> - <span class="num">1</span>);
+
+    <span class="kw">while</span> (left &lt;= right)
+    {
+        <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+
+        <span class="kw">if</span> (arr[mid] == target)
+            <span class="kw">return</span> mid;
+        <span class="kw">if</span> (arr[mid] &lt; target)
+            left = mid + <span class="num">1</span>;
+        <span class="kw">else</span>
+            right = mid - <span class="num">1</span>;
+    }
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+
+      <p><strong>Time:</strong> O(log n). <strong>Use when:</strong> Array size is unknown, or you're searching an infinite stream.</p>
+
+      <h3>Jump Search</h3>
+      <p>Jump Search divides the array into blocks of size sqrt(n). Jump through blocks, then linear search within the found block. Time: O(sqrt(n)).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">static</span> <span class="ty">int</span> <span class="fn">JumpSearch</span>(<span class="ty">int</span>[] arr, <span class="ty">int</span> target)
+{
+    <span class="ty">int</span> n = arr.<span class="prop">Length</span>;
+    <span class="ty">int</span> step = (<span class="ty">int</span>)<span class="ty">Math</span>.<span class="fn">Sqrt</span>(n);
+    <span class="ty">int</span> prev = <span class="num">0</span>;
+
+    <span class="cm">// Jump through blocks</span>
+    <span class="kw">while</span> (arr[<span class="ty">Math</span>.<span class="fn">Min</span>(step, n) - <span class="num">1</span>] &lt; target)
+    {
+        prev = step;
+        step += (<span class="ty">int</span>)<span class="ty">Math</span>.<span class="fn">Sqrt</span>(n);
+        <span class="kw">if</span> (prev &gt;= n)
+            <span class="kw">return</span> <span class="num">-1</span>;
+    }
+
+    <span class="cm">// Linear search in block [prev, step)</span>
+    <span class="kw">while</span> (arr[prev] &lt; target)
+    {
+        prev++;
+        <span class="kw">if</span> (prev == <span class="ty">Math</span>.<span class="fn">Min</span>(step, n))
+            <span class="kw">return</span> <span class="num">-1</span>;
+    }
+
+    <span class="kw">if</span> (arr[prev] == target)
+        <span class="kw">return</span> prev;
+
+    <span class="kw">return</span> <span class="num">-1</span>;
+}</pre>
+      </div>
+    </section>
+
+    <!-- Section 10.7: Practice Problems -->
+    <section class="section fade" id="sec-7">
+      <div class="sec-tag">
+        <span class="sec-num">10.7</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Complete Practice Problems with Solutions</h2>
+
+      <h3>Problem 1: Binary Search (LeetCode 704)</h3>
+      <p><strong>Statement:</strong> Given a sorted array and target, return the index if found, else -1.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Search</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] == target) <span class="kw">return</span> mid;
+            <span class="kw">if</span> (nums[mid] &lt; target) left = mid + <span class="num">1</span>;
+            <span class="kw">else</span> right = mid - <span class="num">1</span>;
+        }
+        <span class="kw">return</span> <span class="num">-1</span>;
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 2: First Bad Version (LeetCode 278)</h3>
+      <p><strong>Statement:</strong> Given an API isBadVersion(version), find the first bad version in [1, n].</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span> : <span class="ty">VersionControl</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">FirstBadVersion</span>(<span class="ty">int</span> n)
+    {
+        <span class="ty">int</span> left = <span class="num">1</span>, right = n;
+
+        <span class="kw">while</span> (left &lt; right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (<span class="fn">IsBadVersion</span>(mid))
+                right = mid; <span class="cm">// First bad is at mid or before</span>
+            <span class="kw">else</span>
+                left = mid + <span class="num">1</span>; <span class="cm">// First bad is after mid</span>
+        }
+        <span class="kw">return</span> left;
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 3: Search Insert Position (LeetCode 35)</h3>
+      <p><strong>Statement:</strong> Find the index where target should be inserted to keep array sorted.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">SearchInsert</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span>;
+
+        <span class="kw">while</span> (left &lt; right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] &lt; target)
+                left = mid + <span class="num">1</span>;
+            <span class="kw">else</span>
+                right = mid;
+        }
+        <span class="kw">return</span> left;
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 4: Find First and Last Position (LeetCode 34)</h3>
+      <p><strong>Statement:</strong> Find the range [first, last] of target in sorted array. Return [-1, -1] if not found.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span>[] <span class="fn">SearchRange</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> first = <span class="fn">FindFirst</span>(nums, target);
+        <span class="kw">if</span> (first == <span class="num">-1</span>) <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[] { <span class="num">-1</span>, <span class="num">-1</span> };
+
+        <span class="ty">int</span> last = <span class="fn">FindLast</span>(nums, target);
+        <span class="kw">return</span> <span class="kw">new</span> <span class="ty">int</span>[] { first, last };
+    }
+
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">FindFirst</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+        <span class="ty">int</span> result = <span class="num">-1</span>;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] == target)
+            {
+                result = mid;
+                right = mid - <span class="num">1</span>;
+            }
+            <span class="kw">else</span> <span class="kw">if</span> (nums[mid] &lt; target) left = mid + <span class="num">1</span>;
+            <span class="kw">else</span> right = mid - <span class="num">1</span>;
+        }
+        <span class="kw">return</span> result;
+    }
+
+    <span class="kw">private</span> <span class="ty">int</span> <span class="fn">FindLast</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+        <span class="ty">int</span> result = <span class="num">-1</span>;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] == target)
+            {
+                result = mid;
+                left = mid + <span class="num">1</span>;
+            }
+            <span class="kw">else</span> <span class="kw">if</span> (nums[mid] &lt; target) left = mid + <span class="num">1</span>;
+            <span class="kw">else</span> right = mid - <span class="num">1</span>;
+        }
+        <span class="kw">return</span> result;
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 5: Search in Rotated Sorted Array (LeetCode 33)</h3>
+      <p><strong>Statement:</strong> Search in rotated sorted array with distinct elements.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">Search</span>(<span class="ty">int</span>[] nums, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] == target) <span class="kw">return</span> mid;
+
+            <span class="kw">if</span> (nums[left] &lt;= nums[mid])
+            {
+                <span class="kw">if</span> (nums[left] &lt;= target &amp;&amp; target &lt; nums[mid])
+                    right = mid - <span class="num">1</span>;
+                <span class="kw">else</span>
+                    left = mid + <span class="num">1</span>;
+            }
+            <span class="kw">else</span>
+            {
+                <span class="kw">if</span> (nums[mid] &lt; target &amp;&amp; target &lt;= nums[right])
+                    left = mid + <span class="num">1</span>;
+                <span class="kw">else</span>
+                    right = mid - <span class="num">1</span>;
+            }
+        }
+        <span class="kw">return</span> <span class="num">-1</span>;
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 6: Find Minimum in Rotated Sorted Array (LeetCode 153)</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">FindMin</span>(<span class="ty">int</span>[] nums)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+
+        <span class="kw">while</span> (left &lt; right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] &gt; nums[right])
+                left = mid + <span class="num">1</span>;
+            <span class="kw">else</span>
+                right = mid;
+        }
+        <span class="kw">return</span> nums[left];
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 7: Search a 2D Matrix (LeetCode 74)</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">bool</span> <span class="fn">SearchMatrix</span>(<span class="ty">int</span>[][] matrix, <span class="ty">int</span> target)
+    {
+        <span class="ty">int</span> rows = matrix.<span class="prop">Length</span>, cols = matrix[<span class="num">0</span>].<span class="prop">Length</span>;
+        <span class="ty">int</span> left = <span class="num">0</span>, right = rows * cols - <span class="num">1</span>;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="ty">int</span> val = matrix[mid / cols][mid % cols];
+
+            <span class="kw">if</span> (val == target) <span class="kw">return</span> <span class="kw">true</span>;
+            <span class="kw">if</span> (val &lt; target) left = mid + <span class="num">1</span>;
+            <span class="kw">else</span> right = mid - <span class="num">1</span>;
+        }
+        <span class="kw">return</span> <span class="kw">false</span>;
+    }
+}
+<span class="cm">// Time: O(log(m*n)), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 8: Koko Eating Bananas (LeetCode 875)</h3>
+      <p>(See detailed solution in Section 10.4)</p>
+
+      <h3>Problem 9: Find Peak Element (LeetCode 162)</h3>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">FindPeakElement</span>(<span class="ty">int</span>[] nums)
+    {
+        <span class="ty">int</span> left = <span class="num">0</span>, right = nums.<span class="prop">Length</span> - <span class="num">1</span>;
+
+        <span class="kw">while</span> (left &lt; right)
+        {
+            <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (nums[mid] &lt; nums[mid + <span class="num">1</span>])
+                left = mid + <span class="num">1</span>;
+            <span class="kw">else</span>
+                right = mid;
+        }
+        <span class="kw">return</span> left;
+    }
+}
+<span class="cm">// Time: O(log n), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 10: Sqrt(x) (LeetCode 69)</h3>
+      <p><strong>Statement:</strong> Compute the integer square root of x.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">int</span> <span class="fn">MySqrt</span>(<span class="ty">int</span> x)
+    {
+        <span class="kw">if</span> (x == <span class="num">0</span>) <span class="kw">return</span> <span class="num">0</span>;
+
+        <span class="ty">long</span> left = <span class="num">1</span>, right = x;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">long</span> mid = left + (right - left) / <span class="num">2</span>;
+            <span class="kw">if</span> (mid * mid == x) <span class="kw">return</span> (<span class="ty">int</span>)mid;
+            <span class="kw">if</span> (mid * mid &lt; x) left = mid + <span class="num">1</span>;
+            <span class="kw">else</span> right = mid - <span class="num">1</span>;
+        }
+
+        <span class="kw">return</span> (<span class="ty">int</span>)right;
+    }
+}
+<span class="cm">// Time: O(log x), Space: O(1)</span></pre>
+      </div>
+
+      <h3>Problem 11: Median of Two Sorted Arrays (LeetCode 4) — Hard</h3>
+      <p><strong>Statement:</strong> Find the median of two sorted arrays. Time: O(log(min(m,n))).</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="kw">public</span> <span class="kw">class</span> <span class="ty">Solution</span>
+{
+    <span class="kw">public</span> <span class="ty">double</span> <span class="fn">FindMedianSortedArrays</span>(<span class="ty">int</span>[] nums1, <span class="ty">int</span>[] nums2)
+    {
+        <span class="kw">if</span> (nums1.<span class="prop">Length</span> &gt; nums2.<span class="prop">Length</span>)
+            <span class="kw">return</span> <span class="fn">FindMedianSortedArrays</span>(nums2, nums1);
+
+        <span class="ty">int</span> m = nums1.<span class="prop">Length</span>, n = nums2.<span class="prop">Length</span>;
+        <span class="ty">int</span> left = <span class="num">0</span>, right = m;
+
+        <span class="kw">while</span> (left &lt;= right)
+        {
+            <span class="ty">int</span> cut1 = left + (right - left) / <span class="num">2</span>;
+            <span class="ty">int</span> cut2 = (m + n + <span class="num">1</span>) / <span class="num">2</span> - cut1;
+
+            <span class="ty">int</span> left1 = (cut1 == <span class="num">0</span>) ? <span class="ty">int</span>.<span class="ty">MinValue</span> : nums1[cut1 - <span class="num">1</span>];
+            <span class="ty">int</span> left2 = (cut2 == <span class="num">0</span>) ? <span class="ty">int</span>.<span class="ty">MinValue</span> : nums2[cut2 - <span class="num">1</span>];
+            <span class="ty">int</span> right1 = (cut1 == m) ? <span class="ty">int</span>.<span class="ty">MaxValue</span> : nums1[cut1];
+            <span class="ty">int</span> right2 = (cut2 == n) ? <span class="ty">int</span>.<span class="ty">MaxValue</span> : nums2[cut2];
+
+            <span class="kw">if</span> (left1 &lt;= right2 &amp;&amp; left2 &lt;= right1)
+            {
+                <span class="kw">if</span> ((m + n) % <span class="num">2</span> == <span class="num">0</span>)
+                    <span class="kw">return</span> (<span class="ty">Math</span>.<span class="fn">Max</span>(left1, left2) + <span class="ty">Math</span>.<span class="fn">Min</span>(right1, right2)) / <span class="num">2.0</span>;
+                <span class="kw">else</span>
+                    <span class="kw">return</span> <span class="ty">Math</span>.<span class="fn">Max</span>(left1, left2);
+            }
+            <span class="kw">else</span> <span class="kw">if</span> (left1 &gt; right2)
+                right = cut1 - <span class="num">1</span>;
+            <span class="kw">else</span>
+                left = cut1 + <span class="num">1</span>;
+        }
+
+        <span class="kw">return</span> <span class="num">-1.0</span>;
+    }
+}
+<span class="cm">// Time: O(log(min(m,n))), Space: O(1)</span></pre>
+      </div>
+    </section>
+
+    <!-- Section 10.8: Templates -->
+    <section class="section fade" id="sec-8">
+      <div class="sec-tag">
+        <span class="sec-num">10.8</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Binary Search Template Summary</h2>
+
+      <h3>Template 1: Exact Match</h3>
+      <p>Find an exact match or return -1. Used when any occurrence works.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="ty">int</span> left = <span class="num">0</span>, right = arr.<span class="prop">Length</span> - <span class="num">1</span>;
+<span class="kw">while</span> (left &lt;= right)
+{
+    <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+    <span class="kw">if</span> (arr[mid] == target) <span class="kw">return</span> mid;
+    <span class="kw">if</span> (arr[mid] &lt; target) left = mid + <span class="num">1</span>;
+    <span class="kw">else</span> right = mid - <span class="num">1</span>;
+}
+<span class="kw">return</span> <span class="num">-1</span>;</pre>
+      </div>
+
+      <h3>Template 2: Left Boundary (First Occurrence)</h3>
+      <p>Find the leftmost position of target. Use when duplicates exist.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="ty">int</span> left = <span class="num">0</span>, right = arr.<span class="prop">Length</span>;
+<span class="kw">while</span> (left &lt; right)
+{
+    <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+    <span class="kw">if</span> (arr[mid] &lt; target)
+        left = mid + <span class="num">1</span>;
+    <span class="kw">else</span>
+        right = mid;
+}
+<span class="cm">// left is now the leftmost position where arr[left] >= target</span></pre>
+      </div>
+
+      <h3>Template 3: Right Boundary (Last Occurrence)</h3>
+      <p>Find the rightmost position of target.</p>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-lang">C#</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+        <pre><span class="ty">int</span> left = <span class="num">0</span>, right = arr.<span class="prop">Length</span>;
+<span class="kw">while</span> (left &lt; right)
+{
+    <span class="ty">int</span> mid = left + (right - left) / <span class="num">2</span>;
+    <span class="kw">if</span> (arr[mid] &lt;= target)
+        left = mid + <span class="num">1</span>;
+    <span class="kw">else</span>
+        right = mid;
+}
+<span class="cm">// left - 1 is now the rightmost position where arr[left-1] <= target</span></pre>
+      </div>
+
+      <h3>Decision Tree: Which Template to Use?</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Template 1</div>
+          <div class="proof-body">
+            <strong>Use when:</strong> Finding any occurrence of target<br/>
+            <strong>Return:</strong> Index of target or -1<br/>
+            <strong>Loop:</strong> while (left &lt;= right)<br/>
+            <strong>Key:</strong> Return immediately on match
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Template 2 & 3</div>
+          <div class="proof-body">
+            <strong>Use when:</strong> Finding boundary positions (first/last)<br/>
+            <strong>Return:</strong> left (or left-1)<br/>
+            <strong>Loop:</strong> while (left &lt; right)<br/>
+            <strong>Key:</strong> Shrink search space, return pointer
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 10.9: Interview Tips -->
+    <section class="section fade" id="sec-9">
+      <div class="sec-tag">
+        <span class="sec-num">10.9</span>
+        <div class="sec-line"></div>
+      </div>
+      <h2>Interview Tips & Common Pitfalls</h2>
+
+      <h3>Recognizing Binary Search Opportunities</h3>
+      <p>Not every problem needs binary search, but these signals suggest it might:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Sorted input:</strong> If the array is sorted or can be treated as sorted, binary search often applies.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Optimization problem:</strong> "Find minimum of maximum" or "maximize minimum"? Likely binary search on answer.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Feasibility check exists:</strong> Can you verify if a candidate answer is valid? That's your binary search condition.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Efficiency required:</strong> If a naive approach is O(n²) but the problem has large constraints (n > 10⁵), binary search to O(n log n) or O(log n) usually works.</div>
+        </div>
+      </div>
+
+      <h3>Edge Cases Checklist</h3>
+
+      <div class="proof-grid">
+        <div class="proof-card">
+          <div class="proof-title">Always Test</div>
+          <div class="proof-body">
+            <ul style="margin-left: 16px; line-height: 1.8;">
+              <li>Empty array: Should return -1</li>
+              <li>Single element: Match or no match</li>
+              <li>Target at boundaries: First/last element</li>
+              <li>Duplicates: First, last, or any occurrence</li>
+              <li>Large numbers: Test overflow scenarios</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-title">Common Bugs</div>
+          <div class="proof-body">
+            <ul style="margin-left: 16px; line-height: 1.8;">
+              <li>Using (left + right) / 2 (overflow)</li>
+              <li>Off-by-one errors in boundaries</li>
+              <li>Infinite loops (wrong loop condition)</li>
+              <li>Forgetting to check if element exists before returning index</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h3>How to Avoid Infinite Loops</h3>
+      <p>The most common bug in binary search is infinite loops. Here's how to prevent them:</p>
+
+      <div class="callout danger">
+        <div class="callout-icon">⚠️</div>
+        <div>
+          <strong>Rule 1:</strong> Every iteration must shrink the search space. If mid = left or mid = right, you'll have infinite loops.<br/>
+          <strong>Rule 2:</strong> Use left &lt; right (not &lt;=) in boundary-finding templates. Use left &lt;= right in exact-match templates.<br/>
+          <strong>Rule 3:</strong> When updating pointers: left = mid + 1 or right = mid - 1 (not = mid).
+        </div>
+      </div>
+
+      <h3>Communication Strategy in Interviews</h3>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">1</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>State the problem clearly:</strong> "I need to find the first occurrence of target in a sorted array."</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">2</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Explain the approach:</strong> "I'll use binary search to achieve O(log n) time. When I find the target, I'll search left for the first occurrence."</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">3</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Walk through an example:</strong> Show left/right/mid values on a small array to demonstrate correctness.</div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">4</div>
+            <div class="step-vline"></div>
+          </div>
+          <div class="step-body"><strong>Discuss complexity:</strong> "Time: O(log n), Space: O(1)." Be ready to optimize further if asked.</div>
+        </div>
+      </div>
+
+      <h3>Interview Tips</h3>
+
+      <div class="tips">
+        <div class="tip-card g">
+          <div class="tip-n">Tip 1</div>
+          <div class="tip-title">Always Verify Assumptions</div>
+          <div class="tip-body">Ask: Is the array sorted? Are there duplicates? Can there be negative numbers? Don't assume—clarify with the interviewer.</div>
+        </div>
+        <div class="tip-card b">
+          <div class="tip-n">Tip 2</div>
+          <div class="tip-title">Code Template First</div>
+          <div class="tip-body">Memorize the three templates. Write one from memory, then adapt it. This saves time and reduces bugs significantly.</div>
+        </div>
+        <div class="tip-card a">
+          <div class="tip-n">Tip 3</div>
+          <div class="tip-title">Test Your Code</div>
+          <div class="tip-body">Trace through your code on edge cases before claiming it's done. Interviewers expect this rigor and attention to detail.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <p>Chapter 10: Searching & Binary Search — DSA Complete Book</p>
+        <p>Master searching algorithms: linear search, binary search, variations, and advanced techniques like binary search on answer. 1400+ lines, 45+ code examples, 11 complete LeetCode solutions.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Fade-in animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const codeBlock = this.parentElement.nextElementSibling;
+        const text = codeBlock.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = this.innerText;
+          this.innerText = 'Copied!';
+          setTimeout(() => {
+            this.innerText = originalText;
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
