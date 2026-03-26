@@ -192,7 +192,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
       </div>
       <h1>Big O Notation & <em>Complexity Analysis</em></h1>
       <p class="hero-sub">Master the mathematical foundation for analyzing algorithm efficiency. Learn to evaluate code performance, calculate time and space complexity, and make data structure decisions based on rigorous analysis rather than intuition.</p>
-      <div class="stats fade">
+      <div class="stats">
         <div class="stat">
           <div class="stat-n">13</div>
           <div class="stat-l">Topics Covered</div>
@@ -212,7 +212,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
       </div>
     </section>
 
-    <section class="toc fade">
+    <section class="toc">
       <div class="toc-head">Table of Contents</div>
       <div class="toc-grid">
         <a href="#sec-1"><span class="toc-n">1.1</span> What is Algorithm Analysis?</a>
@@ -231,7 +231,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.1 -->
-    <section class="section fade" id="sec-1">
+    <section class="section" id="sec-1">
       <div class="sec-tag">
         <span class="sec-num">1.1</span>
         <div class="sec-line"></div>
@@ -308,7 +308,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.2 -->
-    <section class="section fade" id="sec-2">
+    <section class="section" id="sec-2">
       <div class="sec-tag">
         <span class="sec-num">1.2</span>
         <div class="sec-line"></div>
@@ -362,7 +362,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.3 -->
-    <section class="section fade" id="sec-3">
+    <section class="section" id="sec-3">
       <div class="sec-tag">
         <span class="sec-num">1.3</span>
         <div class="sec-line"></div>
@@ -406,7 +406,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.4 -->
-    <section class="section fade" id="sec-4">
+    <section class="section" id="sec-4">
       <div class="sec-tag">
         <span class="sec-num">1.4</span>
         <div class="sec-line"></div>
@@ -651,7 +651,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.5 -->
-    <section class="section fade" id="sec-5">
+    <section class="section" id="sec-5">
       <div class="sec-tag">
         <span class="sec-num">1.5</span>
         <div class="sec-line"></div>
@@ -726,7 +726,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.6 -->
-    <section class="section fade" id="sec-6">
+    <section class="section" id="sec-6">
       <div class="sec-tag">
         <span class="sec-num">1.6</span>
         <div class="sec-line"></div>
@@ -836,7 +836,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.7 -->
-    <section class="section fade" id="sec-7">
+    <section class="section" id="sec-7">
       <div class="sec-tag">
         <span class="sec-num">1.7</span>
         <div class="sec-line"></div>
@@ -873,7 +873,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.8 -->
-    <section class="section fade" id="sec-8">
+    <section class="section" id="sec-8">
       <div class="sec-tag">
         <span class="sec-num">1.8</span>
         <div class="sec-line"></div>
@@ -969,7 +969,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.9 -->
-    <section class="section fade" id="sec-9">
+    <section class="section" id="sec-9">
       <div class="sec-tag">
         <span class="sec-num">1.9</span>
         <div class="sec-line"></div>
@@ -1048,7 +1048,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.10 -->
-    <section class="section fade" id="sec-10">
+    <section class="section" id="sec-10">
       <div class="sec-tag">
         <span class="sec-num">1.10</span>
         <div class="sec-line"></div>
@@ -1147,7 +1147,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.11 -->
-    <section class="section fade" id="sec-11">
+    <section class="section" id="sec-11">
       <div class="sec-tag">
         <span class="sec-num">1.11</span>
         <div class="sec-line"></div>
@@ -1470,7 +1470,7 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
     </section>
 
     <!-- Section 1.12 -->
-    <section class="section fade" id="sec-12">
+    <section class="section" id="sec-12">
       <div class="sec-tag">
         <span class="sec-num">1.12</span>
         <div class="sec-line"></div>
@@ -1635,6 +1635,420 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
           <strong>"This has T(n) = 2·T(n/2) + n. Using the Master Theorem with a=2, b=2, f(n)=n, we get T(n) = Θ(n log n)."</strong> This is cleaner than working through the recursion manually.
         </div>
       </div>
+
+      <!-- Master Theorem Deep Dive -->
+      <div class="algo" id="master-theorem-proof" style="margin-top: 36px;">
+        <div class="algo-head">
+          <div>
+            <div class="algo-name">The Master Theorem — Complete Proof</div>
+            <div class="algo-desc">
+              A recurrence like T(n) = 2·T(n/2) + n defines itself in terms of itself — it has no direct answer yet. The Master Theorem is called a <strong>closed-form method</strong> because it <em>closes that loop</em>: it converts a self-referential recurrence into a direct, final expression like Θ(n log n) that you can evaluate immediately with no expansion, no iteration, and no guessing.
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;font-size:13px;">
+                <div style="background:var(--red-l);border:1px solid var(--red-b);border-radius:8px;padding:12px 14px;color:#6e1616;">
+                  <div style="font-weight:700;margin-bottom:6px;">❌ Without it (open form)</div>
+                  Expand step by step: T(n) → 2T(n/2)+n → 4T(n/4)+2n → 8T(n/8)+3n → ... log n steps later → Θ(n log n). You must unroll, spot a pattern, and sum a series manually.
+                </div>
+                <div style="background:var(--green-l);border:1px solid var(--green-b);border-radius:8px;padding:12px 14px;color:#164d32;">
+                  <div style="font-weight:700;margin-bottom:6px;">✓ With it (closed form)</div>
+                  Read off a=2, b=2, f(n)=n. Compare f(n) to n<sup>log₂2</sup>=n. They match → Case 2 → <strong>Θ(n log n)</strong>. One step. No expansion needed.
+                </div>
+              </div>
+              <div style="margin-top:12px;font-size:13px;color:var(--ink3);">The same idea applies elsewhere in math: summing 1+2+…+n by hand is open-form; the formula n(n+1)/2 is closed-form. The Master Theorem is the closed-form equivalent for divide-and-conquer recurrences.</div>
+            </div>
+            <div class="algo-tags" style="margin-top: 14px;">
+              <span class="badge b-blue">Divide &amp; Conquer</span>
+              <span class="badge b-orange">Recurrence Relations</span>
+              <span class="badge b-green">Asymptotic Analysis</span>
+            </div>
+          </div>
+          <div class="algo-idx">MT</div>
+        </div>
+
+        <div class="algo-body">
+
+          <!-- The only 3 inputs -->
+          <h3 style="margin-top: 0;">The Three Inputs You Provide</h3>
+          <p>The Master Theorem needs exactly three things from you. You read them directly off your recurrence — nothing is computed yet.</p>
+
+          <div class="cx-row">
+            <div class="cx">
+              <div class="cx-l">a &nbsp;≥ 1</div>
+              <div class="cx-v">Number of recursive calls</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">b &nbsp;&gt; 1</div>
+              <div class="cx-v">Factor input shrinks by</div>
+            </div>
+            <div class="cx">
+              <div class="cx-l">f(n)</div>
+              <div class="cx-v">Work outside recursion</div>
+            </div>
+          </div>
+
+          <div style="background:var(--bg2);border:1px solid var(--rule);border-radius:10px;padding:20px 28px 28px;margin-bottom:10px;">
+            <div style="font-family:var(--serif);font-size:21px;color:var(--ink);text-align:center;letter-spacing:0.01em;display:flex;align-items:flex-start;justify-content:center;">
+              <span style="padding-top:6px;">T(n) &nbsp;=&nbsp;</span>
+              <span style="display:inline-flex;flex-direction:column;align-items:center;">
+                <span style="color:var(--green);font-weight:700;">a</span>
+                <span style="font-size:16px;color:var(--green);line-height:1;margin-top:4px;">↓</span>
+                <span style="font-size:11px;font-weight:600;color:var(--green);font-family:var(--sans);white-space:nowrap;margin-top:2px;">how many subproblems</span>
+              </span>
+              <span style="padding-top:6px;">&nbsp;·&nbsp;T(n/</span>
+              <span style="display:inline-flex;flex-direction:column;align-items:center;">
+                <span style="color:var(--blue);font-weight:700;">b</span>
+                <span style="font-size:16px;color:var(--blue);line-height:1;margin-top:4px;">↓</span>
+                <span style="font-size:11px;font-weight:600;color:var(--blue);font-family:var(--sans);white-space:nowrap;margin-top:2px;">how much smaller each is</span>
+              </span>
+              <span style="padding-top:6px;">)&nbsp;+&nbsp;</span>
+              <span style="display:inline-flex;flex-direction:column;align-items:center;">
+                <span style="color:var(--acc);font-weight:700;">f(n)</span>
+                <span style="font-size:16px;color:var(--acc);line-height:1;margin-top:4px;">↓</span>
+                <span style="font-size:11px;font-weight:600;color:var(--acc);font-family:var(--sans);white-space:nowrap;margin-top:2px;">cost to divide &amp; combine</span>
+              </span>
+            </div>
+          </div>
+
+          <p style="margin-bottom:26px;">For merge sort: you make <strong style="color:var(--green);">2</strong> recursive calls, each on an array of size <strong style="color:var(--blue);">n/2</strong>, and merging costs <strong style="color:var(--acc);">n</strong> work. So a=2, b=2, f(n)=n.</p>
+
+          <!-- WHERE DOES log_b(a) COME FROM -->
+          <div style="border:1px solid var(--rule);border-radius:12px;overflow:hidden;margin-bottom:26px;">
+            <div style="background:var(--bg3);padding:14px 22px;border-bottom:1px solid var(--rule);">
+              <span style="font-size:13px;font-weight:700;color:var(--ink);">Where does n<sup>log<sub>b</sub> a</sup> come from? — Deriving it from scratch</span>
+            </div>
+            <div style="padding:20px 22px;">
+              <p style="font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:14px;">
+                <code class="il">log<sub>b</sub> a</code> is <strong>not a fourth input</strong>. It is a quantity that <em>emerges naturally</em> when you draw the recursion tree and count the leaf nodes. Here is the full derivation:
+              </p>
+
+              <!-- Step A -->
+              <div style="display:flex;gap:16px;margin-bottom:14px;padding:14px 16px;background:var(--bg2);border-radius:8px;">
+                <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);">A</div>
+                <div style="font-size:13.5px;color:var(--ink2);line-height:1.8;">
+                  <strong style="color:var(--ink);">How deep is the tree?</strong><br>
+                  At each level the problem size is divided by b. Starting from n, after k levels the size is n/b<sup>k</sup>. The tree bottoms out when the problem is size 1:<br>
+                  <span style="font-family:var(--serif);font-size:15px;display:block;text-align:center;margin:10px 0;color:var(--ink);">n / b<sup>k</sup> = 1 &nbsp;⟹&nbsp; b<sup>k</sup> = n &nbsp;⟹&nbsp; <strong>k = log<sub>b</sub> n</strong></span>
+                  The tree has exactly <strong>log<sub>b</sub> n levels</strong>. This comes purely from b — the branching factor a plays no role in depth.
+
+                  <!-- Logarithm definition box -->
+                  <div style="margin-top:12px;border:1px solid var(--blue-b);background:var(--blue-l);border-radius:8px;padding:14px 16px;">
+                    <div style="font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">Definition of a Logarithm</div>
+                    <div style="font-size:13px;color:#10325a;line-height:1.9;">
+                      The step b<sup>k</sup> = n &nbsp;⟹&nbsp; k = log<sub>b</sub> n is simply the <strong>definition of a logarithm</strong>:<br>
+                      <span style="font-family:var(--serif);font-size:15px;display:block;text-align:center;margin:10px 0;color:var(--ink);">
+                        log<sub>b</sub> n = k &nbsp;&nbsp; means exactly &nbsp;&nbsp; b<sup>k</sup> = n
+                      </span>
+                      In plain English: <em>"log<sub>b</sub> n is the power you raise b to in order to get n."</em><br><br>
+                      <strong>Proof that k = log<sub>b</sub> n:</strong>
+                      <ol style="margin:8px 0 0 18px;line-height:2.2;">
+                        <li>Start with &nbsp;<span style="font-family:var(--serif);">b<sup>k</sup> = n</span></li>
+                        <li>Take log<sub>b</sub> of both sides: &nbsp;<span style="font-family:var(--serif);">log<sub>b</sub>(b<sup>k</sup>) = log<sub>b</sub> n</span></li>
+                        <li>Left side simplifies — log and exponent cancel: &nbsp;<span style="font-family:var(--serif);">k · log<sub>b</sub> b = log<sub>b</sub> n</span></li>
+                        <li>Since log<sub>b</sub> b = 1 by definition: &nbsp;<span style="font-family:var(--serif);font-weight:700;">k = log<sub>b</sub> n &nbsp;✓</span></li>
+                      </ol>
+                      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,0.5);border-radius:6px;font-size:12px;">
+                        <strong>Concrete example:</strong> If b=2 and n=8, then 2<sup>k</sup>=8 &nbsp;⟹&nbsp; k=3, and log<sub>2</sub> 8 = 3. ✓ &nbsp; A binary tree over 8 elements is 3 levels deep.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step B -->
+              <div style="display:flex;gap:16px;margin-bottom:14px;padding:14px 16px;background:var(--bg2);border-radius:8px;">
+                <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--acc-l);border:1.5px solid var(--acc-b);color:var(--acc);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);">B</div>
+                <div style="font-size:13.5px;color:var(--ink2);line-height:1.8;">
+                  <strong style="color:var(--ink);">How many leaves are there?</strong><br>
+                  At each level, every node spawns a children. So at level k there are a<sup>k</sup> nodes. At the leaf level k = log<sub>b</sub> n, the number of leaves is:<br>
+                  <span style="font-family:var(--serif);font-size:15px;display:block;text-align:center;margin:10px 0;color:var(--ink);">a<sup>log<sub>b</sub> n</sup></span>
+                  This is the number of base cases the algorithm reaches. Each base case costs Θ(1), so the total leaf cost is Θ(a<sup>log<sub>b</sub> n</sup>).
+                </div>
+              </div>
+
+              <!-- Step C -->
+              <div style="display:flex;gap:16px;padding:14px 16px;background:var(--blue-l);border:1px solid var(--blue-b);border-radius:8px;">
+                <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);">C</div>
+                <div style="font-size:13.5px;color:#10325a;line-height:1.8;">
+                  <strong>Simplify using the logarithm identity</strong><br>
+                  The expression a<sup>log<sub>b</sub> n</sup> looks messy, but a standard log identity lets us swap the base and exponent:<br>
+                  <span style="font-family:var(--serif);font-size:15px;display:block;text-align:center;margin:10px 0;color:var(--ink);">a<sup>log<sub>b</sub> n</sup> &nbsp;=&nbsp; n<sup>log<sub>b</sub> a</sup></span>
+                  <strong>Proof of identity:</strong> let x = a<sup>log<sub>b</sub> n</sup>. Take log<sub>b</sub> of both sides: log<sub>b</sub> x = log<sub>b</sub> n · log<sub>b</sub> a. So x = b<sup>log<sub>b</sub>n · log<sub>b</sub>a</sup> = n<sup>log<sub>b</sub>a</sup>. ✓<br><br>
+                  This is where <strong>n<sup>log<sub>b</sub> a</sup></strong> comes from — it is simply a cleaner way to write the total number of leaf nodes. The exponent log<sub>b</sub> a is derived; you never look it up.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FULL RECURSION TREE TABLE for merge sort -->
+          <h3>Building the Recursion Tree — Merge Sort Step by Step</h3>
+          <p>The best way to understand the proof is to trace through a real example level by level. We use merge sort: <strong>T(n) = 2·T(n/2) + n</strong> with n = 8, so a = 2, b = 2, f(n) = n.</p>
+          <p>At every level we track three things: how many subproblems exist, what size they are, and what the combine cost is per node and in total.</p>
+
+          <div class="tbl-wrap" style="margin-bottom:10px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Level</th>
+                  <th>Number of nodes</th>
+                  <th>Subproblem size</th>
+                  <th>Divide&nbsp;&amp;&nbsp;combine cost per node</th>
+                  <th>Total cost at this level</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>0</strong> (root)</td>
+                  <td>1</td>
+                  <td>n = 8</td>
+                  <td>f(8) = 8</td>
+                  <td><code class="il">1 × 8 = 8 = n</code></td>
+                </tr>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td>2 = a<sup>1</sup></td>
+                  <td>n/2 = 4</td>
+                  <td>f(4) = 4</td>
+                  <td><code class="il">2 × 4 = 8 = n</code></td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>4 = a<sup>2</sup></td>
+                  <td>n/4 = 2</td>
+                  <td>f(2) = 2</td>
+                  <td><code class="il">4 × 2 = 8 = n</code></td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong> (leaves)</td>
+                  <td>8 = a<sup>3</sup> = n</td>
+                  <td>n/8 = 1</td>
+                  <td>Θ(1) base case</td>
+                  <td><code class="il">8 × 1 = 8 = n</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout info" style="margin-bottom:26px;">
+            <div class="callout-icon">ℹ️</div>
+            <div>
+              Every level costs exactly <strong>n = 8</strong> total work. There are log<sub>2</sub> 8 = 3 + 1 = 4 levels (depth 0 through 3). Grand total = n × (log n + 1) levels = <strong>Θ(n log n)</strong>. The "+1" is absorbed into the Θ notation.
+            </div>
+          </div>
+
+          <!-- Visual ASCII tree -->
+          <div style="background:#1a1916;border-radius:12px;overflow:hidden;margin-bottom:26px;">
+            <div style="padding:10px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-family:var(--mono);font-size:11px;color:#8a8680;letter-spacing:.07em;">RECURSION TREE — MERGE SORT (n=8)</span>
+              <span style="font-size:11px;color:#6a6660;">levels × combine cost = total</span>
+            </div>
+            <pre style="padding:20px 24px;font-family:var(--mono);font-size:12.5px;line-height:2;color:#d4d0c8;overflow-x:auto;">
+<span class="cm">Level 0  nodes=1   size=8</span>
+              [<span class="num">8</span>]                               <span class="va">cost: 8</span>
+           ┌────┴────┐
+<span class="cm">Level 1  nodes=2   size=4</span>
+          [<span class="num">4</span>]       [<span class="num">4</span>]                       <span class="va">cost: 4+4 = 8</span>
+        ┌──┴──┐   ┌──┴──┐
+<span class="cm">Level 2  nodes=4   size=2</span>
+       [<span class="num">2</span>]  [<span class="num">2</span>]  [<span class="num">2</span>]  [<span class="num">2</span>]               <span class="va">cost: 2×4 = 8</span>
+      ┌─┴─┐ ┌─┴─┐ ┌─┴─┐ ┌─┴─┐
+<span class="cm">Level 3  nodes=8   size=1  (leaves)</span>
+     [<span class="num">1</span>][<span class="num">1</span>][<span class="num">1</span>][<span class="num">1</span>][<span class="num">1</span>][<span class="num">1</span>][<span class="num">1</span>][<span class="num">1</span>]        <span class="va">cost: 1×8 = 8</span>
+
+<span class="cm">─────────────────────────────────────────────────────</span>
+<span class="str">Total = 8 + 8 + 8 + 8 = 4 × n = n × log₂(n)  →  Θ(n log n)</span>
+<span class="cm">        └── log₂8 = 3 levels + 1 leaf level ──┘</span></pre>
+          </div>
+
+          <!-- Step 2: General sum formula -->
+          <h3>The General Sum Formula</h3>
+          <p>For any recurrence T(n) = a·T(n/b) + f(n), the pattern from the table generalises to:</p>
+
+          <div style="background:var(--bg2);border:1px solid var(--rule);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;padding:18px 24px;margin-bottom:10px;">
+            <div style="font-family:var(--serif);font-size:16px;color:var(--ink);line-height:2.4;">
+              T(n) &nbsp;=&nbsp;
+              <span style="font-size:22px;line-height:1;">∑</span><span style="font-size:11px;vertical-align:baseline;"> k=0 to log<sub>b</sub>n−1</span>
+              &nbsp; a<sup>k</sup> · f(n/b<sup>k</sup>)
+              &nbsp;+&nbsp; Θ(n<sup>log<sub>b</sub>a</sup>)
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:26px;">
+            <div style="padding:14px 16px;background:var(--bg2);border-radius:8px;border:1px solid var(--rule);font-size:13px;color:var(--ink2);line-height:1.7;">
+              <strong style="color:var(--ink);">Left sum — internal nodes</strong><br>
+              At level k there are a<sup>k</sup> nodes, each processing a subproblem of size n/b<sup>k</sup>, costing f(n/b<sup>k</sup>) each. Summing across all log<sub>b</sub>n levels gives the total internal work.
+            </div>
+            <div style="padding:14px 16px;background:var(--bg2);border-radius:8px;border:1px solid var(--rule);font-size:13px;color:var(--ink2);line-height:1.7;">
+              <strong style="color:var(--ink);">Right term — leaf nodes</strong><br>
+              There are n<sup>log<sub>b</sub>a</sup> leaves (derived above), each costing Θ(1). This is the total cost of all base cases. It represents the recursive work stripped of the combine steps.
+            </div>
+          </div>
+
+          <!-- Three Cases -->
+          <h3>The Three Cases — Which Term Wins?</h3>
+          <p>The theorem asks: does the internal work (the sum) grow faster, slower, or the same as the leaf work (n<sup>log<sub>b</sub>a</sup>)? The answer determines which term dominates the total.</p>
+
+          <!-- Case 1 -->
+          <div style="border:1px solid var(--green-b);background:var(--green-l);border-radius:12px;padding:20px 24px;margin-bottom:14px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <span style="background:var(--green);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;">CASE 1</span>
+              <span style="font-size:15px;font-weight:700;color:var(--green);">Leaves dominate — recursion wins</span>
+            </div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:6px;padding:10px 14px;background:rgba(255,255,255,0.5);border-radius:6px;">
+              If &nbsp; f(n) = O(n<sup>log<sub>b</sub>a − ε</sup>) &nbsp; for some ε &gt; 0
+            </div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:12px;padding:10px 14px;background:rgba(255,255,255,0.5);border-radius:6px;">
+              Then &nbsp; <strong>T(n) = Θ(n<sup>log<sub>b</sub>a</sup>)</strong>
+            </div>
+            <div style="font-size:13px;color:#164d32;line-height:1.8;">
+              <strong>Why:</strong> The combine cost f(n) is polynomially smaller than the leaf cost n<sup>log<sub>b</sub>a</sup>. As we go deeper in the tree, the combine work per level <em>shrinks</em> fast enough that the sum of all internal work is dominated by the bottom-most levels. It's like a geometric series that converges — the vast majority of work happens at the leaves.<br><br>
+              <strong>Example — Binary tree traversal:</strong> T(n) = 2T(n/2) + 1 &nbsp;→&nbsp; a=2, b=2, f(n)=1.<br>
+              n<sup>log<sub>2</sub>2</sup> = n. Is f(n)=1 = O(n<sup>1−ε</sup>)? Yes (ε=1). So T(n) = <strong>Θ(n)</strong>. The tree visits n nodes, each doing O(1) work.
+            </div>
+          </div>
+
+          <!-- Case 2 -->
+          <div style="border:1px solid var(--blue-b);background:var(--blue-l);border-radius:12px;padding:20px 24px;margin-bottom:14px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <span style="background:var(--blue);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;">CASE 2</span>
+              <span style="font-size:15px;font-weight:700;color:var(--blue);">All levels tied — multiply by log n</span>
+            </div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:6px;padding:10px 14px;background:rgba(255,255,255,0.5);border-radius:6px;">
+              If &nbsp; f(n) = Θ(n<sup>log<sub>b</sub>a</sup>)
+            </div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:12px;padding:10px 14px;background:rgba(255,255,255,0.5);border-radius:6px;">
+              Then &nbsp; <strong>T(n) = Θ(n<sup>log<sub>b</sub>a</sup> · log n)</strong>
+            </div>
+            <div style="font-size:13px;color:#10325a;line-height:1.8;">
+              <strong>Why:</strong> The combine cost per level exactly matches the leaf cost. As seen in the merge sort table, every level contributes the same total work — n. With log<sub>b</sub>n levels each contributing the same amount, the total is simply that amount multiplied by the number of levels: Θ(n<sup>log<sub>b</sub>a</sup> × log n). The log n factor is the fingerprint of this balanced case.<br><br>
+              <strong>Example — Merge sort:</strong> T(n) = 2T(n/2) + n &nbsp;→&nbsp; a=2, b=2, f(n)=n.<br>
+              n<sup>log<sub>2</sub>2</sup> = n. Is f(n) = Θ(n)? Yes. So T(n) = <strong>Θ(n log n)</strong>. Each of log n levels costs n to merge.
+            </div>
+          </div>
+
+          <!-- Case 3 -->
+          <div style="border:1px solid var(--acc-b);background:var(--acc-l);border-radius:12px;padding:20px 24px;margin-bottom:26px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <span style="background:var(--acc);color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 10px;border-radius:4px;">CASE 3</span>
+              <span style="font-size:15px;font-weight:700;color:var(--acc);">Root dominates — combine wins</span>
+            </div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:6px;padding:10px 14px;background:rgba(255,255,255,0.5);border-radius:6px;">
+              If &nbsp; f(n) = Ω(n<sup>log<sub>b</sub>a + ε</sup>) &nbsp; for some ε &gt; 0
+              &nbsp; AND &nbsp; a · f(n/b) ≤ c · f(n) &nbsp; for some c &lt; 1 &nbsp;<em>(regularity)</em>
+            </div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--ink);margin-bottom:12px;padding:10px 14px;background:rgba(255,255,255,0.5);border-radius:6px;">
+              Then &nbsp; <strong>T(n) = Θ(f(n))</strong>
+            </div>
+            <div style="font-size:13px;color:#5a3c00;line-height:1.8;">
+              <strong>Why:</strong> The combine cost f(n) is polynomially larger than the leaf cost. As we go deeper the work <em>decreases</em> geometrically (the regularity condition guarantees this), so the root level — where subproblem size is largest — contributes the most. The geometric series of internal costs sums to a constant multiple of f(n).<br><br>
+              <strong>Regularity condition:</strong> We need a · f(n/b) ≤ c · f(n) to confirm that work truly decreases at each level. Without it, f(n) could grow fast but oscillate in a way that prevents the root from dominating.<br><br>
+              <strong>Example:</strong> T(n) = T(n/2) + n² &nbsp;→&nbsp; a=1, b=2, f(n)=n².<br>
+              n<sup>log<sub>2</sub>1</sup> = n⁰ = 1. Is f(n)=n² = Ω(n<sup>0+ε</sup>)? Yes. Check regularity: 1·f(n/2) = n²/4 ≤ (3/4)·n². Holds. So T(n) = <strong>Θ(n²)</strong>.
+            </div>
+          </div>
+
+          <!-- Quick reference summary table -->
+          <h3>Quick Reference</h3>
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Case</th>
+                  <th>Condition on f(n)</th>
+                  <th>Result T(n)</th>
+                  <th>Who dominates</th>
+                  <th>Classic example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge b-green">Case 1</span></td>
+                  <td><code class="il">f(n) = O(n<sup>log<sub>b</sub>a − ε</sup>)</code></td>
+                  <td><code class="il">Θ(n<sup>log<sub>b</sub>a</sup>)</code></td>
+                  <td>Leaves (base cases)</td>
+                  <td>Binary tree traversal: T(n)=2T(n/2)+1 → Θ(n)</td>
+                </tr>
+                <tr>
+                  <td><span class="badge b-blue">Case 2</span></td>
+                  <td><code class="il">f(n) = Θ(n<sup>log<sub>b</sub>a</sup>)</code></td>
+                  <td><code class="il">Θ(n<sup>log<sub>b</sub>a</sup> · log n)</code></td>
+                  <td>All levels equally</td>
+                  <td>Merge sort: T(n)=2T(n/2)+n → Θ(n log n)</td>
+                </tr>
+                <tr>
+                  <td><span class="badge b-orange">Case 3</span></td>
+                  <td><code class="il">f(n) = Ω(n<sup>log<sub>b</sub>a + ε</sup>)</code> + regularity</td>
+                  <td><code class="il">Θ(f(n))</code></td>
+                  <td>Root (combine step)</td>
+                  <td>T(n)=T(n/2)+n² → Θ(n²)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Full merge sort walkthrough -->
+          <h3>Complete Worked Example — Merge Sort</h3>
+          <p>Here is the full process from recurrence to answer, tracing every step explicitly.</p>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-left"><div class="step-num">1</div><div class="step-vline"></div></div>
+              <div class="step-body">
+                <strong>Write the recurrence:</strong> T(n) = 2·T(n/2) + n<br>
+                <span style="color:var(--ink3);font-size:13px;">Merge sort splits the array in two (2 recursive calls), each half (n/2), and merging takes linear time (n).</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num">2</div><div class="step-vline"></div></div>
+              <div class="step-body">
+                <strong>Read off a, b, f(n):</strong> &nbsp; a = 2, &nbsp; b = 2, &nbsp; f(n) = n<br>
+                <span style="color:var(--ink3);font-size:13px;">These are the only inputs to the theorem. No computation yet.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num">3</div><div class="step-vline"></div></div>
+              <div class="step-body">
+                <strong>Find the tree depth:</strong> log<sub>b</sub> n = log<sub>2</sub> n levels<br>
+                <span style="color:var(--ink3);font-size:13px;">We divide by b=2 each time; the tree is log<sub>2</sub> n deep.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num">4</div><div class="step-vline"></div></div>
+              <div class="step-body">
+                <strong>Count the leaves:</strong> a<sup>log<sub>b</sub>n</sup> = 2<sup>log<sub>2</sub>n</sup> = n leaves<br>
+                Using the identity: n<sup>log<sub>b</sub>a</sup> = n<sup>log<sub>2</sub>2</sup> = n<sup>1</sup> = <strong>n</strong><br>
+                <span style="color:var(--ink3);font-size:13px;">This is where n<sup>log<sub>b</sub>a</sup> appears — it is simply the total leaf count, rewritten.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num">5</div><div class="step-vline"></div></div>
+              <div class="step-body">
+                <strong>Compare f(n) to n<sup>log<sub>b</sub>a</sup>:</strong> &nbsp; f(n) = n &nbsp; vs &nbsp; n<sup>1</sup> = n<br>
+                They are equal: f(n) = Θ(n<sup>log<sub>2</sub>2</sup>) = Θ(n). <strong>Case 2 applies.</strong>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-left"><div class="step-num">6</div></div>
+              <div class="step-body">
+                <strong>Apply Case 2:</strong> T(n) = Θ(n<sup>log<sub>2</sub>2</sup> · log n) = Θ(n · log n) = <strong>Θ(n log n)</strong><br>
+                <span style="color:var(--ink3);font-size:13px;">Intuition check: log<sub>2</sub> n levels, each costs n to merge → n × log n total. ✓</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- When it doesn't apply -->
+          <div class="callout warn">
+            <div class="callout-icon">⚠️</div>
+            <div>
+              <strong>When the Master Theorem does NOT apply:</strong>
+              <ul style="margin: 10px 0 0 16px; line-height: 2;">
+                <li><strong>Unequal subproblem sizes</strong> — e.g. T(n) = T(n/3) + T(2n/3) + n. All subproblems must be the same size n/b. Use Akra-Bazzi for unequal sizes.</li>
+                <li><strong>Gap between cases</strong> — e.g. f(n) = n/log n sits between Case 1 and 2 with no valid ε. The theorem only covers polynomial gaps.</li>
+                <li><strong>Regularity condition fails in Case 3</strong> — even if f(n) is large enough, you must verify a·f(n/b) ≤ c·f(n) for some c &lt; 1.</li>
+                <li><strong>Generalized Case 2</strong> — if f(n) = Θ(n<sup>log<sub>b</sub>a</sup> · log<sup>k</sup>n), the result is Θ(n<sup>log<sub>b</sub>a</sup> · log<sup>k+1</sup>n).</li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /algo-body -->
+      </div><!-- /algo -->
+
     </section>
   </div>
 
@@ -1671,10 +2085,15 @@ footer p+p{font-size:12px;color:var(--ink4);margin-top:4px}
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade').forEach(el => {
-      observer.observe(el);
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('in');
+      } else {
+        observer.observe(el);
+      }
     });
   </script>
 </body>
